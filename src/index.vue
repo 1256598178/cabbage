@@ -1,8 +1,12 @@
 <template>
   <div class="wrapper">
-  	<div class="map">
-  		<div class="maps"></div>
-  	</div>
+    <ul class="tab">
+      <li class="tab-lis"><router-link to="/home">首页</router-link></li>
+      <li class="tab-lis"><router-link to="/class">分类</router-link></li>
+      <li class="tab-lis"><router-link to="/shop">购物车</router-link></li>
+      <li class="tab-lis"><router-link to="/goods">取货</router-link></li>
+      <li class="tab-lis"><router-link to="/my">我的</router-link></li>
+    </ul>
     <router-view/>
   </div>
 </template>
@@ -10,20 +14,20 @@
 <script>
 export default {
   name: 'App',
-  data () {
-  }
+  // data () {
+  // }
 }
 </script>
 
 <style lang="stylus" scoped>
-.map{
-	width: 100px;
-	height: 100px;
-	background: blue;
-	.maps{
-		width: 50px;
-		height: 50px;
-		background: red;
-	}
+.tab{
+  display: flex;
+  &>li{
+    flex: 1;
+    float: left;
+    &>a{
+      text-align: center;
+    }
+  }
 }
 </style>
