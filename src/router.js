@@ -8,7 +8,6 @@ import my from '../src/components/my/my.vue'
 
 Vue.use(Router)
 module.exports = new Router({
-  mode: 'hash',
   linkActiveClass: 'active',
   routes: [
     {

@@ -1,5 +1,5 @@
 /*global Vue*/
-
+// import router from './router'
 /* weex initialized here, please do not move this line */
 const router = require('./router');
 const App = require('@/index.vue');

@@ -27,47 +27,14 @@
         <text @click="jump('my')">我的</text>
       </li>
     </ul>
-    <!-- <ul class="tab">
-      <li class="tab-lis">
-        <router-link to="/home">
-          <div class="_img"></div>
-          <text>首页</text>
-        </router-link>
-      </li>
-      <li class="tab-lis">
-        <router-link to="/classes">
-          <div class="_img"></div>
-          <text>分类</text>
-        </router-link>
-      </li>
-      <li class="tab-lis">
-        <router-link to="/shop">
-          <div class="_img"></div>
-          <text>购物车</text>
-        </router-link>
-      </li>
-      <li class="tab-lis">
-        <router-link to="/goods">
-          <div class="_img"></div>
-          <text>取货</text>
-        </router-link>
-      </li>
-      <li class="tab-lis">
-        <router-link to="/my">
-          <div class="_img"></div>
-          <text>我的</text>
-        </router-link>
-      </li>
-    </ul> -->
   </div>
 </template>
 
 <script>
-import router from './router.js'
 export default {
   methods: {
     jump (msg) {
-      router.push(msg)
+      this.$router.push(msg);
     }
   }
 }
@@ -91,6 +58,9 @@ export default {
       margin: 0 auto;
       width: 25px;
       height: 24px;
+    }
+    &>p{
+      text-align: center;
     }
   }
 }
