@@ -1,5 +1,7 @@
 <template>
-	<div class="home">home<br>home<br>home<br>home<br>home<br>home<br>home<br>home<br>home<br>home<br>home<br>home<br>home<br>home<br>home<br>home<br>home<br>home<br>home<br>home<br>home<br>home<br>home<br>home<br>home<br>home<br>home<br>home<br>home<br>home<br>home<br>home<br>home<br>home<br>home<br>home<br>home<br>home<br>home<br>home<br>home<br>home<br>home<br>home<br>home<br>home<br>home<br>home<br>home<br>home<br>home<br>home<br>home<br>home<br>home<br>home<br>home<br></div>
+	<div class="home">
+		<text>home</text>
+	</div>
 </template>
 
 <script>

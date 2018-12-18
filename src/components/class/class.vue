@@ -1,12 +1,9 @@
 <template>
-	<div class="class">class</div>
+	<div class="classes"><text>class</text></div>
 </template>
 
 <script>
 export default {
-  name: 'class',
-  // data () {
-  // }
 }
 </script>
 

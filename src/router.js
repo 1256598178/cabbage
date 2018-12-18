@@ -7,31 +7,29 @@ import goods from '../src/components/goods/goods.vue'
 import my from '../src/components/my/my.vue'
 
 Vue.use(Router)
-const routes = [
-	{
-      path: '/',
-      redirect: '/home'
-    },{
-	  path: '/home',
-  	  component: home
-    },{
-	  path: '/class',
-  	  component: classes
-    },{
-	  path: '/shop',
-  	  component: shop
-    },{
-	  path: '/goods',
-  	  component: goods
-    },{
-	  path: '/my',
-  	  component: my
-    }
-]
+module.exports = new Router({
+  mode: 'hash',
+  linkActiveClass: 'active',
+  routes: [
+    {
+        path: '/',
+        redirect: '/home'
+      },{
+        path: '/home',
+        component: home
+      },{
+        path: '/classes',
+        component: classes
+      },{
+        path: '/shop',
+        component: shop
+      },{
+        path: '/goods',
+        component: goods
+      },{
+        path: '/my',
+        component: my
+      }
+  ]
+});
 
-const router = new Router({
-	linkActiveClass: 'active',
-	routes
-})
-
-module.exports = router;

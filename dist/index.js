@@ -62,27 +62,11 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 0);
+/******/ 	return __webpack_require__(__webpack_require__.s = 1);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-/*global Vue*/
-
-/* weex initialized here, please do not move this line */
-var router = __webpack_require__(1);
-var App = __webpack_require__(23);
-/* eslint-disable no-new */
-new Vue(Vue.util.extend({ el: '#root', router: router }, App));
-router.push('/');
-
-/***/ }),
-/* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -116,32 +100,45 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 /*global Vue*/
 Vue.use(_vueRouter2.default);
-var routes = [{
-  path: '/',
-  redirect: '/home'
-}, {
-  path: '/home',
-  component: _home2.default
-}, {
-  path: '/class',
-  component: _class2.default
-}, {
-  path: '/shop',
-  component: _shop2.default
-}, {
-  path: '/goods',
-  component: _goods2.default
-}, {
-  path: '/my',
-  component: _my2.default
-}];
-
-var router = new _vueRouter2.default({
+module.exports = new _vueRouter2.default({
+  mode: 'hash',
   linkActiveClass: 'active',
-  routes: routes
+  routes: [{
+    path: '/',
+    redirect: '/home'
+  }, {
+    path: '/home',
+    component: _home2.default
+  }, {
+    path: '/classes',
+    component: _class2.default
+  }, {
+    path: '/shop',
+    component: _shop2.default
+  }, {
+    path: '/goods',
+    component: _goods2.default
+  }, {
+    path: '/my',
+    component: _my2.default
+  }]
 });
 
-module.exports = router;
+/***/ }),
+/* 1 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/*global Vue*/
+
+/* weex initialized here, please do not move this line */
+var router = __webpack_require__(0);
+var App = __webpack_require__(23);
+/* eslint-disable no-new */
+new Vue(Vue.util.extend({ el: '#root', router: router }, App));
+router.push('/');
 
 /***/ }),
 /* 2 */
@@ -2828,13 +2825,22 @@ module.exports = {}
 //
 //
 //
+//
+//
 
 
 /***/ }),
 /* 6 */
 /***/ (function(module, exports) {
 
-module.exports={render:function(){},staticRenderFns:[]}
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _vm._m(0)
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: ["home"]
+  }, [_c('text', [_vm._v("home")])])
+}]}
+module.exports.render._withStripped = true
 
 /***/ }),
 /* 7 */
@@ -2901,21 +2907,19 @@ Object.defineProperty(exports, "__esModule", {
 //
 //
 
-exports.default = {
-  name: 'class'
-  // data () {
-  // }
-};
+exports.default = {};
 
 /***/ }),
 /* 10 */
 /***/ (function(module, exports) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _vm._m(0)
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
-    staticClass: ["class"]
-  }, [_vm._v("class")])
-},staticRenderFns: []}
+    staticClass: ["classes"]
+  }, [_c('text', [_vm._v("class")])])
+}]}
 module.exports.render._withStripped = true
 
 /***/ }),
@@ -2984,10 +2988,12 @@ module.exports = {}
 /***/ (function(module, exports) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _vm._m(0)
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: ["shop"]
-  }, [_vm._v("shop")])
-},staticRenderFns: []}
+  }, [_c('text', [_vm._v("shop")])])
+}]}
 module.exports.render._withStripped = true
 
 /***/ }),
@@ -3121,6 +3127,8 @@ module.exports = {}
 //
 //
 //
+//
+//
 
 
 /***/ }),
@@ -3128,10 +3136,12 @@ module.exports = {}
 /***/ (function(module, exports) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _vm._m(0)
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: ["my"]
-  }, [_vm._v("my")])
-},staticRenderFns: []}
+  }, [_c('text', [_vm._v("my")])])
+}]}
 module.exports.render._withStripped = true
 
 /***/ }),
@@ -3184,7 +3194,22 @@ module.exports = __vue_exports__
 
 module.exports = {
   "tab": {
-    "display": "flex"
+    "position": "absolute",
+    "left": 0,
+    "bottom": 0,
+    "height": "50",
+    "width": "750",
+    "display": "flex",
+    "flexDirection": "row",
+    "justifyContent": "space-around"
+  },
+  "scroll-wrapper": {
+    "position": "absolute",
+    "bottom": "50",
+    "top": "45",
+    "left": 0,
+    "right": 0,
+    "overflow": "hidden"
   }
 }
 
@@ -3198,25 +3223,83 @@ module.exports = {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+
+var _router = __webpack_require__(0);
+
+var _router2 = _interopRequireDefault(_router);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = {
-  name: 'App'
-  // data () {
-  // }
-};
+  methods: {
+    jump: function jump(msg) {
+      _router2.default.push(msg);
+    }
+  }
+}; //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /***/ }),
 /* 26 */
@@ -3225,39 +3308,61 @@ exports.default = {
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: ["wrapper"]
-  }, [_c('ul', {
+  }, [_c('div', {
+    staticClass: ["scroll-wrapper"]
+  }, [_c('div', [_c('router-view')], 1)]), _c('ul', {
     staticClass: ["tab"]
   }, [_c('li', {
     staticClass: ["tab-lis"]
-  }, [_c('router-link', {
-    attrs: {
-      "to": "/home"
+  }, [_c('div', {
+    staticClass: ["_img"]
+  }), _c('text', {
+    on: {
+      "click": function($event) {
+        _vm.jump('home')
+      }
     }
-  }, [_vm._v("首页")])], 1), _c('li', {
+  }, [_vm._v("首页")])]), _c('li', {
     staticClass: ["tab-lis"]
-  }, [_c('router-link', {
-    attrs: {
-      "to": "/class"
+  }, [_c('div', {
+    staticClass: ["_img"]
+  }), _c('text', {
+    on: {
+      "click": function($event) {
+        _vm.jump('classes')
+      }
     }
-  }, [_vm._v("分类")])], 1), _c('li', {
+  }, [_vm._v("分类")])]), _c('li', {
     staticClass: ["tab-lis"]
-  }, [_c('router-link', {
-    attrs: {
-      "to": "/shop"
+  }, [_c('div', {
+    staticClass: ["_img"]
+  }), _c('text', {
+    on: {
+      "click": function($event) {
+        _vm.jump('shop')
+      }
     }
-  }, [_vm._v("购物车")])], 1), _c('li', {
+  }, [_vm._v("购物车")])]), _c('li', {
     staticClass: ["tab-lis"]
-  }, [_c('router-link', {
-    attrs: {
-      "to": "/goods"
+  }, [_c('div', {
+    staticClass: ["_img"]
+  }), _c('text', {
+    on: {
+      "click": function($event) {
+        _vm.jump('goods')
+      }
     }
-  }, [_vm._v("取货")])], 1), _c('li', {
+  }, [_vm._v("取货")])]), _c('li', {
     staticClass: ["tab-lis"]
-  }, [_c('router-link', {
-    attrs: {
-      "to": "/my"
+  }, [_c('div', {
+    staticClass: ["_img"]
+  }), _c('text', {
+    on: {
+      "click": function($event) {
+        _vm.jump('my')
+      }
     }
-  }, [_vm._v("我的")])], 1)], 1), _c('router-view')], 1)
+  }, [_vm._v("我的")])])], 1)], 1)
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 
