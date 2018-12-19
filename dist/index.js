@@ -3193,22 +3193,17 @@ module.exports = __vue_exports__
 
 module.exports = {
   "tab": {
-    "position": "absolute",
-    "left": 0,
+    "position": "fixed",
     "bottom": 0,
-    "height": "50",
+    "height": "100",
     "width": "750",
     "display": "flex",
     "flexDirection": "row",
-    "justifyContent": "space-around"
-  },
-  "scroll-wrapper": {
-    "position": "absolute",
-    "bottom": "50",
-    "top": "45",
-    "left": 0,
-    "right": 0,
-    "overflow": "hidden"
+    "justifyContent": "space-between",
+    "alignItems": "center",
+    "borderTopWidth": "1",
+    "borderTopColor": "#eeeeee",
+    "borderTopStyle": "solid"
   }
 }
 
@@ -3220,13 +3215,8 @@ module.exports = {
 
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
-//
-//
-//
-//
-//
 //
 //
 //
@@ -3256,11 +3246,11 @@ Object.defineProperty(exports, "__esModule", {
 //
 
 exports.default = {
-  methods: {
-    jump: function jump(msg) {
-      this.$router.push(msg);
+    methods: {
+        jump: function jump(msg) {
+            this.$router.push(msg);
+        }
     }
-  }
 };
 
 /***/ }),
@@ -3270,60 +3260,103 @@ exports.default = {
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: ["wrapper"]
-  }, [_c('div', {
-    staticClass: ["scroll-wrapper"]
-  }, [_c('div', [_c('router-view')], 1)]), _c('ul', {
+  }, [_c('router-view'), _c('ul', {
     staticClass: ["tab"]
   }, [_c('li', {
-    staticClass: ["tab-lis"]
-  }, [_c('div', {
-    staticClass: ["_img"]
-  }), _c('text', {
+    staticClass: ["tab-list"],
     on: {
       "click": function($event) {
         _vm.jump('home')
       }
     }
-  }, [_vm._v("首页")])]), _c('li', {
-    staticClass: ["tab-lis"]
-  }, [_c('div', {
-    staticClass: ["_img"]
+  }, [_c('image', {
+    staticClass: ["_img", "home"],
+    staticStyle: {
+      width: "50px",
+      height: "48px",
+      marginBottom: "17px"
+    },
+    attrs: {
+      "src": "../src/common/images/home.png"
+    }
   }), _c('text', {
+    staticClass: ["content"]
+  }, [_vm._v("首页")])]), _c('li', {
+    staticClass: ["tab-list"],
     on: {
       "click": function($event) {
         _vm.jump('classes')
       }
     }
-  }, [_vm._v("分类")])]), _c('li', {
-    staticClass: ["tab-lis"]
-  }, [_c('div', {
-    staticClass: ["_img"]
+  }, [_c('image', {
+    staticClass: ["_img", "class"],
+    staticStyle: {
+      width: "51px",
+      height: "51px",
+      marginBottom: "14px"
+    },
+    attrs: {
+      "src": "../src/common/images/class.png"
+    }
   }), _c('text', {
+    staticClass: ["content"]
+  }, [_vm._v("分类")])]), _c('li', {
+    staticClass: ["tab-list"],
     on: {
       "click": function($event) {
         _vm.jump('shop')
       }
     }
-  }, [_vm._v("购物车")])]), _c('li', {
-    staticClass: ["tab-lis"]
-  }, [_c('div', {
-    staticClass: ["_img"]
+  }, [_c('image', {
+    staticClass: ["_img", "shop"],
+    staticStyle: {
+      width: "52px",
+      height: "48px",
+      marginBottom: "17px"
+    },
+    attrs: {
+      "src": "../src/common/images/shop.png"
+    }
   }), _c('text', {
+    staticClass: ["content"]
+  }, [_vm._v("购物车")])]), _c('li', {
+    staticClass: ["tab-list"],
     on: {
       "click": function($event) {
         _vm.jump('goods')
       }
     }
-  }, [_vm._v("取货")])]), _c('li', {
-    staticClass: ["tab-lis"]
-  }, [_c('div', {
-    staticClass: ["_img"]
+  }, [_c('image', {
+    staticClass: ["_img", "goods"],
+    staticStyle: {
+      width: "49px",
+      height: "49px",
+      marginBottom: "16px"
+    },
+    attrs: {
+      "src": "../src/common/images/goods.png"
+    }
   }), _c('text', {
+    staticClass: ["content"]
+  }, [_vm._v("取货")])]), _c('li', {
+    staticClass: ["tab-list"],
     on: {
       "click": function($event) {
         _vm.jump('my')
       }
     }
+  }, [_c('image', {
+    staticClass: ["_img", "my"],
+    staticStyle: {
+      width: "48px",
+      height: "50px",
+      marginBottom: "15px"
+    },
+    attrs: {
+      "src": "../src/common/images/my.png"
+    }
+  }), _c('text', {
+    staticClass: ["content"]
   }, [_vm._v("我的")])])], 1)], 1)
 },staticRenderFns: []}
 module.exports.render._withStripped = true
