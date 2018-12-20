@@ -2773,7 +2773,7 @@ var __vue_exports__, __vue_options__
 var __vue_styles__ = []
 
 /* styles */
-__vue_styles__.push(__webpack_require__(4)
+__vue_styles__.push(__webpack_require__(31)
 )
 
 /* script */
@@ -2810,16 +2810,65 @@ module.exports = __vue_exports__
 
 
 /***/ }),
-/* 4 */
-/***/ (function(module, exports) {
-
-module.exports = {}
-
-/***/ }),
+/* 4 */,
 /* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2827,17 +2876,217 @@ module.exports = {}
 //
 //
 
+exports.default = {
+	data: function data() {
+		return {
+			autoPlay: true, //轮播图是否自动播放
+			bannerList: [{
+				url: '../src/components/home/banner.png'
+			}, {
+				url: '../src/components/home/banner.png'
+			}, {
+				url: '../src/components/home/banner.png'
+			}, {
+				url: '../src/components/home/banner.png'
+			}],
+			navWrapperList: [{
+				id: 1,
+				imageUrl: '../src/components/home/nav_list1.png',
+				names: '今日特价2'
+			}, {
+				id: 2,
+				imageUrl: '../src/components/home/nav_list2.png',
+				names: '新品抢先'
+			}, {
+				id: 3,
+				imageUrl: '../src/components/home/nav_list3.png',
+				names: '网络最红'
+			}, {
+				id: 4,
+				imageUrl: '../src/components/home/nav_list4.png',
+				names: '海鲜水产'
+			}, {
+				id: 5,
+				imageUrl: '../src/components/home/nav_list5.png',
+				names: '幸运抽奖'
+			}, {
+				id: 1,
+				imageUrl: '../src/components/home/nav_list1.png',
+				names: '今日特价'
+			}, {
+				id: 2,
+				imageUrl: '../src/components/home/nav_list2.png',
+				names: '新品抢先'
+			}, {
+				id: 3,
+				imageUrl: '../src/components/home/nav_list3.png',
+				names: '网络最红'
+			}, {
+				id: 4,
+				imageUrl: '../src/components/home/nav_list4.png',
+				names: '海鲜水产'
+			}, {
+				id: 5,
+				imageUrl: '../src/components/home/nav_list5.png',
+				names: '幸运抽奖'
+			}, {
+				id: 1,
+				imageUrl: '../src/components/home/nav_list1.png',
+				names: '今日特价2'
+			}, {
+				id: 2,
+				imageUrl: '../src/components/home/nav_list2.png',
+				names: '新品抢先'
+			}, {
+				id: 3,
+				imageUrl: '../src/components/home/nav_list3.png',
+				names: '网络最红'
+			}, {
+				id: 4,
+				imageUrl: '../src/components/home/nav_list4.png',
+				names: '海鲜水产'
+			}, {
+				id: 5,
+				imageUrl: '../src/components/home/nav_list5.png',
+				names: '幸运抽奖'
+			}, {
+				id: 1,
+				imageUrl: '../src/components/home/nav_list1.png',
+				names: '今日特价'
+			}, {
+				id: 2,
+				imageUrl: '../src/components/home/nav_list2.png',
+				names: '新品抢先'
+			}, {
+				id: 3,
+				imageUrl: '../src/components/home/nav_list3.png',
+				names: '网络最红'
+			}, {
+				id: 4,
+				imageUrl: '../src/components/home/nav_list4.png',
+				names: '海鲜水产'
+			}, {
+				id: 5,
+				imageUrl: '../src/components/home/nav_list5.png',
+				names: '幸运抽奖'
+			}],
+			service: {
+				wechatImage: '../src/components/home/wechatBg.png',
+				wechat: '../src/components/home/wechat.png',
+				telImage: '../src/components/home/phone.png',
+				names: '绿白菜 • 滨湖春融苑店',
+				linkr: '扫码添加微信实惠更多>',
+				telName: '服务热线',
+				telNum: '400-1000-000'
+			}
+		};
+	}
+};
 
 /***/ }),
 /* 6 */
 /***/ (function(module, exports) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _vm._m(0)
-},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: ["home"]
-  }, [_c('text', [_vm._v("home")])])
+  }, [_c('list', [_vm._m(0), _c('cell', {
+    appendAsTree: true,
+    attrs: {
+      "append": "tree"
+    }
+  }, [_c('slider', {
+    staticClass: ["list-box", "banner-wrapper"],
+    attrs: {
+      "autoPlay": "autoPlay",
+      "interval": "4000"
+    }
+  }, [_vm._l((_vm.bannerList), function(banner) {
+    return _c('div', {
+      staticClass: ["banner-list", "list-box-child"]
+    }, [_c('image', {
+      staticClass: ["_banner"],
+      attrs: {
+        "src": banner.url
+      }
+    })])
+  }), _c('indicator', {
+    staticClass: ["indicator"]
+  })], 2)]), _c('cell', {
+    appendAsTree: true,
+    attrs: {
+      "append": "tree"
+    }
+  }, [_c('slider', {
+    staticClass: ["list-box", "fication-wrapper"]
+  }, [_c('ul', {
+    staticClass: ["fication-wrapper-list", "list-box-child"]
+  }, _vm._l((_vm.navWrapperList), function(list, index) {
+    return (index < 10) ? _c('li', {
+      key: index,
+      staticClass: ["fication-wrapper-list-child"]
+    }, [_c('image', {
+      staticClass: ["_fication"],
+      attrs: {
+        "src": list.imageUrl
+      }
+    }), _c('text', {
+      staticClass: ["fication-name"]
+    }, [_vm._v(_vm._s(list.names))])]) : _vm._e()
+  })), _c('indicator', {
+    staticClass: ["indicator", "fication-indicator"]
+  })], 1)]), _c('cell', {
+    appendAsTree: true,
+    attrs: {
+      "append": "tree"
+    }
+  }, [_c('div', {
+    staticClass: ["list-box", "wechat-wrapper"]
+  }, [_c('image', {
+    staticClass: ["_wechatImage"],
+    attrs: {
+      "src": _vm.service.wechatImage
+    }
+  }), _c('image', {
+    staticClass: ["wechat"],
+    attrs: {
+      "src": _vm.service.wechat
+    }
+  }), _c('div', {
+    staticClass: ["service-info"]
+  }, [_c('text', {
+    staticClass: ["face-name"]
+  }, [_vm._v(_vm._s(_vm.service.names))]), _c('a', [_c('text', {
+    staticClass: ["face-linkr"]
+  }, [_vm._v(_vm._s(_vm.service.linkr))])])]), _c('div', {
+    staticClass: ["tel-wrapper"]
+  }, [_c('image', {
+    staticClass: ["_tel"],
+    attrs: {
+      "src": _vm.service.telImage
+    }
+  }), _c('div', [_c('text', {
+    staticClass: ["telName"]
+  }, [_vm._v(_vm._s(_vm.service.telName))]), _c('text', {
+    staticClass: ["telNum"]
+  }, [_vm._v(_vm._s(_vm.service.telNum))])])])])]), _vm._m(1), _vm._m(2)])])
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('refresh', [_c('text', {
+    staticClass: ["refresh"]
+  }, [_vm._v("下拉刷新...")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('cell', {
+    appendAsTree: true,
+    attrs: {
+      "append": "tree"
+    }
+  }, [_c('div', {
+    staticClass: ["list-box"]
+  })])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('loading', [_c('text', {
+    staticClass: ["loading"]
+  }, [_vm._v("加载更多...")])])
 }]}
 module.exports.render._withStripped = true
 
@@ -3158,7 +3407,7 @@ __vue_styles__.push(__webpack_require__(24)
 __vue_exports__ = __webpack_require__(25)
 
 /* template */
-var __vue_template__ = __webpack_require__(26)
+var __vue_template__ = __webpack_require__(30)
 __vue_options__ = __vue_exports__ = __vue_exports__ || {}
 if (
   typeof __vue_exports__.default === "object" ||
@@ -3192,18 +3441,44 @@ module.exports = __vue_exports__
 /***/ (function(module, exports) {
 
 module.exports = {
+  "header": {
+    "height": "90"
+  },
   "tab": {
     "position": "fixed",
     "bottom": 0,
-    "height": "100",
+    "height": "110",
     "width": "750",
     "display": "flex",
     "flexDirection": "row",
-    "justifyContent": "space-between",
+    "justifyContent": "space-around",
     "alignItems": "center",
     "borderTopWidth": "1",
     "borderTopColor": "#eeeeee",
     "borderTopStyle": "solid"
+  },
+  "tab-list": {
+    "width": "150",
+    "height": "110",
+    "textAlign": "center"
+  },
+  "nav-img": {
+    "width": "50",
+    "height": "50",
+    "marginTop": "15",
+    "marginLeft": "50"
+  },
+  "nav-cn": {
+    "fontSize": "20",
+    "textAlign": "center",
+    "marginTop": "10",
+    "color": "#777777"
+  },
+  "nav-cn-active": {
+    "fontSize": "20",
+    "textAlign": "center",
+    "marginTop": "10",
+    "color": "#73cc00"
   }
 }
 
@@ -3215,8 +3490,55 @@ module.exports = {
 
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+  value: true
 });
+
+var _header = __webpack_require__(26);
+
+var _header2 = _interopRequireDefault(_header);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = {
+  data: {
+    navIndex: 0,
+    nav: [{
+      title: '首页',
+      srco: '../src/common/images/home.png',
+      srct: '../src/common/images/home_act.png',
+      path: 'home'
+    }, {
+      title: '分类',
+      srco: '../src/common/images/class.png',
+      srct: '../src/common/images/class_act.png',
+      path: 'classes'
+    }, {
+      title: '购物车',
+      srco: '../src/common/images/shop.png',
+      srct: '../src/common/images/shop_act.png',
+      path: 'shop'
+    }, {
+      title: '取货',
+      srco: '../src/common/images/goods.png',
+      srct: '../src/common/images/goods_act.png',
+      path: 'goods'
+    }, {
+      title: '我的',
+      srco: '../src/common/images/my.png',
+      srct: '../src/common/images/my_act.png',
+      path: 'my'
+    }]
+  },
+  methods: {
+    jump: function jump(index, msg) {
+      this.navIndex = index;
+      this.$router.push(msg);
+    }
+  },
+  components: {
+    'v-header': _header2.default
+  }
+}; //
 //
 //
 //
@@ -3228,7 +3550,117 @@ Object.defineProperty(exports, "__esModule", {
 //
 //
 //
-//
+
+/***/ }),
+/* 26 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __vue_exports__, __vue_options__
+var __vue_styles__ = []
+
+/* styles */
+__vue_styles__.push(__webpack_require__(27)
+)
+
+/* script */
+__vue_exports__ = __webpack_require__(28)
+
+/* template */
+var __vue_template__ = __webpack_require__(29)
+__vue_options__ = __vue_exports__ = __vue_exports__ || {}
+if (
+  typeof __vue_exports__.default === "object" ||
+  typeof __vue_exports__.default === "function"
+) {
+if (Object.keys(__vue_exports__).some(function (key) { return key !== "default" && key !== "__esModule" })) {console.error("named exports are not supported in *.vue files.")}
+__vue_options__ = __vue_exports__ = __vue_exports__.default
+}
+if (typeof __vue_options__ === "function") {
+  __vue_options__ = __vue_options__.options
+}
+__vue_options__.__file = "F:\\WebApp\\cabbage\\src\\components\\header\\header.vue"
+__vue_options__.render = __vue_template__.render
+__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
+__vue_options__._scopeId = "data-v-0f66b2fc"
+__vue_options__.style = __vue_options__.style || {}
+__vue_styles__.forEach(function (module) {
+  for (var name in module) {
+    __vue_options__.style[name] = module[name]
+  }
+})
+if (typeof __register_static_styles__ === "function") {
+  __register_static_styles__(__vue_options__._scopeId, __vue_styles__)
+}
+
+module.exports = __vue_exports__
+
+
+/***/ }),
+/* 27 */
+/***/ (function(module, exports) {
+
+module.exports = {
+  "header": {
+    "height": "90",
+    "paddingLeft": "20",
+    "paddingRight": "20",
+    "backgroundColor": "#73cc46",
+    "display": "flex",
+    "flexDirection": "row"
+  },
+  "address-wrapper": {
+    "marginTop": "27.5",
+    "flex": 1,
+    "flexDirection": "row"
+  },
+  "address-name": {
+    "fontSize": "26",
+    "lineHeight": "35",
+    "color": "#ffffff"
+  },
+  "search-wrapper": {
+    "marginTop": "23.5",
+    "width": "117",
+    "flexDirection": "row"
+  },
+  "_logo": {
+    "marginTop": "13.5",
+    "width": "70",
+    "height": "63",
+    "marginRight": "30"
+  },
+  "_address": {
+    "marginRight": "12",
+    "width": "25",
+    "height": "35"
+  },
+  "_arrow": {
+    "marginTop": "13",
+    "marginLeft": "11",
+    "width": "14",
+    "height": "9"
+  },
+  "_magnifier": {
+    "width": "43",
+    "height": "43",
+    "marginRight": "32"
+  },
+  "_scan": {
+    "width": "42",
+    "height": "42"
+  }
+}
+
+/***/ }),
+/* 28 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 //
 //
 //
@@ -3246,120 +3678,238 @@ Object.defineProperty(exports, "__esModule", {
 //
 
 exports.default = {
-    methods: {
-        jump: function jump(msg) {
-            this.$router.push(msg);
-        }
-    }
+  data: function data() {
+    return {
+      logo: "../src/components/header/logo.png", //logo图
+      address: "../src/components/header/address.png", // 定位图标
+      arrow: "../src/components/header/arrow.png",
+      magnifier: "../src/components/header/search.png", // 放大镜图标
+      scan: "../src/components/header/scan.png", // 扫一扫图标
+      position: '合肥市滨湖春融苑店'
+    };
+  }
 };
 
 /***/ }),
-/* 26 */
+/* 29 */
+/***/ (function(module, exports) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('header', {
+    staticClass: ["header"],
+    appendAsTree: true,
+    attrs: {
+      "append": "tree"
+    }
+  }, [_c('image', {
+    staticClass: ["_logo"],
+    attrs: {
+      "src": _vm.logo
+    }
+  }), _c('div', {
+    staticClass: ["address-wrapper"]
+  }, [_c('image', {
+    staticClass: ["_address"],
+    attrs: {
+      "src": _vm.address
+    }
+  }), _c('text', {
+    staticClass: ["address-name"]
+  }, [_vm._v(_vm._s(this.position))]), _c('image', {
+    staticClass: ["_arrow"],
+    attrs: {
+      "src": _vm.arrow
+    }
+  })]), _c('div', {
+    staticClass: ["search-wrapper"]
+  }, [_c('div', {
+    staticClass: ["magnifier"]
+  }, [_c('image', {
+    staticClass: ["_magnifier"],
+    attrs: {
+      "src": _vm.magnifier
+    }
+  })]), _c('div', {
+    staticClass: ["scan"]
+  }, [_c('image', {
+    staticClass: ["_scan"],
+    attrs: {
+      "src": _vm.scan
+    }
+  })])])])
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+
+/***/ }),
+/* 30 */
 /***/ (function(module, exports) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: ["wrapper"]
-  }, [_c('router-view'), _c('ul', {
+  }, [_c('v-header'), _c('router-view'), _c('ul', {
     staticClass: ["tab"]
-  }, [_c('li', {
-    staticClass: ["tab-list"],
-    on: {
-      "click": function($event) {
-        _vm.jump('home')
+  }, _vm._l((_vm.nav), function(item, index) {
+    return _c('li', {
+      key: index,
+      staticClass: ["tab-list"],
+      on: {
+        "click": function($event) {
+          _vm.jump(index, item.path)
+        }
       }
-    }
-  }, [_c('image', {
-    staticClass: ["_img", "home"],
-    staticStyle: {
-      width: "50px",
-      height: "48px",
-      marginBottom: "17px"
-    },
-    attrs: {
-      "src": "../src/common/images/home.png"
-    }
-  }), _c('text', {
-    staticClass: ["content"]
-  }, [_vm._v("首页")])]), _c('li', {
-    staticClass: ["tab-list"],
-    on: {
-      "click": function($event) {
-        _vm.jump('classes')
+    }, [_c('image', {
+      staticClass: ["nav-img"],
+      attrs: {
+        "src": _vm.navIndex === index ? item.srct : item.srco
       }
-    }
-  }, [_c('image', {
-    staticClass: ["_img", "class"],
-    staticStyle: {
-      width: "51px",
-      height: "51px",
-      marginBottom: "14px"
-    },
-    attrs: {
-      "src": "../src/common/images/class.png"
-    }
-  }), _c('text', {
-    staticClass: ["content"]
-  }, [_vm._v("分类")])]), _c('li', {
-    staticClass: ["tab-list"],
-    on: {
-      "click": function($event) {
-        _vm.jump('shop')
-      }
-    }
-  }, [_c('image', {
-    staticClass: ["_img", "shop"],
-    staticStyle: {
-      width: "52px",
-      height: "48px",
-      marginBottom: "17px"
-    },
-    attrs: {
-      "src": "../src/common/images/shop.png"
-    }
-  }), _c('text', {
-    staticClass: ["content"]
-  }, [_vm._v("购物车")])]), _c('li', {
-    staticClass: ["tab-list"],
-    on: {
-      "click": function($event) {
-        _vm.jump('goods')
-      }
-    }
-  }, [_c('image', {
-    staticClass: ["_img", "goods"],
-    staticStyle: {
-      width: "49px",
-      height: "49px",
-      marginBottom: "16px"
-    },
-    attrs: {
-      "src": "../src/common/images/goods.png"
-    }
-  }), _c('text', {
-    staticClass: ["content"]
-  }, [_vm._v("取货")])]), _c('li', {
-    staticClass: ["tab-list"],
-    on: {
-      "click": function($event) {
-        _vm.jump('my')
-      }
-    }
-  }, [_c('image', {
-    staticClass: ["_img", "my"],
-    staticStyle: {
-      width: "48px",
-      height: "50px",
-      marginBottom: "15px"
-    },
-    attrs: {
-      "src": "../src/common/images/my.png"
-    }
-  }), _c('text', {
-    staticClass: ["content"]
-  }, [_vm._v("我的")])])], 1)], 1)
+    }), _c('text', {
+      class: [_vm.navIndex === index ? 'nav-cn-active' : 'nav-cn']
+    }, [_vm._v(_vm._s(item.title))])])
+  }))], 1)
 },staticRenderFns: []}
 module.exports.render._withStripped = true
+
+/***/ }),
+/* 31 */
+/***/ (function(module, exports) {
+
+module.exports = {
+  "home": {
+    "paddingTop": "10",
+    "paddingBottom": "10",
+    "paddingLeft": "20",
+    "paddingRight": "20"
+  },
+  "refresh": {
+    "textAlign": "center"
+  },
+  "loading": {
+    "textAlign": "center"
+  },
+  "list-box": {
+    "width": "710",
+    "marginTop": "10",
+    "marginBottom": "10"
+  },
+  "list-box-child": {
+    "position": "relative",
+    "width": "710"
+  },
+  "banner-wrapper": {
+    "height": "300",
+    "backgroundColor": "#eeeeee",
+    "borderRadius": "15",
+    "boxShadow": "0px 2px 3px 2px #eee"
+  },
+  "banner-list": {
+    "height": "300"
+  },
+  "_banner": {
+    "width": "710",
+    "height": "300"
+  },
+  "indicator": {
+    "position": "absolute",
+    "width": "710",
+    "height": "300",
+    "top": "130",
+    "left": "0",
+    "itemColor": "rgb(255,255,255)",
+    "itemSelectedColor": "rgb(115,204,70)",
+    "itemSize": "20"
+  },
+  "fication-indicator": {
+    "top": "165",
+    "itemColor": "rgb(198,194,194)",
+    "itemSize": "15"
+  },
+  "fication-wrapper": {
+    "height": "325"
+  },
+  "fication-wrapper-list": {
+    "display": "flex",
+    "flexDirection": "row",
+    "justifyContent": "space-between",
+    "alignItems": "center",
+    "flexWrap": "wrap"
+  },
+  "fication-wrapper-list-child": {
+    "width": "142"
+  },
+  "fication-name": {
+    "marginTop": "10",
+    "marginBottom": "20",
+    "fontSize": "22",
+    "color": "#333333",
+    "textAlign": "center"
+  },
+  "_fication": {
+    "borderRadius": 50,
+    "marginLeft": "21",
+    "width": "100",
+    "height": "100",
+    "boxShadow": "5px 2px 5px 2px #eee"
+  },
+  "wechat-wrapper": {
+    "position": "relative",
+    "height": "194",
+    "paddingTop": "7",
+    "paddingBottom": "7",
+    "paddingLeft": "10",
+    "paddingRight": "15",
+    "borderRadius": "10",
+    "boxShadow": "0 0 5px 2px #eee"
+  },
+  "_wechatImage": {
+    "width": "685",
+    "height": "180"
+  },
+  "wechat": {
+    "position": "absolute",
+    "top": "70",
+    "left": "88",
+    "width": "50",
+    "height": "50"
+  },
+  "service-info": {
+    "position": "absolute",
+    "top": "55",
+    "left": "210"
+  },
+  "face-name": {
+    "fontSize": "22",
+    "color": "#333333",
+    "fontWeight": "700"
+  },
+  "face-linkr": {
+    "fontSize": "18",
+    "color": "#777777",
+    "marginTop": "10",
+    "textDecoration": "underline"
+  },
+  "tel-wrapper": {
+    "position": "absolute",
+    "top": "60",
+    "right": "32",
+    "flexDirection": "row"
+  },
+  "_tel": {
+    "width": "43",
+    "height": "43",
+    "marginRight": "10"
+  },
+  "telName": {
+    "fontSize": "16",
+    "color": "#777777"
+  },
+  "telNum": {
+    "marginTop": "6",
+    "fontSize": "20",
+    "color": "#333333",
+    "fontWeight": "900"
+  }
+}
 
 /***/ })
 /******/ ]);
