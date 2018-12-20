@@ -2792,7 +2792,7 @@ __vue_options__ = __vue_exports__ = __vue_exports__.default
 if (typeof __vue_options__ === "function") {
   __vue_options__ = __vue_options__.options
 }
-__vue_options__.__file = "F:\\WebApp\\cabbage\\src\\components\\home\\home.vue"
+__vue_options__.__file = "F:\\张元涛\\LBC\\cabbage\\src\\components\\home\\home.vue"
 __vue_options__.render = __vue_template__.render
 __vue_options__.staticRenderFns = __vue_template__.staticRenderFns
 __vue_options__._scopeId = "data-v-7b63ac08"
@@ -2868,7 +2868,7 @@ __vue_options__ = __vue_exports__ = __vue_exports__.default
 if (typeof __vue_options__ === "function") {
   __vue_options__ = __vue_options__.options
 }
-__vue_options__.__file = "F:\\WebApp\\cabbage\\src\\components\\class\\class.vue"
+__vue_options__.__file = "F:\\张元涛\\LBC\\cabbage\\src\\components\\class\\class.vue"
 __vue_options__.render = __vue_template__.render
 __vue_options__.staticRenderFns = __vue_template__.staticRenderFns
 __vue_options__._scopeId = "data-v-71fb8054"
@@ -2889,7 +2889,49 @@ module.exports = __vue_exports__
 /* 8 */
 /***/ (function(module, exports) {
 
-module.exports = {}
+module.exports = {
+  "left-nav": {
+    "width": "150",
+    "height": "1"
+  },
+  "nav-list": {
+    "width": "150",
+    "position": "fixed",
+    "top": "90",
+    "left": 0,
+    "bottom": "110",
+    "backgroundColor": "#f6f6f6"
+  },
+  "panel": {
+    "height": "88",
+    "paddingTop": "16",
+    "paddingBottom": "16"
+  },
+  "panel-crt": {
+    "height": "88",
+    "paddingTop": "16",
+    "paddingBottom": "16",
+    "backgroundColor": "#ffffff"
+  },
+  "text": {
+    "fontSize": "24",
+    "lineHeight": "56",
+    "textAlign": "center",
+    "color": "#333333",
+    "borderLeftWidth": "8",
+    "borderLeftStyle": "solid",
+    "borderLeftColor": "rgba(115,204,0,0)"
+  },
+  "text-crt": {
+    "fontSize": "24",
+    "lineHeight": "56",
+    "textAlign": "center",
+    "color": "#41b883",
+    "borderLeftWidth": "8",
+    "borderLeftStyle": "solid",
+    "borderLeftColor": "#73cc00"
+  }
+}
 
 /***/ }),
 /* 9 */
@@ -2899,26 +2941,146 @@ module.exports = {}
 
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+	value: true
 });
+
+var _searchHeader = __webpack_require__(27);
+
+var _searchHeader2 = _interopRequireDefault(_searchHeader);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = {
+	data: function data() {
+		return {
+			list: [{
+				title: '速食',
+				id: 1,
+				urls: "../src/json/sushi.json"
+			}, {
+				title: '冲调类',
+				id: 2,
+				urls: "../src/json/chongtiao.json"
+			}, {
+				title: '熟食',
+				id: 3,
+				urls: "../src/json/shushi.json"
+			}],
+			pList: {},
+			navIndex: 0
+		};
+	},
+
+	//2.然后,在components中写入子组件
+	components: { sHeader: _searchHeader2.default },
+	methods: {
+		select: function select(index) {
+			var stream = weex.requireModule('stream');
+			var urls = this.list[index].urls;
+			var self = this;
+			this.navIndex = index;
+			//为了在内部函数能使用外部函数的this对象，要给它赋值了一个名叫self的变量。
+			stream.fetch({
+				url: urls,
+				method: 'get',
+				dataType: 'json'
+			}, function (res) {
+				self.pList = JSON.parse(res.data);
+				console.log(self.pList);
+			}, function () {});
+		}
+	}
+}; //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
 //
 
-exports.default = {};
+//1.先使用import导入你要在该组件中使用的子组件
 
 /***/ }),
 /* 10 */
 /***/ (function(module, exports) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _vm._m(0)
-},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
-    staticClass: ["classes"]
-  }, [_c('text', [_vm._v("class")])])
-}]}
+    staticClass: ["class"]
+  }, [_c('sHeader'), _c('div', {
+    staticClass: ["class-box"]
+  }, [_c('div', {
+    staticClass: ["left-box"]
+  }, [_c('list', {
+    staticClass: ["nav-list"],
+    attrs: {
+      "showScrollbar": "false"
+    }
+  }, _vm._l((_vm.list), function(num, index) {
+    return _c('cell', {
+      key: index,
+      staticClass: ["cell"],
+      appendAsTree: true,
+      attrs: {
+        "append": "tree"
+      },
+      on: {
+        "click": function($event) {
+          _vm.select(index)
+        }
+      }
+    }, [_c('div', {
+      class: [_vm.navIndex === index ? 'panel-crt' : 'panel']
+    }, [_c('text', {
+      class: [_vm.navIndex === index ? 'text-crt' : 'text']
+    }, [_vm._v(_vm._s(num.title))])])])
+  }))]), _c('div', {
+    staticClass: ["right-box"]
+  }, [_c('div', {
+    staticClass: ["sec-nav"]
+  }, [_c('list', {
+    staticClass: ["sec-nav-list"],
+    attrs: {
+      "showScrollbar": "false",
+      "scrollDirection": "horizontal"
+    }
+  }, _vm._l((_vm.pList.sNav), function(nums, indexs) {
+    return _c('cell', {
+      key: indexs,
+      staticClass: ["cell"],
+      appendAsTree: true,
+      attrs: {
+        "append": "tree"
+      },
+      on: {
+        "click": function($event) {
+          _vm.selects(indexs)
+        }
+      }
+    }, [_c('div', [_c('text', {}, [_vm._v(_vm._s(nums.title))])])])
+  }))])])])], 1)
+},staticRenderFns: []}
 module.exports.render._withStripped = true
 
 /***/ }),
@@ -2948,7 +3110,7 @@ __vue_options__ = __vue_exports__ = __vue_exports__.default
 if (typeof __vue_options__ === "function") {
   __vue_options__ = __vue_options__.options
 }
-__vue_options__.__file = "F:\\WebApp\\cabbage\\src\\components\\shop\\shop.vue"
+__vue_options__.__file = "F:\\张元涛\\LBC\\cabbage\\src\\components\\shop\\shop.vue"
 __vue_options__.render = __vue_template__.render
 __vue_options__.staticRenderFns = __vue_template__.staticRenderFns
 __vue_options__._scopeId = "data-v-7d6b305c"
@@ -3022,7 +3184,7 @@ __vue_options__ = __vue_exports__ = __vue_exports__.default
 if (typeof __vue_options__ === "function") {
   __vue_options__ = __vue_options__.options
 }
-__vue_options__.__file = "F:\\WebApp\\cabbage\\src\\components\\goods\\goods.vue"
+__vue_options__.__file = "F:\\张元涛\\LBC\\cabbage\\src\\components\\goods\\goods.vue"
 __vue_options__.render = __vue_template__.render
 __vue_options__.staticRenderFns = __vue_template__.staticRenderFns
 __vue_options__._scopeId = "data-v-6a77ff90"
@@ -3094,7 +3256,7 @@ __vue_options__ = __vue_exports__ = __vue_exports__.default
 if (typeof __vue_options__ === "function") {
   __vue_options__ = __vue_options__.options
 }
-__vue_options__.__file = "F:\\WebApp\\cabbage\\src\\components\\my\\my.vue"
+__vue_options__.__file = "F:\\张元涛\\LBC\\cabbage\\src\\components\\my\\my.vue"
 __vue_options__.render = __vue_template__.render
 __vue_options__.staticRenderFns = __vue_template__.staticRenderFns
 __vue_options__._scopeId = "data-v-c5801bc8"
@@ -3170,7 +3332,7 @@ __vue_options__ = __vue_exports__ = __vue_exports__.default
 if (typeof __vue_options__ === "function") {
   __vue_options__ = __vue_options__.options
 }
-__vue_options__.__file = "F:\\WebApp\\cabbage\\src\\index.vue"
+__vue_options__.__file = "F:\\张元涛\\LBC\\cabbage\\src\\index.vue"
 __vue_options__.render = __vue_template__.render
 __vue_options__.staticRenderFns = __vue_template__.staticRenderFns
 __vue_options__._scopeId = "data-v-1a4d8e3c"
@@ -3195,15 +3357,38 @@ module.exports = {
   "tab": {
     "position": "fixed",
     "bottom": 0,
-    "height": "100",
+    "height": "110",
     "width": "750",
     "display": "flex",
     "flexDirection": "row",
-    "justifyContent": "space-between",
+    "justifyContent": "space-around",
     "alignItems": "center",
     "borderTopWidth": "1",
     "borderTopColor": "#eeeeee",
     "borderTopStyle": "solid"
+  },
+  "tab-list": {
+    "width": "150",
+    "height": "110",
+    "textAlign": "center"
+  },
+  "nav-img": {
+    "width": "50",
+    "height": "50",
+    "marginTop": "15",
+    "marginLeft": "50"
+  },
+  "nav-cn": {
+    "fontSize": "20",
+    "textAlign": "center",
+    "marginTop": "10",
+    "color": "#777777"
+  },
+  "nav-cn-active": {
+    "fontSize": "20",
+    "textAlign": "center",
+    "marginTop": "10",
+    "color": "#73cc00"
   }
 }
 
@@ -3215,24 +3400,8 @@ module.exports = {
 
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+	value: true
 });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -3246,11 +3415,41 @@ Object.defineProperty(exports, "__esModule", {
 //
 
 exports.default = {
-    methods: {
-        jump: function jump(msg) {
-            this.$router.push(msg);
-        }
-    }
+	data: {
+		nav: [{
+			title: '首页',
+			srco: '../src/common/images/home.png',
+			srct: '../src/common/images/home_act.png',
+			path: 'home'
+		}, {
+			title: '分类',
+			srco: '../src/common/images/class.png',
+			srct: '../src/common/images/class_act.png',
+			path: 'classes'
+		}, {
+			title: '购物车',
+			srco: '../src/common/images/shop.png',
+			srct: '../src/common/images/shop_act.png',
+			path: 'shop'
+		}, {
+			title: '取货',
+			srco: '../src/common/images/goods.png',
+			srct: '../src/common/images/goods_act.png',
+			path: 'goods'
+		}, {
+			title: '我的',
+			srco: '../src/common/images/my.png',
+			srct: '../src/common/images/my_act.png',
+			path: 'my'
+		}],
+		navIndex: 0
+	},
+	methods: {
+		jump: function jump(index, msg) {
+			this.navIndex = index;
+			this.$router.push(msg);
+		}
+	}
 };
 
 /***/ }),
@@ -3262,103 +3461,161 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: ["wrapper"]
   }, [_c('router-view'), _c('ul', {
     staticClass: ["tab"]
-  }, [_c('li', {
-    staticClass: ["tab-list"],
-    on: {
-      "click": function($event) {
-        _vm.jump('home')
+  }, _vm._l((_vm.nav), function(item, index) {
+    return _c('li', {
+      key: index,
+      staticClass: ["tab-list"],
+      on: {
+        "click": function($event) {
+          _vm.jump(index, item.path)
+        }
       }
-    }
-  }, [_c('image', {
-    staticClass: ["_img", "home"],
-    staticStyle: {
-      width: "50px",
-      height: "48px",
-      marginBottom: "17px"
-    },
-    attrs: {
-      "src": "../src/common/images/home.png"
-    }
-  }), _c('text', {
-    staticClass: ["content"]
-  }, [_vm._v("首页")])]), _c('li', {
-    staticClass: ["tab-list"],
-    on: {
-      "click": function($event) {
-        _vm.jump('classes')
+    }, [_c('image', {
+      staticClass: ["nav-img"],
+      attrs: {
+        "src": _vm.navIndex === index ? item.srct : item.srco
       }
-    }
-  }, [_c('image', {
-    staticClass: ["_img", "class"],
-    staticStyle: {
-      width: "51px",
-      height: "51px",
-      marginBottom: "14px"
-    },
-    attrs: {
-      "src": "../src/common/images/class.png"
-    }
-  }), _c('text', {
-    staticClass: ["content"]
-  }, [_vm._v("分类")])]), _c('li', {
-    staticClass: ["tab-list"],
-    on: {
-      "click": function($event) {
-        _vm.jump('shop')
-      }
-    }
-  }, [_c('image', {
-    staticClass: ["_img", "shop"],
-    staticStyle: {
-      width: "52px",
-      height: "48px",
-      marginBottom: "17px"
-    },
-    attrs: {
-      "src": "../src/common/images/shop.png"
-    }
-  }), _c('text', {
-    staticClass: ["content"]
-  }, [_vm._v("购物车")])]), _c('li', {
-    staticClass: ["tab-list"],
-    on: {
-      "click": function($event) {
-        _vm.jump('goods')
-      }
-    }
-  }, [_c('image', {
-    staticClass: ["_img", "goods"],
-    staticStyle: {
-      width: "49px",
-      height: "49px",
-      marginBottom: "16px"
-    },
-    attrs: {
-      "src": "../src/common/images/goods.png"
-    }
-  }), _c('text', {
-    staticClass: ["content"]
-  }, [_vm._v("取货")])]), _c('li', {
-    staticClass: ["tab-list"],
-    on: {
-      "click": function($event) {
-        _vm.jump('my')
-      }
-    }
-  }, [_c('image', {
-    staticClass: ["_img", "my"],
-    staticStyle: {
-      width: "48px",
-      height: "50px",
-      marginBottom: "15px"
-    },
-    attrs: {
-      "src": "../src/common/images/my.png"
-    }
-  }), _c('text', {
-    staticClass: ["content"]
-  }, [_vm._v("我的")])])], 1)], 1)
+    }), _c('text', {
+      class: [_vm.navIndex === index ? 'nav-cn-active' : 'nav-cn']
+    }, [_vm._v(_vm._s(item.title))])])
+  }))], 1)
 },staticRenderFns: []}
+module.exports.render._withStripped = true
+
+/***/ }),
+/* 27 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __vue_exports__, __vue_options__
+var __vue_styles__ = []
+
+/* styles */
+__vue_styles__.push(__webpack_require__(28)
+)
+
+/* script */
+__vue_exports__ = __webpack_require__(29)
+
+/* template */
+var __vue_template__ = __webpack_require__(30)
+__vue_options__ = __vue_exports__ = __vue_exports__ || {}
+if (
+  typeof __vue_exports__.default === "object" ||
+  typeof __vue_exports__.default === "function"
+) {
+if (Object.keys(__vue_exports__).some(function (key) { return key !== "default" && key !== "__esModule" })) {console.error("named exports are not supported in *.vue files.")}
+__vue_options__ = __vue_exports__ = __vue_exports__.default
+}
+if (typeof __vue_options__ === "function") {
+  __vue_options__ = __vue_options__.options
+}
+__vue_options__.__file = "F:\\张元涛\\LBC\\cabbage\\src\\components\\header\\searchHeader.vue"
+__vue_options__.render = __vue_template__.render
+__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
+__vue_options__._scopeId = "data-v-7409b4f8"
+__vue_options__.style = __vue_options__.style || {}
+__vue_styles__.forEach(function (module) {
+  for (var name in module) {
+    __vue_options__.style[name] = module[name]
+  }
+})
+if (typeof __register_static_styles__ === "function") {
+  __register_static_styles__(__vue_options__._scopeId, __vue_styles__)
+}
+
+module.exports = __vue_exports__
+
+
+/***/ }),
+/* 28 */
+/***/ (function(module, exports) {
+
+module.exports = {
+  "classes-head": {
+    "paddingTop": "17",
+    "paddingBottom": "17",
+    "paddingLeft": "20",
+    "paddingRight": "20",
+    "flexDirection": "row",
+    "backgroundColor": "#73cc00"
+  },
+  "search-box": {
+    "height": "56",
+    "borderRadius": "56",
+    "backgroundColor": "rgba(255,255,255,0.5)",
+    "paddingLeft": "20",
+    "paddingRight": "20",
+    "flex": 1,
+    "flexDirection": "row"
+  },
+  "search-icon": {
+    "width": "32",
+    "height": "32",
+    "marginTop": "12",
+    "marginRight": "15"
+  },
+  "search-text": {
+    "fontSize": "24",
+    "lineHeight": "56",
+    "color": "#ffffff"
+  },
+  "scan-btn": {
+    "width": "42",
+    "marginLeft": "15"
+  },
+  "scan-icon": {
+    "width": "42",
+    "height": "42",
+    "marginTop": "7"
+  }
+}
+
+/***/ }),
+/* 29 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/***/ }),
+/* 30 */
+/***/ (function(module, exports) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _vm._m(0)
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: ["classes-head"]
+  }, [_c('div', {
+    staticClass: ["search-box"]
+  }, [_c('image', {
+    staticClass: ["search-icon"],
+    attrs: {
+      "src": "../src/components/header/search.png"
+    }
+  }), _c('text', {
+    staticClass: ["search-text"]
+  }, [_vm._v("搜索商品名称")])]), _c('div', {
+    staticClass: ["scan-btn"]
+  }, [_c('image', {
+    staticClass: ["scan-icon"],
+    attrs: {
+      "src": "../src/components/header/scan.png"
+    }
+  })])])
+}]}
 module.exports.render._withStripped = true
 
 /***/ })
