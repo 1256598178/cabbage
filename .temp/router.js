@@ -9,7 +9,6 @@ import my from '../src/components/my/my.vue'
 
 Vue.use(Router)
 module.exports = new Router({
-  mode: 'abstract',
   linkActiveClass: 'active',
   routes: [
     {
