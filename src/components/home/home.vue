@@ -16,7 +16,7 @@
 			<cell>
 				<slider class="list-box fication-wrapper">
 					<!-- 待开发 -->
-					<ul class="fication-wrapper-list list-box-child" v-for="">
+					<ul class="fication-wrapper-list list-box-child" v-for="item in panels">
 						<li class="fication-wrapper-list-child" v-for="(list,index) in navWrapperList" v-if="index<10" :key="index">
 							<image class="_fication" :src="list.imageUrl"></image>
 						    <text class="fication-name">{{list.names}}</text>
@@ -94,8 +94,9 @@ import header from '../header/header.vue'
 export default {
 	data() {
 		return {
-			refreshing: false,
-			loadinging: false,
+			refreshing: false,//下拉刷新
+			loadinging: false,//上拉加载
+			panels: 1,
 			autoPlay: true, //轮播图是否自动播放
 			bannerList: [
 				{
@@ -112,11 +113,11 @@ export default {
 				{
 					id: 1,
 					imageUrl: '../src/components/home/nav_list1.png',
-					names: '今日特价2'
+					names: '今日特价1'
 				},{
 					id: 2,
 					imageUrl: '../src/components/home/nav_list2.png',
-					names: '新品抢先'
+					names: '新品抢先1'
 				},
 				{
 					id: 3,
@@ -133,37 +134,37 @@ export default {
 					imageUrl: '../src/components/home/nav_list5.png',
 					names: '幸运抽奖'
 				},{
-					id: 1,
-					imageUrl: '../src/components/home/nav_list1.png',
-					names: '今日特价'
-				},{
-					id: 2,
-					imageUrl: '../src/components/home/nav_list2.png',
-					names: '新品抢先'
-				},
-				{
-					id: 3,
-					imageUrl: '../src/components/home/nav_list3.png',
-					names: '网络最红'
-				},
-				{
-					id: 4,
-					imageUrl: '../src/components/home/nav_list4.png',
-					names: '海鲜水产'
-				},
-				{
-					id: 5,
-					imageUrl: '../src/components/home/nav_list5.png',
-					names: '幸运抽奖'
-				},
-				{
 					id: 1,
 					imageUrl: '../src/components/home/nav_list1.png',
 					names: '今日特价2'
 				},{
 					id: 2,
 					imageUrl: '../src/components/home/nav_list2.png',
-					names: '新品抢先'
+					names: '新品抢先2'
+				},
+				{
+					id: 3,
+					imageUrl: '../src/components/home/nav_list3.png',
+					names: '网络最红'
+				},
+				{
+					id: 4,
+					imageUrl: '../src/components/home/nav_list4.png',
+					names: '海鲜水产'
+				},
+				{
+					id: 5,
+					imageUrl: '../src/components/home/nav_list5.png',
+					names: '幸运抽奖'
+				},
+				{
+					id: 1,
+					imageUrl: '../src/components/home/nav_list1.png',
+					names: '今日特价3'
+				},{
+					id: 2,
+					imageUrl: '../src/components/home/nav_list2.png',
+					names: '新品抢先3'
 				},
 				{
 					id: 3,
@@ -182,11 +183,105 @@ export default {
 				},{
 					id: 1,
 					imageUrl: '../src/components/home/nav_list1.png',
-					names: '今日特价'
+					names: '今日特价4'
 				},{
 					id: 2,
 					imageUrl: '../src/components/home/nav_list2.png',
-					names: '新品抢先'
+					names: '新品抢先4'
+				},
+				{
+					id: 3,
+					imageUrl: '../src/components/home/nav_list3.png',
+					names: '网络最红'
+				},
+				{
+					id: 4,
+					imageUrl: '../src/components/home/nav_list4.png',
+					names: '海鲜水产'
+				},
+				{
+					id: 5,
+					imageUrl: '../src/components/home/nav_list5.png',
+					names: '幸运抽奖'
+				},
+				{
+					id: 1,
+					imageUrl: '../src/components/home/nav_list1.png',
+					names: '今日特价5'
+				},{
+					id: 2,
+					imageUrl: '../src/components/home/nav_list2.png',
+					names: '新品抢先5'
+				},
+				{
+					id: 3,
+					imageUrl: '../src/components/home/nav_list3.png',
+					names: '网络最红'
+				},
+				{
+					id: 4,
+					imageUrl: '../src/components/home/nav_list4.png',
+					names: '海鲜水产'
+				},
+				{
+					id: 5,
+					imageUrl: '../src/components/home/nav_list5.png',
+					names: '幸运抽奖'
+				},{
+					id: 1,
+					imageUrl: '../src/components/home/nav_list1.png',
+					names: '今日特价6'
+				},{
+					id: 2,
+					imageUrl: '../src/components/home/nav_list2.png',
+					names: '新品抢先6'
+				},
+				{
+					id: 3,
+					imageUrl: '../src/components/home/nav_list3.png',
+					names: '网络最红'
+				},
+				{
+					id: 4,
+					imageUrl: '../src/components/home/nav_list4.png',
+					names: '海鲜水产'
+				},
+				{
+					id: 5,
+					imageUrl: '../src/components/home/nav_list5.png',
+					names: '幸运抽奖'
+				},
+				{
+					id: 1,
+					imageUrl: '../src/components/home/nav_list1.png',
+					names: '今日特价7'
+				},{
+					id: 2,
+					imageUrl: '../src/components/home/nav_list2.png',
+					names: '新品抢先7'
+				},
+				{
+					id: 3,
+					imageUrl: '../src/components/home/nav_list3.png',
+					names: '网络最红'
+				},
+				{
+					id: 4,
+					imageUrl: '../src/components/home/nav_list4.png',
+					names: '海鲜水产'
+				},
+				{
+					id: 5,
+					imageUrl: '../src/components/home/nav_list5.png',
+					names: '幸运抽奖'
+				},{
+					id: 1,
+					imageUrl: '../src/components/home/nav_list1.png',
+					names: '今日特价4'
+				},{
+					id: 2,
+					imageUrl: '../src/components/home/nav_list2.png',
+					names: '新品抢先4'
 				},
 				{
 					id: 3,
@@ -259,11 +354,20 @@ export default {
 			setTimeout(()=>{
 				this.loadinging = false;
 			},2000)
-		}
+		},
+		panel() {
+    		this.panels = (this.navWrapperList.length) / 10;
+    		console.log(this.panels)
+    	}
 	},
     components: {
       'v-header': header
-    }
+    },
+    mounted() {
+	  	this.$nextTick(() => {
+	        // this.panel();
+	    }) 
+	}
 }
 </script>
 
