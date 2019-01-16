@@ -1,41 +1,40 @@
 <template>
 	<div class="shop">
 		<header class="shop-header">
-			<div class="container">
-				<div class="shop-header-title-wrapper">
+			<!-- <div class="container"> -->
+				<v-header :titleName="titleName" :deleted="true"></v-header>
+				<!-- <div class="shop-header-title-wrapper">
 					<text class="shop-header-title">购物车</text>
-					<text class="shop-header-delet">删除</text>
-				</div>
+					<text class="shop-header-delet" @click="deletFoods()">删除</text>
+				</div> -->
 				<div class="shop-address-wrapper">
 					<text class="iconFont iconfont-address">&#xe7e0;</text>
 					<text class="shop-address-text">绿白菜滨湖春融苑店</text>
 				</div>
-			</div>
+			<!-- </div> -->
 		</header><!-- /header -->
 		<list class="shop-wrapper">
 			<refresh @refresh="onrefresh" :display="refreshing ? 'show' : 'hide'">
 				<text class="refresh">下拉刷新...</text>
 			</refresh>
-			<cell v-for="item in 10">
+			<cell  v-for="(foods,index) in shopCar" :key="index" v-if="foods.number > 0">
 				<div class="shop-list">
-					<wxc-checkbox :config="config" :has-bottom-border="false" class="shop-list-checkout"></wxc-checkbox>
-					<image class="shop-list-image" src="../src/components/shop/product-img01.png"></image>
+					<wxc-checkbox :value="index" :config="config" :has-bottom-border="false" :checked="checkArr[index].checked" class="shop-list-checkout" @wxcCheckBoxItemChecked="wxcCheckBoxItemChecked"></wxc-checkbox>
+					<image class="shop-list-image" :src="foods.ImageUrl"></image>
 					<div class="shop-list-info">
 						<div class="shop-list-info-title">
-							<text class="shop-list-info-name">五彩</text>
-							<text class="shop-list-info-weight">500gg</text>
+							<text class="shop-list-info-name">{{foods.foodName}}</text>
+							<text class="shop-list-info-weight">{{foods.weight}}g</text>
 						</div>
 						<div class="shop-list-money-wrapper">
 							<div class="shop-list-money-left">
-								<text class="shop-list-money">￥0.5元/斤</text>
-							    <text class="shop-list-all-money">￥6.29</text>
+								<text class="shop-list-money">￥{{foods.price}}元/斤</text>
+							    <!-- <text class="shop-list-all-money">￥{{foods.totalPrice}}</text> -->
 							</div>
 							<div class="shop-list-money-right">
-								<!-- weex ui  设计样式不符 -->
-									<!-- <wxc-stepper :config="stepper"></wxc-stepper> -->
-								<text class="iconFont shop-list-money-reduce" @click="reduceMoney()">&#xe600;</text>
-								<input type="text" class="shop-list-money-number" disabled="true" v-model="moneyValue"/>
-								<text class="iconFont shop-list-money-add" @click="addMoney()">&#xe601;</text>
+								<text class="iconFont shop-list-money-reduce" @click="reduceMoney(foods.number,index)">&#xe600;</text>
+								<input type="text" class="shop-list-money-number" disabled="true" v-model="foods.number"/>
+								<text class="iconFont shop-list-money-add" @click="addMoney(foods.number,index)">&#xe601;</text>
 							</div>
 						</div>
 					</div>
@@ -49,18 +48,18 @@
 		<div class="good-bottom-wrapper">
 			<div class="good-bottom-member-wrapper">
 				<text class="iconFont member-image">&#xe641;</text>
-				<text class="member-text">升级会员，本单可为您节省</text><text class="member-text-num">0.38</text><text class="member-text">元!</text>
+				<text class="member-text">升级会员，本单可为您节省</text><text class="member-text-num">{{discount}}</text><text class="member-text">元!</text>
 			</div>
 			<div class="good-bottom-list-wrapper">
 				<div class="good-bottom-select-wrapper">
-					<wxc-checkbox :config="config" :has-bottom-border="false" class="shop-list-checkout shop-bottom-checkout"></wxc-checkbox>
+					<wxc-checkbox :config="config" :has-bottom-border="false" class="shop-list-checkout shop-bottom-checkout" @wxcCheckBoxItemChecked="wxcCheck"></wxc-checkbox>
 				    <text class="good-bottom-checked-all">全选</text>
 				</div>
 				<div class="good-bottom-total-wrapper">
 					<text class="good-bottom-total-text">合计:</text>
-					<text class="good-bottom-total-money">￥1.00元</text>
+					<text class="good-bottom-total-money">￥{{total}}元</text>
 					<div class="good-bottom-total-button">
-						<text class="good-bottom-total-button-text">结算(2)</text>
+						<text class="good-bottom-total-button-text">结算({{shopNumber}})</text>
 					</div>
 				</div>
 			</div>
@@ -69,13 +68,24 @@
 </template>
 
 <script>
+import Util from '../../common/utils/utils.js'
 import { WxcCheckbox,WxcCheckboxList,WxcStepper } from 'weex-ui'
+import header from '../header/orderHeader.vue'
+let stream = weex.requireModule("stream")
+const SHOP_URL = 'api/cart/getMyCartList'
+const storage = weex.requireModule('storage')
 export default {
 	data() {
 		return {
+			titleName: '购物车',
 			refreshing: false,//下拉刷新
 			loadinging: false,//上拉加载
-			moneyValue: 1,//购买商品数
+			selectAll: false,//是否全选
+			selectOne: false,//是否单选
+			checkArr: [],//被选中产品的数组 用来做全部删除
+			USERID: 'user_id',
+			TOKEN: 'user_token',
+			aa: {},
 			config: {
 				//初始单选框
 			    unCheckedIcon: '../src/components/shop/unchecked.png',
@@ -85,14 +95,19 @@ export default {
 			    unCheckedDisabledIcon:'https://gw.alicdn.com/tfs/TB1lTuzpwoQMeJjy0FoXXcShVXa-72-72.png',
 			    checkedColor: '#f40',
 			},
+			shopCar: {},// 物品对象
+			discounts: 0,//折扣价
+			// moneyValue: 0,//购买商品数
+			// total: 0,//总价
+			// shopNumber: 0,//商品个数
         }
 	},
 	methods: {
-		reduceMoney() {
-    		this.moneyValue = this.moneyValue - 1;
+		reduceMoney(num,index) {
+    		this.shopCar[index].number = parseInt(this.shopCar[index].number) - 1;
     	},
-    	addMoney() {
-    		this.moneyValue = this.moneyValue + 1;
+    	addMoney(num,index) {
+    		this.shopCar[index].number = parseInt(this.shopCar[index].number) + 1;
     	},
     	onrefresh (){
 			this.refreshing = true;
@@ -106,6 +121,45 @@ export default {
 				this.loadinging = false;
 			},2000)
 		},
+		_initCheckArr() {
+			for(var i = 0; i < this.shopCar.length; i++){
+				this.checkArr.push({value: i,checked: false})
+			}
+		},
+		// 选中
+		wxcCheckBoxItemChecked(e) {
+			this.selectOne = !this.selectOne;
+			var value = e.value;
+			if(this.selectOne){
+				this.checkArr[value].checked = true;
+				console.log(this.checkArr[value].checked)
+			}else{
+				this.checkArr[value].checked = false;
+				console.log(this.checkArr[value].checked)
+			}
+		},
+		// 全选按钮
+		wxcCheck(){
+			//判断是否全选
+			this.selectAll = !this.selectAll;
+			if(this.selectAll){
+				for(var i = 0; i < this.checkArr.length; i++){
+					this.checkArr[i].checked = true;
+				}
+			}else{
+				for(var i = 0; i < this.checkArr.length; i++){
+					this.checkArr[i].checked = false;
+				}
+			}
+		},
+		//全部删除按钮
+		deletFoods() {
+			for(var i = 0; i < this.checkArr.length; i++){
+				if(this.checkArr[i].checked == true){
+					this.shopCar.splice(i,1)
+				}
+			}
+		}
 	},
 	created() {
         var fontModule = weex.requireModule("dom");
@@ -113,19 +167,106 @@ export default {
             'fontFamily': "iconfont",
             'src': "url('//at.alicdn.com/t/font_948634_q51n034oj8.ttf')"
         })
+        var self = this;
+        storage.getItem(this.USERID,event => {
+        	self.USERID = event.data
+        	storage.getItem(this.TOKEN,event => {
+        		self.TOKEN = event.data
+		        Util.WeexAjax({
+		            url: SHOP_URL,
+		            method: 'GET',
+		            type: 'JSON',
+		            token: self.TOKEN,
+		            body: {
+		            	"userId": self.USERID
+		            },
+		            callback: function(ret) {
+		            	var rets = ret;
+		            	if(ret.Status == 1){
+		            		console.log(rets)
+		            	}
+		            }
+		        })
+        	})
+        });
+        // let me = this;
+        // let GET_URL = "../src/shop.json";
+        // // let GET_URL = "http://47.92.164.211:8011/api/prodcut/getcagegorylist";
+        // let getResult = "loding...";
+        // stream.fetch({
+       	// 	method: 'GET',
+       	// 	url: GET_URL,
+       	// 	type: 'json',
+        // },(res) => {
+        // 	if(!res.ok){
+        // 		me.getResult = "request failed";
+        // 	}else{
+        // 		me.shopCar = res.data.shopCar;
+        // 		me.discounts = res.data.discount;
+        // 		this._initCheckArr();
+        // 	}
+        // },() => {}) 
+
+  //       let me = this;
+  //       let POST_URL = "http://47.92.164.211:8011/api/cart/addCart";
+  //       let postResult = "loding...";
+		// stream.fetch({
+		// 	method: 'POST',
+		// 	url: POST_URL,
+		// 	type:'json',
+		// 	headers: {'Content-Type':'application/x-www-form-urlencoded'},
+		// 	body : {
+		// 	  "UserId": 1,
+		// 	  "ProductId": 2,
+		// 	  "CartNum": 3
+		// 	}
+		// }, function(ret) {
+		// 	if(!ret.ok){
+		//   		me.postResult = "request failed";
+		// 	}else{
+		//   		console.log('get:'+JSON.stringify(ret));
+		//   		me.postResult = JSON.stringify(ret.data);
+		// 	}
+		// },function(response){
+		// 	console.log('get in progress:'+response.length);
+		// 	me.postResult = "bytes received:"+response.length;
+		// });
     },
-    components: { WxcCheckbox, WxcCheckboxList, WxcStepper },
+    components: { 
+    	WxcCheckbox, 
+    	WxcCheckboxList, 
+    	WxcStepper, 
+    	"v-header": header 
+    },
+    computed: {
+    	shopNumber() {
+    		var num = 0;
+    		for(var i = 0; i < this.shopCar.length; i++){
+    			num += parseInt(this.shopCar[i].number);
+    		}
+    		return num;
+    	},
+    	total() {
+    		var money = 0;
+    		for(var i = 0; i < this.shopCar.length; i++){
+    			money += parseFloat(this.shopCar[i].price) * parseInt(this.shopCar[i].number);
+    		}
+    		return money.toFixed(2);
+    	},
+    	discount() {
+    		var count = 0;
+    		for(var i = 0; i < this.shopCar.length; i++){
+    			count += (parseFloat(this.shopCar[i].price).toFixed(2) * parseInt(this.shopCar[i].number)) - (parseFloat(this.shopCar[i].price).toFixed(2) * parseInt(this.shopCar[i].number) * this.discounts);
+    		}
+    		return count.toFixed(2);
+    	}
+    }
 }
 </script>
 
 <style lang="stylus" scoped>
 .iconFont{
     font-family: iconfont;
-}
-.container{
-	position: relative;
-	padding-left: 20px;
-	paddng-right: 20px;
 }
 .shop{
 	position: fixed;
@@ -135,18 +276,17 @@ export default {
 	background-color: #f5f5f5;
 }
 .shop-header{
-	width: 750px;
 	height: 240px;
 	background-color: rgb(115,204,70);
 }
-.shop-header-title-wrapper{
+/*.shop-header-title-wrapper{
 	position: relative;
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
 	align-items: center;
 	width: 710px;
-	height: 92px;  /*26 + 40 + 26*/
+	height: 92px;  26 + 40 + 26
 }
 .shop-header-title{
 	font-size: 43px;
@@ -159,11 +299,13 @@ export default {
 	margin-top: 29px;
 	font-size: 34px;
 	color: #c1e6a3;
-}
+}*/
 .shop-address-wrapper{
 	display: flex;
 	flex-direction: row;
 	align-items: center;
+	padding-left: 20px;
+	padding-right: 20px;
 	padding-top: 21px;  /*47 - 26*/
 }
 .iconfont-address{
@@ -181,9 +323,9 @@ export default {
 	left: 0;
 	top: 174px;
 	bottom: 265px;
-	width: 710px;
-	margin-left: 20px;
-	margin-right: 20px;
+	width: 750px;
+	padding-left: 20px;
+	padding-right: 20px;
 }
 .shop-list{
 	display: flex;
@@ -215,6 +357,7 @@ export default {
 	line-height: 60px;
 }
 .shop-list-image{
+	margin-right: 25px;
 	width: 200px;
 	height: 200px;
 }

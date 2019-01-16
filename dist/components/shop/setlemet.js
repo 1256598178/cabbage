@@ -1,0 +1,1066 @@
+// { "framework": "Vue"} 
+
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, {
+/******/ 				configurable: false,
+/******/ 				enumerable: true,
+/******/ 				get: getter
+/******/ 			});
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = 204);
+/******/ })
+/************************************************************************/
+/******/ ({
+
+/***/ 10:
+/***/ (function(module, exports) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: ["shop-header-title-wrapper"]
+  }, [(_vm.backPage) ? _c('image', {
+    staticClass: ["backBtn"],
+    attrs: {
+      "src": "../src/common/images/backImage.png"
+    },
+    on: {
+      "click": function($event) {
+        _vm.backJump()
+      }
+    }
+  }) : _vm._e(), _c('text', {
+    staticClass: ["shop-header-title"]
+  }, [_vm._v(_vm._s(_vm.titleName))]), (_vm.deleted) ? _c('text', {
+    staticClass: ["shop-header-delet"],
+    on: {
+      "click": function($event) {
+        _vm.deletFoods()
+      }
+    }
+  }, [_vm._v("删除")]) : _vm._e(), (_vm.cancel) ? _c('text', {
+    staticClass: ["shop-header-delet"],
+    on: {
+      "click": function($event) {
+        _vm.cancel()
+      }
+    }
+  }, [_vm._v("取消")]) : _vm._e(), (_vm.info) ? _c('text', {
+    staticClass: ["shop-header-info"],
+    on: {
+      "click": function($event) {}
+    }
+  }, [_vm._v("使用说明")]) : _vm._e(), (_vm.shareBtn) ? _c('image', {
+    staticClass: ["shareBtn"],
+    attrs: {
+      "src": "../src/common/images/share@46x46.png"
+    }
+  }) : _vm._e(), (_vm.layout) ? _c('image', {
+    staticClass: ["layoutBtn-44"],
+    attrs: {
+      "src": _vm.layoutAct == false ? _vm.layoutImage.urlImage : _vm.layoutImage.urlImageAct
+    },
+    on: {
+      "click": function($event) {
+        _vm.layoutClick()
+      }
+    }
+  }) : _vm._e()])
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+
+/***/ }),
+
+/***/ 11:
+/***/ (function(module, exports, __webpack_require__) {
+
+var __vue_exports__, __vue_options__
+var __vue_styles__ = []
+
+/* styles */
+__vue_styles__.push(__webpack_require__(8)
+)
+
+/* script */
+__vue_exports__ = __webpack_require__(9)
+
+/* template */
+var __vue_template__ = __webpack_require__(10)
+__vue_options__ = __vue_exports__ = __vue_exports__ || {}
+if (
+  typeof __vue_exports__.default === "object" ||
+  typeof __vue_exports__.default === "function"
+) {
+if (Object.keys(__vue_exports__).some(function (key) { return key !== "default" && key !== "__esModule" })) {console.error("named exports are not supported in *.vue files.")}
+__vue_options__ = __vue_exports__ = __vue_exports__.default
+}
+if (typeof __vue_options__ === "function") {
+  __vue_options__ = __vue_options__.options
+}
+__vue_options__.__file = "F:\\WebApp\\cabbage\\src\\components\\header\\orderHeader.vue"
+__vue_options__.render = __vue_template__.render
+__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
+__vue_options__._scopeId = "data-v-20c9827a"
+__vue_options__.style = __vue_options__.style || {}
+__vue_styles__.forEach(function (module) {
+  for (var name in module) {
+    __vue_options__.style[name] = module[name]
+  }
+})
+if (typeof __register_static_styles__ === "function") {
+  __register_static_styles__(__vue_options__._scopeId, __vue_styles__)
+}
+
+module.exports = __vue_exports__
+
+
+/***/ }),
+
+/***/ 204:
+/***/ (function(module, exports, __webpack_require__) {
+
+var __vue_exports__, __vue_options__
+var __vue_styles__ = []
+
+/* styles */
+__vue_styles__.push(__webpack_require__(205)
+)
+
+/* script */
+__vue_exports__ = __webpack_require__(206)
+
+/* template */
+var __vue_template__ = __webpack_require__(207)
+__vue_options__ = __vue_exports__ = __vue_exports__ || {}
+if (
+  typeof __vue_exports__.default === "object" ||
+  typeof __vue_exports__.default === "function"
+) {
+if (Object.keys(__vue_exports__).some(function (key) { return key !== "default" && key !== "__esModule" })) {console.error("named exports are not supported in *.vue files.")}
+__vue_options__ = __vue_exports__ = __vue_exports__.default
+}
+if (typeof __vue_options__ === "function") {
+  __vue_options__ = __vue_options__.options
+}
+__vue_options__.__file = "F:\\WebApp\\cabbage\\src\\components\\shop\\setlemet.vue"
+__vue_options__.render = __vue_template__.render
+__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
+__vue_options__._scopeId = "data-v-e7e38e2e"
+__vue_options__.style = __vue_options__.style || {}
+__vue_styles__.forEach(function (module) {
+  for (var name in module) {
+    __vue_options__.style[name] = module[name]
+  }
+})
+if (typeof __register_static_styles__ === "function") {
+  __register_static_styles__(__vue_options__._scopeId, __vue_styles__)
+}
+
+module.exports = __vue_exports__
+module.exports.el = 'true'
+new Vue(module.exports)
+
+
+/***/ }),
+
+/***/ 205:
+/***/ (function(module, exports) {
+
+module.exports = {
+  "iconFont": {
+    "fontFamily": "iconfont"
+  },
+  "shop": {
+    "position": "fixed",
+    "width": "750",
+    "top": 0,
+    "bottom": "110",
+    "backgroundColor": "#f5f5f5"
+  },
+  "shop-header-title-wrapper": {
+    "position": "relative",
+    "display": "flex",
+    "flexDirection": "row",
+    "justifyContent": "center",
+    "alignItems": "center",
+    "width": "710",
+    "height": "92",
+    "marginLeft": "20",
+    "marginRight": "20"
+  },
+  "shop-header-title": {
+    "fontSize": "43",
+    "color": "#ffffff"
+  },
+  "lemet-body": {
+    "marginBottom": "10"
+  },
+  "lemet-address-wrapper": {
+    "paddingTop": "25",
+    "paddingLeft": "20",
+    "paddingRight": "20",
+    "paddingBottom": "30",
+    "backgroundColor": "#ffffff"
+  },
+  "lemet-food-time": {
+    "backgroundColor": "#ffffff"
+  },
+  "lemet-trade-wrapper": {
+    "backgroundColor": "#ffffff"
+  },
+  "lemet-title-address": {
+    "display": "flex",
+    "flexDirection": "row",
+    "justifyContent": "space-between",
+    "alignItems": "center",
+    "marginBottom": "20"
+  },
+  "lemet-food-time-list": {
+    "display": "flex",
+    "flexDirection": "row",
+    "justifyContent": "space-between",
+    "alignItems": "center",
+    "paddingTop": "20",
+    "paddingBottom": "20",
+    "paddingLeft": "20",
+    "paddingRight": "20",
+    "borderBottomWidth": "1",
+    "borderBottomStyle": "solid",
+    "borderBottomColor": "#f4f4f4"
+  },
+  "lemet-title-address-left": {
+    "display": "flex",
+    "flexDirection": "row",
+    "alignItems": "center"
+  },
+  "lemet-food-time-info": {
+    "display": "flex",
+    "flexDirection": "row",
+    "alignItems": "center"
+  },
+  "lemet-trade-title-wrapper": {
+    "display": "flex",
+    "flexDirection": "row",
+    "alignItems": "center",
+    "paddingTop": "20",
+    "paddingBottom": "20",
+    "paddingLeft": "20",
+    "paddingRight": "20",
+    "borderBottomWidth": "1",
+    "borderBottomStyle": "solid",
+    "borderBottomColor": "#f4f4f4"
+  },
+  "pro-r": {
+    "display": "flex",
+    "flexDirection": "row",
+    "alignItems": "center"
+  },
+  "lemet-title-address-right": {
+    "width": "16",
+    "height": "25"
+  },
+  "lemet-body-title-iconfont": {
+    "fontSize": "40",
+    "color": "#333333",
+    "lineHeight": "48",
+    "marginRight": "10"
+  },
+  "lemet-body-title-name": {
+    "fontSize": "30",
+    "color": "#333333",
+    "lineHeight": "34"
+  },
+  "lemet-address-box-text": {
+    "fontSize": "24",
+    "color": "#777777",
+    "lineHeight": "40"
+  },
+  "lemet-food-time-name": {
+    "fontSize": "24",
+    "color": "#333333",
+    "lineHeight": "26"
+  },
+  "lemet-food-time-num": {
+    "fontSize": "24",
+    "color": "#777777",
+    "lineHeight": "26"
+  },
+  "lemet-food-time-name-active": {
+    "fontSize": "24",
+    "color": "#ffa800",
+    "lineHeight": "26"
+  },
+  "moreImage-14x9": {
+    "width": "14",
+    "height": "9",
+    "marginLeft": "12"
+  },
+  "lemet-trade-title-line": {
+    "marginRight": "15",
+    "width": "10",
+    "height": "50",
+    "backgroundColor": "#73cc00",
+    "borderRadius": "10"
+  },
+  "lemet-trade-title-name": {
+    "fontSize": "30",
+    "color": "#333333",
+    "lineHeight": "34"
+  },
+  "cellps": {
+    "display": "flex",
+    "flexDirection": "row",
+    "borderBottomWidth": "1",
+    "borderBottomColor": "#d2d2d2",
+    "borderBottomStyle": "solid",
+    "paddingTop": "20",
+    "paddingBottom": "20",
+    "paddingRight": "20",
+    "paddingLeft": "20"
+  },
+  "product-img": {
+    "width": "200",
+    "height": "200",
+    "marginRight": "30"
+  },
+  "pro-news": {
+    "marginTop": "20",
+    "display": "flex",
+    "flexDirection": "column",
+    "justifyContent": "space-between",
+    "flex": 1,
+    "height": "140"
+  },
+  "product-title": {
+    "marginRight": "20",
+    "fontSize": "30",
+    "color": "#333333",
+    "textOverflow": "ellipsis",
+    "lines": 1
+  },
+  "product-title-weight": {
+    "marginRight": "20",
+    "fontSize": "30",
+    "color": "#333333",
+    "textOverflow": "ellipsis",
+    "lines": 1
+  },
+  "pro-m": {
+    "height": "42",
+    "display": "flex",
+    "flexDirection": "row",
+    "justifyContent": "space-between",
+    "alignItems": "center"
+  },
+  "product-type-box": {
+    "height": "36",
+    "marginTop": "10"
+  },
+  "product-type": {
+    "width": "80",
+    "fontSize": "20",
+    "lineHeight": "36",
+    "color": "#ffffff",
+    "textAlign": "center",
+    "borderRadius": "5",
+    "backgroundColor": "#cccccc"
+  },
+  "product-types": {
+    "opacity": 0
+  },
+  "product-price": {
+    "fontSize": "30",
+    "fontWeight": "bold",
+    "color": "#f26100",
+    "marginRight": "10"
+  },
+  "product-prices": {
+    "fontSize": "20",
+    "color": "#777777"
+  },
+  "shop-car-icon": {
+    "width": "42",
+    "height": "42",
+    "position": "absolute",
+    "bottom": 0,
+    "right": 0
+  },
+  "shop-wrapper": {
+    "position": "fixed",
+    "left": 0,
+    "top": "92",
+    "bottom": "265",
+    "width": "750"
+  },
+  "good-bottom-wrapper": {
+    "position": "fixed",
+    "display": "flex",
+    "flexDirection": "column",
+    "bottom": "109",
+    "height": "155",
+    "width": "750"
+  },
+  "good-bottom-member-wrapper": {
+    "display": "flex",
+    "flexDirection": "row",
+    "alignItems": "center",
+    "paddingLeft": "20",
+    "paddingRight": "20",
+    "height": "60",
+    "backgroundColor": "#ade564"
+  },
+  "good-bottom-list-wrapper": {
+    "display": "flex",
+    "flexDirection": "row",
+    "alignItems": "center",
+    "paddingLeft": "20",
+    "paddingRight": "20",
+    "justifyContent": "space-between",
+    "height": "95",
+    "backgroundColor": "#ffffff"
+  },
+  "member-image": {
+    "marginRight": "10",
+    "fontSize": "27",
+    "color": "#ffffff"
+  },
+  "member-text": {
+    "fontSize": "18",
+    "color": "#ffffff"
+  },
+  "member-text-num": {
+    "fontSize": "18",
+    "color": "#73cc00"
+  },
+  "good-bottom-select-wrapper": {
+    "display": "flex",
+    "flexDirection": "row",
+    "alignItems": "center"
+  },
+  "good-bottom-total-wrapper": {
+    "display": "flex",
+    "flexDirection": "row",
+    "alignItems": "center"
+  },
+  "good-bottom-total-text": {
+    "fontSize": "24",
+    "color": "#777777"
+  },
+  "good-bottom-total-money": {
+    "fontSize": "24",
+    "color": "#f26100"
+  },
+  "good-bottom-total-button": {
+    "display": "flex",
+    "flexDirection": "row",
+    "justifyContent": "center",
+    "alignItems": "center",
+    "marginLeft": "20",
+    "width": "220",
+    "height": "70",
+    "borderRadius": "220",
+    "backgroundColor": "#73cc00"
+  },
+  "good-bottom-total-button-text": {
+    "fontSize": "30",
+    "color": "#ffffff"
+  }
+}
+
+/***/ }),
+
+/***/ 206:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _orderHeader = __webpack_require__(11);
+
+var _orderHeader2 = _interopRequireDefault(_orderHeader);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = {
+	data: function data() {
+		return {
+			titleName: '订单结算',
+			refreshing: false, //下拉刷新
+			loadinging: false //上拉加载
+		};
+	},
+
+	methods: {
+		onrefresh: function onrefresh() {
+			var _this = this;
+
+			this.refreshing = true;
+			setTimeout(function () {
+				_this.refreshing = false;
+			}, 2000);
+		},
+		onloading: function onloading() {
+			var _this2 = this;
+
+			this.loadinging = true;
+			setTimeout(function () {
+				_this2.loadinging = false;
+			}, 2000);
+		}
+	},
+	created: function created() {
+		var fontModule = weex.requireModule("dom");
+		fontModule.addRule('fontFace', {
+			'fontFamily': "iconfont",
+			'src': "url('//at.alicdn.com/t/font_948634_q51n034oj8.ttf')"
+		});
+	},
+
+	components: {
+		"v-header": _orderHeader2.default
+	}
+}; //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/***/ }),
+
+/***/ 207:
+/***/ (function(module, exports) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: ["shop"]
+  }, [_c('header', {
+    staticClass: ["shop-header"],
+    appendAsTree: true,
+    attrs: {
+      "append": "tree"
+    }
+  }, [_c('v-header', {
+    attrs: {
+      "titleName": _vm.titleName,
+      "backPage": true
+    }
+  })], 1), _c('list', {
+    staticClass: ["shop-wrapper"]
+  }, [_c('refresh', {
+    attrs: {
+      "display": _vm.refreshing ? 'show' : 'hide'
+    },
+    on: {
+      "refresh": _vm.onrefresh
+    }
+  }, [_c('text', {
+    staticClass: ["refresh"]
+  }, [_vm._v("下拉刷新...")])]), _vm._m(0), _vm._m(1), _c('loading', {
+    staticClass: ["loading"],
+    attrs: {
+      "display": _vm.loadinging ? 'show' : 'hide'
+    },
+    on: {
+      "loading": _vm.onloading
+    }
+  }, [_c('text', {
+    staticClass: ["loading"]
+  }, [_vm._v("加载更多...")]), _c('loading-indicator', {
+    staticClass: ["indicators"]
+  })])]), _c('div', {
+    staticClass: ["good-bottom-wrapper"]
+  }, [_c('div', {
+    staticClass: ["good-bottom-member-wrapper"]
+  }, [_c('text', {
+    staticClass: ["iconFont", "member-image"]
+  }, [_vm._v("")]), _c('text', {
+    staticClass: ["member-text"]
+  }, [_vm._v("升级会员，本单可为您节省")]), _c('text', {
+    staticClass: ["member-text-num"]
+  }, [_vm._v(_vm._s(123))]), _c('text', {
+    staticClass: ["member-text"]
+  }, [_vm._v("元!")])]), _c('div', {
+    staticClass: ["good-bottom-list-wrapper"]
+  }, [_c('div', {
+    staticClass: ["good-bottom-select-wrapper"]
+  }, [_c('text', {
+    staticClass: ["good-bottom-total-text"]
+  }, [_vm._v("预付款:")]), _c('text', {
+    staticClass: ["good-bottom-total-money"]
+  }, [_vm._v("￥" + _vm._s(123) + "元")])]), _c('div', {
+    staticClass: ["good-bottom-total-button"]
+  }, [_c('text', {
+    staticClass: ["good-bottom-total-button-text"]
+  }, [_vm._v("结算(" + _vm._s(123) + ")")])])])])])
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('cell', {
+    appendAsTree: true,
+    attrs: {
+      "append": "tree"
+    }
+  }, [_c('div', {
+    staticClass: ["lemet-body", "lemet-address-wrapper"]
+  }, [_c('div', {
+    staticClass: ["lemet-title-address"]
+  }, [_c('div', {
+    staticClass: ["lemet-title-address-left"]
+  }, [_c('text', {
+    staticClass: ["iconFont", "lemet-body-title-iconfont"]
+  }, [_vm._v("")]), _c('text', {
+    staticClass: ["lemet-body-title-name"]
+  }, [_vm._v("绿白菜滨湖春融苑店")])]), _c('image', {
+    staticClass: ["lemet-title-address-right"],
+    attrs: {
+      "src": "../src/common/images/moreImage@16x25.png"
+    }
+  })]), _c('div', {
+    staticClass: ["lemet-address-box"]
+  }, [_c('text', {
+    staticClass: ["lemet-address-box-text"]
+  }, [_vm._v("合肥市滨湖区南京路与天柱山路交口春融苑")]), _c('text', {
+    staticClass: ["lemet-address-box-text"]
+  }, [_vm._v("联系电话：400 1234 4567")])])]), _c('div', {
+    staticClass: ["lemet-body", "lemet-food-time"]
+  }, [_c('div', {
+    staticClass: ["lemet-food-time-list"]
+  }, [_c('text', {
+    staticClass: ["lemet-food-time-name"]
+  }, [_vm._v("预约取货日期")]), _c('div', {
+    staticClass: ["lemet-food-time-info"]
+  }, [_c('text', {
+    staticClass: ["lemet-food-time-num", "lemet-food-time-name-active"]
+  }, [_vm._v("2018-12-01(明天)")]), _c('image', {
+    staticClass: ["moreImage-14x9"],
+    attrs: {
+      "src": "../src/common/images/moreImage@14x9.png"
+    }
+  })])]), _c('div', {
+    staticClass: ["lemet-food-time-list"]
+  }, [_c('text', {
+    staticClass: ["lemet-food-time-name"]
+  }, [_vm._v("预约取货时间")]), _c('div', {
+    staticClass: ["lemet-food-time-info"]
+  }, [_c('text', {
+    staticClass: ["lemet-food-time-num"]
+  }, [_vm._v("2018-12-01(明天)")]), _c('image', {
+    staticClass: ["moreImage-14x9"],
+    attrs: {
+      "src": "../src/common/images/moreImage@14x9.png"
+    }
+  })])]), _c('div', {
+    staticClass: ["lemet-food-time-list"]
+  }, [_c('text', {
+    staticClass: ["lemet-food-time-name"]
+  }, [_vm._v("是否使用优惠券")]), _c('div', {
+    staticClass: ["lemet-food-time-info"]
+  }, [_c('text', {
+    staticClass: ["lemet-food-time-num"]
+  }, [_vm._v("请选择优惠券")]), _c('image', {
+    staticClass: ["moreImage-14x9"],
+    attrs: {
+      "src": "../src/common/images/moreImage@14x9.png"
+    }
+  })])]), _c('div', {
+    staticClass: ["lemet-food-time-list"]
+  }, [_c('text', {
+    staticClass: ["lemet-food-time-name"]
+  }, [_vm._v("是否需要购物袋")]), _c('div', {
+    staticClass: ["lemet-food-time-info"]
+  }, [_c('text', {
+    staticClass: ["lemet-food-time-num"]
+  }, [_vm._v("2018-12-01(明天)")]), _c('image', {
+    staticClass: ["moreImage-14x9"],
+    attrs: {
+      "src": "../src/common/images/moreImage@14x9.png"
+    }
+  })])])])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('cell', {
+    appendAsTree: true,
+    attrs: {
+      "append": "tree"
+    }
+  }, [_c('div', {
+    staticClass: ["lemet-body", "lemet-trade-wrapper"]
+  }, [_c('div', {
+    staticClass: ["lemet-trade-title-wrapper"]
+  }, [_c('div', {
+    staticClass: ["lemet-trade-title-line"]
+  }), _c('text', {
+    staticClass: ["lemet-trade-title-name"]
+  }, [_vm._v("商品品名")])]), _c('div', {
+    staticClass: ["lemet-trade-foods-wrapper"]
+  }, [_c('div', {
+    staticClass: ["cellps"]
+  }, [_c('image', {
+    staticClass: ["product-img"],
+    attrs: {
+      "src": "../src/components/shop/product-img01.png"
+    }
+  }), _c('div', {
+    staticClass: ["pro-news"]
+  }, [_c('div', {
+    staticClass: ["pro-r"]
+  }, [_c('text', {
+    staticClass: ["product-title"]
+  }, [_vm._v("乌菜")]), _c('text', {
+    staticClass: ["product-title-weight"]
+  }, [_vm._v("500g")])]), _c('div', {
+    staticClass: ["pro-m"]
+  }, [_c('text', {
+    staticClass: ["product-price"]
+  }, [_vm._v("¥0.50元/斤")]), _c('text', {
+    staticClass: ["product-price-number"]
+  }, [_vm._v("×2")])])])]), _c('div', {
+    staticClass: ["cellps"]
+  }, [_c('image', {
+    staticClass: ["product-img"],
+    attrs: {
+      "src": "../src/components/shop/product-img01.png"
+    }
+  }), _c('div', {
+    staticClass: ["pro-news"]
+  }, [_c('div', {
+    staticClass: ["pro-r"]
+  }, [_c('text', {
+    staticClass: ["product-title"]
+  }, [_vm._v("乌菜")]), _c('text', {
+    staticClass: ["product-title-weight"]
+  }, [_vm._v("500g")])]), _c('div', {
+    staticClass: ["pro-m"]
+  }, [_c('text', {
+    staticClass: ["product-price"]
+  }, [_vm._v("¥0.50元/斤")]), _c('text', {
+    staticClass: ["product-price-number"]
+  }, [_vm._v("×2")])])])])])])])
+}]}
+module.exports.render._withStripped = true
+
+/***/ }),
+
+/***/ 8:
+/***/ (function(module, exports) {
+
+module.exports = {
+  "iconFont": {
+    "fontFamily": "iconfont"
+  },
+  "backBtn": {
+    "position": "absolute",
+    "left": "20",
+    "top": "25.5",
+    "width": "28",
+    "height": "41"
+  },
+  "shareBtn": {
+    "position": "absolute",
+    "top": "23",
+    "right": "20",
+    "width": "46",
+    "height": "46"
+  },
+  "layoutBtn-44": {
+    "position": "absolute",
+    "top": "24",
+    "right": "20",
+    "width": "44",
+    "height": "44"
+  },
+  "shop-header-title-wrapper": {
+    "position": "relative",
+    "display": "flex",
+    "flexDirection": "row",
+    "justifyContent": "center",
+    "alignItems": "center",
+    "height": "92",
+    "paddingLeft": "20",
+    "paddingRight": "20",
+    "backgroundColor": "#73cc46"
+  },
+  "shop-header-title": {
+    "width": "500",
+    "fontSize": "42",
+    "color": "#ffffff",
+    "textAlign": "center",
+    "textOverflow": "ellipsis",
+    "lines": 1
+  },
+  "shop-header-delet": {
+    "position": "absolute",
+    "right": "20",
+    "top": 0,
+    "marginTop": "27",
+    "fontSize": "34",
+    "lineHeight": "38",
+    "color": "#c1e6a3"
+  },
+  "shop-header-info": {
+    "position": "absolute",
+    "right": "20",
+    "top": 0,
+    "marginTop": "27",
+    "fontSize": "34",
+    "lineHeight": "38",
+    "color": "#ffffff"
+  }
+}
+
+/***/ }),
+
+/***/ 9:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+var navigator = weex.requireModule('navigator');
+var modal = weex.requireModule('modal');
+exports.default = {
+	props: {
+		titleName: {
+			type: String
+		},
+		deleted: {
+			type: Boolean
+		},
+		backPage: {
+			type: Boolean
+		},
+		shareBtn: {
+			type: Boolean
+		},
+		layout: {
+			type: Boolean
+		},
+		layoutAct: {
+			type: Boolean
+		},
+		cancel: {
+			type: Boolean
+		},
+		info: {
+			type: Boolean
+		}
+	},
+	data: function data() {
+		return {
+			layoutActBool: false,
+			layoutImage: {
+				urlImage: '../src/common/images/layout@44x44.png',
+				urlImageAct: '../src/common/images/layoutACT@44x44.png'
+			}
+		};
+	},
+
+	methods: {
+		backJump: function backJump() {
+			navigator.pop({
+				// url: '../src/components/other/find.vue',congratulate
+				url: 'http://192.168.1.103:8082/dist/index.js',
+				animated: "true"
+			}, function (event) {
+				// modal.toast({ message: 'callback: ' + event })
+			});
+		},
+		layoutClick: function layoutClick() {
+			this.$emit("layoutAct", this.layoutActBool = !this.layoutActBool);
+		}
+	},
+	created: function created() {
+		var fontModule = weex.requireModule("dom");
+		fontModule.addRule('fontFace', {
+			'fontFamily': "iconfont",
+			'src': "url('//at.alicdn.com/t/font_948634_q51n034oj8.ttf')"
+		});
+	}
+};
+
+/***/ })
+
+/******/ });

@@ -1,6 +1,6 @@
 <template>
   <header class="header">
-    <image class="_logo" :src="logo"></image>
+    <image class="_logo" :src="logo" @click="jump()"></image>
 	<div class="address-wrapper">
 		<image class="_address" :src="address"></image>
 		<text class="address-name">{{this.position}}</text>
@@ -14,6 +14,7 @@
 </template>
 
 <script>
+import Utils from '../../common/utils/utils.js'
 export default {
   data() {
   	return {
@@ -23,6 +24,11 @@ export default {
   		magnifier: "../src/components/header/search.png",  // 放大镜图标
   		scan: "../src/components/header/scan.png", // 扫一扫图标
   		position: '合肥市滨湖春融苑店',
+  	}
+  },
+  methods: {
+  	jump(){
+  		// Utils.bindThis(Utils.jump('components/register/register.js'),this.$getConfig())
   	}
   }
 }

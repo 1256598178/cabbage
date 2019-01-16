@@ -1,0 +1,52 @@
+{
+	"discount": 0.9595959596,
+	"shopCar": [{
+		"id": 0,
+		"foodName": "乌菜",
+		"weight": "500",
+		"number": "1",
+		"ImageUrl": "../src/components/shop/product-img01.png",
+		"price": 0.51,
+		"totalPrice": 6.2
+	},{
+		"id": 1,
+		"foodName": "茼蒿",
+		"weight": "500",
+		"number": "1",
+		"ImageUrl": "../src/components/shop/product-img02.png",
+		"price": 4.50,
+		"totalPrice": 12.2
+	},{
+		"id": 2,
+		"foodName": "乌菜",
+		"weight": "500",
+		"number": "1",
+		"ImageUrl": "../src/components/shop/product-img01.png",
+		"price": 0.50,
+		"totalPrice": 26.2
+	},{
+		"id": 3,
+		"foodName": "茼蒿",
+		"weight": "500",
+		"number": "1",
+		"ImageUrl": "../src/components/shop/product-img02.png",
+		"price": 44.50,
+		"totalPrice": 12.2
+	},{
+		"id": 4,
+		"foodName": "乌菜",
+		"weight": "500",
+		"number": "1",
+		"ImageUrl": "../src/components/shop/product-img01.png",
+		"price": 4.50,
+		"totalPrice": 26.2
+	},{
+		"id": 5,
+		"foodName": "茼蒿",
+		"weight": "500",
+		"number": "1",
+		"ImageUrl": "../src/components/shop/product-img02.png",
+		"price": 4.50,
+		"totalPrice": 12.2
+	}]
+}

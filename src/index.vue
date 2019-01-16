@@ -1,38 +1,38 @@
 <template>
     <div class="wrapper">
         <router-view />
-        <ul class="tab">
+        <div class="tab">
             <!-- <li class="tab-list" v-for="(item,index) in nav" @click="jump(index,item.path)" :key="index">
                 <image class="nav-img" :src=" navIndex === index ? item.srct : item.srco"></image>
                 <text class="iconFont"  v-html="item.iconText"></text>
                 <text :class="[navIndex === index ? 'nav-cn-active' : 'nav-cn']">{{item.title}}</text>
             </li> -->
-            <li class="tab-list" @click="jump('home')">
+            <div class="tab-list" @click="jump('home')">
                 <!-- <image class="nav-img" :src=" navIndex === index ? item.srct : item.srco"></image> -->
                 <text class="iconFont" :class="[navIndex == 'home' ? 'nav-image-active' : 'nav-image']">&#xe605;</text>
                 <text :class="[navIndex == 'home' ? 'nav-cn-active' : 'nav-cn']">首页</text>
-            </li>
-            <li class="tab-list" @click="jump('classes')">
+            </div>
+            <div class="tab-list" @click="jump('classes')">
                 <!-- <image class="nav-img" :src=" navIndex === index ? item.srct : item.srco"></image> -->
                 <text class="iconFont" :class="[navIndex == 'classes' ? 'nav-image-active' : 'nav-image']">&#xe645;</text>
                 <text :class="[navIndex == 'classes' ? 'nav-cn-active' : 'nav-cn']">分类</text>
-            </li>
-            <li class="tab-list" @click="jump('shop')">
+            </div>
+            <div class="tab-list" @click="jump('shop')">
                 <!-- <image class="nav-img" :src=" navIndex === index ? item.srct : item.srco"></image> -->
                 <text class="iconFont" :class="[navIndex == 'shop' ? 'nav-image-active' : 'nav-image']">&#xe607;</text>
                 <text :class="[navIndex == 'shop' ? 'nav-cn-active' : 'nav-cn']">购物车</text>
-            </li>
-            <li class="tab-list" @click="jump('goods')">
+            </div>
+            <div class="tab-list" @click="jump('goods')">
                 <!-- <image class="nav-img" :src=" navIndex === index ? item.srct : item.srco"></image> -->
                 <text class="iconFont" :class="[navIndex == 'goods' ? 'nav-image-active' : 'nav-image']">&#xe69e;</text>
                 <text :class="[navIndex == 'goods' ? 'nav-cn-active' : 'nav-cn']">取货</text>
-            </li>
-            <li class="tab-list" @click="jump('my')">
+            </div>
+            <div class="tab-list" @click="jump('my')">
                 <!-- <image class="nav-img" :src=" navIndex === index ? item.srct : item.srco"></image> -->
                 <text class="iconFont" :class="[navIndex == 'my' ? 'nav-image-active' : 'nav-image']">&#xe612;</text>
                 <text :class="[navIndex == 'my' ? 'nav-cn-active' : 'nav-cn']">我的</text>
-            </li>
-        </ul>
+            </div>
+        </div>
     </div>
 </template>
 <script>

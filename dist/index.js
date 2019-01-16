@@ -62,25 +62,271 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 1);
+/******/ 	return __webpack_require__(__webpack_require__.s = 3);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
 /***/ (function(module, exports, __webpack_require__) {
 
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+var Storage = __webpack_require__(1);
+var stream = weex.requireModule('stream');
+var navigator = weex.requireModule('navigator');
+var modal = weex.requireModule('modal');
+var AJAX_URL = 'http://47.92.164.211:8011/';
+var utils = {
+    // 发送请求
+    WeexAjax: function WeexAjax(obj) {
+        var me = this;
+        var URL = obj.url;
+        var Result = "loding...";
+        if (obj.method == 'POST' || obj.method == 'GET') {
+            stream.fetch({
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': 'Bearer ' + obj.token },
+                method: obj.method,
+                url: AJAX_URL + URL,
+                type: obj.type,
+                // body: 'MobilePhone='+this.loginValue.name
+                // 拼接字符串
+                body: me.toParams(obj.body)
+            }, function (res) {
+                if (!res.ok) {
+                    me.Result = "request failed";
+                    // me.loginTip = '请求错误,请重试!'
+                } else {
+                    // 返回相应内容
+                    var rets = me.JsonFormat(res.data);
+                    // console.log(rets.Status)
+                    obj.callback(rets);
+                }
+            }, function (response) {});
+        } else {
+            console.log('请求方式错误');
+        }
+    },
+
+    // body请求主体转换函数
+    toParams: function toParams(obj) {
+        var param = "";
+        for (var name in obj) {
+            if (typeof obj[name] != 'function') {
+                param += "&" + name + "=" + encodeURI(obj[name]);
+            }
+        }
+        return param.substring(1);
+    },
+
+    // 不同的设备json解析不同
+    JsonFormat: function JsonFormat(msg) {
+        var rest = {};
+        if (this.device() == 0 || this.device() == 2) {
+            rest = JSON.parse(msg);
+        } else if (this.device() == 1) {
+            rest = eval(msg);
+        } else {
+            rest = msg;
+        }
+        return rest;
+    },
+
+    // 页面跳转navigation
+    jump: function jump(href, event) {
+        var bundleUrl = this.bundleUrl;
+        var url = decodeURI(weex.config.bundleUrl); //取得整个地址栏
+        var result = url.match(new RegExp("[a-zA-z]+://[^\s]{19}", "g"));
+        if (WXEnvironment.platform === 'Web') {
+            console.warn('Web端跳转待开发');
+            // window.location.href = 'http://192.168.1.103:8082/src/components/other/find.vue'
+            // window.location.href = href
+        } else {
+            navigator.push({
+                // url: '../../../dist/components/other/find.js',
+                url: result + 'dist/' + href,
+                // url: 'http://192.168.1.104:8082/dist/components/other/find.js',
+                animated: "true"
+            }, function (event) {
+                // modal.toast({ message: 'callback: ' + event })
+            });
+        }
+    },
+
+    //跳转延迟
+    NavigatUrl: function NavigatUrl(obj) {
+        var self = this;
+        modal.toast({
+            message: obj.message,
+            duration: obj.duration
+        });
+        setTimeout(function () {
+            self.bindThis(self.jump(obj.urls), obj._this);
+        }, obj.duration);
+    },
+
+    // 判断当前处于哪个设备
+    device: function device() {
+        if (WXEnvironment.platform === 'android') {
+            // console.log('Android')
+            return 0;
+        } else if (WXEnvironment.platform === 'iOS') {
+            // console.log('iOS')
+            return 1;
+        } else {
+            // console.log('Web')
+            return 2;
+        }
+    },
+
+    // 改变this指向问题
+    bindThis: function bindThis(f, oTarget) {
+        return function () {
+            return f.apply(oTarget, arguments);
+        };
+    },
+    analAjax: function analAjax() {
+        var url = decodeURI(weex.config.bundleUrl); //取得整个地址栏
+        var result = url.match(new RegExp(/\?\w*\=\w(\&\w*\=\w*)*/, "g"))[0].slice(1);
+        var key = result.match(new RegExp(/\w*\=/, "g"));
+        var value = result.match(new RegExp(/\=\w*/, "g"));
+        var warp = {};
+        for (var indexes in value) {
+            key[indexes] = key[indexes].slice(0, key[indexes].length - 1);
+            value[indexes] = value[indexes].slice(1);
+            warp[key[indexes]] = value[indexes];
+        }
+        return warp;
+    }
+};
+exports.default = utils;
+
+// login () {
+//   navigator.push({url:this.getJumpBaseUrl('login')})
+// },
+// getJumpBaseUrl(toUrl) {  
+//  console.log(1)
+//     var bundleUrl = weex.config.bundleUrl;  
+//     bundleUrl = new String(bundleUrl);  
+//     var nativeBase;  
+//     var native;  
+//     if (WXEnvironment.platform === 'Android') {
+//      console.log('Android')  
+//         nativeBase = 'file://assets/dist/';  
+//         native = nativeBase + toUrl + ".js";  
+//     } else if (WXEnvironment.platform === 'iOS') {  
+//      console.log('iOS')  
+//         nativeBase = bundleUrl.substring(0, bundleUrl.lastIndexOf('/') + 1);  
+//         native = nativeBase + toUrl + ".js";  
+//     } else {  
+//      console.log('Web')  
+//         var host = 'localhost:8082';  
+//         var matches = /\/\/([^\/]+?)\//.exec(bundleUrl);  
+//         if (matches && matches.length >= 2) {  
+//             host = matches[1];  
+//         }  
+
+//         //此处需注意一下,tabbar 用的直接是jsbundle 的路径,但是navigator是直接跳转到新页面上的.  
+//         if (typeof window === 'object') {  
+//             nativeBase = 'http://' + host + '/';  
+//             console.log(nativeBase+'---1')
+//         } else {  
+//             nativeBase = 'http://' + host + '/';  
+//             console.log(nativeBase+'---2')
+//         }  
+
+//         native = nativeBase + toUrl + ".html";  
+//         console.log(native+'---3')
+//     }  
+//     return native;  
+// },
+
+/***/ }),
+/* 1 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+var Util = __webpack_require__(0);
+var storage = weex.requireModule('storage');
+var modal = weex.requireModule('modal');
+var AIstorage = {
+    // 存入到手机储存中
+    setItems: function setItems(obj) {
+        for (var item in obj) {
+            storage.setItem(item, obj[item], function (event) {
+                console.log('set success');
+            });
+        }
+    },
+
+    // 获取
+    getItems: function getItems(obj) {
+        var arr = '';
+        storage.getItem(obj.value, function (event) {
+            arr = event.data;
+            obj.callback(arr);
+        });
+        return arr;
+    },
+
+    // getItems(obj) {
+    //     let arr = {};
+    //     for(var i = 0; i < arguments.length; i++){
+    //         arr[arguments[i]] = storage.getItem(arguments[i], event => {
+    //             arr[arguments[i]] = event.data;
+    //             console.log(arr)
+    //         })
+    //     }
+    //     return arr;
+    // },
+    // 移除
+    removeItem: function removeItem(name) {
+        var _this = this;
+
+        storage.removeItem(name, function (event) {
+            console.log('delete value:', event.data);
+            _this.state = 'deleted';
+        });
+    },
+
+    // 全部移除
+    getAll: function getAll() {
+        storage.getAllKeys(function (event) {
+            // modal.toast({ message: event.result })
+            if (event.result === 'success') {
+                modal.toast({
+                    message: 'props: ' + event.data.join(', ')
+                });
+            }
+        });
+    }
+};
+exports.default = AIstorage;
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
 var __vue_exports__, __vue_options__
 var __vue_styles__ = []
 
 /* styles */
-__vue_styles__.push(__webpack_require__(27)
+__vue_styles__.push(__webpack_require__(43)
 )
 
 /* script */
-__vue_exports__ = __webpack_require__(28)
+__vue_exports__ = __webpack_require__(44)
 
 /* template */
-var __vue_template__ = __webpack_require__(39)
+var __vue_template__ = __webpack_require__(55)
 __vue_options__ = __vue_exports__ = __vue_exports__ || {}
 if (
   typeof __vue_exports__.default === "object" ||
@@ -110,7 +356,7 @@ module.exports = __vue_exports__
 
 
 /***/ }),
-/* 1 */
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -119,41 +365,62 @@ module.exports = __vue_exports__
 /*global Vue*/
 // import router from './router'
 /* weex initialized here, please do not move this line */
-var router = __webpack_require__(2);
-var App = __webpack_require__(51);
-// const App = require('@/components/goods/goods.vue');
+var router = __webpack_require__(4);
+var App = __webpack_require__(71);
+// const App = require('@/components/class/class.vue');//分类
+// const App = require('@/components/shop/shop.vue');//购物
+// const App = require('@/components/shop/setlemet.vue');//
+// const App = require('@/components/my/my.vue');//我的
+// const App = require('@/components/other/find.vue');//发现
+// const App = require('@/components/other/congratulate.vue');//新年贺岁
+// const App = require('@/components/seafood/seafood.vue');//海鲜水产
+// const App = require('@/components/sign/signInfo.vue');//签到记录
+// const App = require('@/components/sign/sign.vue');//签到
+// const App = require('@/components/search/search.vue');//搜索页面
+// const App = require('@/components/collection/collection.vue');//我的收藏
+// const App = require('@/components/coupon/coupon.vue');//优惠券
+// const App = require('@/components/coupon/myCoupon.vue');//我的优惠券
+// const App = require('@/components/information/information.vue');//信息通知
+// const App = require('@/components/reward/reward.vue');//我的奖励
+// const App = require('@/components/register/register.vue');//注册
+// const App = require('@/components/login/login.vue');//登录
+// const App = require('@/components/map/map.vue');//测试
 /* eslint-disable no-new */
 new Vue(Vue.util.extend({ el: '#root', router: router }, App));
 router.push('/');
 
+// ///////////////////////////////////////////////////
+// 
+// weex compile src dist编辑文件生成对应的js入口文件 实现页面的跳转
+
 /***/ }),
-/* 2 */
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _vueRouter = __webpack_require__(3);
+var _vueRouter = __webpack_require__(5);
 
 var _vueRouter2 = _interopRequireDefault(_vueRouter);
 
-var _home = __webpack_require__(4);
+var _home = __webpack_require__(6);
 
 var _home2 = _interopRequireDefault(_home);
 
-var _class = __webpack_require__(12);
+var _class = __webpack_require__(14);
 
 var _class2 = _interopRequireDefault(_class);
 
-var _shop = __webpack_require__(16);
+var _shop = __webpack_require__(32);
 
 var _shop2 = _interopRequireDefault(_shop);
 
-var _goods = __webpack_require__(43);
+var _goods = __webpack_require__(63);
 
 var _goods2 = _interopRequireDefault(_goods);
 
-var _my = __webpack_require__(47);
+var _my = __webpack_require__(67);
 
 var _my2 = _interopRequireDefault(_my);
 
@@ -185,7 +452,7 @@ module.exports = new _vueRouter2.default({
 });
 
 /***/ }),
-/* 3 */
+/* 5 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2811,21 +3078,21 @@ if (inBrowser && window.Vue) {
 
 
 /***/ }),
-/* 4 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __vue_exports__, __vue_options__
 var __vue_styles__ = []
 
 /* styles */
-__vue_styles__.push(__webpack_require__(5)
+__vue_styles__.push(__webpack_require__(7)
 )
 
 /* script */
-__vue_exports__ = __webpack_require__(6)
+__vue_exports__ = __webpack_require__(8)
 
 /* template */
-var __vue_template__ = __webpack_require__(11)
+var __vue_template__ = __webpack_require__(13)
 __vue_options__ = __vue_exports__ = __vue_exports__ || {}
 if (
   typeof __vue_exports__.default === "object" ||
@@ -2855,7 +3122,7 @@ module.exports = __vue_exports__
 
 
 /***/ }),
-/* 5 */
+/* 7 */
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -3113,377 +3380,287 @@ module.exports = {
 }
 
 /***/ }),
-/* 6 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 Object.defineProperty(exports, "__esModule", {
-	value: true
+    value: true
 });
 
-var _header = __webpack_require__(7);
+var _header = __webpack_require__(9);
 
 var _header2 = _interopRequireDefault(_header);
 
+var _utils = __webpack_require__(0);
+
+var _utils2 = _interopRequireDefault(_utils);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+var HOME_URL = 'api/basic/gethomepage';
 exports.default = {
-	data: function data() {
-		return {
-			refreshing: false, //下拉刷新
-			loadinging: false, //上拉加载
-			panels: 1,
-			autoPlay: true, //轮播图是否自动播放
-			bannerList: [{
-				url: '../src/components/home/banner.png'
-			}, {
-				url: '../src/components/home/banner.png'
-			}, {
-				url: '../src/components/home/banner.png'
-			}, {
-				url: '../src/components/home/banner.png'
-			}],
-			navWrapperList: [{
-				id: 1,
-				imageUrl: '../src/components/home/nav_list1.png',
-				names: '今日特价1'
-			}, {
-				id: 2,
-				imageUrl: '../src/components/home/nav_list2.png',
-				names: '新品抢先1'
-			}, {
-				id: 3,
-				imageUrl: '../src/components/home/nav_list3.png',
-				names: '网络最红'
-			}, {
-				id: 4,
-				imageUrl: '../src/components/home/nav_list4.png',
-				names: '海鲜水产'
-			}, {
-				id: 5,
-				imageUrl: '../src/components/home/nav_list5.png',
-				names: '幸运抽奖'
-			}, {
-				id: 1,
-				imageUrl: '../src/components/home/nav_list1.png',
-				names: '今日特价2'
-			}, {
-				id: 2,
-				imageUrl: '../src/components/home/nav_list2.png',
-				names: '新品抢先2'
-			}, {
-				id: 3,
-				imageUrl: '../src/components/home/nav_list3.png',
-				names: '网络最红'
-			}, {
-				id: 4,
-				imageUrl: '../src/components/home/nav_list4.png',
-				names: '海鲜水产'
-			}, {
-				id: 5,
-				imageUrl: '../src/components/home/nav_list5.png',
-				names: '幸运抽奖'
-			}, {
-				id: 1,
-				imageUrl: '../src/components/home/nav_list1.png',
-				names: '今日特价3'
-			}, {
-				id: 2,
-				imageUrl: '../src/components/home/nav_list2.png',
-				names: '新品抢先3'
-			}, {
-				id: 3,
-				imageUrl: '../src/components/home/nav_list3.png',
-				names: '网络最红'
-			}, {
-				id: 4,
-				imageUrl: '../src/components/home/nav_list4.png',
-				names: '海鲜水产'
-			}, {
-				id: 5,
-				imageUrl: '../src/components/home/nav_list5.png',
-				names: '幸运抽奖'
-			}, {
-				id: 1,
-				imageUrl: '../src/components/home/nav_list1.png',
-				names: '今日特价4'
-			}, {
-				id: 2,
-				imageUrl: '../src/components/home/nav_list2.png',
-				names: '新品抢先4'
-			}, {
-				id: 3,
-				imageUrl: '../src/components/home/nav_list3.png',
-				names: '网络最红'
-			}, {
-				id: 4,
-				imageUrl: '../src/components/home/nav_list4.png',
-				names: '海鲜水产'
-			}, {
-				id: 5,
-				imageUrl: '../src/components/home/nav_list5.png',
-				names: '幸运抽奖'
-			}, {
-				id: 1,
-				imageUrl: '../src/components/home/nav_list1.png',
-				names: '今日特价5'
-			}, {
-				id: 2,
-				imageUrl: '../src/components/home/nav_list2.png',
-				names: '新品抢先5'
-			}, {
-				id: 3,
-				imageUrl: '../src/components/home/nav_list3.png',
-				names: '网络最红'
-			}, {
-				id: 4,
-				imageUrl: '../src/components/home/nav_list4.png',
-				names: '海鲜水产'
-			}, {
-				id: 5,
-				imageUrl: '../src/components/home/nav_list5.png',
-				names: '幸运抽奖'
-			}, {
-				id: 1,
-				imageUrl: '../src/components/home/nav_list1.png',
-				names: '今日特价6'
-			}, {
-				id: 2,
-				imageUrl: '../src/components/home/nav_list2.png',
-				names: '新品抢先6'
-			}, {
-				id: 3,
-				imageUrl: '../src/components/home/nav_list3.png',
-				names: '网络最红'
-			}, {
-				id: 4,
-				imageUrl: '../src/components/home/nav_list4.png',
-				names: '海鲜水产'
-			}, {
-				id: 5,
-				imageUrl: '../src/components/home/nav_list5.png',
-				names: '幸运抽奖'
-			}, {
-				id: 1,
-				imageUrl: '../src/components/home/nav_list1.png',
-				names: '今日特价7'
-			}, {
-				id: 2,
-				imageUrl: '../src/components/home/nav_list2.png',
-				names: '新品抢先7'
-			}, {
-				id: 3,
-				imageUrl: '../src/components/home/nav_list3.png',
-				names: '网络最红'
-			}, {
-				id: 4,
-				imageUrl: '../src/components/home/nav_list4.png',
-				names: '海鲜水产'
-			}, {
-				id: 5,
-				imageUrl: '../src/components/home/nav_list5.png',
-				names: '幸运抽奖'
-			}, {
-				id: 1,
-				imageUrl: '../src/components/home/nav_list1.png',
-				names: '今日特价4'
-			}, {
-				id: 2,
-				imageUrl: '../src/components/home/nav_list2.png',
-				names: '新品抢先4'
-			}, {
-				id: 3,
-				imageUrl: '../src/components/home/nav_list3.png',
-				names: '网络最红'
-			}, {
-				id: 4,
-				imageUrl: '../src/components/home/nav_list4.png',
-				names: '海鲜水产'
-			}, {
-				id: 5,
-				imageUrl: '../src/components/home/nav_list5.png',
-				names: '幸运抽奖'
-			}],
-			service: {
-				wechatImage: '../src/components/home/wechatBg.png',
-				wechat: '../src/components/home/wechat.png',
-				telImage: '../src/components/home/phone.png',
-				names: '绿白菜 • 滨湖春融苑店',
-				linkr: '扫码添加微信实惠更多>',
-				telName: '服务热线',
-				telNum: '400-1000-000'
-			},
-			foodWrapper: {
-				shopCar: '../src/components/home/shop-car.png',
-				foodLists: [{
-					urlImage: '../src/components/home/food_01.png',
-					foodName: '荷兰豆',
-					foodWeight: '1000',
-					price: '5.38',
-					allMoney: '18.85'
-				}, {
-					urlImage: '../src/components/home/food_02.png',
-					foodName: '荷兰豆',
-					foodWeight: '1000',
-					price: '5.38',
-					allMoney: '18.85'
-				}, {
-					urlImage: '../src/components/home/food_03.png',
-					foodName: '荷兰豆',
-					foodWeight: '1000',
-					price: '5.38',
-					allMoney: '18.85'
-				}, {
-					urlImage: '../src/components/home/food_04.png',
-					foodName: '荷兰豆',
-					foodWeight: '1000',
-					price: '5.38',
-					allMoney: '18.85'
-				}]
-			}
-		};
-	},
+    data: function data() {
+        return {
+            refreshing: false, //下拉刷新
+            loadinging: false, //上拉加载
+            panels: 1,
+            autoPlay: true, //轮播图是否自动播放
+            homeArr: {},
+            bannerList: [{
+                url: '../src/components/home/banner.png'
+            }, {
+                url: '../src/components/home/banner.png'
+            }, {
+                url: '../src/components/home/banner.png'
+            }, {
+                url: '../src/components/home/banner.png'
+            }],
+            nav: {
+                navWrapperList: []
+            },
+            service: {
+                wechatImage: '../src/components/home/wechatBg.png',
+                wechat: '../src/components/home/wechat.png',
+                telImage: '../src/components/home/phone.png',
+                names: '绿白菜 • 滨湖春融苑店',
+                linkr: '扫码添加微信实惠更多>',
+                telName: '服务热线',
+                telNum: '400-1000-000'
+            },
+            foodWrapper: {
+                shopCar: '../src/components/home/shop-car.png',
+                foodLists: [{
+                    urlImage: '../src/components/home/food_01.png',
+                    foodName: '荷兰豆',
+                    foodWeight: '1000',
+                    price: '5.38',
+                    allMoney: '18.85'
+                }, {
+                    urlImage: '../src/components/home/food_02.png',
+                    foodName: '荷兰豆',
+                    foodWeight: '1000',
+                    price: '5.38',
+                    allMoney: '18.85'
+                }, {
+                    urlImage: '../src/components/home/food_03.png',
+                    foodName: '荷兰豆',
+                    foodWeight: '1000',
+                    price: '5.38',
+                    allMoney: '18.85'
+                }, {
+                    urlImage: '../src/components/home/food_04.png',
+                    foodName: '荷兰豆',
+                    foodWeight: '1000',
+                    price: '5.38',
+                    allMoney: '18.85'
+                }]
+            }
+        };
+    },
 
-	methods: {
-		onrefresh: function onrefresh() {
-			var _this = this;
+    methods: {
+        onrefresh: function onrefresh() {
+            var _this2 = this;
 
-			this.refreshing = true;
-			setTimeout(function () {
-				_this.refreshing = false;
-			}, 2000);
-		},
-		onloading: function onloading() {
-			var _this2 = this;
+            this.refreshing = true;
+            setTimeout(function () {
+                _this2.refreshing = false;
+            }, 2000);
+        },
+        onloading: function onloading() {
+            var _this3 = this;
 
-			this.loadinging = true;
-			setTimeout(function () {
-				_this2.loadinging = false;
-			}, 2000);
-		},
-		panel: function panel() {
-			this.panels = this.navWrapperList.length / 10;
-			console.log(this.panels);
-		}
-	},
-	components: {
-		'v-header': _header2.default
-	},
-	mounted: function mounted() {
-		this.$nextTick(function () {
-			// this.panel();
-		});
-	}
-}; //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+            this.loadinging = true;
+            setTimeout(function () {
+                _this3.loadinging = false;
+            }, 2000);
+        },
+        panel: function panel() {
+            this.panels = this.navWrapperList.length / 10;
+            console.log(this.panels);
+        },
+        jump: function jump(href) {
+            _utils2.default.bindThis(_utils2.default.jump(href), this.$getConfig());
+        }
+    },
+    components: {
+        'v-header': _header2.default
+    },
+    created: function created() {
+        var _this = this;
+        _utils2.default.WeexAjax({
+            url: HOME_URL,
+            method: 'GET',
+            type: 'JSON',
+            callback: function callback(ret) {
+                var rets = ret;
+                console.log(ret);
+                if (rets.Status == 1) {
+                    _this.homeArr = ret.obj;
+                    var TopCategoryList = _this.homeArr.TopCategoryList;
+                    var index = 0,
+                        fre = TopCategoryList.length / 10;
+                    for (var i = 0; i < fre; i++) {
+                        // 十次一个循环
+                        var arr = [];
+                        for (var j = 0; j < 10; j++) {
+                            if (TopCategoryList[index]) {
+                                arr.push(TopCategoryList[index]);
+                            } else {
+                                break;
+                            }
+                            index++;
+                        }
+                        _this.nav.navWrapperList.push(arr);
+                        // console.log(_this.nav.navWrapperList)
+                    }
+                }
+            }
+        });
+    },
+
+    filters: {
+        droller: function droller(msg) {
+            return msg.toFixed(2);
+        }
+    }
+};
 
 /***/ }),
-/* 7 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __vue_exports__, __vue_options__
 var __vue_styles__ = []
 
 /* styles */
-__vue_styles__.push(__webpack_require__(8)
+__vue_styles__.push(__webpack_require__(10)
 )
 
 /* script */
-__vue_exports__ = __webpack_require__(9)
+__vue_exports__ = __webpack_require__(11)
 
 /* template */
-var __vue_template__ = __webpack_require__(10)
+var __vue_template__ = __webpack_require__(12)
 __vue_options__ = __vue_exports__ = __vue_exports__ || {}
 if (
   typeof __vue_exports__.default === "object" ||
@@ -3513,7 +3690,7 @@ module.exports = __vue_exports__
 
 
 /***/ }),
-/* 8 */
+/* 10 */
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -3569,7 +3746,7 @@ module.exports = {
 }
 
 /***/ }),
-/* 9 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3578,21 +3755,12 @@ module.exports = {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+
+var _utils = __webpack_require__(0);
+
+var _utils2 = _interopRequireDefault(_utils);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = {
   data: function data() {
@@ -3604,11 +3772,31 @@ exports.default = {
       scan: "../src/components/header/scan.png", // 扫一扫图标
       position: '合肥市滨湖春融苑店'
     };
+  },
+
+  methods: {
+    jump: function jump() {
+      // Utils.bindThis(Utils.jump('components/register/register.js'),this.$getConfig())
+    }
   }
-};
+}; //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /***/ }),
-/* 10 */
+/* 12 */
 /***/ (function(module, exports) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -3622,6 +3810,11 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: ["_logo"],
     attrs: {
       "src": _vm.logo
+    },
+    on: {
+      "click": function($event) {
+        _vm.jump()
+      }
     }
   }), _c('div', {
     staticClass: ["address-wrapper"]
@@ -3658,7 +3851,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
 module.exports.render._withStripped = true
 
 /***/ }),
-/* 11 */
+/* 13 */
 /***/ (function(module, exports) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -3686,13 +3879,13 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "autoPlay": "autoPlay",
       "interval": "4000"
     }
-  }, [_vm._l((_vm.bannerList), function(banner) {
+  }, [_vm._l((_vm.homeArr.BannerList), function(banner) {
     return _c('div', {
       staticClass: ["banner-list", "list-box-child"]
     }, [_c('image', {
       staticClass: ["_banner"],
       attrs: {
-        "src": banner.url
+        "src": banner.ImageUrl
       }
     })])
   }), _c('indicator', {
@@ -3704,21 +3897,27 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_c('slider', {
     staticClass: ["list-box", "fication-wrapper"]
-  }, [_vm._l((_vm.panels), function(item) {
-    return _c('ul', {
+  }, [_vm._l((_vm.nav.navWrapperList), function(item, cindex) {
+    return _c('div', {
+      key: cindex,
       staticClass: ["fication-wrapper-list", "list-box-child"]
-    }, _vm._l((_vm.navWrapperList), function(list, index) {
-      return (index < 10) ? _c('li', {
+    }, _vm._l((_vm.nav.navWrapperList[cindex]), function(list, index) {
+      return _c('div', {
         key: index,
-        staticClass: ["fication-wrapper-list-child"]
+        staticClass: ["fication-wrapper-list-child"],
+        on: {
+          "click": function($event) {
+            _vm.jump('components/seafood/seafood.js?CategoryId=' + list.CategoryId)
+          }
+        }
       }, [_c('image', {
         staticClass: ["_fication"],
         attrs: {
-          "src": list.imageUrl
+          "src": list.TopImageUrl
         }
       }), _c('text', {
         staticClass: ["fication-name"]
-      }, [_vm._v(_vm._s(list.names))])]) : _vm._e()
+      }, [_vm._v(_vm._s(list.CategoryName))])])
     }))
   }), _c('indicator', {
     staticClass: ["indicator", "fication-indicator"]
@@ -3756,56 +3955,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: ["telName"]
   }, [_vm._v(_vm._s(_vm.service.telName))]), _c('text', {
     staticClass: ["telNum"]
-  }, [_vm._v(_vm._s(_vm.service.telNum))])])])])]), _vm._m(0), _vm._m(1), _c('cell', {
-    appendAsTree: true,
-    attrs: {
-      "append": "tree"
-    }
-  }, [_c('ul', {
-    staticClass: ["list-box", "foot-list-wrapper"]
-  }, _vm._l((_vm.foodWrapper.foodLists), function(foodList) {
-    return _c('li', {
-      staticClass: ["foot-list"]
-    }, [_c('div', {
-      staticClass: ["image-box"]
-    }, [_c('image', {
-      staticClass: ["food-image"],
-      attrs: {
-        "src": foodList.urlImage
-      }
-    })]), _c('div', {
-      staticClass: ["food-shop-wrapper"]
-    }, [_c('div', {
-      staticClass: ["food-name-wrapper"]
-    }, [_c('text', {
-      staticClass: ["foot-shop-name"]
-    }, [_vm._v(_vm._s(foodList.foodName) + "  " + _vm._s(foodList.foodWeight) + "g")])]), _c('div', {
-      staticClass: ["foot-dollar-wrapper"]
-    }, [_c('text', {
-      staticClass: ["foot-dollar"]
-    }, [_vm._v("￥" + _vm._s(foodList.price))]), _c('text', {
-      staticClass: ["foot-more-money"]
-    }, [_vm._v("￥" + _vm._s(foodList.allMoney))]), _c('image', {
-      staticClass: ["foot-shop-car"],
-      attrs: {
-        "src": "../src/components/home/shop-car.png"
-      }
-    })])])])
-  }))], 1), _c('loading', {
-    staticClass: ["loading"],
-    attrs: {
-      "display": _vm.loadinging ? 'show' : 'hide'
-    },
-    on: {
-      "loading": _vm.onloading
-    }
-  }, [_c('text', {
-    staticClass: ["loading"]
-  }, [_vm._v("加载更多...")]), _c('loading-indicator', {
-    staticClass: ["indicators"]
-  })])])], 1)
-},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('cell', {
+  }, [_vm._v(_vm._s(_vm.service.telNum))])])])])]), _c('cell', {
     appendAsTree: true,
     attrs: {
       "append": "tree"
@@ -3819,21 +3969,125 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('image', {
     staticClass: ["foods-image", "foods-image-one"],
     attrs: {
-      "src": "../src/components/home/food-icon-1.png"
+      "src": _vm.homeArr.RegionCategoryList[0].RegionImageUrl
     }
   })]), _c('div', {
     staticClass: ["foods-wrapper-list", "foods-wrapper-list-two"]
   }, [_c('image', {
     staticClass: ["foods-image"],
     attrs: {
-      "src": "../src/components/home/food-icon-2.png"
+      "src": _vm.homeArr.RegionCategoryList[1].RegionImageUrl
     }
   }), _c('image', {
     staticClass: ["foods-image"],
     attrs: {
       "src": "../src/components/home/food-icon-2.png"
     }
-  })])]), _c('div', {
+  })])]), _vm._m(0)])]), _vm._l((_vm.homeArr.HotCategoryProdctListList), function(foodList, index) {
+    return _c('cell', {
+      key: index,
+      appendAsTree: true,
+      attrs: {
+        "append": "tree"
+      }
+    }, [_c('div', {
+      staticClass: ["list-box"]
+    }, [_c('image', {
+      staticClass: ["food-bg-image"],
+      attrs: {
+        "src": foodList.ImageUrl
+      }
+    })]), _c('div', {
+      staticClass: ["list-box", "foot-list-wrapper"]
+    }, _vm._l((_vm.homeArr.HotCategoryProdctListList[index].ProductsList), function(food) {
+      return _c('div', {
+        staticClass: ["foot-list"]
+      }, [_c('div', {
+        staticClass: ["image-box"]
+      }, [_c('image', {
+        staticClass: ["food-image"],
+        attrs: {
+          "src": food.ImageUrl
+        }
+      })]), _c('div', {
+        staticClass: ["food-shop-wrapper"]
+      }, [_c('div', {
+        staticClass: ["food-name-wrapper"]
+      }, [_c('text', {
+        staticClass: ["foot-shop-name"]
+      }, [_vm._v(_vm._s(food.ProductName) + "  " + _vm._s(food.Weight))])]), _c('div', {
+        staticClass: ["foot-dollar-wrapper"]
+      }, [_c('text', {
+        staticClass: ["foot-dollar"]
+      }, [_vm._v("￥" + _vm._s(_vm._f("droller")(food.SalesPrice)))]), _c('text', {
+        staticClass: ["foot-more-money"]
+      }, [_vm._v("￥" + _vm._s(_vm._f("droller")(food.Price)))]), _c('image', {
+        staticClass: ["foot-shop-car"],
+        attrs: {
+          "src": "../src/components/home/shop-car.png"
+        }
+      })])])])
+    }))])
+  }), _vm._l((_vm.homeArr.HotCategoryProdctListList), function(foodList, index) {
+    return _c('cell', {
+      key: index,
+      appendAsTree: true,
+      attrs: {
+        "append": "tree"
+      }
+    }, [_c('div', {
+      staticClass: ["list-box"]
+    }, [_c('image', {
+      staticClass: ["food-bg-image"],
+      attrs: {
+        "src": foodList.ImageUrl
+      }
+    })]), _c('div', {
+      staticClass: ["list-box", "foot-list-wrapper"]
+    }, _vm._l((_vm.homeArr.HotCategoryProdctListList[index].ProductsList), function(food) {
+      return _c('div', {
+        staticClass: ["foot-list"]
+      }, [_c('div', {
+        staticClass: ["image-box"]
+      }, [_c('image', {
+        staticClass: ["food-image"],
+        attrs: {
+          "src": food.ImageUrl
+        }
+      })]), _c('div', {
+        staticClass: ["food-shop-wrapper"]
+      }, [_c('div', {
+        staticClass: ["food-name-wrapper"]
+      }, [_c('text', {
+        staticClass: ["foot-shop-name"]
+      }, [_vm._v(_vm._s(food.ProductName) + "  " + _vm._s(food.Weight))])]), _c('div', {
+        staticClass: ["foot-dollar-wrapper"]
+      }, [_c('text', {
+        staticClass: ["foot-dollar"]
+      }, [_vm._v("￥" + _vm._s(_vm._f("droller")(food.SalesPrice)))]), _c('text', {
+        staticClass: ["foot-more-money"]
+      }, [_vm._v("￥" + _vm._s(_vm._f("droller")(food.Price)))]), _c('image', {
+        staticClass: ["foot-shop-car"],
+        attrs: {
+          "src": "../src/components/home/shop-car.png"
+        }
+      })])])])
+    }))])
+  }), _vm._v("`\n        "), _c('loading', {
+    staticClass: ["loading"],
+    attrs: {
+      "display": _vm.loadinging ? 'show' : 'hide'
+    },
+    on: {
+      "loading": _vm.onloading
+    }
+  }, [_c('text', {
+    staticClass: ["loading"]
+  }, [_vm._v("加载更多...")]), _c('loading-indicator', {
+    staticClass: ["indicators"]
+  })])], 2)], 1)
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
     staticClass: ["foods-wrapper"]
   }, [_c('div', {
     staticClass: ["foods-wrapper-list"]
@@ -3849,40 +4103,26 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "src": "../src/components/home/food-icon-2.png"
     }
-  })])])])])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('cell', {
-    appendAsTree: true,
-    attrs: {
-      "append": "tree"
-    }
-  }, [_c('div', {
-    staticClass: ["list-box"]
-  }, [_c('image', {
-    staticClass: ["food-bg-image"],
-    attrs: {
-      "src": "../src/components/home/food-bg-01.png"
-    }
   })])])
 }]}
 module.exports.render._withStripped = true
 
 /***/ }),
-/* 12 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __vue_exports__, __vue_options__
 var __vue_styles__ = []
 
 /* styles */
-__vue_styles__.push(__webpack_require__(13)
+__vue_styles__.push(__webpack_require__(15)
 )
 
 /* script */
-__vue_exports__ = __webpack_require__(14)
+__vue_exports__ = __webpack_require__(16)
 
 /* template */
-var __vue_template__ = __webpack_require__(15)
+var __vue_template__ = __webpack_require__(31)
 __vue_options__ = __vue_exports__ = __vue_exports__ || {}
 if (
   typeof __vue_exports__.default === "object" ||
@@ -3912,50 +4152,1423 @@ module.exports = __vue_exports__
 
 
 /***/ }),
-/* 13 */
-/***/ (function(module, exports) {
-
-module.exports = {}
-
-/***/ }),
-/* 14 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-//
-//
-//
-//
-//
-
-
-/***/ }),
 /* 15 */
 /***/ (function(module, exports) {
 
-module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: ["class"]
-  })
-},staticRenderFns: []}
-module.exports.render._withStripped = true
+module.exports = {
+  "left-nav": {
+    "width": "150"
+  },
+  "nav-list": {
+    "width": "150",
+    "position": "fixed",
+    "top": "90",
+    "left": 0,
+    "bottom": "110",
+    "backgroundColor": "#f6f6f6"
+  },
+  "panel": {
+    "height": "88",
+    "paddingTop": "16",
+    "paddingBottom": "16"
+  },
+  "panel-crt": {
+    "height": "88",
+    "paddingTop": "16",
+    "paddingBottom": "16",
+    "backgroundColor": "#ffffff"
+  },
+  "text": {
+    "fontSize": "24",
+    "lineHeight": "56",
+    "textAlign": "center",
+    "color": "#333333",
+    "borderLeftWidth": "8",
+    "borderLeftStyle": "solid",
+    "borderLeftColor": "rgba(115,204,0,0)"
+  },
+  "text-crt": {
+    "fontSize": "24",
+    "lineHeight": "56",
+    "textAlign": "center",
+    "color": "#41b883",
+    "borderLeftWidth": "8",
+    "borderLeftStyle": "solid",
+    "borderLeftColor": "#73cc00"
+  },
+  "right-box": {
+    "width": "580",
+    "position": "fixed",
+    "top": "90",
+    "bottom": "110",
+    "right": 0
+  },
+  "iconFont": {
+    "fontFamily": "iconfont"
+  },
+  "sec-nav": {
+    "flexDirection": "row"
+  },
+  "sec-nav-list": {
+    "flex": 1,
+    "flexDirection": "row",
+    "height": "88",
+    "paddingTop": "24",
+    "borderBottomWidth": "1",
+    "borderBottomColor": "#d2d2d2",
+    "borderBottomStyle": "solid",
+    "marginRight": "20"
+  },
+  "slideShow": {
+    "width": "80",
+    "height": "88",
+    "position": "absolute",
+    "top": 0,
+    "right": 0
+  },
+  "slideShow-icon": {
+    "fontSize": "50",
+    "color": "#999999",
+    "lineHeight": "88",
+    "textAlign": "center"
+  },
+  "cover": {
+    "width": "600",
+    "position": "fixed",
+    "top": "177",
+    "bottom": "110",
+    "right": "-600",
+    "backgroundColor": "rgba(0,0,0,0.5)",
+    "transitionDuration": 500,
+    "transitionTimingFunction": "ease",
+    "overflow": "hidden"
+  },
+  "@TRANSITION": {
+    "cover": {
+      "duration": 500,
+      "timingFunction": "ease"
+    }
+  },
+  "demo-content": {
+    "backgroundColor": "#ffffff"
+  },
+  "cells": {
+    "height": "40",
+    "paddingLeft": "20",
+    "paddingRight": "20",
+    "borderWidth": "1",
+    "borderColor": "#d2d2d2",
+    "borderStyle": "solid",
+    "marginLeft": "15",
+    "borderRadius": "40"
+  },
+  "slide-list": {
+    "flexDirection": "row",
+    "paddingTop": "10",
+    "paddingBottom": "10"
+  },
+  "slide-list-cell": {
+    "width": "173",
+    "marginLeft": "20",
+    "marginTop": "10",
+    "marginBottom": "10"
+  },
+  "texts": {
+    "fontSize": "22",
+    "lineHeight": "38",
+    "textAlign": "center"
+  },
+  "texts-crt": {
+    "fontSize": "22",
+    "lineHeight": "38",
+    "color": "#41b883",
+    "textAlign": "center"
+  },
+  "product-box": {
+    "width": "580",
+    "position": "fixed",
+    "top": "178",
+    "bottom": "110",
+    "right": 0
+  },
+  "nav-head": {
+    "width": "580",
+    "position": "absolute",
+    "top": 0,
+    "left": 0,
+    "backgroundColor": "#ffffff",
+    "paddingRight": "20"
+  },
+  "nav-title": {
+    "width": "560",
+    "paddingTop": "15",
+    "paddingBottom": "15",
+    "fontSize": "22",
+    "borderBottomWidth": "1",
+    "borderBottomColor": "#d2d2d2",
+    "borderBottomStyle": "solid"
+  },
+  "cellps": {
+    "flexDirection": "row",
+    "borderBottomWidth": "1",
+    "borderBottomColor": "#d2d2d2",
+    "borderBottomStyle": "solid",
+    "paddingTop": "30",
+    "paddingBottom": "30",
+    "marginRight": "20"
+  },
+  "product-img": {
+    "width": "200",
+    "height": "200",
+    "marginRight": "30"
+  },
+  "pro-news": {
+    "flex": 1
+  },
+  "product-title": {
+    "fontSize": "30",
+    "color": "#333333",
+    "marginTop": "20",
+    "textOverflow": "ellipsis",
+    "lines": 1
+  },
+  "product-type-box": {
+    "height": "36",
+    "marginTop": "10"
+  },
+  "product-type": {
+    "width": "80",
+    "fontSize": "20",
+    "lineHeight": "36",
+    "color": "#ffffff",
+    "textAlign": "center",
+    "borderRadius": "5",
+    "backgroundColor": "#cccccc"
+  },
+  "product-types": {
+    "opacity": 0
+  },
+  "pro-m": {
+    "height": "42",
+    "flexDirection": "row",
+    "alignItems": "flex-end"
+  },
+  "product-price": {
+    "fontSize": "30",
+    "fontWeight": "bold",
+    "color": "#f26100",
+    "marginRight": "10"
+  },
+  "product-prices": {
+    "fontSize": "20",
+    "color": "#777777"
+  },
+  "shop-car-icon": {
+    "width": "42",
+    "height": "42",
+    "position": "absolute",
+    "bottom": 0,
+    "right": 0
+  }
+}
 
 /***/ }),
 /* 16 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _wxcPopup = __webpack_require__(17);
+
+var _wxcPopup2 = _interopRequireDefault(_wxcPopup);
+
+var _utils = __webpack_require__(0);
+
+var _utils2 = _interopRequireDefault(_utils);
+
+var _searchHeader = __webpack_require__(27);
+
+var _searchHeader2 = _interopRequireDefault(_searchHeader);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+var dom = weex.requireModule('dom');
+//1.先使用import导入你要在该组件中使用的子组件
+
+var animation = weex.requireModule('animation');
+var modal = weex.requireModule('modal');
+var CLASS_URL = 'api/product/getcagegorylist';
+var SELECT_URL = 'api/product/getprodcutlist?categoryId=';
+exports.default = {
+    data: function data() {
+        return {
+            list: [{
+                title: '速食',
+                id: 1,
+                urls: "../src/json/sushi.json"
+            }, {
+                title: '冲调类',
+                id: 2,
+                urls: "../src/json/chongtiao.json"
+            }, {
+                title: '熟食',
+                id: 3,
+                urls: "../src/json/shushi.json"
+            }],
+            pList: [],
+            //分类数组
+            classArr: {},
+            classsubArr: [],
+            navIndex: 0,
+            navIndexs: 0,
+            bool: true
+        };
+    },
+
+    //2.然后,在components中写入子组件
+    components: { sHeader: _searchHeader2.default, WxcPopup: _wxcPopup2.default },
+    methods: {
+        select: function select(index, categoryId) {
+            var self = this;
+            self.navIndex = index;
+            // console.log(categoryId)
+            // console.log(self.classArr[index].CategoryList)
+            // 获取二级分类
+            // self.classsubArr = self.classArr[index].CategoryList
+            // 获取产品列表
+            _utils2.default.WeexAjax({
+                url: SELECT_URL + categoryId,
+                method: 'GET',
+                type: 'JSON',
+                callback: function callback(ret) {
+                    if (ret.Status == 1) {
+                        var rets = ret.obj;
+                        var map = {},
+                            dest = [];
+                        for (var i = 0; i < rets.length; i++) {
+                            if (!map[rets[i].ChildId]) {
+                                dest.push({
+                                    ChildId: rets[i].ChildId,
+                                    data: [rets[i]]
+                                });
+                                map[rets[i].ChildId] = rets[i];
+                            } else {
+                                for (var j = 0; j < dest.length; j++) {
+                                    if (dest[j].ChildId == rets[i].ChildId) {
+                                        dest[j].data.push(rets[i]);
+                                    }
+                                }
+                            }
+                        }
+                        // console.log(dest);
+                        for (var i = 0; i < self.classArr[self.navIndex].CategoryList.length; i++) {
+                            var aa = self.classArr[self.navIndex].CategoryList[i];
+                            for (var j = 0; j < dest.length; j++) {
+                                var bb = dest[j].ChildId;
+                                if (aa.CategoryId == bb) {
+                                    // console.log(bb.data)
+                                    aa.product = dest[j].data;
+                                }
+                            }
+                        }
+                        self.classsubArr = self.classArr[self.navIndex].CategoryList;
+                        console.log(self.classsubArr);
+                    }
+                }
+            });
+        },
+        selects: function selects(indexs) {
+            console.log(indexs);
+            var testEl = this.$refs.slides;
+            var testEt = this.$refs.slideBtn;
+            this.navIndexs = indexs;
+            var el = this.$refs.item[indexs];
+            console.log(this.$refs.item[indexs].clientHeight);
+            dom.scrollToElement(el, {});
+            animation.transition(testEl, {
+                styles: {
+                    transform: 'translateX(0)'
+                },
+                duration: 500, //ms
+                timingFunction: 'ease',
+                delay: 0 //ms
+            });
+            animation.transition(testEt, {
+                styles: {
+                    transform: 'rotateX(0deg)'
+                },
+                duration: 500, //ms
+                timingFunction: 'ease',
+                delay: 0 //ms
+            });
+            this.bool = true;
+        },
+        openCover: function openCover() {
+            var testEl = this.$refs.slides;
+            var testEt = this.$refs.slideBtn;
+            if (this.bool) {
+                animation.transition(testEl, {
+                    styles: {
+                        transform: 'translateX(-600px)'
+                    },
+                    duration: 500, //ms
+                    timingFunction: 'ease',
+                    delay: 0 //ms
+                });
+                animation.transition(testEt, {
+                    styles: {
+                        transform: 'rotateX(180deg)'
+                    },
+                    duration: 500, //ms
+                    timingFunction: 'ease',
+                    delay: 0 //ms
+                });
+                this.bool = false;
+            } else {
+                animation.transition(testEl, {
+                    styles: {
+                        transform: 'translateX(0)'
+                    },
+                    duration: 500, //ms
+                    timingFunction: 'ease',
+                    delay: 0 //ms
+                });
+                animation.transition(testEt, {
+                    styles: {
+                        transform: 'rotateX(0deg)'
+                    },
+                    duration: 500, //ms
+                    timingFunction: 'ease',
+                    delay: 0 //ms
+                });
+                this.bool = true;
+            }
+        },
+
+        //非状态组件，需要在这里关闭
+        closeCover: function closeCover() {
+            var testEl = this.$refs.slides;
+            var testEt = this.$refs.slideBtn;
+            animation.transition(testEl, {
+                styles: {
+                    transform: 'translateX(0)'
+                },
+                duration: 500, //ms
+                timingFunction: 'ease',
+                delay: 0 //ms
+            });
+            animation.transition(testEt, {
+                styles: {
+                    transform: 'rotateX(0deg)'
+                },
+                duration: 500, //ms
+                timingFunction: 'ease',
+                delay: 0 //ms
+            });
+            this.bool = true;
+        }
+    },
+    created: function created() {
+        var _this = this;
+        // 获取右侧列表信息和左侧副标题
+        _utils2.default.WeexAjax({
+            url: CLASS_URL,
+            method: 'GET',
+            type: 'JSON',
+            callback: function callback(ret) {
+                if (ret.Status == 1) {
+                    _this.classArr = ret.obj;
+                    _utils2.default.WeexAjax({
+                        url: SELECT_URL + _this.classArr[0].CategoryId,
+                        method: 'GET',
+                        type: 'JSON',
+                        callback: function callback(ret) {
+                            if (ret.Status == 1) {
+                                var rets = ret.obj;
+                                var map = {},
+                                    dest = [];
+                                for (var i = 0; i < rets.length; i++) {
+                                    if (!map[rets[i].ChildId]) {
+                                        dest.push({
+                                            ChildId: rets[i].ChildId,
+                                            data: [rets[i]]
+                                        });
+                                        map[rets[i].ChildId] = rets[i];
+                                    } else {
+                                        for (var j = 0; j < dest.length; j++) {
+                                            if (dest[j].ChildId == rets[i].ChildId) {
+                                                dest[j].data.push(rets[i]);
+                                            }
+                                        }
+                                    }
+                                }
+                                // console.log(dest);
+                                for (var i = 0; i < _this.classArr[0].CategoryList.length; i++) {
+                                    var aa = _this.classArr[0].CategoryList[i];
+                                    for (var j = 0; j < dest.length; j++) {
+                                        var bb = dest[j].ChildId;
+                                        if (aa.CategoryId == bb) {
+                                            // console.log(bb.data)
+                                            aa.product = dest[j].data;
+                                        }
+                                    }
+                                }
+                                _this.classsubArr = _this.classArr[0].CategoryList;
+                                // console.log(_this.classsubArr)
+                            }
+                        }
+                    });
+                }
+            }
+        });
+        var fontModule = weex.requireModule("dom");
+        fontModule.addRule('fontFace', {
+            'fontFamily': "iconfont",
+            'src': "url('//at.alicdn.com/t/font_948634_gubgm8w1dr.ttf')"
+        });
+    }
+};
+
+/***/ }),
+/* 17 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _index = __webpack_require__(18);
+
+Object.defineProperty(exports, 'default', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_index).default;
+  }
+});
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/***/ }),
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __vue_exports__, __vue_options__
 var __vue_styles__ = []
 
 /* styles */
-__vue_styles__.push(__webpack_require__(17)
+__vue_styles__.push(__webpack_require__(19)
 )
 
 /* script */
-__vue_exports__ = __webpack_require__(18)
+__vue_exports__ = __webpack_require__(20)
 
 /* template */
-var __vue_template__ = __webpack_require__(42)
+var __vue_template__ = __webpack_require__(26)
+__vue_options__ = __vue_exports__ = __vue_exports__ || {}
+if (
+  typeof __vue_exports__.default === "object" ||
+  typeof __vue_exports__.default === "function"
+) {
+if (Object.keys(__vue_exports__).some(function (key) { return key !== "default" && key !== "__esModule" })) {console.error("named exports are not supported in *.vue files.")}
+__vue_options__ = __vue_exports__ = __vue_exports__.default
+}
+if (typeof __vue_options__ === "function") {
+  __vue_options__ = __vue_options__.options
+}
+__vue_options__.__file = "F:\\WebApp\\cabbage\\node_modules\\weex-ui\\packages\\wxc-popup\\index.vue"
+__vue_options__.render = __vue_template__.render
+__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
+__vue_options__._scopeId = "data-v-ef24f190"
+__vue_options__.style = __vue_options__.style || {}
+__vue_styles__.forEach(function (module) {
+  for (var name in module) {
+    __vue_options__.style[name] = module[name]
+  }
+})
+if (typeof __register_static_styles__ === "function") {
+  __register_static_styles__(__vue_options__._scopeId, __vue_styles__)
+}
+
+module.exports = __vue_exports__
+
+
+/***/ }),
+/* 19 */
+/***/ (function(module, exports) {
+
+module.exports = {
+  "wxc-popup": {
+    "position": "fixed",
+    "width": "750"
+  },
+  "top": {
+    "left": 0,
+    "right": 0
+  },
+  "bottom": {
+    "left": 0,
+    "right": 0
+  },
+  "left": {
+    "bottom": 0,
+    "top": 0
+  },
+  "right": {
+    "bottom": 0,
+    "top": 0
+  }
+}
+
+/***/ }),
+/* 20 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+var _wxcOverlay = __webpack_require__(21);
+
+var _wxcOverlay2 = _interopRequireDefault(_wxcOverlay);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+var animation = weex.requireModule('animation');
+var platform = weex.config.env.platform;
+
+var isWeb = (typeof window === 'undefined' ? 'undefined' : _typeof(window)) === 'object' && platform.toLowerCase() === 'web';
+exports.default = {
+  components: { WxcOverlay: _wxcOverlay2.default },
+  props: {
+    show: {
+      type: Boolean,
+      default: false
+    },
+    pos: {
+      type: String,
+      default: 'bottom'
+    },
+    popupColor: {
+      type: String,
+      default: '#FFFFFF'
+    },
+    overlayCfg: {
+      type: Object,
+      default: function _default() {
+        return {
+          hasAnimation: true,
+          timingFunction: ['ease-in', 'ease-out'],
+          duration: 300,
+          opacity: 0.6
+        };
+      }
+    },
+    height: {
+      type: [Number, String],
+      default: 840
+    },
+    standOut: {
+      type: [Number, String],
+      default: 0
+    },
+    width: {
+      type: [Number, String],
+      default: 750
+    },
+    animation: {
+      type: Object,
+      default: function _default() {
+        return {
+          timingFunction: 'ease-in'
+        };
+      }
+    }
+  },
+  data: function data() {
+    return {
+      haveOverlay: true,
+      isOverShow: true
+    };
+  },
+  computed: {
+    isNeedShow: function isNeedShow() {
+      var _this = this;
+
+      setTimeout(function () {
+        _this.appearPopup(_this.show);
+      }, 50);
+      return this.show;
+    },
+    _height: function _height() {
+      this.appearPopup(this.show, 150);
+      return this.height;
+    },
+    padStyle: function padStyle() {
+      var pos = this.pos,
+          width = this.width,
+          height = this.height,
+          popupColor = this.popupColor,
+          standOut = this.standOut;
+
+      var stand = parseInt(standOut, 10);
+      var style = {
+        width: width + 'px',
+        backgroundColor: popupColor
+      };
+      pos === 'top' && (style = _extends({}, style, {
+        top: -height + stand + 'px',
+        height: height + 'px'
+      }));
+      pos === 'bottom' && (style = _extends({}, style, {
+        bottom: -height + stand + 'px',
+        height: height + 'px'
+      }));
+      pos === 'left' && (style = _extends({}, style, {
+        left: -width + stand + 'px'
+      }));
+      pos === 'right' && (style = _extends({}, style, {
+        right: -width + stand + 'px'
+      }));
+      return style;
+    }
+  },
+  methods: {
+    handleTouchEnd: function handleTouchEnd(e) {
+      // 在支付宝上面有点击穿透问题
+      var platform = weex.config.env.platform;
+
+      platform === 'Web' && e.preventDefault && e.preventDefault();
+    },
+    hide: function hide() {
+      this.appearPopup(false);
+      this.$refs.overlay.appearOverlay(false);
+    },
+    wxcOverlayBodyClicking: function wxcOverlayBodyClicking() {
+      this.isShow && this.appearPopup(false);
+    },
+    appearPopup: function appearPopup(bool) {
+      var _this2 = this;
+
+      var duration = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 300;
+
+      this.isShow = bool;
+      var popupEl = this.$refs['wxc-popup'];
+      if (!popupEl) {
+        return;
+      }
+      animation.transition(popupEl, _extends({
+        styles: {
+          transform: this.getTransform(this.pos, this.width, this.height, !bool)
+        },
+        duration: duration,
+        delay: 0
+      }, this.animation), function () {
+        if (!bool) {
+          _this2.$emit('wxcPopupOverlayClicked', { pos: _this2.pos });
+        }
+      });
+    },
+    getTransform: function getTransform(pos, width, height, bool) {
+      var _size = pos === 'top' || pos === 'bottom' ? height : width;
+      bool && (_size = 0);
+      var _transform = void 0;
+      switch (pos) {
+        case 'top':
+          _transform = 'translateY(' + _size + 'px)';
+          break;
+        case 'bottom':
+          _transform = 'translateY(-' + _size + 'px)';
+          break;
+        case 'left':
+          _transform = 'translateX(' + _size + 'px)';
+          break;
+        case 'right':
+          _transform = 'translateX(-' + _size + 'px)';
+          break;
+      }
+      return _transform;
+    }
+  }
+};
+
+/***/ }),
+/* 21 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _index = __webpack_require__(22);
+
+Object.defineProperty(exports, 'default', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_index).default;
+  }
+});
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/***/ }),
+/* 22 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __vue_exports__, __vue_options__
+var __vue_styles__ = []
+
+/* styles */
+__vue_styles__.push(__webpack_require__(23)
+)
+
+/* script */
+__vue_exports__ = __webpack_require__(24)
+
+/* template */
+var __vue_template__ = __webpack_require__(25)
+__vue_options__ = __vue_exports__ = __vue_exports__ || {}
+if (
+  typeof __vue_exports__.default === "object" ||
+  typeof __vue_exports__.default === "function"
+) {
+if (Object.keys(__vue_exports__).some(function (key) { return key !== "default" && key !== "__esModule" })) {console.error("named exports are not supported in *.vue files.")}
+__vue_options__ = __vue_exports__ = __vue_exports__.default
+}
+if (typeof __vue_options__ === "function") {
+  __vue_options__ = __vue_options__.options
+}
+__vue_options__.__file = "F:\\WebApp\\cabbage\\node_modules\\weex-ui\\packages\\wxc-overlay\\index.vue"
+__vue_options__.render = __vue_template__.render
+__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
+__vue_options__._scopeId = "data-v-5dc5d348"
+__vue_options__.style = __vue_options__.style || {}
+__vue_styles__.forEach(function (module) {
+  for (var name in module) {
+    __vue_options__.style[name] = module[name]
+  }
+})
+if (typeof __register_static_styles__ === "function") {
+  __register_static_styles__(__vue_options__._scopeId, __vue_styles__)
+}
+
+module.exports = __vue_exports__
+
+
+/***/ }),
+/* 23 */
+/***/ (function(module, exports) {
+
+module.exports = {
+  "wxc-overlay": {
+    "width": "750",
+    "position": "fixed",
+    "left": 0,
+    "top": 0,
+    "bottom": 0,
+    "right": 0
+  }
+}
+
+/***/ }),
+/* 24 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+var animation = weex.requireModule('animation');
+exports.default = {
+  props: {
+    show: {
+      type: Boolean,
+      default: true
+    },
+    hasAnimation: {
+      type: Boolean,
+      default: true
+    },
+    duration: {
+      type: [Number, String],
+      default: 300
+    },
+    timingFunction: {
+      type: Array,
+      default: function _default() {
+        return ['ease-in', 'ease-out'];
+      }
+    },
+    opacity: {
+      type: [Number, String],
+      default: 0.6
+    },
+    canAutoClose: {
+      type: Boolean,
+      default: true
+    }
+  },
+  computed: {
+    overlayStyle: function overlayStyle() {
+      return {
+        opacity: this.hasAnimation ? 0 : 1,
+        backgroundColor: 'rgba(0, 0, 0,' + this.opacity + ')'
+      };
+    },
+    shouldShow: function shouldShow() {
+      var _this = this;
+
+      var show = this.show,
+          hasAnimation = this.hasAnimation;
+
+      hasAnimation && setTimeout(function () {
+        _this.appearOverlay(show);
+      }, 50);
+      return show;
+    }
+  },
+  methods: {
+    overlayClicked: function overlayClicked(e) {
+      this.canAutoClose ? this.appearOverlay(false) : this.$emit('wxcOverlayBodyClicked', {});
+    },
+    appearOverlay: function appearOverlay(bool) {
+      var _this2 = this;
+
+      var duration = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.duration;
+      var hasAnimation = this.hasAnimation,
+          timingFunction = this.timingFunction,
+          canAutoClose = this.canAutoClose;
+
+      var needEmit = !bool && canAutoClose;
+      needEmit && this.$emit('wxcOverlayBodyClicking', {});
+      var overlayEl = this.$refs['wxc-overlay'];
+      if (hasAnimation && overlayEl) {
+        animation.transition(overlayEl, {
+          styles: {
+            opacity: bool ? 1 : 0
+          },
+          duration: duration,
+          timingFunction: timingFunction[bool ? 0 : 1],
+          delay: 0
+        }, function () {
+          needEmit && _this2.$emit('wxcOverlayBodyClicked', {});
+        });
+      } else {
+        needEmit && this.$emit('wxcOverlayBodyClicked', {});
+      }
+    }
+  }
+};
+
+/***/ }),
+/* 25 */
+/***/ (function(module, exports) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', [(_vm.show) ? _c('div', {
+    ref: "wxc-overlay",
+    staticClass: ["wxc-overlay"],
+    style: _vm.overlayStyle,
+    attrs: {
+      "hack": _vm.shouldShow
+    },
+    on: {
+      "click": _vm.overlayClicked
+    }
+  }) : _vm._e()])
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+
+/***/ }),
+/* 26 */
+/***/ (function(module, exports) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', [_c('div', {
+    on: {
+      "touchend": _vm.handleTouchEnd
+    }
+  }, [(_vm.show) ? _c('wxc-overlay', _vm._b({
+    ref: "overlay",
+    attrs: {
+      "show": _vm.haveOverlay && _vm.isOverShow
+    },
+    on: {
+      "wxcOverlayBodyClicking": _vm.wxcOverlayBodyClicking
+    }
+  }, 'wxc-overlay', _vm.overlayCfg, false)) : _vm._e()], 1), (_vm.show) ? _c('div', {
+    ref: "wxc-popup",
+    class: ['wxc-popup', _vm.pos],
+    style: _vm.padStyle,
+    attrs: {
+      "height": _vm._height,
+      "hack": _vm.isNeedShow
+    },
+    on: {
+      "click": function () {}
+    }
+  }, [_vm._t("default")], 2) : _vm._e()])
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+
+/***/ }),
+/* 27 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __vue_exports__, __vue_options__
+var __vue_styles__ = []
+
+/* styles */
+__vue_styles__.push(__webpack_require__(28)
+)
+
+/* script */
+__vue_exports__ = __webpack_require__(29)
+
+/* template */
+var __vue_template__ = __webpack_require__(30)
+__vue_options__ = __vue_exports__ = __vue_exports__ || {}
+if (
+  typeof __vue_exports__.default === "object" ||
+  typeof __vue_exports__.default === "function"
+) {
+if (Object.keys(__vue_exports__).some(function (key) { return key !== "default" && key !== "__esModule" })) {console.error("named exports are not supported in *.vue files.")}
+__vue_options__ = __vue_exports__ = __vue_exports__.default
+}
+if (typeof __vue_options__ === "function") {
+  __vue_options__ = __vue_options__.options
+}
+__vue_options__.__file = "F:\\WebApp\\cabbage\\src\\components\\header\\searchHeader.vue"
+__vue_options__.render = __vue_template__.render
+__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
+__vue_options__._scopeId = "data-v-7409b4f8"
+__vue_options__.style = __vue_options__.style || {}
+__vue_styles__.forEach(function (module) {
+  for (var name in module) {
+    __vue_options__.style[name] = module[name]
+  }
+})
+if (typeof __register_static_styles__ === "function") {
+  __register_static_styles__(__vue_options__._scopeId, __vue_styles__)
+}
+
+module.exports = __vue_exports__
+
+
+/***/ }),
+/* 28 */
+/***/ (function(module, exports) {
+
+module.exports = {
+  "classes-head": {
+    "paddingTop": "17",
+    "paddingBottom": "17",
+    "paddingLeft": "20",
+    "paddingRight": "20",
+    "flexDirection": "row",
+    "backgroundColor": "#73cc00"
+  },
+  "search-box": {
+    "height": "56",
+    "borderRadius": "56",
+    "backgroundColor": "rgba(255,255,255,0.5)",
+    "paddingLeft": "20",
+    "paddingRight": "20",
+    "flex": 1,
+    "flexDirection": "row"
+  },
+  "search-icon": {
+    "width": "32",
+    "height": "32",
+    "marginTop": "12",
+    "marginRight": "15"
+  },
+  "search-text": {
+    "fontSize": "24",
+    "lineHeight": "56",
+    "color": "#ffffff"
+  },
+  "scan-btn": {
+    "width": "42",
+    "marginLeft": "15"
+  },
+  "scan-icon": {
+    "width": "42",
+    "height": "42",
+    "marginTop": "7"
+  }
+}
+
+/***/ }),
+/* 29 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+exports.default = {};
+
+/***/ }),
+/* 30 */
+/***/ (function(module, exports) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _vm._m(0)
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: ["classes-head"]
+  }, [_c('div', {
+    staticClass: ["search-box"]
+  }, [_c('image', {
+    staticClass: ["search-icon"],
+    attrs: {
+      "src": "../src/components/header/search.png"
+    }
+  }), _c('text', {
+    staticClass: ["search-text"]
+  }, [_vm._v("搜索商品名称")])]), _c('div', {
+    staticClass: ["scan-btn"]
+  }, [_c('image', {
+    staticClass: ["scan-icon"],
+    attrs: {
+      "src": "../src/components/header/scan.png"
+    }
+  })])])
+}]}
+module.exports.render._withStripped = true
+
+/***/ }),
+/* 31 */
+/***/ (function(module, exports) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: ["class"]
+  }, [_c('sHeader'), _c('div', {
+    staticClass: ["class-box"]
+  }, [_c('div', {
+    staticClass: ["left-box"]
+  }, [_c('list', {
+    staticClass: ["nav-list"],
+    attrs: {
+      "showScrollbar": "false"
+    }
+  }, _vm._l((_vm.classArr), function(num, index) {
+    return _c('cell', {
+      key: index,
+      staticClass: ["cell"],
+      appendAsTree: true,
+      attrs: {
+        "append": "tree"
+      },
+      on: {
+        "click": function($event) {
+          _vm.select(index, num.CategoryId)
+        }
+      }
+    }, [_c('div', {
+      class: [_vm.navIndex === index ? 'panel-crt' : 'panel']
+    }, [_c('text', {
+      class: [_vm.navIndex === index ? 'text-crt' : 'text']
+    }, [_vm._v(_vm._s(num.CategoryName))])])])
+  }))]), _c('div', {
+    staticClass: ["right-box"]
+  }, [_c('div', {
+    staticClass: ["sec-nav"]
+  }, [_c('scroller', {
+    staticClass: ["sec-nav-list"],
+    attrs: {
+      "showScrollbar": "false",
+      "scrollDirection": "horizontal"
+    }
+  }, _vm._l((_vm.classsubArr), function(nums, indexs) {
+    return _c('div', {
+      key: indexs,
+      staticClass: ["cells"],
+      on: {
+        "click": function($event) {
+          _vm.selects(indexs)
+        }
+      }
+    }, [_c('text', {
+      class: [_vm.navIndexs === indexs ? 'texts-crt' : 'texts']
+    }, [_vm._v(_vm._s(nums.CategoryName))])])
+  })), _c('div', {
+    staticClass: ["slideShow"]
+  }, [_c('text', {
+    ref: "slideBtn",
+    staticClass: ["iconFont", "slideShow-icon"],
+    on: {
+      "click": _vm.openCover
+    }
+  }, [_vm._v("")])])]), _c('div', {
+    staticClass: ["product-box"]
+  }, [_c('scroller', {
+    staticClass: ["product-list"]
+  }, _vm._l((_vm.classsubArr), function(parent, index) {
+    return _c('div', {
+      key: index,
+      ref: "item",
+      refInFor: true,
+      staticClass: ["cellp"]
+    }, [_c('text', {
+      staticClass: ["nav-title"]
+    }, [_vm._v(_vm._s(parent.CategoryName))]), _c('list', _vm._l((_vm.classsubArr[index].product), function(child, cindex) {
+      return _c('cell', {
+        key: cindex,
+        staticClass: ["cellps"],
+        appendAsTree: true,
+        attrs: {
+          "append": "tree"
+        }
+      }, [_c('image', {
+        staticClass: ["product-img"],
+        attrs: {
+          "src": child.ImageUrl
+        }
+      }), _c('div', {
+        staticClass: ["pro-news"]
+      }, [_c('text', {
+        staticClass: ["product-title"]
+      }, [_vm._v(_vm._s(child.ProductName))]), _c('div', {
+        staticClass: ["product-type-box"]
+      }, [_c('text', {
+        class: [child.sellOut === true ? 'product-type' : 'product-types']
+      }, [_vm._v("已售完")])]), _c('div', {
+        staticClass: ["pro-m"]
+      }, [_c('text', {
+        staticClass: ["product-price"]
+      }, [_vm._v("￥" + _vm._s(child.SalesPrice) + "元/" + _vm._s(child.Unit))]), _c('text', {
+        staticClass: ["product-prices"]
+      }, [_vm._v("￥" + _vm._s(child.Price) + "元")]), _c('image', {
+        staticClass: ["shop-car-icon"],
+        attrs: {
+          "src": "../src/components/class/shop-car-icon.png"
+        }
+      })])])])
+    }))])
+  }))])])]), _c('div', {
+    ref: "slides",
+    staticClass: ["cover"],
+    on: {
+      "click": _vm.closeCover
+    }
+  }, [_c('div', {
+    staticClass: ["demo-content"]
+  }, [_c('div', {
+    staticClass: ["slide-list"]
+  }, _vm._l((_vm.classsubArr), function(nums, indexs) {
+    return _c('div', {
+      key: indexs,
+      staticClass: ["cells", "slide-list-cell"],
+      on: {
+        "click": function($event) {
+          _vm.selects(indexs)
+        }
+      }
+    }, [_c('text', {
+      class: [_vm.navIndexs === indexs ? 'texts-crt' : 'texts']
+    }, [_vm._v(_vm._s(nums.CategoryName))])])
+  }))])])], 1)
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+
+/***/ }),
+/* 32 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __vue_exports__, __vue_options__
+var __vue_styles__ = []
+
+/* styles */
+__vue_styles__.push(__webpack_require__(33)
+)
+
+/* script */
+__vue_exports__ = __webpack_require__(34)
+
+/* template */
+var __vue_template__ = __webpack_require__(62)
 __vue_options__ = __vue_exports__ = __vue_exports__ || {}
 if (
   typeof __vue_exports__.default === "object" ||
@@ -3985,17 +5598,12 @@ module.exports = __vue_exports__
 
 
 /***/ }),
-/* 17 */
+/* 33 */
 /***/ (function(module, exports) {
 
 module.exports = {
   "iconFont": {
     "fontFamily": "iconfont"
-  },
-  "container": {
-    "position": "relative",
-    "paddingLeft": "20",
-    "paddngRight": "20"
   },
   "shop": {
     "position": "fixed",
@@ -4005,35 +5613,15 @@ module.exports = {
     "backgroundColor": "#f5f5f5"
   },
   "shop-header": {
-    "width": "750",
     "height": "240",
     "backgroundColor": "#73cc46"
-  },
-  "shop-header-title-wrapper": {
-    "position": "relative",
-    "display": "flex",
-    "flexDirection": "row",
-    "justifyContent": "center",
-    "alignItems": "center",
-    "width": "710",
-    "height": "92"
-  },
-  "shop-header-title": {
-    "fontSize": "43",
-    "color": "#ffffff"
-  },
-  "shop-header-delet": {
-    "position": "absolute",
-    "right": 0,
-    "top": 0,
-    "marginTop": "29",
-    "fontSize": "34",
-    "color": "#c1e6a3"
   },
   "shop-address-wrapper": {
     "display": "flex",
     "flexDirection": "row",
     "alignItems": "center",
+    "paddingLeft": "20",
+    "paddingRight": "20",
     "paddingTop": "21"
   },
   "iconfont-address": {
@@ -4051,9 +5639,9 @@ module.exports = {
     "left": 0,
     "top": "174",
     "bottom": "265",
-    "width": "710",
-    "marginLeft": "20",
-    "marginRight": "20"
+    "width": "750",
+    "paddingLeft": "20",
+    "paddingRight": "20"
   },
   "shop-list": {
     "display": "flex",
@@ -4078,6 +5666,7 @@ module.exports = {
     "lineHeight": "60"
   },
   "shop-list-image": {
+    "marginRight": "25",
     "width": "200",
     "height": "200"
   },
@@ -4218,7 +5807,7 @@ module.exports = {
 }
 
 /***/ }),
-/* 18 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4228,26 +5817,113 @@ Object.defineProperty(exports, "__esModule", {
 	value: true
 });
 
-var _wxcStepper = __webpack_require__(19);
+var _wxcStepper = __webpack_require__(35);
 
 var _wxcStepper2 = _interopRequireDefault(_wxcStepper);
 
-var _wxcCheckboxList = __webpack_require__(24);
+var _wxcCheckboxList = __webpack_require__(40);
 
 var _wxcCheckboxList2 = _interopRequireDefault(_wxcCheckboxList);
 
-var _wxcCheckbox = __webpack_require__(41);
+var _wxcCheckbox = __webpack_require__(57);
 
 var _wxcCheckbox2 = _interopRequireDefault(_wxcCheckbox);
 
+var _utils = __webpack_require__(0);
+
+var _utils2 = _interopRequireDefault(_utils);
+
+var _orderHeader = __webpack_require__(58);
+
+var _orderHeader2 = _interopRequireDefault(_orderHeader);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+var stream = weex.requireModule("stream");
+var SHOP_URL = 'api/cart/getMyCartList';
+var storage = weex.requireModule('storage');
 exports.default = {
 	data: function data() {
 		return {
+			titleName: '购物车',
 			refreshing: false, //下拉刷新
 			loadinging: false, //上拉加载
-			moneyValue: 1, //购买商品数
+			selectAll: false, //是否全选
+			selectOne: false, //是否单选
+			checkArr: [], //被选中产品的数组 用来做全部删除
+			USERID: 'user_id',
+			TOKEN: 'user_token',
+			aa: {},
 			config: {
 				//初始单选框
 				unCheckedIcon: '../src/components/shop/unchecked.png',
@@ -4256,16 +5932,21 @@ exports.default = {
 				checkedDisabledIcon: 'https://gw.alicdn.com/tfs/TB1aPabpwMPMeJjy1XcXXXpppXa-72-72.png',
 				unCheckedDisabledIcon: 'https://gw.alicdn.com/tfs/TB1lTuzpwoQMeJjy0FoXXcShVXa-72-72.png',
 				checkedColor: '#f40'
-			}
+			},
+			shopCar: {}, // 物品对象
+			discounts: 0 //折扣价
+			// moneyValue: 0,//购买商品数
+			// total: 0,//总价
+			// shopNumber: 0,//商品个数
 		};
 	},
 
 	methods: {
-		reduceMoney: function reduceMoney() {
-			this.moneyValue = this.moneyValue - 1;
+		reduceMoney: function reduceMoney(num, index) {
+			this.shopCar[index].number = parseInt(this.shopCar[index].number) - 1;
 		},
-		addMoney: function addMoney() {
-			this.moneyValue = this.moneyValue + 1;
+		addMoney: function addMoney(num, index) {
+			this.shopCar[index].number = parseInt(this.shopCar[index].number) + 1;
 		},
 		onrefresh: function onrefresh() {
 			var _this = this;
@@ -4282,90 +5963,157 @@ exports.default = {
 			setTimeout(function () {
 				_this2.loadinging = false;
 			}, 2000);
+		},
+		_initCheckArr: function _initCheckArr() {
+			for (var i = 0; i < this.shopCar.length; i++) {
+				this.checkArr.push({ value: i, checked: false });
+			}
+		},
+
+		// 选中
+		wxcCheckBoxItemChecked: function wxcCheckBoxItemChecked(e) {
+			this.selectOne = !this.selectOne;
+			var value = e.value;
+			if (this.selectOne) {
+				this.checkArr[value].checked = true;
+				console.log(this.checkArr[value].checked);
+			} else {
+				this.checkArr[value].checked = false;
+				console.log(this.checkArr[value].checked);
+			}
+		},
+
+		// 全选按钮
+		wxcCheck: function wxcCheck() {
+			//判断是否全选
+			this.selectAll = !this.selectAll;
+			if (this.selectAll) {
+				for (var i = 0; i < this.checkArr.length; i++) {
+					this.checkArr[i].checked = true;
+				}
+			} else {
+				for (var i = 0; i < this.checkArr.length; i++) {
+					this.checkArr[i].checked = false;
+				}
+			}
+		},
+
+		//全部删除按钮
+		deletFoods: function deletFoods() {
+			for (var i = 0; i < this.checkArr.length; i++) {
+				if (this.checkArr[i].checked == true) {
+					this.shopCar.splice(i, 1);
+				}
+			}
 		}
 	},
 	created: function created() {
+		var _this3 = this;
+
 		var fontModule = weex.requireModule("dom");
 		fontModule.addRule('fontFace', {
 			'fontFamily': "iconfont",
 			'src': "url('//at.alicdn.com/t/font_948634_q51n034oj8.ttf')"
 		});
+		var self = this;
+		storage.getItem(this.USERID, function (event) {
+			self.USERID = event.data;
+			storage.getItem(_this3.TOKEN, function (event) {
+				self.TOKEN = event.data;
+				_utils2.default.WeexAjax({
+					url: SHOP_URL,
+					method: 'GET',
+					type: 'JSON',
+					token: self.TOKEN,
+					body: {
+						"userId": self.USERID
+					},
+					callback: function callback(ret) {
+						var rets = ret;
+						if (ret.Status == 1) {
+							console.log(rets);
+						}
+					}
+				});
+			});
+		});
+		// let me = this;
+		// let GET_URL = "../src/shop.json";
+		// // let GET_URL = "http://47.92.164.211:8011/api/prodcut/getcagegorylist";
+		// let getResult = "loding...";
+		// stream.fetch({
+		// 	method: 'GET',
+		// 	url: GET_URL,
+		// 	type: 'json',
+		// },(res) => {
+		// 	if(!res.ok){
+		// 		me.getResult = "request failed";
+		// 	}else{
+		// 		me.shopCar = res.data.shopCar;
+		// 		me.discounts = res.data.discount;
+		// 		this._initCheckArr();
+		// 	}
+		// },() => {}) 
+
+		//       let me = this;
+		//       let POST_URL = "http://47.92.164.211:8011/api/cart/addCart";
+		//       let postResult = "loding...";
+		// stream.fetch({
+		// 	method: 'POST',
+		// 	url: POST_URL,
+		// 	type:'json',
+		// 	headers: {'Content-Type':'application/x-www-form-urlencoded'},
+		// 	body : {
+		// 	  "UserId": 1,
+		// 	  "ProductId": 2,
+		// 	  "CartNum": 3
+		// 	}
+		// }, function(ret) {
+		// 	if(!ret.ok){
+		//   		me.postResult = "request failed";
+		// 	}else{
+		//   		console.log('get:'+JSON.stringify(ret));
+		//   		me.postResult = JSON.stringify(ret.data);
+		// 	}
+		// },function(response){
+		// 	console.log('get in progress:'+response.length);
+		// 	me.postResult = "bytes received:"+response.length;
+		// });
 	},
 
-	components: { WxcCheckbox: _wxcCheckbox2.default, WxcCheckboxList: _wxcCheckboxList2.default, WxcStepper: _wxcStepper2.default }
-}; //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+	components: {
+		WxcCheckbox: _wxcCheckbox2.default,
+		WxcCheckboxList: _wxcCheckboxList2.default,
+		WxcStepper: _wxcStepper2.default,
+		"v-header": _orderHeader2.default
+	},
+	computed: {
+		shopNumber: function shopNumber() {
+			var num = 0;
+			for (var i = 0; i < this.shopCar.length; i++) {
+				num += parseInt(this.shopCar[i].number);
+			}
+			return num;
+		},
+		total: function total() {
+			var money = 0;
+			for (var i = 0; i < this.shopCar.length; i++) {
+				money += parseFloat(this.shopCar[i].price) * parseInt(this.shopCar[i].number);
+			}
+			return money.toFixed(2);
+		},
+		discount: function discount() {
+			var count = 0;
+			for (var i = 0; i < this.shopCar.length; i++) {
+				count += parseFloat(this.shopCar[i].price).toFixed(2) * parseInt(this.shopCar[i].number) - parseFloat(this.shopCar[i].price).toFixed(2) * parseInt(this.shopCar[i].number) * this.discounts;
+			}
+			return count.toFixed(2);
+		}
+	}
+};
 
 /***/ }),
-/* 19 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4375,7 +6123,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _index = __webpack_require__(20);
+var _index = __webpack_require__(36);
 
 Object.defineProperty(exports, 'default', {
   enumerable: true,
@@ -4387,21 +6135,21 @@ Object.defineProperty(exports, 'default', {
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ }),
-/* 20 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __vue_exports__, __vue_options__
 var __vue_styles__ = []
 
 /* styles */
-__vue_styles__.push(__webpack_require__(21)
+__vue_styles__.push(__webpack_require__(37)
 )
 
 /* script */
-__vue_exports__ = __webpack_require__(22)
+__vue_exports__ = __webpack_require__(38)
 
 /* template */
-var __vue_template__ = __webpack_require__(23)
+var __vue_template__ = __webpack_require__(39)
 __vue_options__ = __vue_exports__ = __vue_exports__ || {}
 if (
   typeof __vue_exports__.default === "object" ||
@@ -4431,7 +6179,7 @@ module.exports = __vue_exports__
 
 
 /***/ }),
-/* 21 */
+/* 37 */
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -4470,7 +6218,7 @@ module.exports = {
 }
 
 /***/ }),
-/* 22 */
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4657,7 +6405,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 23 */
+/* 39 */
 /***/ (function(module, exports) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -4708,7 +6456,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
 module.exports.render._withStripped = true
 
 /***/ }),
-/* 24 */
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4718,7 +6466,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _index = __webpack_require__(25);
+var _index = __webpack_require__(41);
 
 Object.defineProperty(exports, 'default', {
   enumerable: true,
@@ -4730,17 +6478,17 @@ Object.defineProperty(exports, 'default', {
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ }),
-/* 25 */
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __vue_exports__, __vue_options__
 var __vue_styles__ = []
 
 /* script */
-__vue_exports__ = __webpack_require__(26)
+__vue_exports__ = __webpack_require__(42)
 
 /* template */
-var __vue_template__ = __webpack_require__(40)
+var __vue_template__ = __webpack_require__(56)
 __vue_options__ = __vue_exports__ = __vue_exports__ || {}
 if (
   typeof __vue_exports__.default === "object" ||
@@ -4769,7 +6517,7 @@ module.exports = __vue_exports__
 
 
 /***/ }),
-/* 26 */
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4779,7 +6527,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _index = __webpack_require__(0);
+var _index = __webpack_require__(2);
 
 var _index2 = _interopRequireDefault(_index);
 
@@ -4844,7 +6592,7 @@ exports.default = {
 //
 
 /***/ }),
-/* 27 */
+/* 43 */
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -4858,7 +6606,7 @@ module.exports = {
 }
 
 /***/ }),
-/* 28 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4868,11 +6616,11 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _wxcCell = __webpack_require__(29);
+var _wxcCell = __webpack_require__(45);
 
 var _wxcCell2 = _interopRequireDefault(_wxcCell);
 
-var _type = __webpack_require__(38);
+var _type = __webpack_require__(54);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -5000,7 +6748,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 29 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5010,7 +6758,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _index = __webpack_require__(30);
+var _index = __webpack_require__(46);
 
 Object.defineProperty(exports, 'default', {
   enumerable: true,
@@ -5022,21 +6770,21 @@ Object.defineProperty(exports, 'default', {
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ }),
-/* 30 */
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __vue_exports__, __vue_options__
 var __vue_styles__ = []
 
 /* styles */
-__vue_styles__.push(__webpack_require__(31)
+__vue_styles__.push(__webpack_require__(47)
 )
 
 /* script */
-__vue_exports__ = __webpack_require__(32)
+__vue_exports__ = __webpack_require__(48)
 
 /* template */
-var __vue_template__ = __webpack_require__(37)
+var __vue_template__ = __webpack_require__(53)
 __vue_options__ = __vue_exports__ = __vue_exports__ || {}
 if (
   typeof __vue_exports__.default === "object" ||
@@ -5066,7 +6814,7 @@ module.exports = __vue_exports__
 
 
 /***/ }),
-/* 31 */
+/* 47 */
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -5129,7 +6877,7 @@ module.exports = {
 }
 
 /***/ }),
-/* 32 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5139,7 +6887,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _utils = __webpack_require__(33);
+var _utils = __webpack_require__(49);
 
 var _utils2 = _interopRequireDefault(_utils);
 
@@ -5314,7 +7062,7 @@ exports.default = {
 //
 
 /***/ }),
-/* 33 */
+/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5329,7 +7077,7 @@ var _typeof2 = typeof Symbol === "function" && typeof Symbol.iterator === "symbo
                                                                                                                                                                                                                                                                                 * Created by Tw93 on 17/11/01
                                                                                                                                                                                                                                                                                 */
 
-var _urlParse = __webpack_require__(34);
+var _urlParse = __webpack_require__(50);
 
 var _urlParse2 = _interopRequireDefault(_urlParse);
 
@@ -5668,14 +7416,14 @@ var Utils = {
 exports.default = Utils;
 
 /***/ }),
-/* 34 */
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var required = __webpack_require__(35)
-  , qs = __webpack_require__(36)
+var required = __webpack_require__(51)
+  , qs = __webpack_require__(52)
   , protocolre = /^([a-z][a-z0-9.+-]*:)?(\/\/)?([\S\s]*)/i
   , slashes = /^[A-Za-z][A-Za-z0-9+-.]*:\/\//;
 
@@ -6107,7 +7855,7 @@ module.exports = Url;
 
 
 /***/ }),
-/* 35 */
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6152,7 +7900,7 @@ module.exports = function required(port, protocol) {
 
 
 /***/ }),
-/* 36 */
+/* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6247,7 +7995,7 @@ exports.parse = querystring;
 
 
 /***/ }),
-/* 37 */
+/* 53 */
 /***/ (function(module, exports) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -6282,7 +8030,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
 module.exports.render._withStripped = true
 
 /***/ }),
-/* 38 */
+/* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6302,7 +8050,7 @@ var CHECKED_DISABLED = exports.CHECKED_DISABLED = 'https://gw.alicdn.com/tfs/TB1
 var UNCHECKED_DISABLED = exports.UNCHECKED_DISABLED = 'https://gw.alicdn.com/tfs/TB1lTuzpwoQMeJjy0FoXXcShVXa-72-72.png';
 
 /***/ }),
-/* 39 */
+/* 55 */
 /***/ (function(module, exports) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -6337,7 +8085,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
 module.exports.render._withStripped = true
 
 /***/ }),
-/* 40 */
+/* 56 */
 /***/ (function(module, exports) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -6356,7 +8104,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
 module.exports.render._withStripped = true
 
 /***/ }),
-/* 41 */
+/* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6366,7 +8114,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _index = __webpack_require__(0);
+var _index = __webpack_require__(2);
 
 Object.defineProperty(exports, 'default', {
   enumerable: true,
@@ -6378,13 +8126,278 @@ Object.defineProperty(exports, 'default', {
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ }),
-/* 42 */
+/* 58 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __vue_exports__, __vue_options__
+var __vue_styles__ = []
+
+/* styles */
+__vue_styles__.push(__webpack_require__(59)
+)
+
+/* script */
+__vue_exports__ = __webpack_require__(60)
+
+/* template */
+var __vue_template__ = __webpack_require__(61)
+__vue_options__ = __vue_exports__ = __vue_exports__ || {}
+if (
+  typeof __vue_exports__.default === "object" ||
+  typeof __vue_exports__.default === "function"
+) {
+if (Object.keys(__vue_exports__).some(function (key) { return key !== "default" && key !== "__esModule" })) {console.error("named exports are not supported in *.vue files.")}
+__vue_options__ = __vue_exports__ = __vue_exports__.default
+}
+if (typeof __vue_options__ === "function") {
+  __vue_options__ = __vue_options__.options
+}
+__vue_options__.__file = "F:\\WebApp\\cabbage\\src\\components\\header\\orderHeader.vue"
+__vue_options__.render = __vue_template__.render
+__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
+__vue_options__._scopeId = "data-v-215a929c"
+__vue_options__.style = __vue_options__.style || {}
+__vue_styles__.forEach(function (module) {
+  for (var name in module) {
+    __vue_options__.style[name] = module[name]
+  }
+})
+if (typeof __register_static_styles__ === "function") {
+  __register_static_styles__(__vue_options__._scopeId, __vue_styles__)
+}
+
+module.exports = __vue_exports__
+
+
+/***/ }),
+/* 59 */
+/***/ (function(module, exports) {
+
+module.exports = {
+  "iconFont": {
+    "fontFamily": "iconfont"
+  },
+  "backBtn": {
+    "position": "absolute",
+    "left": "20",
+    "top": "25.5",
+    "width": "28",
+    "height": "41"
+  },
+  "shareBtn": {
+    "position": "absolute",
+    "top": "23",
+    "right": "20",
+    "width": "46",
+    "height": "46"
+  },
+  "layoutBtn-44": {
+    "position": "absolute",
+    "top": "24",
+    "right": "20",
+    "width": "44",
+    "height": "44"
+  },
+  "shop-header-title-wrapper": {
+    "position": "relative",
+    "display": "flex",
+    "flexDirection": "row",
+    "justifyContent": "center",
+    "alignItems": "center",
+    "height": "92",
+    "paddingLeft": "20",
+    "paddingRight": "20",
+    "backgroundColor": "#73cc46"
+  },
+  "shop-header-title": {
+    "width": "500",
+    "fontSize": "42",
+    "color": "#ffffff",
+    "textAlign": "center",
+    "textOverflow": "ellipsis",
+    "lines": 1
+  },
+  "shop-header-delet": {
+    "position": "absolute",
+    "right": "20",
+    "top": 0,
+    "marginTop": "27",
+    "fontSize": "34",
+    "lineHeight": "38",
+    "color": "#c1e6a3"
+  },
+  "shop-header-info": {
+    "position": "absolute",
+    "right": "20",
+    "top": 0,
+    "marginTop": "27",
+    "fontSize": "34",
+    "lineHeight": "38",
+    "color": "#ffffff"
+  }
+}
+
+/***/ }),
+/* 60 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+var navigator = weex.requireModule('navigator');
+var modal = weex.requireModule('modal');
+exports.default = {
+	props: {
+		titleName: {
+			type: String
+		},
+		deleted: {
+			type: Boolean
+		},
+		backPage: {
+			type: Boolean
+		},
+		shareBtn: {
+			type: Boolean
+		},
+		layout: {
+			type: Boolean
+		},
+		layoutAct: {
+			type: Boolean
+		},
+		cancel: {
+			type: Boolean
+		},
+		info: {
+			type: Boolean
+		}
+	},
+	data: function data() {
+		return {
+			layoutActBool: false,
+			layoutImage: {
+				urlImage: '../src/common/images/layout@44x44.png',
+				urlImageAct: '../src/common/images/layoutACT@44x44.png'
+			}
+		};
+	},
+
+	methods: {
+		backJump: function backJump() {
+			navigator.pop({
+				// url: '../src/components/other/find.vue',congratulate
+				url: 'http://192.168.1.103:8082/dist/index.js',
+				animated: "true"
+			}, function (event) {
+				// modal.toast({ message: 'callback: ' + event })
+			});
+		},
+		layoutClick: function layoutClick() {
+			this.$emit("layoutAct", this.layoutActBool = !this.layoutActBool);
+		}
+	},
+	created: function created() {
+		var fontModule = weex.requireModule("dom");
+		fontModule.addRule('fontFace', {
+			'fontFamily': "iconfont",
+			'src': "url('//at.alicdn.com/t/font_948634_q51n034oj8.ttf')"
+		});
+	}
+};
+
+/***/ }),
+/* 61 */
+/***/ (function(module, exports) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: ["shop-header-title-wrapper"]
+  }, [(_vm.backPage) ? _c('image', {
+    staticClass: ["backBtn"],
+    attrs: {
+      "src": "../src/common/images/backImage.png"
+    },
+    on: {
+      "click": function($event) {
+        _vm.backJump()
+      }
+    }
+  }) : _vm._e(), _c('text', {
+    staticClass: ["shop-header-title"]
+  }, [_vm._v(_vm._s(_vm.titleName))]), (_vm.deleted) ? _c('text', {
+    staticClass: ["shop-header-delet"],
+    on: {
+      "click": function($event) {
+        _vm.deletFoods()
+      }
+    }
+  }, [_vm._v("删除")]) : _vm._e(), (_vm.cancel) ? _c('text', {
+    staticClass: ["shop-header-delet"],
+    on: {
+      "click": function($event) {
+        _vm.cancel()
+      }
+    }
+  }, [_vm._v("取消")]) : _vm._e(), (_vm.info) ? _c('text', {
+    staticClass: ["shop-header-info"],
+    on: {
+      "click": function($event) {}
+    }
+  }, [_vm._v("使用说明")]) : _vm._e(), (_vm.shareBtn) ? _c('image', {
+    staticClass: ["shareBtn"],
+    attrs: {
+      "src": "../src/common/images/share@46x46.png"
+    }
+  }) : _vm._e(), (_vm.layout) ? _c('image', {
+    staticClass: ["layoutBtn-44"],
+    attrs: {
+      "src": _vm.layoutAct == false ? _vm.layoutImage.urlImage : _vm.layoutImage.urlImageAct
+    },
+    on: {
+      "click": function($event) {
+        _vm.layoutClick()
+      }
+    }
+  }) : _vm._e()])
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+
+/***/ }),
+/* 62 */
 /***/ (function(module, exports) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: ["shop"]
-  }, [_vm._m(0), _c('list', {
+  }, [_c('header', {
+    staticClass: ["shop-header"],
+    appendAsTree: true,
+    attrs: {
+      "append": "tree"
+    }
+  }, [_c('v-header', {
+    attrs: {
+      "titleName": _vm.titleName,
+      "deleted": true
+    }
+  }), _vm._m(0)], 1), _c('list', {
     staticClass: ["shop-wrapper"]
   }, [_c('refresh', {
     attrs: {
@@ -6395,8 +8408,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_c('text', {
     staticClass: ["refresh"]
-  }, [_vm._v("下拉刷新...")])]), _vm._l((10), function(item) {
-    return _c('cell', {
+  }, [_vm._v("下拉刷新...")])]), _vm._l((_vm.shopCar), function(foods, index) {
+    return (foods.number > 0) ? _c('cell', {
+      key: index,
       appendAsTree: true,
       attrs: {
         "append": "tree"
@@ -6406,25 +8420,40 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }, [_c('wxc-checkbox', {
       staticClass: ["shop-list-checkout"],
       attrs: {
+        "value": index,
         "config": _vm.config,
-        "hasBottomBorder": false
+        "hasBottomBorder": false,
+        "checked": _vm.checkArr[index].checked
+      },
+      on: {
+        "wxcCheckBoxItemChecked": _vm.wxcCheckBoxItemChecked
       }
     }), _c('image', {
       staticClass: ["shop-list-image"],
       attrs: {
-        "src": "../src/components/shop/product-img01.png"
+        "src": foods.ImageUrl
       }
     }), _c('div', {
       staticClass: ["shop-list-info"]
-    }, [_vm._m(1, true), _c('div', {
+    }, [_c('div', {
+      staticClass: ["shop-list-info-title"]
+    }, [_c('text', {
+      staticClass: ["shop-list-info-name"]
+    }, [_vm._v(_vm._s(foods.foodName))]), _c('text', {
+      staticClass: ["shop-list-info-weight"]
+    }, [_vm._v(_vm._s(foods.weight) + "g")])]), _c('div', {
       staticClass: ["shop-list-money-wrapper"]
-    }, [_vm._m(2, true), _c('div', {
+    }, [_c('div', {
+      staticClass: ["shop-list-money-left"]
+    }, [_c('text', {
+      staticClass: ["shop-list-money"]
+    }, [_vm._v("￥" + _vm._s(foods.price) + "元/斤")])]), _c('div', {
       staticClass: ["shop-list-money-right"]
     }, [_c('text', {
       staticClass: ["iconFont", "shop-list-money-reduce"],
       on: {
         "click": function($event) {
-          _vm.reduceMoney()
+          _vm.reduceMoney(foods.number, index)
         }
       }
     }, [_vm._v("")]), _c('input', {
@@ -6432,21 +8461,21 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       attrs: {
         "type": "text",
         "disabled": "true",
-        "value": (_vm.moneyValue)
+        "value": (foods.number)
       },
       on: {
         "input": function($event) {
-          _vm.moneyValue = $event.target.attr.value
+          _vm.$set(foods, "number", $event.target.attr.value)
         }
       }
     }), _c('text', {
       staticClass: ["iconFont", "shop-list-money-add"],
       on: {
         "click": function($event) {
-          _vm.addMoney()
+          _vm.addMoney(foods.number, index)
         }
       }
-    }, [_vm._v("")])])])])], 1)])
+    }, [_vm._v("")])])])])], 1)]) : _vm._e()
   }), _c('loading', {
     staticClass: ["loading"],
     attrs: {
@@ -6461,7 +8490,17 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: ["indicators"]
   })])], 2), _c('div', {
     staticClass: ["good-bottom-wrapper"]
-  }, [_vm._m(3), _c('div', {
+  }, [_c('div', {
+    staticClass: ["good-bottom-member-wrapper"]
+  }, [_c('text', {
+    staticClass: ["iconFont", "member-image"]
+  }, [_vm._v("")]), _c('text', {
+    staticClass: ["member-text"]
+  }, [_vm._v("升级会员，本单可为您节省")]), _c('text', {
+    staticClass: ["member-text-num"]
+  }, [_vm._v(_vm._s(_vm.discount))]), _c('text', {
+    staticClass: ["member-text"]
+  }, [_vm._v("元!")])]), _c('div', {
     staticClass: ["good-bottom-list-wrapper"]
   }, [_c('div', {
     staticClass: ["good-bottom-select-wrapper"]
@@ -6470,91 +8509,50 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "config": _vm.config,
       "hasBottomBorder": false
+    },
+    on: {
+      "wxcCheckBoxItemChecked": _vm.wxcCheck
     }
   }), _c('text', {
     staticClass: ["good-bottom-checked-all"]
-  }, [_vm._v("全选")])], 1), _vm._m(4)])])])
-},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('header', {
-    staticClass: ["shop-header"],
-    appendAsTree: true,
-    attrs: {
-      "append": "tree"
-    }
-  }, [_c('div', {
-    staticClass: ["container"]
-  }, [_c('div', {
-    staticClass: ["shop-header-title-wrapper"]
-  }, [_c('text', {
-    staticClass: ["shop-header-title"]
-  }, [_vm._v("购物车")]), _c('text', {
-    staticClass: ["shop-header-delet"]
-  }, [_vm._v("删除")])]), _c('div', {
-    staticClass: ["shop-address-wrapper"]
-  }, [_c('text', {
-    staticClass: ["iconFont", "iconfont-address"]
-  }, [_vm._v("")]), _c('text', {
-    staticClass: ["shop-address-text"]
-  }, [_vm._v("绿白菜滨湖春融苑店")])])])])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: ["shop-list-info-title"]
-  }, [_c('text', {
-    staticClass: ["shop-list-info-name"]
-  }, [_vm._v("五彩")]), _c('text', {
-    staticClass: ["shop-list-info-weight"]
-  }, [_vm._v("500gg")])])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: ["shop-list-money-left"]
-  }, [_c('text', {
-    staticClass: ["shop-list-money"]
-  }, [_vm._v("￥0.5元/斤")]), _c('text', {
-    staticClass: ["shop-list-all-money"]
-  }, [_vm._v("￥6.29")])])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: ["good-bottom-member-wrapper"]
-  }, [_c('text', {
-    staticClass: ["iconFont", "member-image"]
-  }, [_vm._v("")]), _c('text', {
-    staticClass: ["member-text"]
-  }, [_vm._v("升级会员，本单可为您节省")]), _c('text', {
-    staticClass: ["member-text-num"]
-  }, [_vm._v("0.38")]), _c('text', {
-    staticClass: ["member-text"]
-  }, [_vm._v("元!")])])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
+  }, [_vm._v("全选")])], 1), _c('div', {
     staticClass: ["good-bottom-total-wrapper"]
   }, [_c('text', {
     staticClass: ["good-bottom-total-text"]
   }, [_vm._v("合计:")]), _c('text', {
     staticClass: ["good-bottom-total-money"]
-  }, [_vm._v("￥1.00元")]), _c('div', {
+  }, [_vm._v("￥" + _vm._s(_vm.total) + "元")]), _c('div', {
     staticClass: ["good-bottom-total-button"]
   }, [_c('text', {
     staticClass: ["good-bottom-total-button-text"]
-  }, [_vm._v("结算(2)")])])])
+  }, [_vm._v("结算(" + _vm._s(_vm.shopNumber) + ")")])])])])])])
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: ["shop-address-wrapper"]
+  }, [_c('text', {
+    staticClass: ["iconFont", "iconfont-address"]
+  }, [_vm._v("")]), _c('text', {
+    staticClass: ["shop-address-text"]
+  }, [_vm._v("绿白菜滨湖春融苑店")])])
 }]}
 module.exports.render._withStripped = true
 
 /***/ }),
-/* 43 */
+/* 63 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __vue_exports__, __vue_options__
 var __vue_styles__ = []
 
 /* styles */
-__vue_styles__.push(__webpack_require__(44)
+__vue_styles__.push(__webpack_require__(64)
 )
 
 /* script */
-__vue_exports__ = __webpack_require__(45)
+__vue_exports__ = __webpack_require__(65)
 
 /* template */
-var __vue_template__ = __webpack_require__(46)
+var __vue_template__ = __webpack_require__(66)
 __vue_options__ = __vue_exports__ = __vue_exports__ || {}
 if (
   typeof __vue_exports__.default === "object" ||
@@ -6584,20 +8582,211 @@ module.exports = __vue_exports__
 
 
 /***/ }),
-/* 44 */
+/* 64 */
 /***/ (function(module, exports) {
 
-module.exports = {}
+module.exports = {
+  "claim-goods-box": {
+    "position": "fixed",
+    "top": 0,
+    "bottom": "110",
+    "left": 0,
+    "right": 0,
+    "backgroundColor": "#f5f5f5"
+  },
+  "shop-header": {
+    "width": "750",
+    "height": "92",
+    "backgroundColor": "rgb(115,204,70)"
+  },
+  "shop-header-title-wrapper": {
+    "position": "relative",
+    "display": "flex",
+    "flexDirection": "row",
+    "justifyContent": "center",
+    "alignItems": "center",
+    "width": "750",
+    "height": "92"
+  },
+  "shop-header-title": {
+    "fontSize": "43",
+    "color": "#ffffff"
+  },
+  "shop-header-delet": {
+    "position": "absolute",
+    "right": 0,
+    "top": 0,
+    "marginTop": "29",
+    "fontSize": "34",
+    "color": "#c1e6a3"
+  },
+  "shop-address-wrapper": {
+    "display": "flex",
+    "flexDirection": "row",
+    "alignItems": "center",
+    "paddingTop": "21"
+  },
+  "iconFont": {
+    "fontFamily": "iconfont"
+  },
+  "iconfont-address": {
+    "marginRight": "15",
+    "fontSize": "36",
+    "color": "#ffffff"
+  },
+  "shop-address-text": {
+    "fontSize": "30",
+    "color": "#ffffff",
+    "fontWeight": "600"
+  },
+  "slider": {
+    "marginTop": "60",
+    "width": "750",
+    "height": "815"
+  },
+  "cabbage-img-box": {
+    "width": "90",
+    "height": "90",
+    "borderRadius": "90",
+    "backgroundColor": "#e0f8b1",
+    "flexDirection": "row",
+    "justifyContent": "center",
+    "position": "absolute",
+    "top": 0,
+    "left": "330"
+  },
+  "cabbage-image": {
+    "width": "58",
+    "height": "77",
+    "marginTop": "10"
+  },
+  "frame": {
+    "width": "750",
+    "flexDirection": "row",
+    "justifyContent": "center",
+    "position": "relative"
+  },
+  "frame-box": {
+    "width": "710",
+    "height": "770",
+    "paddingTop": "75",
+    "marginTop": "45",
+    "backgroundColor": "#ffffff",
+    "borderRadius": "10"
+  },
+  "claim-box": {
+    "marginLeft": "60",
+    "marginRight": "60",
+    "flexDirection": "row",
+    "marginTop": "20"
+  },
+  "claim-time": {
+    "flexDirection": "row",
+    "flex": 1
+  },
+  "share": {
+    "width": "54",
+    "height": "54",
+    "flexDirection": "row",
+    "justifyContent": "center",
+    "borderRadius": "54",
+    "borderWidth": "4",
+    "borderColor": "#73cc00",
+    "borderStyle": "solid"
+  },
+  "share-btn": {
+    "fontSize": "42",
+    "lineHeight": "50",
+    "color": "#73cc00",
+    "textAlign": "center"
+  },
+  "text-box01": {
+    "flexDirection": "row",
+    "justifyContent": "center",
+    "marginTop": "20"
+  },
+  "qr-code-box": {
+    "marginTop": "30",
+    "marginBottom": "20",
+    "paddingTop": "30",
+    "paddingBottom": "30",
+    "borderTopWidth": "1",
+    "borderTopColor": "#f4f4f4",
+    "borderTopStyle": "solid",
+    "borderBottomWidth": "1",
+    "borderBottomColor": "#f4f4f4",
+    "borderBottomStyle": "solid",
+    "flexDirection": "row",
+    "justifyContent": "center"
+  },
+  "qr-code-image": {
+    "width": "300",
+    "height": "300"
+  },
+  "text01": {
+    "fontSize": "30",
+    "lineHeight": "36",
+    "color": "#333333",
+    "textAlign": "center"
+  },
+  "text02": {
+    "fontSize": "24",
+    "lineHeight": "30",
+    "color": "#777777",
+    "textAlign": "center",
+    "marginTop": "20"
+  },
+  "text03": {
+    "fontSize": "24",
+    "lineHeight": "30",
+    "color": "#73cc00",
+    "textAlign": "center"
+  },
+  "text04": {
+    "fontSize": "24",
+    "lineHeight": "30",
+    "color": "#333333",
+    "textAlign": "center"
+  },
+  "text05": {
+    "fontSize": "24",
+    "lineHeight": "30",
+    "color": "#333333"
+  },
+  "text06": {
+    "fontSize": "24",
+    "lineHeight": "30",
+    "color": "#777777"
+  },
+  "text07": {
+    "fontSize": "24",
+    "lineHeight": "30",
+    "color": "#73cc00",
+    "marginLeft": "60"
+  },
+  "claim-index-box": {
+    "position": "fixed",
+    "bottom": "150",
+    "left": 0
+  },
+  "claim-index": {
+    "width": "750",
+    "fontSize": "24",
+    "lineHeight": "30",
+    "color": "#333333",
+    "textAlign": "center"
+  }
+}
 
 /***/ }),
-/* 45 */
+/* 65 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+	value: true
 });
 //
 //
@@ -6605,36 +8794,415 @@ Object.defineProperty(exports, "__esModule", {
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
-exports.default = {};
+exports.default = {
+	data: function data() {
+		return {
+			goodsList: [{
+				store: '（滨湖春融苑店1）',
+				src: '../src/components/goods/qr-code.png',
+				phone: '18469113870',
+				orderNumber: '6565645646465456465',
+				dates: '2018-12-03',
+				time: '10:00-10:30'
+			}, {
+				store: '（滨湖春融苑店2）',
+				src: '../src/components/goods/qr-code.png',
+				phone: '18469113870',
+				orderNumber: '6565645646465456466',
+				dates: '2018-12-03',
+				time: '10:00-10:30'
+			}, {
+				store: '（滨湖春融苑店3）',
+				src: '../src/components/goods/qr-code.png',
+				phone: '18469113870',
+				orderNumber: '6565645646465456467',
+				dates: '2018-12-03',
+				time: '10:00-10:30'
+			}],
+			cIndex: 1,
+			len: 0
+		};
+	},
+
+	methods: {
+		change: function change(e) {
+			this.cIndex = e.index + 1;
+		}
+	},
+	created: function created() {
+		var fontModule = weex.requireModule("dom");
+		fontModule.addRule('fontFace', {
+			'fontFamily': "iconfont",
+			'src': "url('//at.alicdn.com/t/font_948634_gubgm8w1dr.ttf')"
+		});
+	},
+	mounted: function mounted() {
+		this.len = this.$refs.claim.length;
+	}
+};
 
 /***/ }),
-/* 46 */
+/* 66 */
 /***/ (function(module, exports) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
-    staticClass: ["goods"]
-  })
-},staticRenderFns: []}
+    staticClass: ["claim-goods-box"]
+  }, [_vm._m(0), _c('slider', {
+    staticClass: ["slider"],
+    attrs: {
+      "interval": "3000",
+      "autoPlay": "false"
+    },
+    on: {
+      "change": _vm.change
+    }
+  }, _vm._l((_vm.goodsList), function(num) {
+    return _c('div', {
+      ref: "claim",
+      refInFor: true,
+      staticClass: ["frame"]
+    }, [_c('div', {
+      staticClass: ["frame-box"]
+    }, [_c('text', {
+      staticClass: ["text01"]
+    }, [_vm._v(_vm._s(num.orderNumber))]), _c('text', {
+      staticClass: ["text02"]
+    }, [_vm._v(_vm._s(num.phone))]), _c('div', {
+      staticClass: ["text-box01"]
+    }, [_c('text', {
+      staticClass: ["text06"]
+    }, [_vm._v("请您前往")]), _c('text', {
+      staticClass: ["text03"]
+    }, [_vm._v(_vm._s(num.store))]), _c('text', {
+      staticClass: ["text06"]
+    }, [_vm._v("进行取货")])]), _c('div', {
+      staticClass: ["qr-code-box"]
+    }, [_c('image', {
+      staticClass: ["qr-code-image"],
+      attrs: {
+        "src": num.src
+      }
+    })]), _c('text', {
+      staticClass: ["text07"]
+    }, [_vm._v("订单编号：" + _vm._s(num.orderNumber))]), _c('div', {
+      staticClass: ["claim-box"]
+    }, [_c('div', {
+      staticClass: ["claim-time"]
+    }, [_c('text', {
+      staticClass: ["text05"]
+    }, [_vm._v("取货时间：")]), _c('div', {
+      staticClass: ["text-box02"]
+    }, [_c('text', {
+      staticClass: ["text04"]
+    }, [_vm._v(_vm._s(num.dates))]), _c('text', {
+      staticClass: ["text04"]
+    }, [_vm._v(_vm._s(num.time))])])]), _vm._m(1, true)])]), _vm._m(2, true)])
+  })), _c('div', {
+    staticClass: ["claim-index-box"]
+  }, [_c('text', {
+    staticClass: ["claim-index"]
+  }, [_vm._v(_vm._s(this.cIndex) + "/" + _vm._s(this.len))])])])
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('header', {
+    staticClass: ["shop-header"],
+    appendAsTree: true,
+    attrs: {
+      "append": "tree"
+    }
+  }, [_c('div', {
+    staticClass: ["container"]
+  }, [_c('div', {
+    staticClass: ["shop-header-title-wrapper"]
+  }, [_c('text', {
+    staticClass: ["shop-header-title"]
+  }, [_vm._v("取货")])])])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: ["share"]
+  }, [_c('text', {
+    staticClass: ["share-btn", "iconFont"]
+  }, [_vm._v("")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: ["cabbage-img-box"]
+  }, [_c('image', {
+    staticClass: ["cabbage-image"],
+    attrs: {
+      "src": "../src/components/goods/cabbage-icon.png"
+    }
+  })])
+}]}
 module.exports.render._withStripped = true
 
 /***/ }),
-/* 47 */
+/* 67 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __vue_exports__, __vue_options__
 var __vue_styles__ = []
 
 /* styles */
-__vue_styles__.push(__webpack_require__(48)
+__vue_styles__.push(__webpack_require__(68)
 )
 
 /* script */
-__vue_exports__ = __webpack_require__(49)
+__vue_exports__ = __webpack_require__(69)
 
 /* template */
-var __vue_template__ = __webpack_require__(50)
+var __vue_template__ = __webpack_require__(70)
 __vue_options__ = __vue_exports__ = __vue_exports__ || {}
 if (
   typeof __vue_exports__.default === "object" ||
@@ -6664,16 +9232,489 @@ module.exports = __vue_exports__
 
 
 /***/ }),
-/* 48 */
+/* 68 */
 /***/ (function(module, exports) {
 
-module.exports = {}
+module.exports = {
+  "iconFont": {
+    "fontFamily": "iconfont"
+  },
+  "my": {
+    "position": "fixed",
+    "width": "750",
+    "top": 0,
+    "bottom": "110",
+    "backgroundColor": "#f5f5f5"
+  },
+  "cell-box": {
+    "marginLeft": "20",
+    "marginRight": "20",
+    "width": "710",
+    "marginTop": "10",
+    "marginBottom": "10"
+  },
+  "my-header-title-wrapper": {
+    "position": "relative",
+    "width": "750",
+    "height": "92",
+    "paddingLeft": "20",
+    "paddingRight": "20",
+    "display": "flex",
+    "flexDirection": "row",
+    "justifyContent": "center",
+    "alignItems": "center",
+    "backgroundColor": "#73cc46"
+  },
+  "my-header-info-wrapper": {
+    "position": "absolute",
+    "width": "48",
+    "height": "45",
+    "display": "flex",
+    "flexDirection": "row",
+    "justifyContent": "flex-start",
+    "alignItems": "flex-end",
+    "right": "20",
+    "top": 0,
+    "marginTop": "23.5",
+    "fontSize": "34",
+    "lineHeight": "36",
+    "color": "#c1e6a3"
+  },
+  "my-header": {
+    "width": "750",
+    "height": "148",
+    "backgroundColor": "#73cc46",
+    "borderBottomLeftRadius": "70",
+    "borderBottomRightRadius": "70"
+  },
+  "my-header-title": {
+    "fontSize": "43",
+    "color": "#ffffff",
+    "lineHeight": "45"
+  },
+  "my-header-info": {
+    "fontSize": "42.5",
+    "lineHeight": "44",
+    "color": "#ffffff"
+  },
+  "info-number": {
+    "position": "absolute",
+    "top": "0",
+    "right": "-2",
+    "width": "22",
+    "height": "22",
+    "backgroundColor": "#ffffff",
+    "fontSize": "14",
+    "color": "#73cc00",
+    "borderRadius": 50,
+    "textAlign": "center",
+    "lineHeight": "22"
+  },
+  "my-info-wrapper": {
+    "display": "flex",
+    "flexDirection": "row",
+    "justifyContent": "space-between",
+    "alignItems": "center",
+    "height": "147",
+    "width": "710",
+    "marginLeft": "20",
+    "marginRight": "20"
+  },
+  "my-info-wrapper-left": {
+    "display": "flex",
+    "flexDirection": "row"
+  },
+  "my-info-logo-wrapper": {
+    "display": "flex",
+    "flexDirection": "row",
+    "justifyContent": "center",
+    "alignItems": "flex-end",
+    "marginRight": "10",
+    "paddingBottom": "5",
+    "paddingTop": "5",
+    "paddingLeft": "5",
+    "paddingRight": "5",
+    "width": "100",
+    "height": "100",
+    "borderRadius": 50,
+    "backgroundColor": "#d9f2aa"
+  },
+  "my-info-logo": {
+    "width": "60",
+    "height": "85"
+  },
+  "my-info-sign-wrapper": {
+    "display": "flex",
+    "flexDirection": "column"
+  },
+  "my-info-sign-time": {
+    "fontSize": "36",
+    "lineHeight": "40",
+    "color": "#ffffff"
+  },
+  "my-info-sign-box": {
+    "display": "flex",
+    "flexDirection": "row",
+    "justifyContent": "center",
+    "alignItems": "center",
+    "marginTop": "15",
+    "width": "100",
+    "height": "40",
+    "borderRadius": "40",
+    "backgroundColor": "#ffa200"
+  },
+  "my-info-sign-text": {
+    "fontSize": "20",
+    "lineHeight": "22",
+    "color": "#ffffff"
+  },
+  "mylogin": {
+    "height": "100",
+    "lineHeight": "100",
+    "fontSize": "36",
+    "color": "#ffffff"
+  },
+  "my-info-sign-iconfont": {
+    "fontSize": "20",
+    "lineHeight": "22",
+    "color": "#ffffff",
+    "marginRight": "10"
+  },
+  "my-info-colum-wrapper": {
+    "display": "flex",
+    "flexDirection": "row"
+  },
+  "my-info-colum-list": {
+    "display": "flex",
+    "flexDirection": "row",
+    "alignItems": "center"
+  },
+  "my-info-colum-list-left": {
+    "display": "flex",
+    "flexDirection": "column",
+    "justifyContent": "center",
+    "alignItems": "center"
+  },
+  "my-info-colum-text": {
+    "lineHeight": "24",
+    "fontSize": "22",
+    "color": "#ffffff"
+  },
+  "my-info-colum-num": {
+    "lineHeight": "24",
+    "fontSize": "22",
+    "color": "#ffffff",
+    "marginTop": "8"
+  },
+  "my-info-colum-line": {
+    "marginLeft": "20",
+    "marginRight": "20",
+    "width": "1",
+    "height": "30",
+    "backgroundColor": "#ffffff"
+  },
+  "my-member-area": {
+    "display": "flex",
+    "flexDirection": "column",
+    "top": "-15",
+    "width": "710",
+    "paddingTop": "20",
+    "paddingLeft": "20",
+    "paddingRight": "20",
+    "marginLeft": "20",
+    "marginRight": "20",
+    "borderRadius": "15",
+    "backgroundColor": "#ffffff"
+  },
+  "my-member-area-title": {
+    "display": "flex",
+    "flexDirection": "row",
+    "justifyContent": "space-between",
+    "alignItems": "center",
+    "width": "670",
+    "height": "40",
+    "marginBottom": "20"
+  },
+  "my-member-area-title-left": {
+    "display": "flex",
+    "flexDirection": "row",
+    "alignItems": "center"
+  },
+  "member-iconfont": {
+    "marginRight": "15",
+    "fontSize": "35",
+    "lineHeight": "37",
+    "color": "#fdc90b"
+  },
+  "my-member-area-title-left-text": {
+    "fontSize": "24",
+    "lineHeight": "26",
+    "color": "#333333"
+  },
+  "my-member-area-title-right": {
+    "width": "110",
+    "height": "40",
+    "borderRadius": "40",
+    "backgroundColor": "#ff8a6f"
+  },
+  "my-member-area-title-right-text": {
+    "textAlign": "center",
+    "fontSize": "20",
+    "lineHeight": "40",
+    "color": "#ffffff"
+  },
+  "my-member-area-body": {
+    "display": "flex",
+    "flexDirection": "row",
+    "flexWrap": "wrap",
+    "justifyContent": "flex-start",
+    "alignContent": "space-between",
+    "marginLeft": "20"
+  },
+  "my-member-area-body-list": {
+    "display": "flex",
+    "flexDirection": "row",
+    "alignItems": "center",
+    "minWidth": "108",
+    "marginRight": "40",
+    "marginBottom": "20"
+  },
+  "my-member-area-body-list-image": {
+    "width": "22",
+    "height": "22"
+  },
+  "my-member-area-body-list-text": {
+    "fontSize": "20",
+    "color": "#ff9000",
+    "paddingLeft": "5"
+  },
+  "my-order-wrapper": {
+    "marginTop": 0,
+    "display": "flex",
+    "flexDirection": "column",
+    "paddingTop": "20",
+    "paddingLeft": "20",
+    "paddingRight": "20",
+    "backgroundColor": "#ffffff",
+    "borderRadius": "15"
+  },
+  "my-tool-wrapper": {
+    "marginTop": "10",
+    "display": "flex",
+    "flexDirection": "column",
+    "paddingTop": "20",
+    "paddingLeft": "20",
+    "paddingRight": "20",
+    "backgroundColor": "#ffffff",
+    "borderRadius": "15"
+  },
+  "my-order-title": {
+    "display": "flex",
+    "flexDirection": "row",
+    "justifyContent": "space-between",
+    "alignItems": "center",
+    "marginBottom": "25"
+  },
+  "my-order-title-text": {
+    "color": "#333333",
+    "fontSize": "30",
+    "lineHeight": "32"
+  },
+  "my-all-order-title": {
+    "color": "#333333",
+    "fontSize": "20",
+    "lineHeight": "22",
+    "display": "flex",
+    "flexDirection": "row",
+    "alignItems": "center"
+  },
+  "my-all-order-title-icon": {
+    "marginLeft": "10",
+    "width": "14",
+    "height": "20"
+  },
+  "my-order-body": {
+    "display": "flex",
+    "flexDirection": "row",
+    "justifyContent": "space-around"
+  },
+  "my-order-body-list": {
+    "position": "relative",
+    "display": "flex",
+    "flexDirection": "column",
+    "justifyContent": "space-between",
+    "alignItems": "center",
+    "marginBottom": "20"
+  },
+  "my-order-body-list-image": {
+    "marginTop": "10",
+    "marginBottom": "10",
+    "width": "42",
+    "height": "42"
+  },
+  "my-order-body-list-number": {
+    "right": "0",
+    "borderWidth": "1",
+    "borderStyle": "solid",
+    "borderColor": "#73cc00"
+  },
+  "my-order-body-list-image-text": {
+    "fontSize": "20",
+    "lineHeight": "22",
+    "color": "#777777"
+  },
+  "my-tell-me-wrapper": {
+    "display": "flex",
+    "flexDirection": "row",
+    "justifyContent": "space-between"
+  },
+  "my-tell-me-image": {
+    "width": "350",
+    "height": "180",
+    "borderRadius": "10"
+  },
+  "my-tool-body": {
+    "display": "flex",
+    "flexDirection": "row",
+    "flexWrap": "wrap",
+    "width": "670"
+  },
+  "my-tool-body-list": {
+    "display": "flex",
+    "flexDirection": "column",
+    "justifyContent": "center",
+    "alignItems": "center",
+    "width": "223.3333",
+    "marginBottom": "20"
+  },
+  "my-tool-body-list-image": {
+    "marginBottom": "15",
+    "width": "52",
+    "height": "52"
+  },
+  "my-tool-body-list-image-text": {
+    "fontSize": "24",
+    "lineHeight": "26",
+    "color": "#777777"
+  }
+}
 
 /***/ }),
-/* 49 */
+/* 69 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _utils = __webpack_require__(0);
+
+var _utils2 = _interopRequireDefault(_utils);
+
+var _storage = __webpack_require__(1);
+
+var _storage2 = _interopRequireDefault(_storage);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -6681,36 +9722,292 @@ module.exports = {}
 //
 //
 
+var modal = weex.requireModule('modal');
+var storage = weex.requireModule('storage');
+var LOGIN_URL = 'api/account/getuserinfo';
+exports.default = {
+	data: function data() {
+		return {
+			titleName: '我的',
+			USERID: 'user_id',
+			TOKEN: 'user_token',
+			loginBool: false, //判断是否登录 显示登录注册
+			myInfo: {}, //我的信息
+			ConTool: [{
+				title: '我的收藏',
+				ImageUrl: '../src/components/my/tool_01.png',
+				navigationUrl: 'components/my/my.js'
+			}, {
+				title: '发现',
+				ImageUrl: '../src/components/my/tool_02.png',
+				navigationUrl: 'components/my/my.js'
+			}, {
+				title: '分享APP',
+				ImageUrl: '../src/components/my/tool_03.png',
+				navigationUrl: 'components/my/my.js'
+			}, {
+				title: '用户协议',
+				ImageUrl: '../src/components/my/tool_04.png',
+				navigationUrl: 'components/my/my.js'
+			}, {
+				title: '设置',
+				ImageUrl: '../src/components/my/tool_05.png',
+				navigationUrl: 'components/setUp/setUp.js'
+			}]
+		};
+	},
+
+	methods: {
+		loginBtn: function loginBtn() {
+			// Util.bindThis(Util.jump('components/login/login.js'),this.$getConfig())
+		}
+	},
+	created: function created() {
+		var _this = this;
+
+		var self = this;
+		var fontModule = weex.requireModule("dom");
+		fontModule.addRule('fontFace', {
+			'fontFamily': "iconfont",
+			'src': "url('//at.alicdn.com/t/font_948634_9f4vyo6e75w.ttf')"
+		});
+		storage.getItem(this.USERID, function (event) {
+			self.USERID = event.data;
+			storage.getItem(_this.TOKEN, function (event) {
+				self.TOKEN = event.data;
+				_utils2.default.WeexAjax({
+					url: LOGIN_URL + '?UserId=' + self.USERID,
+					method: 'GET',
+					type: 'JSON',
+					token: self.TOKEN,
+					callback: function callback(ret) {
+						if (ret.Status == 1) {
+							self.loginBool = true;
+							self.myInfo = ret.obj;
+							console.log(self.myInfo);
+							self.TOKEN = self.myInfo;
+						}
+					}
+				});
+			});
+		});
+	}
+};
 
 /***/ }),
-/* 50 */
+/* 70 */
 /***/ (function(module, exports) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _vm._m(0)
-},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: ["my"]
-  }, [_c('text', [_vm._v("my")])])
+  }, [_c('header', {
+    staticClass: ["my-header-title-wrapper"],
+    appendAsTree: true,
+    attrs: {
+      "append": "tree"
+    }
+  }, [_c('text', {
+    staticClass: ["my-header-title"]
+  }, [_vm._v(_vm._s(_vm.titleName))]), _vm._m(0)]), _c('list', [_c('cell', {
+    appendAsTree: true,
+    attrs: {
+      "append": "tree"
+    }
+  }, [_c('div', {
+    staticClass: ["my-header"]
+  }, [_c('div', {
+    staticClass: ["my-info-wrapper"]
+  }, [_c('div', {
+    staticClass: ["my-info-wrapper-left"]
+  }, [_vm._m(1), (_vm.loginBool) ? _c('div', {
+    staticClass: ["my-info-sign-wrapper"]
+  }, [_c('text', {
+    staticClass: ["my-info-sign-time"]
+  }, [_vm._v("68分59秒")]), _vm._m(2)]) : _vm._e(), (!_vm.loginBool) ? _c('text', {
+    staticClass: ["mylogin"],
+    on: {
+      "click": function($event) {
+        _vm.loginBtn()
+      }
+    }
+  }, [_vm._v("注册/登录")]) : _vm._e()]), _c('div', {
+    staticClass: ["my-info-wrapper-right"]
+  }, [_c('div', {
+    staticClass: ["my-info-colum-wrapper"]
+  }, _vm._l((4), function(item, index) {
+    return _c('div', {
+      key: index,
+      staticClass: ["my-info-colum-list"]
+    }, [_vm._m(3, true), (index != 3) ? _c('div', {
+      staticClass: ["my-info-colum-line"]
+    }) : _vm._e()])
+  }))])])]), _c('div', {
+    staticClass: ["my-member-area"]
+  }, [_vm._m(4), _c('div', {
+    staticClass: ["my-member-area-body"]
+  }, _vm._l((6), function(item) {
+    return _c('div', {
+      staticClass: ["my-member-area-body-list"]
+    }, [_c('image', {
+      staticClass: ["my-member-area-body-list-image"],
+      attrs: {
+        "src": "../src/components/my/merage_01.png"
+      }
+    }), _c('text', {
+      staticClass: ["my-member-area-body-list-text"]
+    }, [_vm._v("尊享黑卡")])])
+  }))])]), _c('cell', {
+    appendAsTree: true,
+    attrs: {
+      "append": "tree"
+    }
+  }, [_c('div', {
+    staticClass: ["cell-box", "my-order-wrapper"]
+  }, [_vm._m(5), _c('div', {
+    staticClass: ["my-order-body"]
+  }, _vm._l((5), function(item) {
+    return _c('div', {
+      staticClass: ["my-order-body-list"]
+    }, [_c('image', {
+      staticClass: ["my-order-body-list-image"],
+      attrs: {
+        "src": "../src/components/my/order_04.png"
+      }
+    }), _c('text', {
+      staticClass: ["info-number", "my-order-body-list-number"]
+    }, [_vm._v("2")]), _c('text', {
+      staticClass: ["my-order-body-list-image-text"]
+    }, [_vm._v("待付款")])])
+  }))])]), _vm._m(6), _c('cell', {
+    appendAsTree: true,
+    attrs: {
+      "append": "tree"
+    }
+  }, [_c('div', {
+    staticClass: ["cell-box", "my-tool-wrapper"]
+  }, [_vm._m(7), _c('div', {
+    staticClass: ["my-tool-body"]
+  }, _vm._l((_vm.ConTool), function(item) {
+    return _c('div', {
+      staticClass: ["my-tool-body-list"]
+    }, [_c('image', {
+      staticClass: ["my-tool-body-list-image"],
+      attrs: {
+        "src": item.ImageUrl
+      }
+    }), _c('text', {
+      staticClass: ["my-tool-body-list-image-text"]
+    }, [_vm._v(_vm._s(item.title))])])
+  }))]), _c('text', {
+    staticClass: ["my-tool-body-list-image-text"]
+  }, [_vm._v(_vm._s(_vm.TOKEN))])])])])
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: ["my-header-info-wrapper"]
+  }, [_c('text', {
+    staticClass: ["iconFont", "my-header-info"]
+  }, [_vm._v("")]), _c('text', {
+    staticClass: ["info-number"]
+  }, [_vm._v("2")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: ["my-info-logo-wrapper"]
+  }, [_c('image', {
+    staticClass: ["my-info-logo"],
+    attrs: {
+      "src": "../src/components/my/logo.png"
+    }
+  })])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: ["my-info-sign-box"]
+  }, [_c('text', {
+    staticClass: ["iconFont", "my-info-sign-iconfont"]
+  }, [_vm._v("")]), _c('text', {
+    staticClass: ["my-info-sign-text"]
+  }, [_vm._v("签到")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: ["my-info-colum-list-left"]
+  }, [_c('text', {
+    staticClass: ["my-info-colum-text"]
+  }, [_vm._v("余额")]), _c('text', {
+    staticClass: ["my-info-colum-num"]
+  }, [_vm._v("0.00元")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: ["my-member-area-title"]
+  }, [_c('div', {
+    staticClass: ["my-member-area-title-left"]
+  }, [_c('text', {
+    staticClass: ["iconFont", "member-iconfont"]
+  }, [_vm._v("")]), _c('text', {
+    staticClass: ["my-member-area-title-left-text"]
+  }, [_vm._v("会员权益")])]), _c('div', {
+    staticClass: ["my-member-area-title-right"]
+  }, [_c('text', {
+    staticClass: ["my-member-area-title-right-text"]
+  }, [_vm._v("开通会员")])])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: ["my-order-title"]
+  }, [_c('text', {
+    staticClass: ["my-order-title-text"]
+  }, [_vm._v("我的订单")]), _c('div', {
+    staticClass: ["my-all-order-title"]
+  }, [_c('text', {
+    staticClass: ["my-all-order-title"]
+  }, [_vm._v("全部订单")]), _c('image', {
+    staticClass: ["my-all-order-title-icon"],
+    attrs: {
+      "src": "../src/components/my/order@left.png"
+    }
+  })])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('cell', {
+    appendAsTree: true,
+    attrs: {
+      "append": "tree"
+    }
+  }, [_c('div', {
+    staticClass: ["cell-box", "my-tell-me-wrapper"]
+  }, [_c('image', {
+    staticClass: ["my-tell-me-image"],
+    attrs: {
+      "src": "../src/components/my/link_01.png"
+    }
+  }), _c('image', {
+    staticClass: ["my-tell-me-image"],
+    attrs: {
+      "src": "../src/components/my/link_02.png"
+    }
+  })])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: ["my-order-title"]
+  }, [_c('text', {
+    staticClass: ["my-order-title-text"]
+  }, [_vm._v("便捷工具")])])
 }]}
 module.exports.render._withStripped = true
 
 /***/ }),
-/* 51 */
+/* 71 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __vue_exports__, __vue_options__
 var __vue_styles__ = []
 
 /* styles */
-__vue_styles__.push(__webpack_require__(52)
+__vue_styles__.push(__webpack_require__(72)
 )
 
 /* script */
-__vue_exports__ = __webpack_require__(53)
+__vue_exports__ = __webpack_require__(73)
 
 /* template */
-var __vue_template__ = __webpack_require__(54)
+var __vue_template__ = __webpack_require__(74)
 __vue_options__ = __vue_exports__ = __vue_exports__ || {}
 if (
   typeof __vue_exports__.default === "object" ||
@@ -6740,7 +10037,7 @@ module.exports = __vue_exports__
 
 
 /***/ }),
-/* 52 */
+/* 72 */
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -6799,7 +10096,7 @@ module.exports = {
 }
 
 /***/ }),
-/* 53 */
+/* 73 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6898,15 +10195,15 @@ exports.default = {
 };
 
 /***/ }),
-/* 54 */
+/* 74 */
 /***/ (function(module, exports) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: ["wrapper"]
-  }, [_c('router-view'), _c('ul', {
+  }, [_c('router-view'), _c('div', {
     staticClass: ["tab"]
-  }, [_c('li', {
+  }, [_c('div', {
     staticClass: ["tab-list"],
     on: {
       "click": function($event) {
@@ -6918,7 +10215,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     class: [_vm.navIndex == 'home' ? 'nav-image-active' : 'nav-image']
   }, [_vm._v("")]), _c('text', {
     class: [_vm.navIndex == 'home' ? 'nav-cn-active' : 'nav-cn']
-  }, [_vm._v("首页")])]), _c('li', {
+  }, [_vm._v("首页")])]), _c('div', {
     staticClass: ["tab-list"],
     on: {
       "click": function($event) {
@@ -6930,7 +10227,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     class: [_vm.navIndex == 'classes' ? 'nav-image-active' : 'nav-image']
   }, [_vm._v("")]), _c('text', {
     class: [_vm.navIndex == 'classes' ? 'nav-cn-active' : 'nav-cn']
-  }, [_vm._v("分类")])]), _c('li', {
+  }, [_vm._v("分类")])]), _c('div', {
     staticClass: ["tab-list"],
     on: {
       "click": function($event) {
@@ -6942,7 +10239,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     class: [_vm.navIndex == 'shop' ? 'nav-image-active' : 'nav-image']
   }, [_vm._v("")]), _c('text', {
     class: [_vm.navIndex == 'shop' ? 'nav-cn-active' : 'nav-cn']
-  }, [_vm._v("购物车")])]), _c('li', {
+  }, [_vm._v("购物车")])]), _c('div', {
     staticClass: ["tab-list"],
     on: {
       "click": function($event) {
@@ -6954,7 +10251,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     class: [_vm.navIndex == 'goods' ? 'nav-image-active' : 'nav-image']
   }, [_vm._v("")]), _c('text', {
     class: [_vm.navIndex == 'goods' ? 'nav-cn-active' : 'nav-cn']
-  }, [_vm._v("取货")])]), _c('li', {
+  }, [_vm._v("取货")])]), _c('div', {
     staticClass: ["tab-list"],
     on: {
       "click": function($event) {
@@ -6966,7 +10263,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     class: [_vm.navIndex == 'my' ? 'nav-image-active' : 'nav-image']
   }, [_vm._v("")]), _c('text', {
     class: [_vm.navIndex == 'my' ? 'nav-cn-active' : 'nav-cn']
-  }, [_vm._v("我的")])])], 1)], 1)
+  }, [_vm._v("我的")])])])], 1)
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 

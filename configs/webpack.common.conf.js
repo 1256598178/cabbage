@@ -9,7 +9,8 @@ const vueWebTemp = helper.rootNode(config.templateDir);
 const hasPluginInstalled = fs.existsSync(helper.rootNode(config.pluginFilePath));
 const isWin = /^win/.test(process.platform);
 const weexEntry = {
-  'index': helper.root('entry.js')
+  'index': helper.root('entry.js'),
+  // 'login': helper.root('login.js')
 }
 
 const getEntryFileContent = (source, routerpath) => {
@@ -41,14 +42,20 @@ const getRouterFileContent = (source) => {
 }
 
 const getEntryFile = () => {
+  // const loginFilePath = 'login.js'
   const entryFile = path.join(vueWebTemp, config.entryFilePath)
   const routerFile = path.join(vueWebTemp, config.routerFilePath)
+  // const loginFile = path.join(vueWebTemp, loginFilePath)
   fs.outputFileSync(entryFile, getEntryFileContent(helper.root(config.entryFilePath), routerFile));
   fs.outputFileSync(routerFile, getRouterFileContent(helper.root(config.routerFilePath)));
+  // fs.outputFileSync(loginFile, getEntryFileContent(helper.root(loginFilePath), routerFile));
+ 
   return {
     index: entryFile
+    // login: loginFile,
   }
 }
+
 
 // The entry file for web needs to add some library. such as vue, weex-vue-render
 // 1. src/entry.js 
