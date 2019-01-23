@@ -67,6 +67,201 @@
 /************************************************************************/
 /******/ ({
 
+/***/ 0:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+var Storage = __webpack_require__(1);
+var stream = weex.requireModule('stream');
+var navigator = weex.requireModule('navigator');
+var modal = weex.requireModule('modal');
+var AJAX_URL = 'http://47.92.164.211:8011/';
+var utils = {
+    // 发送请求
+    WeexAjax: function WeexAjax(obj) {
+        var me = this;
+        var URL = obj.url;
+        var Result = "loding...";
+        if (obj.method == 'POST' || obj.method == 'GET') {
+            stream.fetch({
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': 'Bearer ' + obj.token },
+                method: obj.method,
+                url: AJAX_URL + URL,
+                type: obj.type,
+                // body: 'MobilePhone='+this.loginValue.name
+                // 拼接字符串
+                body: me.toParams(obj.body)
+            }, function (res) {
+                if (!res.ok) {
+                    me.Result = "request failed";
+                    // me.loginTip = '请求错误,请重试!'
+                } else {
+                    // 返回相应内容
+                    var rets = me.JsonFormat(res.data);
+                    // console.log(rets.Status)
+                    obj.callback(rets);
+                }
+            }, function (response) {});
+        } else {
+            console.log('请求方式错误');
+        }
+    },
+
+    // body请求主体转换函数
+    toParams: function toParams(obj) {
+        var param = "";
+        for (var name in obj) {
+            if (typeof obj[name] != 'function') {
+                param += "&" + name + "=" + encodeURI(obj[name]);
+            }
+        }
+        return param.substring(1);
+    },
+
+    // 不同的设备json解析不同
+    JsonFormat: function JsonFormat(msg) {
+        var rest = {};
+        if (this.device() == 0 || this.device() == 2) {
+            rest = JSON.parse(msg);
+        } else if (this.device() == 1) {
+            rest = eval(msg);
+        } else {
+            rest = msg;
+        }
+        return rest;
+    },
+
+    // 页面跳转navigation
+    jump: function jump(href, event) {
+        var bundleUrl = this.bundleUrl;
+        var url = decodeURI(weex.config.bundleUrl); //取得整个地址栏
+        var result = url.match(new RegExp("[a-zA-z]+://[^\s]{19}", "g"));
+        if (WXEnvironment.platform === 'Web') {
+            console.warn('Web端跳转待开发');
+            // window.location.href = 'http://192.168.1.103:8082/src/components/other/find.vue'
+            // window.location.href = href
+        } else {
+            navigator.push({
+                // url: '../../../dist/components/other/find.js',
+                url: result + 'dist/' + href,
+                // url: 'http://192.168.1.104:8082/dist/components/other/find.js',
+                animated: "true"
+            }, function (event) {
+                // modal.toast({ message: 'callback: ' + event })
+            });
+        }
+    },
+    pops: function pops(event) {
+        if (WXEnvironment.platform === 'Web') {
+            console.warn('Web端跳转待开发');
+        } else {
+            navigator.pop({
+                animated: "true"
+            }, function (event) {});
+        }
+    },
+
+    //跳转延迟
+    NavigatUrl: function NavigatUrl(obj) {
+        var self = this;
+        modal.toast({
+            message: obj.message,
+            duration: obj.duration
+        });
+        setTimeout(function () {
+            self.bindThis(self.jump(obj.urls), obj._this);
+        }, obj.duration);
+    },
+
+    // 判断当前处于哪个设备
+    device: function device() {
+        if (WXEnvironment.platform === 'android') {
+            // console.log('Android')
+            return 0;
+        } else if (WXEnvironment.platform === 'iOS') {
+            // console.log('iOS')
+            return 1;
+        } else {
+            // console.log('Web')
+            return 2;
+        }
+    },
+
+    // 改变this指向问题
+    bindThis: function bindThis(f, oTarget) {
+        return function () {
+            return f.apply(oTarget, arguments);
+        };
+    },
+    analAjax: function analAjax() {
+        var url = decodeURI(weex.config.bundleUrl) + '?CategoryId=' + 12; //取得整个地址栏
+        console.log(url);
+        var result = url.match(new RegExp(/\?\w*\=\w*(\&\w*\=\w*)*/, "g"))[0].slice(1);
+        // console.log(result)
+        var key = result.match(new RegExp(/\w*\=/, "g"));
+        // console.log(key)
+        var value = result.match(new RegExp(/\=\w*/, "g"));
+        // console.log(value)
+        var warp = {};
+        for (var indexes in value) {
+            key[indexes] = key[indexes].slice(0, key[indexes].length - 1);
+            value[indexes] = value[indexes].slice(1);
+            // console.log(value[indexes])
+            warp[key[indexes]] = value[indexes];
+        }
+        // console.log(warp)
+        return warp;
+    }
+};
+exports.default = utils;
+
+// login () {
+//   navigator.push({url:this.getJumpBaseUrl('login')})
+// },
+// getJumpBaseUrl(toUrl) {  
+//  console.log(1)
+//     var bundleUrl = weex.config.bundleUrl;  
+//     bundleUrl = new String(bundleUrl);  
+//     var nativeBase;  
+//     var native;  
+//     if (WXEnvironment.platform === 'Android') {
+//      console.log('Android')  
+//         nativeBase = 'file://assets/dist/';  
+//         native = nativeBase + toUrl + ".js";  
+//     } else if (WXEnvironment.platform === 'iOS') {  
+//      console.log('iOS')  
+//         nativeBase = bundleUrl.substring(0, bundleUrl.lastIndexOf('/') + 1);  
+//         native = nativeBase + toUrl + ".js";  
+//     } else {  
+//      console.log('Web')  
+//         var host = 'localhost:8082';  
+//         var matches = /\/\/([^\/]+?)\//.exec(bundleUrl);  
+//         if (matches && matches.length >= 2) {  
+//             host = matches[1];  
+//         }  
+
+//         //此处需注意一下,tabbar 用的直接是jsbundle 的路径,但是navigator是直接跳转到新页面上的.  
+//         if (typeof window === 'object') {  
+//             nativeBase = 'http://' + host + '/';  
+//             console.log(nativeBase+'---1')
+//         } else {  
+//             nativeBase = 'http://' + host + '/';  
+//             console.log(nativeBase+'---2')
+//         }  
+
+//         native = nativeBase + toUrl + ".html";  
+//         console.log(native+'---3')
+//     }  
+//     return native;  
+// },
+
+/***/ }),
+
 /***/ 1:
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -74,351 +269,64 @@
 
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
-
-var _typeof2 = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; /**
-                                                                                                                                                                                                                                                                                * CopyRight (C) 2017-2022 Alibaba Group Holding Limited.
-                                                                                                                                                                                                                                                                                * Created by Tw93 on 17/11/01
-                                                                                                                                                                                                                                                                                */
-
-var _urlParse = __webpack_require__(17);
-
-var _urlParse2 = _interopRequireDefault(_urlParse);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-var Utils = {
-  UrlParser: _urlParse2.default,
-  _typeof: function _typeof(obj) {
-    return Object.prototype.toString.call(obj).slice(8, -1).toLowerCase();
-  },
-  isPlainObject: function isPlainObject(obj) {
-    return Utils._typeof(obj) === 'object';
-  },
-  isString: function isString(obj) {
-    return typeof obj === 'string';
-  },
-  isNonEmptyArray: function isNonEmptyArray() {
-    var obj = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
-
-    return obj && obj.length > 0 && Array.isArray(obj) && typeof obj !== 'undefined';
-  },
-  isObject: function isObject(item) {
-    return item && (typeof item === 'undefined' ? 'undefined' : _typeof2(item)) === 'object' && !Array.isArray(item);
-  },
-  isEmptyObject: function isEmptyObject(obj) {
-    return Object.keys(obj).length === 0 && obj.constructor === Object;
-  },
-  decodeIconFont: function decodeIconFont(text) {
-    // 正则匹配 图标和文字混排 eg: 我去上学校&#xe600;,天天不&#xe600;迟到
-    var regExp = /&#x[a-z|0-9]{4,5};?/g;
-    if (regExp.test(text)) {
-      return text.replace(new RegExp(regExp, 'g'), function (iconText) {
-        var replace = iconText.replace(/&#x/, '0x').replace(/;$/, '');
-        return String.fromCharCode(replace);
-      });
-    } else {
-      return text;
-    }
-  },
-  mergeDeep: function mergeDeep(target) {
-    for (var _len = arguments.length, sources = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-      sources[_key - 1] = arguments[_key];
-    }
-
-    if (!sources.length) return target;
-    var source = sources.shift();
-    if (Utils.isObject(target) && Utils.isObject(source)) {
-      for (var key in source) {
-        if (Utils.isObject(source[key])) {
-          if (!target[key]) {
-            Object.assign(target, _defineProperty({}, key, {}));
-          }
-          Utils.mergeDeep(target[key], source[key]);
-        } else {
-          Object.assign(target, _defineProperty({}, key, source[key]));
+var Util = __webpack_require__(0);
+var storage = weex.requireModule('storage');
+var modal = weex.requireModule('modal');
+var AIstorage = {
+    // 存入到手机储存中
+    setItems: function setItems(obj) {
+        for (var item in obj) {
+            storage.setItem(item, obj[item], function (event) {
+                console.log('set success');
+            });
         }
-      }
-    }
-    return Utils.mergeDeep.apply(Utils, [target].concat(sources));
-  },
-  appendProtocol: function appendProtocol(url) {
-    if (/^\/\//.test(url)) {
-      var bundleUrl = weex.config.bundleUrl;
-
-      return 'http' + (/^https:/.test(bundleUrl) ? 's' : '') + ':' + url;
-    }
-    return url;
-  },
-  encodeURLParams: function encodeURLParams(url) {
-    var parsedUrl = new _urlParse2.default(url, true);
-    return parsedUrl.toString();
-  },
-  goToH5Page: function goToH5Page(jumpUrl) {
-    var animated = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-    var callback = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
-
-    var Navigator = weex.requireModule('navigator');
-    var jumpUrlObj = new Utils.UrlParser(jumpUrl, true);
-    var url = Utils.appendProtocol(jumpUrlObj.toString());
-    Navigator.push({
-      url: Utils.encodeURLParams(url),
-      animated: animated.toString()
-    }, callback);
-  },
-
-  env: {
-    isTaobao: function isTaobao() {
-      var appName = weex.config.env.appName;
-
-      return (/(tb|taobao|淘宝)/i.test(appName)
-      );
-    },
-    isTrip: function isTrip() {
-      var appName = weex.config.env.appName;
-
-      return appName === 'LX';
-    },
-    isBoat: function isBoat() {
-      var appName = weex.config.env.appName;
-
-      return appName === 'Boat' || appName === 'BoatPlayground';
-    },
-    isWeb: function isWeb() {
-      var platform = weex.config.env.platform;
-
-      return (typeof window === 'undefined' ? 'undefined' : _typeof2(window)) === 'object' && platform.toLowerCase() === 'web';
-    },
-    isIOS: function isIOS() {
-      var platform = weex.config.env.platform;
-
-      return platform.toLowerCase() === 'ios';
     },
 
-    /**
-     * 是否为 iPhone X or iPhoneXS or iPhoneXR or iPhoneXS Max
-     * @returns {boolean}
-     */
-    isIPhoneX: function isIPhoneX() {
-      var deviceHeight = weex.config.env.deviceHeight;
-
-      if (Utils.env.isWeb()) {
-        return (typeof window === 'undefined' ? 'undefined' : _typeof2(window)) !== undefined && window.screen && window.screen.width && window.screen.height && (parseInt(window.screen.width, 10) === 375 && parseInt(window.screen.height, 10) === 812 || parseInt(window.screen.width, 10) === 414 && parseInt(window.screen.height, 10) === 896);
-      }
-      return Utils.env.isIOS() && (deviceHeight === 2436 || deviceHeight === 2688 || deviceHeight == 1792);
-    },
-    isAndroid: function isAndroid() {
-      var platform = weex.config.env.platform;
-
-      return platform.toLowerCase() === 'android';
-    },
-    isAlipay: function isAlipay() {
-      var appName = weex.config.env.appName;
-
-      return appName === 'AP';
-    },
-    isTmall: function isTmall() {
-      var appName = weex.config.env.appName;
-
-      return (/(tm|tmall|天猫)/i.test(appName)
-      );
-    },
-    isAliWeex: function isAliWeex() {
-      return Utils.env.isTmall() || Utils.env.isTrip() || Utils.env.isTaobao();
+    // 获取
+    getItems: function getItems(obj) {
+        var arr = '';
+        storage.getItem(obj.value, function (event) {
+            arr = event.data;
+            obj.callback(arr);
+        });
+        return arr;
     },
 
-    /**
-     * 获取weex屏幕真实的设置高度，需要减去导航栏高度
-     * @returns {Number}
-     */
-    getPageHeight: function getPageHeight() {
-      var env = weex.config.env;
+    // getItems(obj) {
+    //     let arr = {};
+    //     for(var i = 0; i < arguments.length; i++){
+    //         arr[arguments[i]] = storage.getItem(arguments[i], event => {
+    //             arr[arguments[i]] = event.data;
+    //             console.log(arr)
+    //         })
+    //     }
+    //     return arr;
+    // },
+    // 移除
+    removeItem: function removeItem(name) {
+        var _this = this;
 
-      var navHeight = Utils.env.isWeb() ? 0 : Utils.env.isIPhoneX() ? 176 : 132;
-      return env.deviceHeight / env.deviceWidth * 750 - navHeight;
+        storage.removeItem(name, function (event) {
+            console.log('delete value:', event.data);
+            _this.state = 'deleted';
+        });
     },
 
-    /**
-     * 获取weex屏幕真实的设置高度
-     * @returns {Number}
-     */
-    getScreenHeight: function getScreenHeight() {
-      var env = weex.config.env;
-
-      return env.deviceHeight / env.deviceWidth * 750;
+    // 全部移除
+    getAll: function getAll() {
+        storage.getAllKeys(function (event) {
+            // modal.toast({ message: event.result })
+            if (event.result === 'success') {
+                modal.toast({
+                    message: 'props: ' + event.data.join(', ')
+                });
+            }
+        });
     }
-  },
-
-  /**
-   * 版本号比较
-   * @memberOf Utils
-   * @param currVer {string}
-   * @param promoteVer {string}
-   * @returns {boolean}
-   * @example
-   *
-   * const { Utils } = require('@ali/wx-bridge');
-   * const { compareVersion } = Utils;
-   * console.log(compareVersion('0.1.100', '0.1.11')); // 'true'
-   */
-  compareVersion: function compareVersion() {
-    var currVer = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '0.0.0';
-    var promoteVer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '0.0.0';
-
-    if (currVer === promoteVer) return true;
-    var currVerArr = currVer.split('.');
-    var promoteVerArr = promoteVer.split('.');
-    var len = Math.max(currVerArr.length, promoteVerArr.length);
-    for (var i = 0; i < len; i++) {
-      var proVal = ~~promoteVerArr[i];
-      var curVal = ~~currVerArr[i];
-      if (proVal < curVal) {
-        return true;
-      } else if (proVal > curVal) {
-        return false;
-      }
-    }
-    return false;
-  },
-
-  /**
-   * 分割数组
-   * @param arr 被分割数组
-   * @param size 分割数组的长度
-   * @returns {Array}
-   */
-  arrayChunk: function arrayChunk() {
-    var arr = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
-    var size = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 4;
-
-    var groups = [];
-    if (arr && arr.length > 0) {
-      groups = arr.map(function (e, i) {
-        return i % size === 0 ? arr.slice(i, i + size) : null;
-      }).filter(function (e) {
-        return e;
-      });
-    }
-    return groups;
-  },
-
-  /*
-   * 截断字符串
-   * @param str 传入字符串
-   * @param len 截断长度
-   * @param hasDot 末尾是否...
-   * @returns {String}
-   */
-  truncateString: function truncateString(str, len) {
-    var hasDot = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
-
-    var newLength = 0;
-    var newStr = '';
-    var singleChar = '';
-    var chineseRegex = /[^\x00-\xff]/g;
-    var strLength = str.replace(chineseRegex, '**').length;
-    for (var i = 0; i < strLength; i++) {
-      singleChar = str.charAt(i).toString();
-      if (singleChar.match(chineseRegex) !== null) {
-        newLength += 2;
-      } else {
-        newLength++;
-      }
-      if (newLength > len) {
-        break;
-      }
-      newStr += singleChar;
-    }
-
-    if (hasDot && strLength > len) {
-      newStr += '...';
-    }
-    return newStr;
-  },
-
-  /*
-   * 转换 obj 为 url params参数
-   * @param obj 传入字符串
-   * @returns {String}
-   */
-  objToParams: function objToParams(obj) {
-    var str = "";
-    for (var key in obj) {
-      if (str !== "") {
-        str += "&";
-      }
-      str += key + "=" + encodeURIComponent(obj[key]);
-    }
-    return str;
-  },
-
-  /*
-   * 转换 url params参数为obj
-   * @param str 传入url参数字符串
-   * @returns {Object}
-   */
-  paramsToObj: function paramsToObj(str) {
-    var obj = {};
-    try {
-      obj = JSON.parse('{"' + decodeURI(str).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g, '":"') + '"}');
-    } catch (e) {
-      console.log(e);
-    }
-    return obj;
-  },
-
-  animation: {
-    /**
-     * 返回定义页面转场动画起初的位置
-     * @param ref
-     * @param transform 运动类型
-     * @param status
-     * @param callback 回调函数
-     */
-    pageTransitionAnimation: function pageTransitionAnimation(ref, transform, status, callback) {
-      var animation = weex.requireModule('animation');
-      animation.transition(ref, {
-        styles: {
-          transform: transform
-        },
-        duration: status ? 250 : 300, // ms
-        timingFunction: status ? 'ease-in' : 'ease-out',
-        delay: 0 // ms
-      }, function () {
-        callback && callback();
-      });
-    }
-  },
-  uiStyle: {
-    /**
-     * 返回定义页面转场动画起初的位置
-     * @param animationType 页面转场动画的类型 push，model
-     * @param size 分割数组的长度
-     * @returns {}
-     */
-    pageTransitionAnimationStyle: function pageTransitionAnimationStyle(animationType) {
-      if (animationType === 'push') {
-        return {
-          left: '750px',
-          top: '0px',
-          height: weex.config.env.deviceHeight / weex.config.env.deviceWidth * 750 + 'px'
-        };
-      } else if (animationType === 'model') {
-        return {
-          top: weex.config.env.deviceHeight / weex.config.env.deviceWidth * 750 + 'px',
-          left: '0px',
-          height: weex.config.env.deviceHeight / weex.config.env.deviceWidth * 750 + 'px'
-        };
-      }
-      return {};
-    }
-  }
 };
-
-exports.default = Utils;
+exports.default = AIstorage;
 
 /***/ }),
 
@@ -1467,7 +1375,7 @@ module.exports = {
     "backgroundColor": "#ffffff",
     "paddingLeft": "20",
     "paddingRight": "20",
-    "boxShadow": "0 -1px 6px rgba(0,0,0,0.1)"
+    "boxShadow": "0 -1px 6px rgba(0, 0, 0, 0.1)"
   },
   "shop-car": {
     "width": "60",
@@ -1546,9 +1454,13 @@ var _wxcTabPage = __webpack_require__(24);
 
 var _wxcTabPage2 = _interopRequireDefault(_wxcTabPage);
 
-var _wxcMinibar = __webpack_require__(3);
+var _wxcMinibar = __webpack_require__(4);
 
 var _wxcMinibar2 = _interopRequireDefault(_wxcMinibar);
+
+var _utils = __webpack_require__(0);
+
+var _utils2 = _interopRequireDefault(_utils);
 
 var _config = __webpack_require__(64);
 
@@ -1560,6 +1472,34 @@ var _vue2 = _interopRequireDefault(_vue);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -1905,74 +1845,87 @@ exports.default = {
 	},
 	data: function data() {
 		return {
-			imgList: [{
-				src: '../src/components/GoodsInfo/goods-img01.png'
-			}, {
-				src: '../src/components/GoodsInfo/goods-img01.png'
-			}, {
-				src: '../src/components/GoodsInfo/goods-img01.png'
-			}],
+			imgList: [/* {
+             src: '../src/components/GoodsInfo/goods-img01.png',
+             }, {
+             src: '../src/components/GoodsInfo/goods-img01.png',
+             }, {
+             src: '../src/components/GoodsInfo/goods-img01.png',
+             } */],
 			cIndex: 1,
-			len: 0
+			len: 0,
+			LOGIN_URL: 'api/product/getprodcutdetail',
+			USERID: 'user_id',
+			TOKEN: 'user_token',
+			PRODUCTID: '',
+			ProductName: '',
+			SubTitle: '',
+			Introduce: '',
+			ImageUrl: '',
+			Price: '',
+			SalesPrice: '',
+			Unit: '',
+			CarNum: '',
+			NumType: false
+
 		};
 	},
 
 	methods: {
 		getOrderData: function getOrderData(curpage) {
 			var self = this;
-			var flag = 0;
-			switch (curpage) {
-				case 0:
-					// 全部订单 
-					flag = 0;
-					break;
-				case 1:
-					// 待付款
-					flag = 1;
-					break;
-				case 2:
-					// 待取货
-					flag = 2;
-					break;
-				case 3:
-					// 待评价
-					flag = 3;
-					break;
-				case 4:
-					// 退款服务
-					flag = 4;
-					break;
-				case 5:
-					// 售后服务
-					flag = 5;
-					break;
-			} //这里url自己写就好
-			var url = '../src/components/myorder/order' + flag + '.json';
-			console.log('geturl----' + url);
-
-			stream.fetch({
-				method: 'GET',
-				url: url,
-				type: 'json'
-			}, function (response) {
-				console.log(response);
-				self.orderList = response.data.orderList; // 刷新当前页面的数据 // tablist是对于tab的集合 需要v-for //orderlist是对应tab下的list数据的集合 需要v-for
-				//console.log(response.data.orderList);
-				_vue2.default.set(self.tabList, curpage, self.orderList);
-				console.log(self.orderList.length);
-			}, function (response) {
-				console.log('http in progress');
-			});
 		},
 		minibarLeftButtonClick: function minibarLeftButtonClick() {
 			this.$router.push('-1');
+		},
+		link: function link(urls) {
+			_utils2.default.jump(urls);
 		}
 	},
 	created: function created() {
+		var _this = this;
+
 		var fontModule = weex.requireModule("dom");
 		fontModule.addRule('fontFace', {
 			'fontFamily': "iconfont",
 			'src': "url('//at.alicdn.com/t/font_948634_j56el7oqed.ttf')"
+		});
+		var self = this;
+		if (self.CarNum == 0 || self.CarNum == '') {
+			self.NumType = false;
+		} else {
+			self.NumType = true;
+		}
+		var GoodsInfo = new BroadcastChannel('Avengers');
+		GoodsInfo.onmessage = function (event) {
+			console.log(event.data); // Assemble!
+		};
+		storage.getItem(this.USERID, function (event) {
+			self.USERID = event.data;
+			storage.getItem(_this.TOKEN, function (event) {
+				self.TOKEN = event.data;
+				_utils2.default.WeexAjax({
+					url: self.LOGIN_URL + '?prodcutId=' + _utils2.default.analAjax().ProductId + '&UserId=' + self.USERID,
+					//url: self.LOGIN_URL + '?categoryId=1',	
+					method: 'GET',
+					type: 'JSON',
+					token: self.TOKEN,
+					callback: function callback(ret) {
+						if (ret.Status == 1) {
+							//self.loginBool = true;
+							self.imgList = ret.obj.ImageList;
+							self.ProductName = ret.obj.ProductName;
+							self.SubTitle = ret.obj.SubTitle;
+							self.Price = ret.obj.Price;
+							self.SalesPrice = ret.obj.SalesPrice;
+							self.Unit = ret.obj.Unit;
+							self.Introduce = ret.obj.Introduce;
+							self.ImageUrl = ret.obj.ImageUrl;
+							console.log(ret);
+						}
+					}
+				});
+			});
 		});
 	}
 };
@@ -1983,7 +1936,24 @@ exports.default = {
 /***/ (function(module, exports) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', [_vm._m(0), _c('list', {
+  return _c('div', [_c('header', {
+    staticClass: ["shop-header"],
+    appendAsTree: true,
+    attrs: {
+      "append": "tree"
+    }
+  }, [_vm._m(0), _c('div', {
+    staticClass: ["shop-header-title-wrapper"]
+  }, [_c('text', {
+    staticClass: ["shop-header-title", "crt"]
+  }, [_vm._v("商品")]), _c('text', {
+    staticClass: ["shop-header-title"],
+    on: {
+      "click": function($event) {
+        _vm.link('components/GoodsInfo/GoodsInfo.js')
+      }
+    }
+  }, [_vm._v("详情")])])]), _c('list', {
     staticClass: ["list-box"]
   }, [_c('cell', {
     appendAsTree: true,
@@ -1995,14 +1965,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "interval": "3000",
       "autoPlay": "false"
-    },
-    on: {
-      "change": function($event) {}
     }
   }, [_vm._l((_vm.imgList), function(num) {
     return _c('div', {
-      ref: "",
-      refInFor: true,
       staticClass: ["frame"]
     }, [_c('image', {
       staticClass: ["goods-image"],
@@ -2013,66 +1978,68 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     })])
   }), _c('indicator', {
     staticClass: ["indicator"]
-  })], 2), _vm._m(1), _vm._m(2), _c('text', {
+  })], 2), _c('div', {
+    staticClass: ["goods-price-box"]
+  }, [_c('text', {
+    staticClass: ["goods-price"]
+  }, [_vm._v("¥" + _vm._s(_vm.SalesPrice) + "元/份")]), _vm._m(1)]), _c('div', {
+    staticClass: ["goods-name-box"]
+  }, [_c('text', {
+    staticClass: ["goods-name"]
+  }, [_vm._v(_vm._s(_vm.ProductName))]), _c('text', {
+    staticClass: ["goods-tip"]
+  }, [_vm._v(_vm._s(_vm.SubTitle))])]), _c('text', {
     staticClass: ["border-cell"]
-  }), _vm._m(3), _c('text', {
-    staticClass: ["border-cell"]
-  }), _vm._m(4)])]), _vm._m(5)])
-},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('header', {
-    staticClass: ["shop-header"],
-    appendAsTree: true,
-    attrs: {
-      "append": "tree"
-    }
+  }), _c('div', {
+    staticClass: ["payment-box"]
   }, [_c('div', {
+    staticClass: ["payment-method"]
+  }, [_vm._m(2), _c('text', {
+    staticClass: ["payment-content"]
+  }, [_vm._v("折合" + _vm._s(_vm.SalesPrice) + "元/份")])]), _vm._m(3)]), _c('text', {
+    staticClass: ["border-cell"]
+  }), _c('div', {
+    staticClass: ["goods-info"]
+  }, [_c('div', {
+    staticClass: ["payment-method"]
+  }, [_vm._m(4), _c('text', {
+    staticClass: ["payment-content"]
+  }, [_vm._v(_vm._s(_vm.Introduce))])])])])]), _c('div', {
+    staticClass: ["bottom-box"]
+  }, [_c('div', {
+    staticClass: ["shop-car"]
+  }, [_c('text', {
+    staticClass: ["shop-car-icon", "iconFont"]
+  }, [_vm._v("")]), (_vm.NumType) ? _c('text', {
+    staticClass: ["shop-car-num"]
+  }, [_vm._v(_vm._s(_vm.CarNum))]) : _vm._e()]), _vm._m(5), _vm._m(6)])])
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
     staticClass: ["back-box"]
   }, [_c('image', {
     staticClass: ["back-btn"],
     attrs: {
       "src": "../src/common/images/backImages.png"
     }
-  })]), _c('div', {
-    staticClass: ["shop-header-title-wrapper"]
-  }, [_c('text', {
-    staticClass: ["shop-header-title", "crt"]
-  }, [_vm._v("商品")]), _c('text', {
-    staticClass: ["shop-header-title"]
-  }, [_vm._v("详情")])])])
+  })])
 },function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
-    staticClass: ["goods-price-box"]
-  }, [_c('text', {
-    staticClass: ["goods-price"]
-  }, [_vm._v("¥46.80元/份")]), _c('div', {
     staticClass: ["goods-share"]
   }, [_c('text', {
     staticClass: ["share-img", "iconFont"]
   }, [_vm._v("")]), _c('text', {
     staticClass: ["share-text"]
-  }, [_vm._v("分享")])])])
+  }, [_vm._v("分享")])])
 },function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
-    staticClass: ["goods-name-box"]
-  }, [_c('text', {
-    staticClass: ["goods-name"]
-  }, [_vm._v("固城湖大闸蟹母蟹2两/只（6只）")]), _c('text', {
-    staticClass: ["goods-tip"]
-  }, [_vm._v("烹饪前请先剪掉蟹扣和吊牌")])])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: ["payment-box"]
-  }, [_c('div', {
-    staticClass: ["payment-method"]
-  }, [_c('div', {
     staticClass: ["payment-l"]
   }, [_c('text', {
     staticClass: ["payment-icon", "iconFont"]
   }, [_vm._v("")]), _c('text', {
     staticClass: ["payment-title"]
-  }, [_vm._v("结算方式")])]), _c('text', {
-    staticClass: ["payment-content"]
-  }, [_vm._v("折合46.80元/份")])]), _c('div', {
+  }, [_vm._v("结算方式")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
     staticClass: ["payment-method", "border-t"]
   }, [_c('div', {
     staticClass: ["payment-l"]
@@ -2082,39 +2049,27 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: ["payment-title"]
   }, [_vm._v("每份数量")])]), _c('text', {
     staticClass: ["payment-content"]
-  }, [_vm._v("1份")])])])
+  }, [_vm._v("份")])])
 },function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
-    staticClass: ["goods-info"]
-  }, [_c('div', {
-    staticClass: ["payment-method"]
-  }, [_c('div', {
     staticClass: ["payment-l"]
   }, [_c('text', {
     staticClass: ["payment-icon", "iconFont"]
   }, [_vm._v("")]), _c('text', {
     staticClass: ["payment-title"]
-  }, [_vm._v("商品详情")])]), _c('text', {
-    staticClass: ["payment-content"]
-  }, [_vm._v("千呼万唤中，我们静候螃蟹肥美、蟹膏丰足、口感和营养也是最顶峰时。终于在这最佳时节，诚意满满的带来固城湖大闸蟹，蟹儿个头大，蟹钳粗，白花花的蟹肉里有天然的咸鲜味，加上黄澄澄、红亮亮、厚笃笃的膏，啥料都不要用放，上锅一蒸，那香味十里飘香！国庆节后开始进入螃蟹最美味的时期哦！")])])])
+  }, [_vm._v("商品详情")])])
 },function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
-    staticClass: ["bottom-box"]
-  }, [_c('div', {
-    staticClass: ["shop-car"]
-  }, [_c('text', {
-    staticClass: ["shop-car-icon", "iconFont"]
-  }, [_vm._v("")]), _c('text', {
-    staticClass: ["shop-car-num"]
-  }, [_vm._v("2")])]), _c('div', {
     staticClass: ["collection"]
   }, [_c('text', {
     staticClass: ["collection-icon", "iconFont"]
-  }, [_vm._v("")])]), _c('div', {
+  }, [_vm._v("")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
     staticClass: ["add-box"]
   }, [_c('text', {
     staticClass: ["add-btn"]
-  }, [_vm._v("加入购物车")])])])
+  }, [_vm._v("加入购物车")])])
 }]}
 module.exports.render._withStripped = true
 
@@ -2134,7 +2089,7 @@ var _indexWeex = __webpack_require__(13);
 
 var _indexWeex2 = _interopRequireDefault(_indexWeex);
 
-var _index = __webpack_require__(1);
+var _index = __webpack_require__(2);
 
 var _index2 = _interopRequireDefault(_index);
 
@@ -9576,7 +9531,7 @@ if (inBrowser) {
 /*  */
 
 exports.default = Vue;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(16), __webpack_require__(2)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(16), __webpack_require__(3)))
 
 /***/ }),
 
@@ -10204,7 +10159,7 @@ Url.location = lolcation;
 Url.qs = qs;
 
 module.exports = Url;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ }),
 
@@ -10355,28 +10310,352 @@ exports.parse = querystring;
 "use strict";
 
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
-var g;
+var _typeof2 = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; /**
+                                                                                                                                                                                                                                                                                * CopyRight (C) 2017-2022 Alibaba Group Holding Limited.
+                                                                                                                                                                                                                                                                                * Created by Tw93 on 17/11/01
+                                                                                                                                                                                                                                                                                */
 
-// This works in non-strict mode
-g = function () {
-	return this;
-}();
+var _urlParse = __webpack_require__(17);
 
-try {
-	// This works if eval is allowed (see CSP)
-	g = g || Function("return this")() || (1, eval)("this");
-} catch (e) {
-	// This works if the window reference is available
-	if ((typeof window === "undefined" ? "undefined" : _typeof(window)) === "object") g = window;
-}
+var _urlParse2 = _interopRequireDefault(_urlParse);
 
-// g can still be undefined, but nothing to do about it...
-// We return undefined, instead of nothing here, so it's
-// easier to handle this case. if(!global) { ...}
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-module.exports = g;
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var Utils = {
+  UrlParser: _urlParse2.default,
+  _typeof: function _typeof(obj) {
+    return Object.prototype.toString.call(obj).slice(8, -1).toLowerCase();
+  },
+  isPlainObject: function isPlainObject(obj) {
+    return Utils._typeof(obj) === 'object';
+  },
+  isString: function isString(obj) {
+    return typeof obj === 'string';
+  },
+  isNonEmptyArray: function isNonEmptyArray() {
+    var obj = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+
+    return obj && obj.length > 0 && Array.isArray(obj) && typeof obj !== 'undefined';
+  },
+  isObject: function isObject(item) {
+    return item && (typeof item === 'undefined' ? 'undefined' : _typeof2(item)) === 'object' && !Array.isArray(item);
+  },
+  isEmptyObject: function isEmptyObject(obj) {
+    return Object.keys(obj).length === 0 && obj.constructor === Object;
+  },
+  decodeIconFont: function decodeIconFont(text) {
+    // 正则匹配 图标和文字混排 eg: 我去上学校&#xe600;,天天不&#xe600;迟到
+    var regExp = /&#x[a-z|0-9]{4,5};?/g;
+    if (regExp.test(text)) {
+      return text.replace(new RegExp(regExp, 'g'), function (iconText) {
+        var replace = iconText.replace(/&#x/, '0x').replace(/;$/, '');
+        return String.fromCharCode(replace);
+      });
+    } else {
+      return text;
+    }
+  },
+  mergeDeep: function mergeDeep(target) {
+    for (var _len = arguments.length, sources = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+      sources[_key - 1] = arguments[_key];
+    }
+
+    if (!sources.length) return target;
+    var source = sources.shift();
+    if (Utils.isObject(target) && Utils.isObject(source)) {
+      for (var key in source) {
+        if (Utils.isObject(source[key])) {
+          if (!target[key]) {
+            Object.assign(target, _defineProperty({}, key, {}));
+          }
+          Utils.mergeDeep(target[key], source[key]);
+        } else {
+          Object.assign(target, _defineProperty({}, key, source[key]));
+        }
+      }
+    }
+    return Utils.mergeDeep.apply(Utils, [target].concat(sources));
+  },
+  appendProtocol: function appendProtocol(url) {
+    if (/^\/\//.test(url)) {
+      var bundleUrl = weex.config.bundleUrl;
+
+      return 'http' + (/^https:/.test(bundleUrl) ? 's' : '') + ':' + url;
+    }
+    return url;
+  },
+  encodeURLParams: function encodeURLParams(url) {
+    var parsedUrl = new _urlParse2.default(url, true);
+    return parsedUrl.toString();
+  },
+  goToH5Page: function goToH5Page(jumpUrl) {
+    var animated = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+    var callback = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
+
+    var Navigator = weex.requireModule('navigator');
+    var jumpUrlObj = new Utils.UrlParser(jumpUrl, true);
+    var url = Utils.appendProtocol(jumpUrlObj.toString());
+    Navigator.push({
+      url: Utils.encodeURLParams(url),
+      animated: animated.toString()
+    }, callback);
+  },
+
+  env: {
+    isTaobao: function isTaobao() {
+      var appName = weex.config.env.appName;
+
+      return (/(tb|taobao|淘宝)/i.test(appName)
+      );
+    },
+    isTrip: function isTrip() {
+      var appName = weex.config.env.appName;
+
+      return appName === 'LX';
+    },
+    isBoat: function isBoat() {
+      var appName = weex.config.env.appName;
+
+      return appName === 'Boat' || appName === 'BoatPlayground';
+    },
+    isWeb: function isWeb() {
+      var platform = weex.config.env.platform;
+
+      return (typeof window === 'undefined' ? 'undefined' : _typeof2(window)) === 'object' && platform.toLowerCase() === 'web';
+    },
+    isIOS: function isIOS() {
+      var platform = weex.config.env.platform;
+
+      return platform.toLowerCase() === 'ios';
+    },
+
+    /**
+     * 是否为 iPhone X or iPhoneXS or iPhoneXR or iPhoneXS Max
+     * @returns {boolean}
+     */
+    isIPhoneX: function isIPhoneX() {
+      var deviceHeight = weex.config.env.deviceHeight;
+
+      if (Utils.env.isWeb()) {
+        return (typeof window === 'undefined' ? 'undefined' : _typeof2(window)) !== undefined && window.screen && window.screen.width && window.screen.height && (parseInt(window.screen.width, 10) === 375 && parseInt(window.screen.height, 10) === 812 || parseInt(window.screen.width, 10) === 414 && parseInt(window.screen.height, 10) === 896);
+      }
+      return Utils.env.isIOS() && (deviceHeight === 2436 || deviceHeight === 2688 || deviceHeight == 1792);
+    },
+    isAndroid: function isAndroid() {
+      var platform = weex.config.env.platform;
+
+      return platform.toLowerCase() === 'android';
+    },
+    isAlipay: function isAlipay() {
+      var appName = weex.config.env.appName;
+
+      return appName === 'AP';
+    },
+    isTmall: function isTmall() {
+      var appName = weex.config.env.appName;
+
+      return (/(tm|tmall|天猫)/i.test(appName)
+      );
+    },
+    isAliWeex: function isAliWeex() {
+      return Utils.env.isTmall() || Utils.env.isTrip() || Utils.env.isTaobao();
+    },
+
+    /**
+     * 获取weex屏幕真实的设置高度，需要减去导航栏高度
+     * @returns {Number}
+     */
+    getPageHeight: function getPageHeight() {
+      var env = weex.config.env;
+
+      var navHeight = Utils.env.isWeb() ? 0 : Utils.env.isIPhoneX() ? 176 : 132;
+      return env.deviceHeight / env.deviceWidth * 750 - navHeight;
+    },
+
+    /**
+     * 获取weex屏幕真实的设置高度
+     * @returns {Number}
+     */
+    getScreenHeight: function getScreenHeight() {
+      var env = weex.config.env;
+
+      return env.deviceHeight / env.deviceWidth * 750;
+    }
+  },
+
+  /**
+   * 版本号比较
+   * @memberOf Utils
+   * @param currVer {string}
+   * @param promoteVer {string}
+   * @returns {boolean}
+   * @example
+   *
+   * const { Utils } = require('@ali/wx-bridge');
+   * const { compareVersion } = Utils;
+   * console.log(compareVersion('0.1.100', '0.1.11')); // 'true'
+   */
+  compareVersion: function compareVersion() {
+    var currVer = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '0.0.0';
+    var promoteVer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '0.0.0';
+
+    if (currVer === promoteVer) return true;
+    var currVerArr = currVer.split('.');
+    var promoteVerArr = promoteVer.split('.');
+    var len = Math.max(currVerArr.length, promoteVerArr.length);
+    for (var i = 0; i < len; i++) {
+      var proVal = ~~promoteVerArr[i];
+      var curVal = ~~currVerArr[i];
+      if (proVal < curVal) {
+        return true;
+      } else if (proVal > curVal) {
+        return false;
+      }
+    }
+    return false;
+  },
+
+  /**
+   * 分割数组
+   * @param arr 被分割数组
+   * @param size 分割数组的长度
+   * @returns {Array}
+   */
+  arrayChunk: function arrayChunk() {
+    var arr = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+    var size = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 4;
+
+    var groups = [];
+    if (arr && arr.length > 0) {
+      groups = arr.map(function (e, i) {
+        return i % size === 0 ? arr.slice(i, i + size) : null;
+      }).filter(function (e) {
+        return e;
+      });
+    }
+    return groups;
+  },
+
+  /*
+   * 截断字符串
+   * @param str 传入字符串
+   * @param len 截断长度
+   * @param hasDot 末尾是否...
+   * @returns {String}
+   */
+  truncateString: function truncateString(str, len) {
+    var hasDot = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
+
+    var newLength = 0;
+    var newStr = '';
+    var singleChar = '';
+    var chineseRegex = /[^\x00-\xff]/g;
+    var strLength = str.replace(chineseRegex, '**').length;
+    for (var i = 0; i < strLength; i++) {
+      singleChar = str.charAt(i).toString();
+      if (singleChar.match(chineseRegex) !== null) {
+        newLength += 2;
+      } else {
+        newLength++;
+      }
+      if (newLength > len) {
+        break;
+      }
+      newStr += singleChar;
+    }
+
+    if (hasDot && strLength > len) {
+      newStr += '...';
+    }
+    return newStr;
+  },
+
+  /*
+   * 转换 obj 为 url params参数
+   * @param obj 传入字符串
+   * @returns {String}
+   */
+  objToParams: function objToParams(obj) {
+    var str = "";
+    for (var key in obj) {
+      if (str !== "") {
+        str += "&";
+      }
+      str += key + "=" + encodeURIComponent(obj[key]);
+    }
+    return str;
+  },
+
+  /*
+   * 转换 url params参数为obj
+   * @param str 传入url参数字符串
+   * @returns {Object}
+   */
+  paramsToObj: function paramsToObj(str) {
+    var obj = {};
+    try {
+      obj = JSON.parse('{"' + decodeURI(str).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g, '":"') + '"}');
+    } catch (e) {
+      console.log(e);
+    }
+    return obj;
+  },
+
+  animation: {
+    /**
+     * 返回定义页面转场动画起初的位置
+     * @param ref
+     * @param transform 运动类型
+     * @param status
+     * @param callback 回调函数
+     */
+    pageTransitionAnimation: function pageTransitionAnimation(ref, transform, status, callback) {
+      var animation = weex.requireModule('animation');
+      animation.transition(ref, {
+        styles: {
+          transform: transform
+        },
+        duration: status ? 250 : 300, // ms
+        timingFunction: status ? 'ease-in' : 'ease-out',
+        delay: 0 // ms
+      }, function () {
+        callback && callback();
+      });
+    }
+  },
+  uiStyle: {
+    /**
+     * 返回定义页面转场动画起初的位置
+     * @param animationType 页面转场动画的类型 push，model
+     * @param size 分割数组的长度
+     * @returns {}
+     */
+    pageTransitionAnimationStyle: function pageTransitionAnimationStyle(animationType) {
+      if (animationType === 'push') {
+        return {
+          left: '750px',
+          top: '0px',
+          height: weex.config.env.deviceHeight / weex.config.env.deviceWidth * 750 + 'px'
+        };
+      } else if (animationType === 'model') {
+        return {
+          top: weex.config.env.deviceHeight / weex.config.env.deviceWidth * 750 + 'px',
+          left: '0px',
+          height: weex.config.env.deviceHeight / weex.config.env.deviceWidth * 750 + 'px'
+        };
+      }
+      return {};
+    }
+  }
+};
+
+exports.default = Utils;
 
 /***/ }),
 
@@ -10457,7 +10736,7 @@ var _indexWeex = __webpack_require__(13);
 
 var _indexWeex2 = _interopRequireDefault(_indexWeex);
 
-var _utils = __webpack_require__(1);
+var _utils = __webpack_require__(2);
 
 var _utils2 = _interopRequireDefault(_utils);
 
@@ -10686,7 +10965,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _utils = __webpack_require__(1);
+var _utils = __webpack_require__(2);
 
 var _utils2 = _interopRequireDefault(_utils);
 
@@ -11131,11 +11410,42 @@ module.exports.render._withStripped = true
 "use strict";
 
 
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+var g;
+
+// This works in non-strict mode
+g = function () {
+	return this;
+}();
+
+try {
+	// This works if eval is allowed (see CSP)
+	g = g || Function("return this")() || (1, eval)("this");
+} catch (e) {
+	// This works if the window reference is available
+	if ((typeof window === "undefined" ? "undefined" : _typeof(window)) === "object") g = window;
+}
+
+// g can still be undefined, but nothing to do about it...
+// We return undefined, instead of nothing here, so it's
+// easier to handle this case. if(!global) { ...}
+
+module.exports = g;
+
+/***/ }),
+
+/***/ 4:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _index = __webpack_require__(4);
+var _index = __webpack_require__(5);
 
 Object.defineProperty(exports, 'default', {
   enumerable: true,
@@ -11148,21 +11458,21 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 /***/ }),
 
-/***/ 4:
+/***/ 5:
 /***/ (function(module, exports, __webpack_require__) {
 
 var __vue_exports__, __vue_options__
 var __vue_styles__ = []
 
 /* styles */
-__vue_styles__.push(__webpack_require__(5)
+__vue_styles__.push(__webpack_require__(6)
 )
 
 /* script */
-__vue_exports__ = __webpack_require__(6)
+__vue_exports__ = __webpack_require__(7)
 
 /* template */
-var __vue_template__ = __webpack_require__(7)
+var __vue_template__ = __webpack_require__(8)
 __vue_options__ = __vue_exports__ = __vue_exports__ || {}
 if (
   typeof __vue_exports__.default === "object" ||
@@ -11193,7 +11503,7 @@ module.exports = __vue_exports__
 
 /***/ }),
 
-/***/ 5:
+/***/ 6:
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -11236,7 +11546,85 @@ module.exports = {
 
 /***/ }),
 
-/***/ 6:
+/***/ 64:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+/**
+ * Created by Tw93 on 2016/11/4.
+ */
+
+exports.default = {
+	tabTitles: [{
+		title: '商品'
+		//icon: 'https://gw.alicdn.com/tfs/TB1MWXdSpXXXXcmXXXXXXXXXXXX-72-72.png',
+		//activeIcon: 'https://gw.alicdn.com/tfs/TB1kCk2SXXXXXXFXFXXXXXXXXXX-72-72.png',
+	}, {
+		title: '详情'
+		//icon: 'https://gw.alicdn.com/tfs/TB1ARoKSXXXXXc9XVXXXXXXXXXX-72-72.png',
+		//activeIcon: 'https://gw.alicdn.com/tfs/TB19Z72SXXXXXamXFXXXXXXXXXX-72-72.png'
+	}],
+	tabStyles: {
+		bgColor: '#FFFFFF',
+		titleColor: '#777777',
+		activeTitleColor: '#73cc00',
+		activeBgColor: '#FFFFFF',
+		isActiveTitleBold: true,
+		iconWidth: 70,
+		iconHeight: 70,
+		width: 140,
+		height: 80,
+		fontSize: 24,
+		hasActiveBottom: true,
+		activeBottomColor: '#73cc00',
+		activeBottomHeight: 2,
+		activeBottomWidth: 100,
+		textPaddingLeft: 10,
+		textPaddingRight: 10
+	},
+	// 使用 iconfont 模式的tab title配置
+	tabIconFontTitles: [{
+		title: '首页',
+		codePoint: '\uE623'
+	}, {
+		title: '特别推荐',
+		codePoint: '\uE608'
+	}, {
+		title: '消息中心',
+		codePoint: '\uE752',
+		badge: 5
+	}, {
+		title: '我的主页',
+		codePoint: '\uE601',
+		dot: true
+	}],
+	tabIconFontStyles: {
+		bgColor: '#FFFFFF',
+		titleColor: '#666666',
+		activeTitleColor: '#3D3D3D',
+		activeBgColor: '#FFFFFF',
+		isActiveTitleBold: true,
+		width: 160,
+		height: 120,
+		fontSize: 24,
+		textPaddingLeft: 10,
+		textPaddingRight: 10,
+		iconFontSize: 50,
+		iconFontColor: '#333333',
+		iconFontMarginBottom: 8,
+		activeIconFontColor: 'red',
+		iconFontUrl: '//at.alicdn.com/t/font_501019_mauqv15evc1pp66r.ttf'
+	}
+};
+
+/***/ }),
+
+/***/ 7:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11395,85 +11783,7 @@ exports.default = {
 
 /***/ }),
 
-/***/ 64:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-	value: true
-});
-/**
- * Created by Tw93 on 2016/11/4.
- */
-
-exports.default = {
-	tabTitles: [{
-		title: '商品'
-		//icon: 'https://gw.alicdn.com/tfs/TB1MWXdSpXXXXcmXXXXXXXXXXXX-72-72.png',
-		//activeIcon: 'https://gw.alicdn.com/tfs/TB1kCk2SXXXXXXFXFXXXXXXXXXX-72-72.png',
-	}, {
-		title: '详情'
-		//icon: 'https://gw.alicdn.com/tfs/TB1ARoKSXXXXXc9XVXXXXXXXXXX-72-72.png',
-		//activeIcon: 'https://gw.alicdn.com/tfs/TB19Z72SXXXXXamXFXXXXXXXXXX-72-72.png'
-	}],
-	tabStyles: {
-		bgColor: '#FFFFFF',
-		titleColor: '#777777',
-		activeTitleColor: '#73cc00',
-		activeBgColor: '#FFFFFF',
-		isActiveTitleBold: true,
-		iconWidth: 70,
-		iconHeight: 70,
-		width: 140,
-		height: 80,
-		fontSize: 24,
-		hasActiveBottom: true,
-		activeBottomColor: '#73cc00',
-		activeBottomHeight: 2,
-		activeBottomWidth: 100,
-		textPaddingLeft: 10,
-		textPaddingRight: 10
-	},
-	// 使用 iconfont 模式的tab title配置
-	tabIconFontTitles: [{
-		title: '首页',
-		codePoint: '\uE623'
-	}, {
-		title: '特别推荐',
-		codePoint: '\uE608'
-	}, {
-		title: '消息中心',
-		codePoint: '\uE752',
-		badge: 5
-	}, {
-		title: '我的主页',
-		codePoint: '\uE601',
-		dot: true
-	}],
-	tabIconFontStyles: {
-		bgColor: '#FFFFFF',
-		titleColor: '#666666',
-		activeTitleColor: '#3D3D3D',
-		activeBgColor: '#FFFFFF',
-		isActiveTitleBold: true,
-		width: 160,
-		height: 120,
-		fontSize: 24,
-		textPaddingLeft: 10,
-		textPaddingRight: 10,
-		iconFontSize: 50,
-		iconFontColor: '#333333',
-		iconFontMarginBottom: 8,
-		activeIconFontColor: 'red',
-		iconFontUrl: '//at.alicdn.com/t/font_501019_mauqv15evc1pp66r.ttf'
-	}
-};
-
-/***/ }),
-
-/***/ 7:
+/***/ 8:
 /***/ (function(module, exports) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;

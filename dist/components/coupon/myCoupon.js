@@ -75,7 +75,7 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-var Storage = __webpack_require__(12);
+var Storage = __webpack_require__(1);
 var stream = weex.requireModule('stream');
 var navigator = weex.requireModule('navigator');
 var modal = weex.requireModule('modal');
@@ -155,6 +155,15 @@ var utils = {
             });
         }
     },
+    pops: function pops(event) {
+        if (WXEnvironment.platform === 'Web') {
+            console.warn('Web端跳转待开发');
+        } else {
+            navigator.pop({
+                animated: "true"
+            }, function (event) {});
+        }
+    },
 
     //跳转延迟
     NavigatUrl: function NavigatUrl(obj) {
@@ -189,16 +198,22 @@ var utils = {
         };
     },
     analAjax: function analAjax() {
-        var url = decodeURI(weex.config.bundleUrl); //取得整个地址栏
-        var result = url.match(new RegExp(/\?\w*\=\w(\&\w*\=\w*)*/, "g"))[0].slice(1);
+        var url = decodeURI(weex.config.bundleUrl) + '?CategoryId=' + 12; //取得整个地址栏
+        console.log(url);
+        var result = url.match(new RegExp(/\?\w*\=\w*(\&\w*\=\w*)*/, "g"))[0].slice(1);
+        // console.log(result)
         var key = result.match(new RegExp(/\w*\=/, "g"));
+        // console.log(key)
         var value = result.match(new RegExp(/\=\w*/, "g"));
+        // console.log(value)
         var warp = {};
         for (var indexes in value) {
             key[indexes] = key[indexes].slice(0, key[indexes].length - 1);
             value[indexes] = value[indexes].slice(1);
+            // console.log(value[indexes])
             warp[key[indexes]] = value[indexes];
         }
+        // console.log(warp)
         return warp;
     }
 };
@@ -246,6 +261,73 @@ exports.default = utils;
 
 /***/ }),
 /* 1 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+var Util = __webpack_require__(0);
+var storage = weex.requireModule('storage');
+var modal = weex.requireModule('modal');
+var AIstorage = {
+    // 存入到手机储存中
+    setItems: function setItems(obj) {
+        for (var item in obj) {
+            storage.setItem(item, obj[item], function (event) {
+                console.log('set success');
+            });
+        }
+    },
+
+    // 获取
+    getItems: function getItems(obj) {
+        var arr = '';
+        storage.getItem(obj.value, function (event) {
+            arr = event.data;
+            obj.callback(arr);
+        });
+        return arr;
+    },
+
+    // getItems(obj) {
+    //     let arr = {};
+    //     for(var i = 0; i < arguments.length; i++){
+    //         arr[arguments[i]] = storage.getItem(arguments[i], event => {
+    //             arr[arguments[i]] = event.data;
+    //             console.log(arr)
+    //         })
+    //     }
+    //     return arr;
+    // },
+    // 移除
+    removeItem: function removeItem(name) {
+        var _this = this;
+
+        storage.removeItem(name, function (event) {
+            console.log('delete value:', event.data);
+            _this.state = 'deleted';
+        });
+    },
+
+    // 全部移除
+    getAll: function getAll() {
+        storage.getAllKeys(function (event) {
+            // modal.toast({ message: event.result })
+            if (event.result === 'success') {
+                modal.toast({
+                    message: 'props: ' + event.data.join(', ')
+                });
+            }
+        });
+    }
+};
+exports.default = AIstorage;
+
+/***/ }),
+/* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -599,7 +681,7 @@ var Utils = {
 exports.default = Utils;
 
 /***/ }),
-/* 2 */
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -629,12 +711,12 @@ try {
 module.exports = g;
 
 /***/ }),
-/* 3 */,
 /* 4 */,
 /* 5 */,
 /* 6 */,
 /* 7 */,
-/* 8 */
+/* 8 */,
+/* 9 */
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -702,17 +784,23 @@ module.exports = {
 }
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 Object.defineProperty(exports, "__esModule", {
-	value: true
+    value: true
 });
-//
-//
+
+var _utils = __webpack_require__(0);
+
+var _utils2 = _interopRequireDefault(_utils);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var navigator = weex.requireModule('navigator'); //
 //
 //
 //
@@ -724,70 +812,67 @@ Object.defineProperty(exports, "__esModule", {
 //
 //
 
-var navigator = weex.requireModule('navigator');
 var modal = weex.requireModule('modal');
 exports.default = {
-	props: {
-		titleName: {
-			type: String
-		},
-		deleted: {
-			type: Boolean
-		},
-		backPage: {
-			type: Boolean
-		},
-		shareBtn: {
-			type: Boolean
-		},
-		layout: {
-			type: Boolean
-		},
-		layoutAct: {
-			type: Boolean
-		},
-		cancel: {
-			type: Boolean
-		},
-		info: {
-			type: Boolean
-		}
-	},
-	data: function data() {
-		return {
-			layoutActBool: false,
-			layoutImage: {
-				urlImage: '../src/common/images/layout@44x44.png',
-				urlImageAct: '../src/common/images/layoutACT@44x44.png'
-			}
-		};
-	},
+    props: {
+        titleName: {
+            type: String
+        },
+        deleted: {
+            type: Boolean
+        },
+        backPage: {
+            type: Boolean
+        },
+        shareBtn: {
+            type: Boolean
+        },
+        layout: {
+            type: Boolean
+        },
+        layoutAct: {
+            type: Boolean
+        },
+        cancel: {
+            type: Boolean
+        },
+        info: {
+            type: Boolean
+        }
+    },
+    data: function data() {
+        return {
+            layoutActBool: false,
+            btnImage: {
+                backImage: "http://47.92.164.211:8011/PublicImage/backImage.png",
+                shareImage: "http://47.92.164.211:8011/PublicImage/share@46x46.png"
+            },
+            layoutImage: {
+                urlImage: 'http://47.92.164.211:8011/PublicImage/layout@44x44.png',
+                urlImageAct: 'http://47.92.164.211:8011/PublicImage/layoutACT@44x44.png'
+            }
+        };
+    },
 
-	methods: {
-		backJump: function backJump() {
-			navigator.pop({
-				// url: '../src/components/other/find.vue',congratulate
-				url: 'http://192.168.1.103:8082/dist/index.js',
-				animated: "true"
-			}, function (event) {
-				// modal.toast({ message: 'callback: ' + event })
-			});
-		},
-		layoutClick: function layoutClick() {
-			this.$emit("layoutAct", this.layoutActBool = !this.layoutActBool);
-		}
-	},
-	created: function created() {
-		var fontModule = weex.requireModule("dom");
-		fontModule.addRule('fontFace', {
-			'fontFamily': "iconfont",
-			'src': "url('//at.alicdn.com/t/font_948634_q51n034oj8.ttf')"
-		});
-	}
+    methods: {
+        pops: function pops() {
+            _utils2.default.pops();
+        },
+        layoutClick: function layoutClick() {
+            this.$emit("layoutAct", this.layoutActBool = !this.layoutActBool);
+        }
+    },
+    created: function created() {
+        var fontModule = weex.requireModule("dom");
+        fontModule.addRule('fontFace', {
+            'fontFamily': "iconfont",
+            'src': "url('//at.alicdn.com/t/font_948634_q51n034oj8.ttf')"
+        });
+    }
 };
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, exports) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -796,11 +881,11 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [(_vm.backPage) ? _c('image', {
     staticClass: ["backBtn"],
     attrs: {
-      "src": "../src/common/images/backImage.png"
+      "src": _vm.btnImage.backImage
     },
     on: {
       "click": function($event) {
-        _vm.backJump()
+        _vm.pops()
       }
     }
   }) : _vm._e(), _c('text', {
@@ -827,7 +912,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_vm._v("使用说明")]) : _vm._e(), (_vm.shareBtn) ? _c('image', {
     staticClass: ["shareBtn"],
     attrs: {
-      "src": "../src/common/images/share@46x46.png"
+      "src": _vm.btnImage.shareImage
     }
   }) : _vm._e(), (_vm.layout) ? _c('image', {
     staticClass: ["layoutBtn-44"],
@@ -844,21 +929,21 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
 module.exports.render._withStripped = true
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __vue_exports__, __vue_options__
 var __vue_styles__ = []
 
 /* styles */
-__vue_styles__.push(__webpack_require__(8)
+__vue_styles__.push(__webpack_require__(9)
 )
 
 /* script */
-__vue_exports__ = __webpack_require__(9)
+__vue_exports__ = __webpack_require__(10)
 
 /* template */
-var __vue_template__ = __webpack_require__(10)
+var __vue_template__ = __webpack_require__(11)
 __vue_options__ = __vue_exports__ = __vue_exports__ || {}
 if (
   typeof __vue_exports__.default === "object" ||
@@ -886,73 +971,6 @@ if (typeof __register_static_styles__ === "function") {
 
 module.exports = __vue_exports__
 
-
-/***/ }),
-/* 12 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-var Util = __webpack_require__(0);
-var storage = weex.requireModule('storage');
-var modal = weex.requireModule('modal');
-var AIstorage = {
-    // 存入到手机储存中
-    setItems: function setItems(obj) {
-        for (var item in obj) {
-            storage.setItem(item, obj[item], function (event) {
-                console.log('set success');
-            });
-        }
-    },
-
-    // 获取
-    getItems: function getItems(obj) {
-        var arr = '';
-        storage.getItem(obj.value, function (event) {
-            arr = event.data;
-            obj.callback(arr);
-        });
-        return arr;
-    },
-
-    // getItems(obj) {
-    //     let arr = {};
-    //     for(var i = 0; i < arguments.length; i++){
-    //         arr[arguments[i]] = storage.getItem(arguments[i], event => {
-    //             arr[arguments[i]] = event.data;
-    //             console.log(arr)
-    //         })
-    //     }
-    //     return arr;
-    // },
-    // 移除
-    removeItem: function removeItem(name) {
-        var _this = this;
-
-        storage.removeItem(name, function (event) {
-            console.log('delete value:', event.data);
-            _this.state = 'deleted';
-        });
-    },
-
-    // 全部移除
-    getAll: function getAll() {
-        storage.getAllKeys(function (event) {
-            // modal.toast({ message: event.result })
-            if (event.result === 'success') {
-                modal.toast({
-                    message: 'props: ' + event.data.join(', ')
-                });
-            }
-        });
-    }
-};
-exports.default = AIstorage;
 
 /***/ }),
 /* 13 */
@@ -1772,7 +1790,7 @@ var _indexWeex = __webpack_require__(13);
 
 var _indexWeex2 = _interopRequireDefault(_indexWeex);
 
-var _index = __webpack_require__(1);
+var _index = __webpack_require__(2);
 
 var _index2 = _interopRequireDefault(_index);
 
@@ -9213,7 +9231,7 @@ if (inBrowser) {
 /*  */
 
 exports.default = Vue;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(16), __webpack_require__(2)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(16), __webpack_require__(3)))
 
 /***/ }),
 /* 16 */
@@ -9839,7 +9857,7 @@ Url.location = lolcation;
 Url.qs = qs;
 
 module.exports = Url;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ }),
 /* 18 */
@@ -10056,7 +10074,7 @@ var _indexWeex = __webpack_require__(13);
 
 var _indexWeex2 = _interopRequireDefault(_indexWeex);
 
-var _utils = __webpack_require__(1);
+var _utils = __webpack_require__(2);
 
 var _utils2 = _interopRequireDefault(_utils);
 
@@ -10280,7 +10298,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _utils = __webpack_require__(1);
+var _utils = __webpack_require__(2);
 
 var _utils2 = _interopRequireDefault(_utils);
 
@@ -11024,11 +11042,11 @@ var _bindEnv = __webpack_require__(40);
 
 var _bindEnv2 = _interopRequireDefault(_bindEnv);
 
-var _utils = __webpack_require__(1);
+var _utils = __webpack_require__(2);
 
 var _utils2 = _interopRequireDefault(_utils);
 
-var _orderHeader = __webpack_require__(11);
+var _orderHeader = __webpack_require__(12);
 
 var _orderHeader2 = _interopRequireDefault(_orderHeader);
 

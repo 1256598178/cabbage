@@ -5,19 +5,19 @@
 				<image class="back-btn" src="../src/common/images/backImages.png"></image>
 			</div>
 			<div class="shop-header-title-wrapper">
-				<text class="shop-header-title">商品</text>
+				<text class="shop-header-title" @click="link('components/GoodsInfo/Goods.js')">商品</text>
 				<text class="shop-header-title crt">详情</text>
 			</div>
 		</header>
 		<list class="list-box">
 			<cell>
-				<image class="goods-info-img" :src="imgUrl" ref="img" @load="onImageLoad"></image>
+				<image class="goods-info-img" :src="ImageUrl" ref="img" @load="onImageLoad"></image>
 			</cell>
 		</list>
 		<div class="bottom-box">
 			<div class="shop-car">
 				<text class="shop-car-icon iconFont">&#xe668;</text>
-				<text class="shop-car-num">2</text>
+				<text class="shop-car-num" v-if="NumType">{{CarNum}}</text>
 			</div>
 			<div class="collection">
 				<text class="collection-icon iconFont">&#xe626;</text>
@@ -194,6 +194,7 @@
 
 	// https://github.com/alibaba/weex-ui/blob/master/example/tab-page/config.js
 	//import orderItem from './order-item.vue'
+	import Util from '../../common/utils/utils.js' 
 	import Config from './config'
 	import Vue from 'vue'
 	const navigator = weex.requireModule('navigator')
@@ -211,27 +212,34 @@
 		},
 		data() {
 			return {
-				imgUrl: '../src/components/GoodsInfo/goods-info-img.png',
 				cIndex: 1,
-				len: 0
+				len: 0,
+				LOGIN_URL: 'api/product/getprodcutdetail',
+				USERID: 'user_id',
+				TOKEN: 'user_token',
+				PRODUCTID: '',
+				ImageUrl:'',
+				CarNum:'',
+				NumType:false
 			}
 		},
 		methods: {
 			onImageLoad(event) {
 				console.log(event.size.naturalWidth + ',' + event.size.naturalHeight)
 				var that = this;
+				var scales = 750/event.size.naturalWidth;
 				console.log('eventTarget = ' + event.target)
 				const view = that.$refs['img']
 				console.log(view);
 				if(event.success) {
 					if(WXEnvironment.platform === 'Web') {
-						//view.style.width = event.size.naturalWidth + 'px';
-						view.style.height = event.size.naturalHeight + 'px';
+						view.style.width = event.size.naturalWidth*scales + 'px';
+						view.style.height = event.size.naturalHeight*scales + 'px';
 					} else {
 						animation.transition(view, {
 							styles: {
-								//width: event.size.naturalWidth + 'px',
-								height: event.size.naturalHeight + 'px'
+								//width: event.size.naturalWidth*scales + 'px',
+								height: event.size.naturalHeight*scales + 'px'
 							},
 							duration: 0, //需要设置为0，否则无效
 							timingFunction: 'ease',
@@ -243,6 +251,9 @@
 			},
 			minibarLeftButtonClick() {
 				this.$router.push('-1')
+			},
+			link(urls){
+				Util.jump(urls);
 			}
 		},
 		created() {
@@ -251,7 +262,37 @@
 				'fontFamily': "iconfont",
 				'src': "url('//at.alicdn.com/t/font_948634_j56el7oqed.ttf')"
 			});
-			onImageLoad();
+			var self = this;
+			if(self.CarNum == 0 || self.CarNum == ''){
+				self.NumType = false;
+			}else{
+				self.NumType = true;
+			}
+			const GoodsInfo = new BroadcastChannel('Avengers')
+			GoodsInfo.onmessage = function(event) {
+				console.log(event.data) // Assemble!
+			}
+			storage.getItem(this.USERID, event => {
+				self.USERID = event.data
+				storage.getItem(this.TOKEN, event => {
+					self.TOKEN = event.data
+					Util.WeexAjax({
+						url: self.LOGIN_URL + '?prodcutId=1',	
+						//url: self.LOGIN_URL + '?categoryId=1',	
+						method: 'GET',
+						type: 'JSON',
+						token: self.TOKEN,
+						callback: function(ret) {
+							if (ret.Status == 1) {
+								//self.loginBool = true;
+								self.ImageUrl = ret.obj.ImageUrl
+								console.log(ret);
+								//self.onImageLoad();
+							}
+						}
+					})
+				})
+			});
 		}
 	};
 </script>

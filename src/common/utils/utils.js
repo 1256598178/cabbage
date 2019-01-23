@@ -75,6 +75,16 @@ let utils = {
             })
         }
     },
+    pops(event){
+        if (WXEnvironment.platform === 'Web') {
+            console.warn('Web端跳转待开发')
+        } else {
+            navigator.pop({
+                animated: "true"
+            }, event => {
+            })
+        }
+    },
     //跳转延迟
     NavigatUrl(obj) {
         const self = this;
@@ -106,16 +116,22 @@ let utils = {
         };
     },
     analAjax() {
-        var url = decodeURI(weex.config.bundleUrl); //取得整个地址栏
-        var result = url.match(new RegExp(/\?\w*\=\w(\&\w*\=\w*)*/, "g"))[0].slice(1);
+        var url = decodeURI(weex.config.bundleUrl) + '?CategoryId=' + 12; //取得整个地址栏
+        console.log(url)
+        var result = url.match(new RegExp(/\?\w*\=\w*(\&\w*\=\w*)*/, "g"))[0].slice(1);
+        // console.log(result)
         var key = result.match(new RegExp(/\w*\=/, "g"));
+        // console.log(key)
         var value = result.match(new RegExp(/\=\w*/, "g"));
+        // console.log(value)
         var warp = {};
         for (var indexes in value) {
             key[indexes] = key[indexes].slice(0, key[indexes].length - 1)
             value[indexes] = value[indexes].slice(1)
+            // console.log(value[indexes])
             warp[key[indexes]] = value[indexes]
         }
+        // console.log(warp)
         return warp
     }
 }

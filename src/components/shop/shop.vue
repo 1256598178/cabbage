@@ -3,10 +3,7 @@
 		<header class="shop-header">
 			<!-- <div class="container"> -->
 				<v-header :titleName="titleName" :deleted="true"></v-header>
-				<!-- <div class="shop-header-title-wrapper">
-					<text class="shop-header-title">购物车</text>
-					<text class="shop-header-delet" @click="deletFoods()">删除</text>
-				</div> -->
+				<!-- 待开发 -->
 				<div class="shop-address-wrapper">
 					<text class="iconFont iconfont-address">&#xe7e0;</text>
 					<text class="shop-address-text">绿白菜滨湖春融苑店</text>
@@ -14,36 +11,29 @@
 			<!-- </div> -->
 		</header><!-- /header -->
 		<list class="shop-wrapper">
-			<refresh @refresh="onrefresh" :display="refreshing ? 'show' : 'hide'">
-				<text class="refresh">下拉刷新...</text>
-			</refresh>
-			<cell  v-for="(foods,index) in shopCar" :key="index" v-if="foods.number > 0">
+			<cell  v-for="(foods,index) in shopCarArr.CartList" :key="index" v-if="foods.CartNum > 0">
 				<div class="shop-list">
 					<wxc-checkbox :value="index" :config="config" :has-bottom-border="false" :checked="checkArr[index].checked" class="shop-list-checkout" @wxcCheckBoxItemChecked="wxcCheckBoxItemChecked"></wxc-checkbox>
 					<image class="shop-list-image" :src="foods.ImageUrl"></image>
 					<div class="shop-list-info">
 						<div class="shop-list-info-title">
-							<text class="shop-list-info-name">{{foods.foodName}}</text>
-							<text class="shop-list-info-weight">{{foods.weight}}g</text>
+							<text class="shop-list-info-name">{{foods.ProductName}}</text>
+							<text class="shop-list-info-weight">{{foods.Weight}}g</text>
 						</div>
 						<div class="shop-list-money-wrapper">
 							<div class="shop-list-money-left">
-								<text class="shop-list-money">￥{{foods.price}}元/斤</text>
-							    <!-- <text class="shop-list-all-money">￥{{foods.totalPrice}}</text> -->
+								<text class="shop-list-money">￥{{foods.SalesPrice}}元/{{foods.Unit}}</text>
+							    <text class="shop-list-all-money">￥{{foods.Price}}</text>
 							</div>
 							<div class="shop-list-money-right">
-								<text class="iconFont shop-list-money-reduce" @click="reduceMoney(foods.number,index)">&#xe600;</text>
-								<input type="text" class="shop-list-money-number" disabled="true" v-model="foods.number"/>
-								<text class="iconFont shop-list-money-add" @click="addMoney(foods.number,index)">&#xe601;</text>
+								<text class="iconFont shop-list-money-reduce" @click="reduceMoney(foods.CartNum,index)">&#xe600;</text>
+								<input type="text" class="shop-list-money-number" disabled="true" v-model="foods.CartNum"/>
+								<text class="iconFont shop-list-money-add" @click="addMoney(foods.CartNum,index)">&#xe601;</text>
 							</div>
 						</div>
 					</div>
 				</div>
 			</cell>
-			<loading class="loading" @loading="onloading" :display="loadinging ? 'show' : 'hide'">
-				<text class="loading">加载更多...</text>
-				<loading-indicator class="indicators"></loading-indicator>
-			</loading>
 		</list>
 		<div class="good-bottom-wrapper">
 			<div class="good-bottom-member-wrapper">
@@ -71,9 +61,13 @@
 import Util from '../../common/utils/utils.js'
 import { WxcCheckbox,WxcCheckboxList,WxcStepper } from 'weex-ui'
 import header from '../header/orderHeader.vue'
+const modal = weex.requireModule('modal')
 let stream = weex.requireModule("stream")
-const SHOP_URL = 'api/cart/getMyCartList'
 const storage = weex.requireModule('storage')
+// 获取购物车列表
+const SHOP_URL = 'api/cart/getMyCartList?userId='
+// 修改购物车数量
+const MODIFYSHOPNUM_URL = 'api/cart/changeCart'
 export default {
 	data() {
 		return {
@@ -85,18 +79,18 @@ export default {
 			checkArr: [],//被选中产品的数组 用来做全部删除
 			USERID: 'user_id',
 			TOKEN: 'user_token',
-			aa: {},
+			shopCarArr: {},
 			config: {
 				//初始单选框
-			    unCheckedIcon: '../src/components/shop/unchecked.png',
-				checkedIcon:'../src/components/shop/checked.png',
+			    unCheckedIcon: 'http://47.92.164.211:8011/PublicImage//unchecked.png',
+				checkedIcon:'http://47.92.164.211:8011/PublicImage//checked.png',
 			    disabledIcon:'https://gw.alicdn.com/tfs/TB1PtN3pwMPMeJjy1XdXXasrXXa-72-72.png',
 			    checkedDisabledIcon:'https://gw.alicdn.com/tfs/TB1aPabpwMPMeJjy1XcXXXpppXa-72-72.png',
 			    unCheckedDisabledIcon:'https://gw.alicdn.com/tfs/TB1lTuzpwoQMeJjy0FoXXcShVXa-72-72.png',
 			    checkedColor: '#f40',
 			},
 			shopCar: {},// 物品对象
-			discounts: 0,//折扣价
+			discounts: 0.8,//折扣价
 			// moneyValue: 0,//购买商品数
 			// total: 0,//总价
 			// shopNumber: 0,//商品个数
@@ -104,25 +98,61 @@ export default {
 	},
 	methods: {
 		reduceMoney(num,index) {
-    		this.shopCar[index].number = parseInt(this.shopCar[index].number) - 1;
+			var self = this,
+				CartNums = self.shopCarArr.CartList[index].CartNum - 1
+	        Util.WeexAjax({
+	            url: MODIFYSHOPNUM_URL,
+	            method: 'POST',
+	            type: 'JSON',
+	            token: self.TOKEN,
+	            body: {
+	            	"UserId": self.USERID,
+	            	"CartId": self.shopCarArr.CartList[index].CartId,
+	            	"CartNum": CartNums
+	            },
+	            callback: function(ret) {
+	            	if(ret.Status == 1){
+	            		var rets = ret.obj;
+						self.shopCarArr.CartList[index].CartNum = parseInt(CartNums) - 1
+	            		console.log(rets)
+	            	}else{
+                        modal.toast({
+                            message: '请求错误',
+                            duration: 1
+                        })
+	            	}
+	            }
+	        })
+    		// this.shopCar[index].number = parseInt(this.shopCar[index].number) - 1;
     	},
-    	addMoney(num,index) {
-    		this.shopCar[index].number = parseInt(this.shopCar[index].number) + 1;
+    	addMoney(num,index) {var self = this;
+	        Util.WeexAjax({
+	            url: MODIFYSHOPNUM_URL,
+	            method: 'POST',
+	            type: 'JSON',
+	            token: self.TOKEN,
+	            body: {
+	            	"UserId": self.USERID,
+	            	"CartId": self.shopCarArr.CartList[index].CartId,
+	            	"CartNum": (parseInt(self.shopCarArr.CartList[index].CartNum) + 1)
+	            },
+	            callback: function(ret) {
+	            	if(ret.Status == 1){
+	            		var rets = ret.obj;
+						self.shopCarArr.CartList[index].CartNum = parseInt(self.shopCarArr.CartList[index].CartNum) + 1
+	            		console.log(rets)
+	            	}else{
+                        modal.toast({
+                            message: '请求错误',
+                            duration: 1
+                        })
+	            	}
+	            }
+	        })
+    		// this.shopCar[index].number = parseInt(this.shopCar[index].number) + 1;
     	},
-    	onrefresh (){
-			this.refreshing = true;
-			setTimeout(()=>{
-				this.refreshing = false;
-			},2000)
-		},
-		onloading (){
-			this.loadinging = true;
-			setTimeout(()=>{
-				this.loadinging = false;
-			},2000)
-		},
 		_initCheckArr() {
-			for(var i = 0; i < this.shopCar.length; i++){
+			for(var i = 0; i < this.shopCarArr.CartList.length; i++){
 				this.checkArr.push({value: i,checked: false})
 			}
 		},
@@ -173,64 +203,26 @@ export default {
         	storage.getItem(this.TOKEN,event => {
         		self.TOKEN = event.data
 		        Util.WeexAjax({
-		            url: SHOP_URL,
+		            url: SHOP_URL + self.USERID,
 		            method: 'GET',
 		            type: 'JSON',
 		            token: self.TOKEN,
-		            body: {
-		            	"userId": self.USERID
-		            },
 		            callback: function(ret) {
-		            	var rets = ret;
 		            	if(ret.Status == 1){
-		            		console.log(rets)
+		            		var rets = ret.obj;
+		            		self.shopCarArr = rets
+		            		self._initCheckArr()
+		            		console.log(self.shopCarArr)
+		            	}else{
+                            modal.toast({
+                                message: '请求错误',
+                                duration: 1
+                            })
 		            	}
 		            }
 		        })
         	})
         });
-        // let me = this;
-        // let GET_URL = "../src/shop.json";
-        // // let GET_URL = "http://47.92.164.211:8011/api/prodcut/getcagegorylist";
-        // let getResult = "loding...";
-        // stream.fetch({
-       	// 	method: 'GET',
-       	// 	url: GET_URL,
-       	// 	type: 'json',
-        // },(res) => {
-        // 	if(!res.ok){
-        // 		me.getResult = "request failed";
-        // 	}else{
-        // 		me.shopCar = res.data.shopCar;
-        // 		me.discounts = res.data.discount;
-        // 		this._initCheckArr();
-        // 	}
-        // },() => {}) 
-
-  //       let me = this;
-  //       let POST_URL = "http://47.92.164.211:8011/api/cart/addCart";
-  //       let postResult = "loding...";
-		// stream.fetch({
-		// 	method: 'POST',
-		// 	url: POST_URL,
-		// 	type:'json',
-		// 	headers: {'Content-Type':'application/x-www-form-urlencoded'},
-		// 	body : {
-		// 	  "UserId": 1,
-		// 	  "ProductId": 2,
-		// 	  "CartNum": 3
-		// 	}
-		// }, function(ret) {
-		// 	if(!ret.ok){
-		//   		me.postResult = "request failed";
-		// 	}else{
-		//   		console.log('get:'+JSON.stringify(ret));
-		//   		me.postResult = JSON.stringify(ret.data);
-		// 	}
-		// },function(response){
-		// 	console.log('get in progress:'+response.length);
-		// 	me.postResult = "bytes received:"+response.length;
-		// });
     },
     components: { 
     	WxcCheckbox, 
@@ -241,22 +233,32 @@ export default {
     computed: {
     	shopNumber() {
     		var num = 0;
-    		for(var i = 0; i < this.shopCar.length; i++){
-    			num += parseInt(this.shopCar[i].number);
+    		var shopCarNum = 0;
+    		for(var i = 0; i < this.shopCarArr.CartList.length; i++){
+    			shopCarNum = this.shopCarArr.CartList[i].CartNum
+    			num += parseInt(shopCarNum);
     		}
     		return num;
     	},
     	total() {
     		var money = 0;
-    		for(var i = 0; i < this.shopCar.length; i++){
-    			money += parseFloat(this.shopCar[i].price) * parseInt(this.shopCar[i].number);
+    		var shopCarPrice = 0,
+    			shopCarNum = 0;
+    		for(var i = 0; i < this.shopCarArr.CartList.length; i++){
+    			shopCarPrice = this.shopCarArr.CartList[i].SalesPrice
+    			shopCarNum = this.shopCarArr.CartList[i].CartNum;
+    			money += parseFloat(shopCarPrice) * parseInt(shopCarNum);
     		}
     		return money.toFixed(2);
     	},
     	discount() {
     		var count = 0;
-    		for(var i = 0; i < this.shopCar.length; i++){
-    			count += (parseFloat(this.shopCar[i].price).toFixed(2) * parseInt(this.shopCar[i].number)) - (parseFloat(this.shopCar[i].price).toFixed(2) * parseInt(this.shopCar[i].number) * this.discounts);
+    		var shopCarPrice = 0,
+    			shopCarNum = 0;
+    		for(var i = 0; i < this.shopCarArr.CartList.length; i++){
+    			shopCarPrice = this.shopCarArr.CartList[i].SalesPrice
+    			shopCarNum = this.shopCarArr.CartList[i].CartNum;
+    			count += (parseFloat(shopCarPrice).toFixed(2) * parseInt(shopCarNum)) - (parseFloat(shopCarPrice).toFixed(2) * parseInt(shopCarNum) * this.discounts);
     		}
     		return count.toFixed(2);
     	}

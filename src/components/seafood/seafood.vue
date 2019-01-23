@@ -43,9 +43,10 @@ const SEAFOOD_URL = 'api/product/getprodcutlistbypage?'
 export default {
 	data() {
 		return {
-			titleName: '海鲜水产',
+			titleName: Util.analAjax().CategoryId,
 			pageAjax: {
 				categoryId: Util.analAjax().CategoryId,
+				// categoryId: 12,
 				page: 1,
 				pageSize: 10,
 			},
@@ -96,7 +97,7 @@ export default {
     	var _this = this;
         Util.WeexAjax({
             url: SEAFOOD_URL + 'categoryId='+ Util.analAjax().CategoryId +'&page='+ 1 +'&pageSize=' + 10,
-            // url: SEAFOOD_URL + 'categoryId='+ 3 +'&page='+ 1 +'&pageSize=' + 10,
+            // url: SEAFOOD_URL + 'categoryId='+ 12 +'&page='+ 1 +'&pageSize=' + 10,
             method: 'GET',
             type: 'JSON',
             callback: function(ret) {

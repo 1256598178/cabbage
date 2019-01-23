@@ -76,7 +76,7 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-var Storage = __webpack_require__(12);
+var Storage = __webpack_require__(1);
 var stream = weex.requireModule('stream');
 var navigator = weex.requireModule('navigator');
 var modal = weex.requireModule('modal');
@@ -156,6 +156,15 @@ var utils = {
             });
         }
     },
+    pops: function pops(event) {
+        if (WXEnvironment.platform === 'Web') {
+            console.warn('Web端跳转待开发');
+        } else {
+            navigator.pop({
+                animated: "true"
+            }, function (event) {});
+        }
+    },
 
     //跳转延迟
     NavigatUrl: function NavigatUrl(obj) {
@@ -190,16 +199,22 @@ var utils = {
         };
     },
     analAjax: function analAjax() {
-        var url = decodeURI(weex.config.bundleUrl); //取得整个地址栏
-        var result = url.match(new RegExp(/\?\w*\=\w(\&\w*\=\w*)*/, "g"))[0].slice(1);
+        var url = decodeURI(weex.config.bundleUrl) + '?CategoryId=' + 12; //取得整个地址栏
+        console.log(url);
+        var result = url.match(new RegExp(/\?\w*\=\w*(\&\w*\=\w*)*/, "g"))[0].slice(1);
+        // console.log(result)
         var key = result.match(new RegExp(/\w*\=/, "g"));
+        // console.log(key)
         var value = result.match(new RegExp(/\=\w*/, "g"));
+        // console.log(value)
         var warp = {};
         for (var indexes in value) {
             key[indexes] = key[indexes].slice(0, key[indexes].length - 1);
             value[indexes] = value[indexes].slice(1);
+            // console.log(value[indexes])
             warp[key[indexes]] = value[indexes];
         }
+        // console.log(warp)
         return warp;
     }
 };
@@ -247,7 +262,7 @@ exports.default = utils;
 
 /***/ }),
 
-/***/ 12:
+/***/ 1:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -375,17 +390,15 @@ module.exports = {
     "bottom": "110"
   },
   "refresh": {
-    "textAlign": "center"
-  },
-  "loading": {
-    "textAlign": "center",
     "width": "750",
-    "height": "200",
+    "height": "50",
+    "lineHeight": "50",
     "display": "flex",
     "MsFlexAlign": "center",
     "WebkitAlignItems": "center",
     "WebkitBoxAlign": "center",
-    "alignItems": "center"
+    "alignItems": "center",
+    "textAlign": "center"
   },
   "list-box": {
     "width": "710",
@@ -422,6 +435,15 @@ module.exports = {
     "itemSelectedColor": "rgb(115,204,70)",
     "itemSize": "20"
   },
+  "loading": {
+    "width": "750",
+    "height": "200",
+    "display": "flex",
+    "MsFlexAlign": "center",
+    "WebkitAlignItems": "center",
+    "WebkitBoxAlign": "center",
+    "alignItems": "center"
+  },
   "indicators": {
     "marginTop": "16",
     "height": "40",
@@ -439,7 +461,7 @@ module.exports = {
   "fication-wrapper-list": {
     "display": "flex",
     "flexDirection": "row",
-    "justifyContent": "space-between",
+    "justifyContent": "flex-start",
     "alignItems": "center",
     "flexWrap": "wrap"
   },
@@ -730,34 +752,11 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
+var modal = weex.requireModule('modal');
+var storage = weex.requireModule('storage');
 var HOME_URL = 'api/basic/gethomepage';
+var SHOPCAR_URL = 'api/cart/addCart';
 exports.default = {
     data: function data() {
         return {
@@ -765,16 +764,10 @@ exports.default = {
             loadinging: false, //上拉加载
             panels: 1,
             autoPlay: true, //轮播图是否自动播放
+            boolArr: [],
             homeArr: {},
-            bannerList: [{
-                url: '../src/components/home/banner.png'
-            }, {
-                url: '../src/components/home/banner.png'
-            }, {
-                url: '../src/components/home/banner.png'
-            }, {
-                url: '../src/components/home/banner.png'
-            }],
+            USERID: 'user_id',
+            TOKEN: 'user_token',
             nav: {
                 navWrapperList: []
             },
@@ -786,61 +779,97 @@ exports.default = {
                 linkr: '扫码添加微信实惠更多>',
                 telName: '服务热线',
                 telNum: '400-1000-000'
-            },
-            foodWrapper: {
-                shopCar: '../src/components/home/shop-car.png',
-                foodLists: [{
-                    urlImage: '../src/components/home/food_01.png',
-                    foodName: '荷兰豆',
-                    foodWeight: '1000',
-                    price: '5.38',
-                    allMoney: '18.85'
-                }, {
-                    urlImage: '../src/components/home/food_02.png',
-                    foodName: '荷兰豆',
-                    foodWeight: '1000',
-                    price: '5.38',
-                    allMoney: '18.85'
-                }, {
-                    urlImage: '../src/components/home/food_03.png',
-                    foodName: '荷兰豆',
-                    foodWeight: '1000',
-                    price: '5.38',
-                    allMoney: '18.85'
-                }, {
-                    urlImage: '../src/components/home/food_04.png',
-                    foodName: '荷兰豆',
-                    foodWeight: '1000',
-                    price: '5.38',
-                    allMoney: '18.85'
-                }]
             }
         };
     },
 
     methods: {
         onrefresh: function onrefresh() {
-            var _this2 = this;
-
             this.refreshing = true;
-            setTimeout(function () {
-                _this2.refreshing = false;
-            }, 2000);
-        },
-        onloading: function onloading() {
-            var _this3 = this;
-
-            this.loadinging = true;
-            setTimeout(function () {
-                _this3.loadinging = false;
-            }, 2000);
+            var _this = this;
+            _utils2.default.WeexAjax({
+                url: HOME_URL,
+                method: 'GET',
+                type: 'JSON',
+                callback: function callback(ret) {
+                    var rets = ret;
+                    console.log(ret);
+                    if (rets.Status == 1) {
+                        _this.homeArr = ret.obj;
+                        var TopCategoryList = _this.homeArr.TopCategoryList;
+                        var index = 0,
+                            fre = TopCategoryList.length / 10;
+                        // 循环push 顶部推荐
+                        for (var i = 0; i < fre; i++) {
+                            // 十次一个循环
+                            var arr = [];
+                            for (var j = 0; j < 10; j++) {
+                                if (TopCategoryList[index]) {
+                                    arr.push(TopCategoryList[index]);
+                                } else {
+                                    break;
+                                }
+                                index++;
+                            }
+                            _this.nav.navWrapperList.push(arr);
+                            // console.log(_this.nav.navWrapperList)
+                        }
+                        // 给专区制作数组
+                        for (var i = 0; i < _this.homeArr.RegionCategoryList.length; i++) {
+                            _this.boolArr[i] = true;
+                        }
+                        _this.refreshing = false;
+                        // console.log(_this.boolArr)
+                    } else {
+                        modal.toast({
+                            message: '请求错误',
+                            duration: 1
+                        });
+                    }
+                }
+            });
         },
         panel: function panel() {
             this.panels = this.navWrapperList.length / 10;
-            console.log(this.panels);
+            // console.log(this.panels)
         },
         jump: function jump(href) {
             _utils2.default.bindThis(_utils2.default.jump(href), this.$getConfig());
+        },
+        addShopCar: function addShopCar(Product_Id) {
+            var _this2 = this;
+
+            storage.getItem(this.USERID, function (event) {
+                self.USERID = event.data;
+                storage.getItem(_this2.TOKEN, function (event) {
+                    self.TOKEN = event.data;
+                    _utils2.default.WeexAjax({
+                        url: SHOPCAR_URL,
+                        //url: self.LOGIN_URL + '?categoryId=1',    
+                        method: 'POST',
+                        type: 'JSON',
+                        token: self.TOKEN,
+                        body: {
+                            "UserId": self.USERID,
+                            "ProductId": Product_Id,
+                            "CartNum": 1
+                        },
+                        callback: function callback(ret) {
+                            if (ret.Status == 1) {
+                                modal.toast({
+                                    message: ret.Message,
+                                    duration: 1
+                                });
+                            } else {
+                                modal.toast({
+                                    message: '请求错误',
+                                    duration: 1
+                                });
+                            }
+                        }
+                    });
+                });
+            });
         }
     },
     components: {
@@ -860,6 +889,7 @@ exports.default = {
                     var TopCategoryList = _this.homeArr.TopCategoryList;
                     var index = 0,
                         fre = TopCategoryList.length / 10;
+                    // 循环push 顶部推荐
                     for (var i = 0; i < fre; i++) {
                         // 十次一个循环
                         var arr = [];
@@ -874,9 +904,25 @@ exports.default = {
                         _this.nav.navWrapperList.push(arr);
                         // console.log(_this.nav.navWrapperList)
                     }
+                    // 给专区制作数组
+                    for (var i = 0; i < _this.homeArr.RegionCategoryList.length; i++) {
+                        _this.boolArr[i] = true;
+                    }
+                    // console.log(_this.boolArr)
+                } else {
+                    modal.toast({
+                        message: '请求错误',
+                        duration: 1
+                    });
                 }
             }
         });
+        // 初始化专区数组
+        for (var i = 0; i < 5; i++) {
+            _this.boolArr.push(false);
+        }
+        // 打印搜索值
+        // console.log(Util.analAjax().CategoryId)
     },
 
     filters: {
@@ -1048,145 +1094,126 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: ["foods-wrapper"]
   }, [_c('div', {
     staticClass: ["foods-wrapper-list"]
-  }, [_c('image', {
+  }, [(_vm.boolArr[0]) ? _c('image', {
     staticClass: ["foods-image", "foods-image-one"],
     attrs: {
       "src": _vm.homeArr.RegionCategoryList[0].RegionImageUrl
+    },
+    on: {
+      "click": function($event) {
+        _vm.jump('components/seafood/seafood.js?CategoryId=' + _vm.homeArr.RegionCategoryList[0].CategoryId)
+      }
     }
-  })]), _c('div', {
+  }) : _vm._e()]), _c('div', {
     staticClass: ["foods-wrapper-list", "foods-wrapper-list-two"]
-  }, [_c('image', {
+  }, [(_vm.boolArr[1]) ? _c('image', {
     staticClass: ["foods-image"],
     attrs: {
       "src": _vm.homeArr.RegionCategoryList[1].RegionImageUrl
-    }
-  }), _c('image', {
-    staticClass: ["foods-image"],
-    attrs: {
-      "src": "../src/components/home/food-icon-2.png"
-    }
-  })])]), _vm._m(0)])]), _vm._l((_vm.homeArr.HotCategoryProdctListList), function(foodList, index) {
-    return _c('cell', {
-      key: index,
-      appendAsTree: true,
-      attrs: {
-        "append": "tree"
-      }
-    }, [_c('div', {
-      staticClass: ["list-box"]
-    }, [_c('image', {
-      staticClass: ["food-bg-image"],
-      attrs: {
-        "src": foodList.ImageUrl
-      }
-    })]), _c('div', {
-      staticClass: ["list-box", "foot-list-wrapper"]
-    }, _vm._l((_vm.homeArr.HotCategoryProdctListList[index].ProductsList), function(food) {
-      return _c('div', {
-        staticClass: ["foot-list"]
-      }, [_c('div', {
-        staticClass: ["image-box"]
-      }, [_c('image', {
-        staticClass: ["food-image"],
-        attrs: {
-          "src": food.ImageUrl
-        }
-      })]), _c('div', {
-        staticClass: ["food-shop-wrapper"]
-      }, [_c('div', {
-        staticClass: ["food-name-wrapper"]
-      }, [_c('text', {
-        staticClass: ["foot-shop-name"]
-      }, [_vm._v(_vm._s(food.ProductName) + "  " + _vm._s(food.Weight))])]), _c('div', {
-        staticClass: ["foot-dollar-wrapper"]
-      }, [_c('text', {
-        staticClass: ["foot-dollar"]
-      }, [_vm._v("￥" + _vm._s(_vm._f("droller")(food.SalesPrice)))]), _c('text', {
-        staticClass: ["foot-more-money"]
-      }, [_vm._v("￥" + _vm._s(_vm._f("droller")(food.Price)))]), _c('image', {
-        staticClass: ["foot-shop-car"],
-        attrs: {
-          "src": "../src/components/home/shop-car.png"
-        }
-      })])])])
-    }))])
-  }), _vm._l((_vm.homeArr.HotCategoryProdctListList), function(foodList, index) {
-    return _c('cell', {
-      key: index,
-      appendAsTree: true,
-      attrs: {
-        "append": "tree"
-      }
-    }, [_c('div', {
-      staticClass: ["list-box"]
-    }, [_c('image', {
-      staticClass: ["food-bg-image"],
-      attrs: {
-        "src": foodList.ImageUrl
-      }
-    })]), _c('div', {
-      staticClass: ["list-box", "foot-list-wrapper"]
-    }, _vm._l((_vm.homeArr.HotCategoryProdctListList[index].ProductsList), function(food) {
-      return _c('div', {
-        staticClass: ["foot-list"]
-      }, [_c('div', {
-        staticClass: ["image-box"]
-      }, [_c('image', {
-        staticClass: ["food-image"],
-        attrs: {
-          "src": food.ImageUrl
-        }
-      })]), _c('div', {
-        staticClass: ["food-shop-wrapper"]
-      }, [_c('div', {
-        staticClass: ["food-name-wrapper"]
-      }, [_c('text', {
-        staticClass: ["foot-shop-name"]
-      }, [_vm._v(_vm._s(food.ProductName) + "  " + _vm._s(food.Weight))])]), _c('div', {
-        staticClass: ["foot-dollar-wrapper"]
-      }, [_c('text', {
-        staticClass: ["foot-dollar"]
-      }, [_vm._v("￥" + _vm._s(_vm._f("droller")(food.SalesPrice)))]), _c('text', {
-        staticClass: ["foot-more-money"]
-      }, [_vm._v("￥" + _vm._s(_vm._f("droller")(food.Price)))]), _c('image', {
-        staticClass: ["foot-shop-car"],
-        attrs: {
-          "src": "../src/components/home/shop-car.png"
-        }
-      })])])])
-    }))])
-  }), _vm._v("`\n        "), _c('loading', {
-    staticClass: ["loading"],
-    attrs: {
-      "display": _vm.loadinging ? 'show' : 'hide'
     },
     on: {
-      "loading": _vm.onloading
+      "click": function($event) {
+        _vm.jump('components/seafood/seafood.js?CategoryId=' + _vm.homeArr.RegionCategoryList[1].CategoryId)
+      }
     }
-  }, [_c('text', {
-    staticClass: ["loading"]
-  }, [_vm._v("加载更多...")]), _c('loading-indicator', {
-    staticClass: ["indicators"]
-  })])], 2)], 1)
-},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
+  }) : _vm._e(), (_vm.boolArr[2]) ? _c('image', {
+    staticClass: ["foods-image"],
+    attrs: {
+      "src": _vm.homeArr.RegionCategoryList[2].RegionImageUrl
+    },
+    on: {
+      "click": function($event) {
+        _vm.jump('components/seafood/seafood.js?CategoryId=' + _vm.homeArr.RegionCategoryList[2].CategoryId)
+      }
+    }
+  }) : _vm._e()])]), _c('div', {
     staticClass: ["foods-wrapper"]
   }, [_c('div', {
     staticClass: ["foods-wrapper-list"]
-  }, [_c('image', {
+  }, [(_vm.boolArr[3]) ? _c('image', {
     staticClass: ["foods-image"],
     attrs: {
-      "src": "../src/components/home/food-icon-2.png"
+      "src": _vm.homeArr.RegionCategoryList[3].RegionImageUrl
+    },
+    on: {
+      "click": function($event) {
+        _vm.jump('components/seafood/seafood.js?CategoryId=' + _vm.homeArr.RegionCategoryList[3].CategoryId)
+      }
     }
-  })]), _c('div', {
+  }) : _vm._e()]), _c('div', {
     staticClass: ["foods-wrapper-list"]
-  }, [_c('image', {
+  }, [(_vm.boolArr[4]) ? _c('image', {
     staticClass: ["foods-image"],
     attrs: {
-      "src": "../src/components/home/food-icon-2.png"
+      "src": _vm.homeArr.RegionCategoryList[4].RegionImageUrl
+    },
+    on: {
+      "click": function($event) {
+        _vm.jump('components/seafood/seafood.js?CategoryId=' + _vm.homeArr.RegionCategoryList[4].CategoryId)
+      }
     }
-  })])])
-}]}
+  }) : _vm._e()])])])]), _vm._l((_vm.homeArr.HotCategoryProdctListList), function(foodList, indexs) {
+    return _c('cell', {
+      key: indexs,
+      appendAsTree: true,
+      attrs: {
+        "append": "tree"
+      }
+    }, [_c('div', {
+      staticClass: ["list-box"]
+    }, [_c('image', {
+      staticClass: ["food-bg-image"],
+      attrs: {
+        "src": foodList.ImageUrl
+      },
+      on: {
+        "click": function($event) {
+          _vm.jump('components/seafood/seafood.js?CategoryId=' + foodList.CategoryId)
+        }
+      }
+    })]), _c('div', {
+      staticClass: ["list-box", "foot-list-wrapper"]
+    }, _vm._l((_vm.homeArr.HotCategoryProdctListList[indexs].ProductsList), function(food) {
+      return _c('div', {
+        staticClass: ["foot-list"],
+        on: {
+          "click": function($event) {
+            _vm.jump('components/GoodsInfo/Goods.js?ProductId=' + food.ProductId)
+          }
+        }
+      }, [_c('div', {
+        staticClass: ["image-box"]
+      }, [_c('image', {
+        staticClass: ["food-image"],
+        attrs: {
+          "src": food.ImageUrl
+        }
+      })]), _c('div', {
+        staticClass: ["food-shop-wrapper"]
+      }, [_c('div', {
+        staticClass: ["food-name-wrapper"]
+      }, [_c('text', {
+        staticClass: ["foot-shop-name"]
+      }, [_vm._v(_vm._s(food.ProductName) + "  " + _vm._s(food.Weight))])]), _c('div', {
+        staticClass: ["foot-dollar-wrapper"]
+      }, [_c('text', {
+        staticClass: ["foot-dollar"]
+      }, [_vm._v("￥" + _vm._s(_vm._f("droller")(food.SalesPrice)))]), _c('text', {
+        staticClass: ["foot-more-money"]
+      }, [_vm._v("￥" + _vm._s(_vm._f("droller")(food.Price)))]), _c('image', {
+        staticClass: ["foot-shop-car"],
+        attrs: {
+          "src": "../src/components/home/shop-car.png"
+        },
+        on: {
+          "click": function($event) {
+            _vm.addShopCar(food.ProductId)
+          }
+        }
+      })])])])
+    }))])
+  })], 2)], 1)
+},staticRenderFns: []}
 module.exports.render._withStripped = true
 
 /***/ }),

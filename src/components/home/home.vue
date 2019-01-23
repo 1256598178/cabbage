@@ -45,29 +45,29 @@
                 <div class="list-box food-box">
                     <div class="foods-wrapper">
                         <div class="foods-wrapper-list">
-                            <image class="foods-image foods-image-one" :src="homeArr.RegionCategoryList[0].RegionImageUrl"></image>
+                            <image class="foods-image foods-image-one" :src="homeArr.RegionCategoryList[0].RegionImageUrl"  v-if="boolArr[0]"  @click="jump('components/seafood/seafood.js?CategoryId=' + homeArr.RegionCategoryList[0].CategoryId)"></image>
                         </div>
                         <div class="foods-wrapper-list foods-wrapper-list-two">
-                            <image class="foods-image" :src="homeArr.RegionCategoryList[1].RegionImageUrl"></image>
-                            <image class="foods-image" src="../src/components/home/food-icon-2.png"></image>
+                            <image class="foods-image" :src="homeArr.RegionCategoryList[1].RegionImageUrl" v-if="boolArr[1]" @click="jump('components/seafood/seafood.js?CategoryId=' + homeArr.RegionCategoryList[1].CategoryId)"></image>
+                            <image class="foods-image" :src="homeArr.RegionCategoryList[2].RegionImageUrl" v-if="boolArr[2]" @click="jump('components/seafood/seafood.js?CategoryId=' + homeArr.RegionCategoryList[2].CategoryId)"></image>
                         </div>
                     </div>
                     <div class="foods-wrapper">
                         <div class="foods-wrapper-list">
-                            <image class="foods-image" src="../src/components/home/food-icon-2.png"></image>
+                            <image class="foods-image" :src="homeArr.RegionCategoryList[3].RegionImageUrl" v-if="boolArr[3]" @click="jump('components/seafood/seafood.js?CategoryId=' + homeArr.RegionCategoryList[3].CategoryId)"></image>
                         </div>
                         <div class="foods-wrapper-list">
-                            <image class="foods-image" src="../src/components/home/food-icon-2.png"></image>
+                            <image class="foods-image" :src="homeArr.RegionCategoryList[4].RegionImageUrl" v-if="boolArr[4]" @click="jump('components/seafood/seafood.js?CategoryId=' + homeArr.RegionCategoryList[4].CategoryId)"></image>
                         </div>
                     </div>
                 </div>
             </cell>
-            <cell v-for="(foodList,index) in homeArr.HotCategoryProdctListList" :key="index">
+            <cell v-for="(foodList,indexs) in homeArr.HotCategoryProdctListList" :key="indexs">
                 <div class="list-box">
-                    <image class="food-bg-image" :src="foodList.ImageUrl"></image>
+                    <image class="food-bg-image" :src="foodList.ImageUrl" @click="jump('components/seafood/seafood.js?CategoryId=' + foodList.CategoryId)"></image>
                 </div>
                 <div class="list-box foot-list-wrapper">
-                    <div class="foot-list" v-for="food in homeArr.HotCategoryProdctListList[index].ProductsList">
+                    <div class="foot-list" v-for="food in homeArr.HotCategoryProdctListList[indexs].ProductsList" @click="jump('components/GoodsInfo/Goods.js?ProductId=' + food.ProductId)">
                         <div class="image-box">
                             <image class="food-image" :src="food.ImageUrl"></image>
                         </div>
@@ -78,45 +78,22 @@
                             <div class="foot-dollar-wrapper">
                                 <text class="foot-dollar">￥{{food.SalesPrice | droller}}</text>
                                 <text class="foot-more-money">￥{{food.Price | droller}}</text>
-                                <image class="foot-shop-car" src="../src/components/home/shop-car.png"></image>
+                                <image class="foot-shop-car" src="../src/components/home/shop-car.png" @click="addShopCar(food.ProductId)"></image>
                             </div>
                         </div>
                     </div>
                 </div>
             </cell>
-            <cell v-for="(foodList,index) in homeArr.HotCategoryProdctListList" :key="index">
-                <div class="list-box">
-                    <image class="food-bg-image" :src="foodList.ImageUrl"></image>
-                </div>
-                <div class="list-box foot-list-wrapper">
-                    <div class="foot-list" v-for="food in homeArr.HotCategoryProdctListList[index].ProductsList">
-                        <div class="image-box">
-                            <image class="food-image" :src="food.ImageUrl"></image>
-                        </div>
-                        <div class="food-shop-wrapper">
-                            <div class="food-name-wrapper">
-                                <text class="foot-shop-name">{{food.ProductName}}&nbsp;&nbsp;{{food.Weight}}</text>
-                            </div>
-                            <div class="foot-dollar-wrapper">
-                                <text class="foot-dollar">￥{{food.SalesPrice | droller}}</text>
-                                <text class="foot-more-money">￥{{food.Price | droller}}</text>
-                                <image class="foot-shop-car" src="../src/components/home/shop-car.png"></image>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </cell>`
-            <loading class="loading" @loading="onloading" :display="loadinging ? 'show' : 'hide'">
-                <text class="loading">加载更多...</text>
-                <loading-indicator class="indicators"></loading-indicator>
-            </loading>
         </list>
     </div>
 </template>
 <script>
 import header from '../header/header.vue'
 import Util from '../../common/utils/utils.js'
+const modal = weex.requireModule('modal')
+const storage = weex.requireModule('storage')
 const HOME_URL = 'api/basic/gethomepage'
+const SHOPCAR_URL = 'api/cart/addCart'
 export default {
     data() {
         return {
@@ -124,16 +101,10 @@ export default {
             loadinging: false, //上拉加载
             panels: 1,
             autoPlay: true, //轮播图是否自动播放
+            boolArr: [],
             homeArr: {},
-            bannerList: [{
-                url: '../src/components/home/banner.png'
-            }, {
-                url: '../src/components/home/banner.png'
-            }, {
-                url: '../src/components/home/banner.png'
-            }, {
-                url: '../src/components/home/banner.png'
-            }],
+            USERID: 'user_id',
+            TOKEN: 'user_token',
             nav: {
                 navWrapperList: []
             },
@@ -146,59 +117,95 @@ export default {
                 telName: '服务热线',
                 telNum: '400-1000-000'
             },
-            foodWrapper: {
-                shopCar: '../src/components/home/shop-car.png',
-                foodLists: [{
-                        urlImage: '../src/components/home/food_01.png',
-                        foodName: '荷兰豆',
-                        foodWeight: '1000',
-                        price: '5.38',
-                        allMoney: '18.85'
-                    },
-                    {
-                        urlImage: '../src/components/home/food_02.png',
-                        foodName: '荷兰豆',
-                        foodWeight: '1000',
-                        price: '5.38',
-                        allMoney: '18.85'
-                    },
-                    {
-                        urlImage: '../src/components/home/food_03.png',
-                        foodName: '荷兰豆',
-                        foodWeight: '1000',
-                        price: '5.38',
-                        allMoney: '18.85'
-                    }, {
-                        urlImage: '../src/components/home/food_04.png',
-                        foodName: '荷兰豆',
-                        foodWeight: '1000',
-                        price: '5.38',
-                        allMoney: '18.85'
-                    }
-                ]
-            }
         }
     },
     methods: {
         onrefresh() {
             this.refreshing = true;
-            setTimeout(() => {
-                this.refreshing = false;
-            }, 2000)
-        },
-        onloading() {
-            this.loadinging = true;
-            setTimeout(() => {
-                this.loadinging = false;
-            }, 2000)
+            var _this = this;
+            Util.WeexAjax({
+                url: HOME_URL,
+                method: 'GET',
+                type: 'JSON',
+                callback: function(ret) {
+                    var rets = ret;
+                    console.log(ret)
+                    if (rets.Status == 1) {
+                        _this.homeArr = ret.obj;
+                        var TopCategoryList = _this.homeArr.TopCategoryList;
+                        var index = 0,
+                            fre = TopCategoryList.length / 10;
+                        // 循环push 顶部推荐
+                        for (var i = 0; i < fre; i++) {
+                            // 十次一个循环
+                            var arr = []
+                            for (var j = 0; j < 10; j++) {
+                                if(TopCategoryList[index]){
+                                    arr.push(TopCategoryList[index])
+                                }else{
+                                    break;
+                                }
+                                index++;
+                            }
+                            _this.nav.navWrapperList.push(arr)
+                            // console.log(_this.nav.navWrapperList)
+                        }
+                        // 给专区制作数组
+                        for(var i = 0; i < _this.homeArr.RegionCategoryList.length; i++){
+                            _this.boolArr[i] = true
+                        }
+                        _this.refreshing = false;
+                        // console.log(_this.boolArr)
+                    }else{
+                        modal.toast({
+                            message: '请求错误',
+                            duration: 1
+                        })
+                    }
+                }
+            })
         },
         panel() {
             this.panels = (this.navWrapperList.length) / 10;
-            console.log(this.panels)
+            // console.log(this.panels)
         },
-        jump(href){
+        jump(href) {
 	  		Util.bindThis(Util.jump(href),this.$getConfig())
-	  	}
+	  	},
+        addShopCar(Product_Id) {
+            console.log(Product_Id)
+            storage.getItem(this.USERID, event => {
+                self.USERID = event.data
+                storage.getItem(this.TOKEN, event => {
+                    self.TOKEN = event.data
+                    Util.WeexAjax({
+                        url: SHOPCAR_URL,
+                        //url: self.LOGIN_URL + '?categoryId=1',    
+                        method: 'POST',
+                        type: 'JSON',
+                        token: self.TOKEN,
+                        body: {
+                            "UserId": self.USERID,
+                            "ProductId": Product_Id,
+                            "CartNum": 1
+                        },
+                        callback: function(ret) {
+                            if (ret.Status == 1) {
+                                modal.toast({
+                                    message: ret.Message,
+                                    duration: 1
+                                })
+                            }else{
+                                modal.toast({
+                                    message: '请求错误',
+                                    duration: 1
+                                })
+                            }
+                        }
+                    })
+                })
+            });
+        }
     },
     components: {
         'v-header': header
@@ -217,6 +224,7 @@ export default {
                     var TopCategoryList = _this.homeArr.TopCategoryList;
                     var index = 0,
                         fre = TopCategoryList.length / 10;
+                    // 循环push 顶部推荐
                     for (var i = 0; i < fre; i++) {
                         // 十次一个循环
                         var arr = []
@@ -231,9 +239,25 @@ export default {
                         _this.nav.navWrapperList.push(arr)
                         // console.log(_this.nav.navWrapperList)
                     }
+                    // 给专区制作数组
+                    for(var i = 0; i < _this.homeArr.RegionCategoryList.length; i++){
+                        _this.boolArr[i] = true
+                    }
+                    // console.log(_this.boolArr)
+                }else{
+                    modal.toast({
+                        message: '请求错误',
+                        duration: 1
+                    })
                 }
             }
         })
+        // 初始化专区数组
+        for(var i = 0; i < 5; i++){
+            _this.boolArr.push(false)
+        }
+        // 打印搜索值
+        // console.log(Util.analAjax().CategoryId)
     },
     filters: {
     	droller: function (msg) {
@@ -252,8 +276,17 @@ export default {
     bottom: 110px;
 }
 
-.refresh,
-.loading {
+.refresh{
+    width: 750px;
+    height: 50px;
+    line-height: 50px;
+    display: -ms-flex;
+    display: -webkit-flex;
+    display: flex;
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+    -webkit-box-align: center;
+    align-items: center;
     text-align: center;
 }
 
@@ -331,7 +364,7 @@ export default {
 .fication-wrapper-list {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
     flex-wrap: wrap;
 }

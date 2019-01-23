@@ -155,6 +155,15 @@ var utils = {
             });
         }
     },
+    pops: function pops(event) {
+        if (WXEnvironment.platform === 'Web') {
+            console.warn('Web端跳转待开发');
+        } else {
+            navigator.pop({
+                animated: "true"
+            }, function (event) {});
+        }
+    },
 
     //跳转延迟
     NavigatUrl: function NavigatUrl(obj) {
@@ -189,16 +198,22 @@ var utils = {
         };
     },
     analAjax: function analAjax() {
-        var url = decodeURI(weex.config.bundleUrl); //取得整个地址栏
-        var result = url.match(new RegExp(/\?\w*\=\w(\&\w*\=\w*)*/, "g"))[0].slice(1);
+        var url = decodeURI(weex.config.bundleUrl) + '?CategoryId=' + 12; //取得整个地址栏
+        console.log(url);
+        var result = url.match(new RegExp(/\?\w*\=\w*(\&\w*\=\w*)*/, "g"))[0].slice(1);
+        // console.log(result)
         var key = result.match(new RegExp(/\w*\=/, "g"));
+        // console.log(key)
         var value = result.match(new RegExp(/\=\w*/, "g"));
+        // console.log(value)
         var warp = {};
         for (var indexes in value) {
             key[indexes] = key[indexes].slice(0, key[indexes].length - 1);
             value[indexes] = value[indexes].slice(1);
+            // console.log(value[indexes])
             warp[key[indexes]] = value[indexes];
         }
+        // console.log(warp)
         return warp;
     }
 };
@@ -366,8 +381,8 @@ module.exports = __vue_exports__
 // import router from './router'
 /* weex initialized here, please do not move this line */
 var router = __webpack_require__(4);
-var App = __webpack_require__(71);
-// const App = require('@/components/class/class.vue');//分类
+// const App = require('@/index.vue');
+// const App = require('@/components/class/class.	vue');//分类
 // const App = require('@/components/shop/shop.vue');//购物
 // const App = require('@/components/shop/setlemet.vue');//
 // const App = require('@/components/my/my.vue');//我的
@@ -385,6 +400,12 @@ var App = __webpack_require__(71);
 // const App = require('@/components/register/register.vue');//注册
 // const App = require('@/components/login/login.vue');//登录
 // const App = require('@/components/map/map.vue');//测试
+// const App = require('@/components/aabbcc/actdet.vue');//测试
+// const App = require('@/components/aabbcc/my.vue');//测试
+// const App = require('@/components/aabbcc/personlInfo.vue');//测试
+// const App = require('@/components/aabbcc/InviteFriends.vue');//测试
+// const App = require('@/components/aabbcc/withdrawal.vue');//测试
+var App = __webpack_require__(71); //测试
 /* eslint-disable no-new */
 new Vue(Vue.util.extend({ el: '#root', router: router }, App));
 router.push('/');
@@ -3135,17 +3156,15 @@ module.exports = {
     "bottom": "110"
   },
   "refresh": {
-    "textAlign": "center"
-  },
-  "loading": {
-    "textAlign": "center",
     "width": "750",
-    "height": "200",
+    "height": "50",
+    "lineHeight": "50",
     "display": "flex",
     "MsFlexAlign": "center",
     "WebkitAlignItems": "center",
     "WebkitBoxAlign": "center",
-    "alignItems": "center"
+    "alignItems": "center",
+    "textAlign": "center"
   },
   "list-box": {
     "width": "710",
@@ -3182,6 +3201,15 @@ module.exports = {
     "itemSelectedColor": "rgb(115,204,70)",
     "itemSize": "20"
   },
+  "loading": {
+    "width": "750",
+    "height": "200",
+    "display": "flex",
+    "MsFlexAlign": "center",
+    "WebkitAlignItems": "center",
+    "WebkitBoxAlign": "center",
+    "alignItems": "center"
+  },
   "indicators": {
     "marginTop": "16",
     "height": "40",
@@ -3199,7 +3227,7 @@ module.exports = {
   "fication-wrapper-list": {
     "display": "flex",
     "flexDirection": "row",
-    "justifyContent": "space-between",
+    "justifyContent": "flex-start",
     "alignItems": "center",
     "flexWrap": "wrap"
   },
@@ -3489,34 +3517,11 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
+var modal = weex.requireModule('modal');
+var storage = weex.requireModule('storage');
 var HOME_URL = 'api/basic/gethomepage';
+var SHOPCAR_URL = 'api/cart/addCart';
 exports.default = {
     data: function data() {
         return {
@@ -3524,16 +3529,10 @@ exports.default = {
             loadinging: false, //上拉加载
             panels: 1,
             autoPlay: true, //轮播图是否自动播放
+            boolArr: [],
             homeArr: {},
-            bannerList: [{
-                url: '../src/components/home/banner.png'
-            }, {
-                url: '../src/components/home/banner.png'
-            }, {
-                url: '../src/components/home/banner.png'
-            }, {
-                url: '../src/components/home/banner.png'
-            }],
+            USERID: 'user_id',
+            TOKEN: 'user_token',
             nav: {
                 navWrapperList: []
             },
@@ -3545,61 +3544,98 @@ exports.default = {
                 linkr: '扫码添加微信实惠更多>',
                 telName: '服务热线',
                 telNum: '400-1000-000'
-            },
-            foodWrapper: {
-                shopCar: '../src/components/home/shop-car.png',
-                foodLists: [{
-                    urlImage: '../src/components/home/food_01.png',
-                    foodName: '荷兰豆',
-                    foodWeight: '1000',
-                    price: '5.38',
-                    allMoney: '18.85'
-                }, {
-                    urlImage: '../src/components/home/food_02.png',
-                    foodName: '荷兰豆',
-                    foodWeight: '1000',
-                    price: '5.38',
-                    allMoney: '18.85'
-                }, {
-                    urlImage: '../src/components/home/food_03.png',
-                    foodName: '荷兰豆',
-                    foodWeight: '1000',
-                    price: '5.38',
-                    allMoney: '18.85'
-                }, {
-                    urlImage: '../src/components/home/food_04.png',
-                    foodName: '荷兰豆',
-                    foodWeight: '1000',
-                    price: '5.38',
-                    allMoney: '18.85'
-                }]
             }
         };
     },
 
     methods: {
         onrefresh: function onrefresh() {
-            var _this2 = this;
-
             this.refreshing = true;
-            setTimeout(function () {
-                _this2.refreshing = false;
-            }, 2000);
-        },
-        onloading: function onloading() {
-            var _this3 = this;
-
-            this.loadinging = true;
-            setTimeout(function () {
-                _this3.loadinging = false;
-            }, 2000);
+            var _this = this;
+            _utils2.default.WeexAjax({
+                url: HOME_URL,
+                method: 'GET',
+                type: 'JSON',
+                callback: function callback(ret) {
+                    var rets = ret;
+                    console.log(ret);
+                    if (rets.Status == 1) {
+                        _this.homeArr = ret.obj;
+                        var TopCategoryList = _this.homeArr.TopCategoryList;
+                        var index = 0,
+                            fre = TopCategoryList.length / 10;
+                        // 循环push 顶部推荐
+                        for (var i = 0; i < fre; i++) {
+                            // 十次一个循环
+                            var arr = [];
+                            for (var j = 0; j < 10; j++) {
+                                if (TopCategoryList[index]) {
+                                    arr.push(TopCategoryList[index]);
+                                } else {
+                                    break;
+                                }
+                                index++;
+                            }
+                            _this.nav.navWrapperList.push(arr);
+                            // console.log(_this.nav.navWrapperList)
+                        }
+                        // 给专区制作数组
+                        for (var i = 0; i < _this.homeArr.RegionCategoryList.length; i++) {
+                            _this.boolArr[i] = true;
+                        }
+                        _this.refreshing = false;
+                        // console.log(_this.boolArr)
+                    } else {
+                        modal.toast({
+                            message: '请求错误',
+                            duration: 1
+                        });
+                    }
+                }
+            });
         },
         panel: function panel() {
             this.panels = this.navWrapperList.length / 10;
-            console.log(this.panels);
+            // console.log(this.panels)
         },
         jump: function jump(href) {
             _utils2.default.bindThis(_utils2.default.jump(href), this.$getConfig());
+        },
+        addShopCar: function addShopCar(Product_Id) {
+            var _this2 = this;
+
+            console.log(Product_Id);
+            storage.getItem(this.USERID, function (event) {
+                self.USERID = event.data;
+                storage.getItem(_this2.TOKEN, function (event) {
+                    self.TOKEN = event.data;
+                    _utils2.default.WeexAjax({
+                        url: SHOPCAR_URL,
+                        //url: self.LOGIN_URL + '?categoryId=1',    
+                        method: 'POST',
+                        type: 'JSON',
+                        token: self.TOKEN,
+                        body: {
+                            "UserId": self.USERID,
+                            "ProductId": Product_Id,
+                            "CartNum": 1
+                        },
+                        callback: function callback(ret) {
+                            if (ret.Status == 1) {
+                                modal.toast({
+                                    message: ret.Message,
+                                    duration: 1
+                                });
+                            } else {
+                                modal.toast({
+                                    message: '请求错误',
+                                    duration: 1
+                                });
+                            }
+                        }
+                    });
+                });
+            });
         }
     },
     components: {
@@ -3619,6 +3655,7 @@ exports.default = {
                     var TopCategoryList = _this.homeArr.TopCategoryList;
                     var index = 0,
                         fre = TopCategoryList.length / 10;
+                    // 循环push 顶部推荐
                     for (var i = 0; i < fre; i++) {
                         // 十次一个循环
                         var arr = [];
@@ -3633,9 +3670,25 @@ exports.default = {
                         _this.nav.navWrapperList.push(arr);
                         // console.log(_this.nav.navWrapperList)
                     }
+                    // 给专区制作数组
+                    for (var i = 0; i < _this.homeArr.RegionCategoryList.length; i++) {
+                        _this.boolArr[i] = true;
+                    }
+                    // console.log(_this.boolArr)
+                } else {
+                    modal.toast({
+                        message: '请求错误',
+                        duration: 1
+                    });
                 }
             }
         });
+        // 初始化专区数组
+        for (var i = 0; i < 5; i++) {
+            _this.boolArr.push(false);
+        }
+        // 打印搜索值
+        // console.log(Util.analAjax().CategoryId)
     },
 
     filters: {
@@ -3966,145 +4019,126 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: ["foods-wrapper"]
   }, [_c('div', {
     staticClass: ["foods-wrapper-list"]
-  }, [_c('image', {
+  }, [(_vm.boolArr[0]) ? _c('image', {
     staticClass: ["foods-image", "foods-image-one"],
     attrs: {
       "src": _vm.homeArr.RegionCategoryList[0].RegionImageUrl
+    },
+    on: {
+      "click": function($event) {
+        _vm.jump('components/seafood/seafood.js?CategoryId=' + _vm.homeArr.RegionCategoryList[0].CategoryId)
+      }
     }
-  })]), _c('div', {
+  }) : _vm._e()]), _c('div', {
     staticClass: ["foods-wrapper-list", "foods-wrapper-list-two"]
-  }, [_c('image', {
+  }, [(_vm.boolArr[1]) ? _c('image', {
     staticClass: ["foods-image"],
     attrs: {
       "src": _vm.homeArr.RegionCategoryList[1].RegionImageUrl
-    }
-  }), _c('image', {
-    staticClass: ["foods-image"],
-    attrs: {
-      "src": "../src/components/home/food-icon-2.png"
-    }
-  })])]), _vm._m(0)])]), _vm._l((_vm.homeArr.HotCategoryProdctListList), function(foodList, index) {
-    return _c('cell', {
-      key: index,
-      appendAsTree: true,
-      attrs: {
-        "append": "tree"
-      }
-    }, [_c('div', {
-      staticClass: ["list-box"]
-    }, [_c('image', {
-      staticClass: ["food-bg-image"],
-      attrs: {
-        "src": foodList.ImageUrl
-      }
-    })]), _c('div', {
-      staticClass: ["list-box", "foot-list-wrapper"]
-    }, _vm._l((_vm.homeArr.HotCategoryProdctListList[index].ProductsList), function(food) {
-      return _c('div', {
-        staticClass: ["foot-list"]
-      }, [_c('div', {
-        staticClass: ["image-box"]
-      }, [_c('image', {
-        staticClass: ["food-image"],
-        attrs: {
-          "src": food.ImageUrl
-        }
-      })]), _c('div', {
-        staticClass: ["food-shop-wrapper"]
-      }, [_c('div', {
-        staticClass: ["food-name-wrapper"]
-      }, [_c('text', {
-        staticClass: ["foot-shop-name"]
-      }, [_vm._v(_vm._s(food.ProductName) + "  " + _vm._s(food.Weight))])]), _c('div', {
-        staticClass: ["foot-dollar-wrapper"]
-      }, [_c('text', {
-        staticClass: ["foot-dollar"]
-      }, [_vm._v("￥" + _vm._s(_vm._f("droller")(food.SalesPrice)))]), _c('text', {
-        staticClass: ["foot-more-money"]
-      }, [_vm._v("￥" + _vm._s(_vm._f("droller")(food.Price)))]), _c('image', {
-        staticClass: ["foot-shop-car"],
-        attrs: {
-          "src": "../src/components/home/shop-car.png"
-        }
-      })])])])
-    }))])
-  }), _vm._l((_vm.homeArr.HotCategoryProdctListList), function(foodList, index) {
-    return _c('cell', {
-      key: index,
-      appendAsTree: true,
-      attrs: {
-        "append": "tree"
-      }
-    }, [_c('div', {
-      staticClass: ["list-box"]
-    }, [_c('image', {
-      staticClass: ["food-bg-image"],
-      attrs: {
-        "src": foodList.ImageUrl
-      }
-    })]), _c('div', {
-      staticClass: ["list-box", "foot-list-wrapper"]
-    }, _vm._l((_vm.homeArr.HotCategoryProdctListList[index].ProductsList), function(food) {
-      return _c('div', {
-        staticClass: ["foot-list"]
-      }, [_c('div', {
-        staticClass: ["image-box"]
-      }, [_c('image', {
-        staticClass: ["food-image"],
-        attrs: {
-          "src": food.ImageUrl
-        }
-      })]), _c('div', {
-        staticClass: ["food-shop-wrapper"]
-      }, [_c('div', {
-        staticClass: ["food-name-wrapper"]
-      }, [_c('text', {
-        staticClass: ["foot-shop-name"]
-      }, [_vm._v(_vm._s(food.ProductName) + "  " + _vm._s(food.Weight))])]), _c('div', {
-        staticClass: ["foot-dollar-wrapper"]
-      }, [_c('text', {
-        staticClass: ["foot-dollar"]
-      }, [_vm._v("￥" + _vm._s(_vm._f("droller")(food.SalesPrice)))]), _c('text', {
-        staticClass: ["foot-more-money"]
-      }, [_vm._v("￥" + _vm._s(_vm._f("droller")(food.Price)))]), _c('image', {
-        staticClass: ["foot-shop-car"],
-        attrs: {
-          "src": "../src/components/home/shop-car.png"
-        }
-      })])])])
-    }))])
-  }), _vm._v("`\n        "), _c('loading', {
-    staticClass: ["loading"],
-    attrs: {
-      "display": _vm.loadinging ? 'show' : 'hide'
     },
     on: {
-      "loading": _vm.onloading
+      "click": function($event) {
+        _vm.jump('components/seafood/seafood.js?CategoryId=' + _vm.homeArr.RegionCategoryList[1].CategoryId)
+      }
     }
-  }, [_c('text', {
-    staticClass: ["loading"]
-  }, [_vm._v("加载更多...")]), _c('loading-indicator', {
-    staticClass: ["indicators"]
-  })])], 2)], 1)
-},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
+  }) : _vm._e(), (_vm.boolArr[2]) ? _c('image', {
+    staticClass: ["foods-image"],
+    attrs: {
+      "src": _vm.homeArr.RegionCategoryList[2].RegionImageUrl
+    },
+    on: {
+      "click": function($event) {
+        _vm.jump('components/seafood/seafood.js?CategoryId=' + _vm.homeArr.RegionCategoryList[2].CategoryId)
+      }
+    }
+  }) : _vm._e()])]), _c('div', {
     staticClass: ["foods-wrapper"]
   }, [_c('div', {
     staticClass: ["foods-wrapper-list"]
-  }, [_c('image', {
+  }, [(_vm.boolArr[3]) ? _c('image', {
     staticClass: ["foods-image"],
     attrs: {
-      "src": "../src/components/home/food-icon-2.png"
+      "src": _vm.homeArr.RegionCategoryList[3].RegionImageUrl
+    },
+    on: {
+      "click": function($event) {
+        _vm.jump('components/seafood/seafood.js?CategoryId=' + _vm.homeArr.RegionCategoryList[3].CategoryId)
+      }
     }
-  })]), _c('div', {
+  }) : _vm._e()]), _c('div', {
     staticClass: ["foods-wrapper-list"]
-  }, [_c('image', {
+  }, [(_vm.boolArr[4]) ? _c('image', {
     staticClass: ["foods-image"],
     attrs: {
-      "src": "../src/components/home/food-icon-2.png"
+      "src": _vm.homeArr.RegionCategoryList[4].RegionImageUrl
+    },
+    on: {
+      "click": function($event) {
+        _vm.jump('components/seafood/seafood.js?CategoryId=' + _vm.homeArr.RegionCategoryList[4].CategoryId)
+      }
     }
-  })])])
-}]}
+  }) : _vm._e()])])])]), _vm._l((_vm.homeArr.HotCategoryProdctListList), function(foodList, indexs) {
+    return _c('cell', {
+      key: indexs,
+      appendAsTree: true,
+      attrs: {
+        "append": "tree"
+      }
+    }, [_c('div', {
+      staticClass: ["list-box"]
+    }, [_c('image', {
+      staticClass: ["food-bg-image"],
+      attrs: {
+        "src": foodList.ImageUrl
+      },
+      on: {
+        "click": function($event) {
+          _vm.jump('components/seafood/seafood.js?CategoryId=' + foodList.CategoryId)
+        }
+      }
+    })]), _c('div', {
+      staticClass: ["list-box", "foot-list-wrapper"]
+    }, _vm._l((_vm.homeArr.HotCategoryProdctListList[indexs].ProductsList), function(food) {
+      return _c('div', {
+        staticClass: ["foot-list"],
+        on: {
+          "click": function($event) {
+            _vm.jump('components/GoodsInfo/Goods.js?ProductId=' + food.ProductId)
+          }
+        }
+      }, [_c('div', {
+        staticClass: ["image-box"]
+      }, [_c('image', {
+        staticClass: ["food-image"],
+        attrs: {
+          "src": food.ImageUrl
+        }
+      })]), _c('div', {
+        staticClass: ["food-shop-wrapper"]
+      }, [_c('div', {
+        staticClass: ["food-name-wrapper"]
+      }, [_c('text', {
+        staticClass: ["foot-shop-name"]
+      }, [_vm._v(_vm._s(food.ProductName) + "  " + _vm._s(food.Weight))])]), _c('div', {
+        staticClass: ["foot-dollar-wrapper"]
+      }, [_c('text', {
+        staticClass: ["foot-dollar"]
+      }, [_vm._v("￥" + _vm._s(_vm._f("droller")(food.SalesPrice)))]), _c('text', {
+        staticClass: ["foot-more-money"]
+      }, [_vm._v("￥" + _vm._s(_vm._f("droller")(food.Price)))]), _c('image', {
+        staticClass: ["foot-shop-car"],
+        attrs: {
+          "src": "../src/components/home/shop-car.png"
+        },
+        on: {
+          "click": function($event) {
+            _vm.addShopCar(food.ProductId)
+          }
+        }
+      })])])])
+    }))])
+  })], 2)], 1)
+},staticRenderFns: []}
 module.exports.render._withStripped = true
 
 /***/ }),
@@ -5898,20 +5932,14 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
+var modal = weex.requireModule('modal');
 var stream = weex.requireModule("stream");
-var SHOP_URL = 'api/cart/getMyCartList';
 var storage = weex.requireModule('storage');
+// 获取购物车列表
+var SHOP_URL = 'api/cart/getMyCartList?userId=';
+// 修改购物车数量
+var MODIFYSHOPNUM_URL = 'api/cart/changeCart';
 exports.default = {
 	data: function data() {
 		return {
@@ -5923,18 +5951,18 @@ exports.default = {
 			checkArr: [], //被选中产品的数组 用来做全部删除
 			USERID: 'user_id',
 			TOKEN: 'user_token',
-			aa: {},
+			shopCarArr: {},
 			config: {
 				//初始单选框
-				unCheckedIcon: '../src/components/shop/unchecked.png',
-				checkedIcon: '../src/components/shop/checked.png',
+				unCheckedIcon: 'http://47.92.164.211:8011/PublicImage//unchecked.png',
+				checkedIcon: 'http://47.92.164.211:8011/PublicImage//checked.png',
 				disabledIcon: 'https://gw.alicdn.com/tfs/TB1PtN3pwMPMeJjy1XdXXasrXXa-72-72.png',
 				checkedDisabledIcon: 'https://gw.alicdn.com/tfs/TB1aPabpwMPMeJjy1XcXXXpppXa-72-72.png',
 				unCheckedDisabledIcon: 'https://gw.alicdn.com/tfs/TB1lTuzpwoQMeJjy0FoXXcShVXa-72-72.png',
 				checkedColor: '#f40'
 			},
 			shopCar: {}, // 物品对象
-			discounts: 0 //折扣价
+			discounts: 0.8 //折扣价
 			// moneyValue: 0,//购买商品数
 			// total: 0,//总价
 			// shopNumber: 0,//商品个数
@@ -5943,29 +5971,62 @@ exports.default = {
 
 	methods: {
 		reduceMoney: function reduceMoney(num, index) {
-			this.shopCar[index].number = parseInt(this.shopCar[index].number) - 1;
+			var self = this,
+			    CartNums = self.shopCarArr.CartList[index].CartNum - 1;
+			_utils2.default.WeexAjax({
+				url: MODIFYSHOPNUM_URL,
+				method: 'POST',
+				type: 'JSON',
+				token: self.TOKEN,
+				body: {
+					"UserId": self.USERID,
+					"CartId": self.shopCarArr.CartList[index].CartId,
+					"CartNum": CartNums
+				},
+				callback: function callback(ret) {
+					if (ret.Status == 1) {
+						var rets = ret.obj;
+						self.shopCarArr.CartList[index].CartNum = parseInt(CartNums) - 1;
+						console.log(rets);
+					} else {
+						modal.toast({
+							message: '请求错误',
+							duration: 1
+						});
+					}
+				}
+			});
+			// this.shopCar[index].number = parseInt(this.shopCar[index].number) - 1;
 		},
 		addMoney: function addMoney(num, index) {
-			this.shopCar[index].number = parseInt(this.shopCar[index].number) + 1;
-		},
-		onrefresh: function onrefresh() {
-			var _this = this;
-
-			this.refreshing = true;
-			setTimeout(function () {
-				_this.refreshing = false;
-			}, 2000);
-		},
-		onloading: function onloading() {
-			var _this2 = this;
-
-			this.loadinging = true;
-			setTimeout(function () {
-				_this2.loadinging = false;
-			}, 2000);
+			var self = this;
+			_utils2.default.WeexAjax({
+				url: MODIFYSHOPNUM_URL,
+				method: 'POST',
+				type: 'JSON',
+				token: self.TOKEN,
+				body: {
+					"UserId": self.USERID,
+					"CartId": self.shopCarArr.CartList[index].CartId,
+					"CartNum": parseInt(self.shopCarArr.CartList[index].CartNum) + 1
+				},
+				callback: function callback(ret) {
+					if (ret.Status == 1) {
+						var rets = ret.obj;
+						self.shopCarArr.CartList[index].CartNum = parseInt(self.shopCarArr.CartList[index].CartNum) + 1;
+						console.log(rets);
+					} else {
+						modal.toast({
+							message: '请求错误',
+							duration: 1
+						});
+					}
+				}
+			});
+			// this.shopCar[index].number = parseInt(this.shopCar[index].number) + 1;
 		},
 		_initCheckArr: function _initCheckArr() {
-			for (var i = 0; i < this.shopCar.length; i++) {
+			for (var i = 0; i < this.shopCarArr.CartList.length; i++) {
 				this.checkArr.push({ value: i, checked: false });
 			}
 		},
@@ -6008,7 +6069,7 @@ exports.default = {
 		}
 	},
 	created: function created() {
-		var _this3 = this;
+		var _this = this;
 
 		var fontModule = weex.requireModule("dom");
 		fontModule.addRule('fontFace', {
@@ -6018,67 +6079,29 @@ exports.default = {
 		var self = this;
 		storage.getItem(this.USERID, function (event) {
 			self.USERID = event.data;
-			storage.getItem(_this3.TOKEN, function (event) {
+			storage.getItem(_this.TOKEN, function (event) {
 				self.TOKEN = event.data;
 				_utils2.default.WeexAjax({
-					url: SHOP_URL,
+					url: SHOP_URL + self.USERID,
 					method: 'GET',
 					type: 'JSON',
 					token: self.TOKEN,
-					body: {
-						"userId": self.USERID
-					},
 					callback: function callback(ret) {
-						var rets = ret;
 						if (ret.Status == 1) {
-							console.log(rets);
+							var rets = ret.obj;
+							self.shopCarArr = rets;
+							self._initCheckArr();
+							console.log(self.shopCarArr);
+						} else {
+							modal.toast({
+								message: '请求错误',
+								duration: 1
+							});
 						}
 					}
 				});
 			});
 		});
-		// let me = this;
-		// let GET_URL = "../src/shop.json";
-		// // let GET_URL = "http://47.92.164.211:8011/api/prodcut/getcagegorylist";
-		// let getResult = "loding...";
-		// stream.fetch({
-		// 	method: 'GET',
-		// 	url: GET_URL,
-		// 	type: 'json',
-		// },(res) => {
-		// 	if(!res.ok){
-		// 		me.getResult = "request failed";
-		// 	}else{
-		// 		me.shopCar = res.data.shopCar;
-		// 		me.discounts = res.data.discount;
-		// 		this._initCheckArr();
-		// 	}
-		// },() => {}) 
-
-		//       let me = this;
-		//       let POST_URL = "http://47.92.164.211:8011/api/cart/addCart";
-		//       let postResult = "loding...";
-		// stream.fetch({
-		// 	method: 'POST',
-		// 	url: POST_URL,
-		// 	type:'json',
-		// 	headers: {'Content-Type':'application/x-www-form-urlencoded'},
-		// 	body : {
-		// 	  "UserId": 1,
-		// 	  "ProductId": 2,
-		// 	  "CartNum": 3
-		// 	}
-		// }, function(ret) {
-		// 	if(!ret.ok){
-		//   		me.postResult = "request failed";
-		// 	}else{
-		//   		console.log('get:'+JSON.stringify(ret));
-		//   		me.postResult = JSON.stringify(ret.data);
-		// 	}
-		// },function(response){
-		// 	console.log('get in progress:'+response.length);
-		// 	me.postResult = "bytes received:"+response.length;
-		// });
 	},
 
 	components: {
@@ -6090,22 +6113,32 @@ exports.default = {
 	computed: {
 		shopNumber: function shopNumber() {
 			var num = 0;
-			for (var i = 0; i < this.shopCar.length; i++) {
-				num += parseInt(this.shopCar[i].number);
+			var shopCarNum = 0;
+			for (var i = 0; i < this.shopCarArr.CartList.length; i++) {
+				shopCarNum = this.shopCarArr.CartList[i].CartNum;
+				num += parseInt(shopCarNum);
 			}
 			return num;
 		},
 		total: function total() {
 			var money = 0;
-			for (var i = 0; i < this.shopCar.length; i++) {
-				money += parseFloat(this.shopCar[i].price) * parseInt(this.shopCar[i].number);
+			var shopCarPrice = 0,
+			    shopCarNum = 0;
+			for (var i = 0; i < this.shopCarArr.CartList.length; i++) {
+				shopCarPrice = this.shopCarArr.CartList[i].SalesPrice;
+				shopCarNum = this.shopCarArr.CartList[i].CartNum;
+				money += parseFloat(shopCarPrice) * parseInt(shopCarNum);
 			}
 			return money.toFixed(2);
 		},
 		discount: function discount() {
 			var count = 0;
-			for (var i = 0; i < this.shopCar.length; i++) {
-				count += parseFloat(this.shopCar[i].price).toFixed(2) * parseInt(this.shopCar[i].number) - parseFloat(this.shopCar[i].price).toFixed(2) * parseInt(this.shopCar[i].number) * this.discounts;
+			var shopCarPrice = 0,
+			    shopCarNum = 0;
+			for (var i = 0; i < this.shopCarArr.CartList.length; i++) {
+				shopCarPrice = this.shopCarArr.CartList[i].SalesPrice;
+				shopCarNum = this.shopCarArr.CartList[i].CartNum;
+				count += parseFloat(shopCarPrice).toFixed(2) * parseInt(shopCarNum) - parseFloat(shopCarPrice).toFixed(2) * parseInt(shopCarNum) * this.discounts;
 			}
 			return count.toFixed(2);
 		}
@@ -8245,10 +8278,16 @@ module.exports = {
 
 
 Object.defineProperty(exports, "__esModule", {
-	value: true
+    value: true
 });
-//
-//
+
+var _utils = __webpack_require__(0);
+
+var _utils2 = _interopRequireDefault(_utils);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var navigator = weex.requireModule('navigator'); //
 //
 //
 //
@@ -8260,66 +8299,63 @@ Object.defineProperty(exports, "__esModule", {
 //
 //
 
-var navigator = weex.requireModule('navigator');
 var modal = weex.requireModule('modal');
 exports.default = {
-	props: {
-		titleName: {
-			type: String
-		},
-		deleted: {
-			type: Boolean
-		},
-		backPage: {
-			type: Boolean
-		},
-		shareBtn: {
-			type: Boolean
-		},
-		layout: {
-			type: Boolean
-		},
-		layoutAct: {
-			type: Boolean
-		},
-		cancel: {
-			type: Boolean
-		},
-		info: {
-			type: Boolean
-		}
-	},
-	data: function data() {
-		return {
-			layoutActBool: false,
-			layoutImage: {
-				urlImage: '../src/common/images/layout@44x44.png',
-				urlImageAct: '../src/common/images/layoutACT@44x44.png'
-			}
-		};
-	},
+    props: {
+        titleName: {
+            type: String
+        },
+        deleted: {
+            type: Boolean
+        },
+        backPage: {
+            type: Boolean
+        },
+        shareBtn: {
+            type: Boolean
+        },
+        layout: {
+            type: Boolean
+        },
+        layoutAct: {
+            type: Boolean
+        },
+        cancel: {
+            type: Boolean
+        },
+        info: {
+            type: Boolean
+        }
+    },
+    data: function data() {
+        return {
+            layoutActBool: false,
+            btnImage: {
+                backImage: "http://47.92.164.211:8011/PublicImage/backImage.png",
+                shareImage: "http://47.92.164.211:8011/PublicImage/share@46x46.png"
+            },
+            layoutImage: {
+                urlImage: 'http://47.92.164.211:8011/PublicImage/layout@44x44.png',
+                urlImageAct: 'http://47.92.164.211:8011/PublicImage/layoutACT@44x44.png'
+            }
+        };
+    },
 
-	methods: {
-		backJump: function backJump() {
-			navigator.pop({
-				// url: '../src/components/other/find.vue',congratulate
-				url: 'http://192.168.1.103:8082/dist/index.js',
-				animated: "true"
-			}, function (event) {
-				// modal.toast({ message: 'callback: ' + event })
-			});
-		},
-		layoutClick: function layoutClick() {
-			this.$emit("layoutAct", this.layoutActBool = !this.layoutActBool);
-		}
-	},
-	created: function created() {
-		var fontModule = weex.requireModule("dom");
-		fontModule.addRule('fontFace', {
-			'fontFamily': "iconfont",
-			'src': "url('//at.alicdn.com/t/font_948634_q51n034oj8.ttf')"
-		});
-	}
+    methods: {
+        pops: function pops() {
+            _utils2.default.pops();
+        },
+        layoutClick: function layoutClick() {
+            this.$emit("layoutAct", this.layoutActBool = !this.layoutActBool);
+        }
+    },
+    created: function created() {
+        var fontModule = weex.requireModule("dom");
+        fontModule.addRule('fontFace', {
+            'fontFamily': "iconfont",
+            'src': "url('//at.alicdn.com/t/font_948634_q51n034oj8.ttf')"
+        });
+    }
 };
 
 /***/ }),
@@ -8332,11 +8368,11 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [(_vm.backPage) ? _c('image', {
     staticClass: ["backBtn"],
     attrs: {
-      "src": "../src/common/images/backImage.png"
+      "src": _vm.btnImage.backImage
     },
     on: {
       "click": function($event) {
-        _vm.backJump()
+        _vm.pops()
       }
     }
   }) : _vm._e(), _c('text', {
@@ -8363,7 +8399,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_vm._v("使用说明")]) : _vm._e(), (_vm.shareBtn) ? _c('image', {
     staticClass: ["shareBtn"],
     attrs: {
-      "src": "../src/common/images/share@46x46.png"
+      "src": _vm.btnImage.shareImage
     }
   }) : _vm._e(), (_vm.layout) ? _c('image', {
     staticClass: ["layoutBtn-44"],
@@ -8399,17 +8435,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }), _vm._m(0)], 1), _c('list', {
     staticClass: ["shop-wrapper"]
-  }, [_c('refresh', {
-    attrs: {
-      "display": _vm.refreshing ? 'show' : 'hide'
-    },
-    on: {
-      "refresh": _vm.onrefresh
-    }
-  }, [_c('text', {
-    staticClass: ["refresh"]
-  }, [_vm._v("下拉刷新...")])]), _vm._l((_vm.shopCar), function(foods, index) {
-    return (foods.number > 0) ? _c('cell', {
+  }, _vm._l((_vm.shopCarArr.CartList), function(foods, index) {
+    return (foods.CartNum > 0) ? _c('cell', {
       key: index,
       appendAsTree: true,
       attrs: {
@@ -8439,21 +8466,23 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       staticClass: ["shop-list-info-title"]
     }, [_c('text', {
       staticClass: ["shop-list-info-name"]
-    }, [_vm._v(_vm._s(foods.foodName))]), _c('text', {
+    }, [_vm._v(_vm._s(foods.ProductName))]), _c('text', {
       staticClass: ["shop-list-info-weight"]
-    }, [_vm._v(_vm._s(foods.weight) + "g")])]), _c('div', {
+    }, [_vm._v(_vm._s(foods.Weight) + "g")])]), _c('div', {
       staticClass: ["shop-list-money-wrapper"]
     }, [_c('div', {
       staticClass: ["shop-list-money-left"]
     }, [_c('text', {
       staticClass: ["shop-list-money"]
-    }, [_vm._v("￥" + _vm._s(foods.price) + "元/斤")])]), _c('div', {
+    }, [_vm._v("￥" + _vm._s(foods.SalesPrice) + "元/" + _vm._s(foods.Unit))]), _c('text', {
+      staticClass: ["shop-list-all-money"]
+    }, [_vm._v("￥" + _vm._s(foods.Price))])]), _c('div', {
       staticClass: ["shop-list-money-right"]
     }, [_c('text', {
       staticClass: ["iconFont", "shop-list-money-reduce"],
       on: {
         "click": function($event) {
-          _vm.reduceMoney(foods.number, index)
+          _vm.reduceMoney(foods.CartNum, index)
         }
       }
     }, [_vm._v("")]), _c('input', {
@@ -8461,34 +8490,22 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       attrs: {
         "type": "text",
         "disabled": "true",
-        "value": (foods.number)
+        "value": (foods.CartNum)
       },
       on: {
         "input": function($event) {
-          _vm.$set(foods, "number", $event.target.attr.value)
+          _vm.$set(foods, "CartNum", $event.target.attr.value)
         }
       }
     }), _c('text', {
       staticClass: ["iconFont", "shop-list-money-add"],
       on: {
         "click": function($event) {
-          _vm.addMoney(foods.number, index)
+          _vm.addMoney(foods.CartNum, index)
         }
       }
     }, [_vm._v("")])])])])], 1)]) : _vm._e()
-  }), _c('loading', {
-    staticClass: ["loading"],
-    attrs: {
-      "display": _vm.loadinging ? 'show' : 'hide'
-    },
-    on: {
-      "loading": _vm.onloading
-    }
-  }, [_c('text', {
-    staticClass: ["loading"]
-  }, [_vm._v("加载更多...")]), _c('loading-indicator', {
-    staticClass: ["indicators"]
-  })])], 2), _c('div', {
+  })), _c('div', {
     staticClass: ["good-bottom-wrapper"]
   }, [_c('div', {
     staticClass: ["good-bottom-member-wrapper"]
@@ -10007,7 +10024,7 @@ __vue_styles__.push(__webpack_require__(72)
 __vue_exports__ = __webpack_require__(73)
 
 /* template */
-var __vue_template__ = __webpack_require__(74)
+var __vue_template__ = __webpack_require__(78)
 __vue_options__ = __vue_exports__ = __vue_exports__ || {}
 if (
   typeof __vue_exports__.default === "object" ||
@@ -10019,10 +10036,10 @@ __vue_options__ = __vue_exports__ = __vue_exports__.default
 if (typeof __vue_options__ === "function") {
   __vue_options__ = __vue_options__.options
 }
-__vue_options__.__file = "F:\\WebApp\\cabbage\\src\\index.vue"
+__vue_options__.__file = "F:\\WebApp\\cabbage\\src\\components\\aabbcc\\ResultsWithdrawals.vue"
 __vue_options__.render = __vue_template__.render
 __vue_options__.staticRenderFns = __vue_template__.staticRenderFns
-__vue_options__._scopeId = "data-v-1a4d8e3c"
+__vue_options__._scopeId = "data-v-d8323cf8"
 __vue_options__.style = __vue_options__.style || {}
 __vue_styles__.forEach(function (module) {
   for (var name in module) {
@@ -10041,62 +10058,307 @@ module.exports = __vue_exports__
 /***/ (function(module, exports) {
 
 module.exports = {
-  "iconFont": {
-    "fontFamily": "iconfont"
-  },
-  "tab": {
+  "act": {
     "position": "fixed",
-    "bottom": 0,
-    "height": "110",
-    "width": "750",
+    "top": "90",
+    "left": 0,
+    "right": 0,
+    "bottom": 0
+  },
+  "act-t1": {
+    "paddingRight": "20",
+    "lineHeight": "85",
+    "fontSize": "24",
+    "color": "#777777",
+    "width": "710",
+    "marginLeft": "20",
+    "marginRight": "20"
+  },
+  "act-t3": {
+    "fontSize": "26",
+    "color": "#333333"
+  },
+  "act-t4": {
+    "marginTop": "15",
+    "marginLeft": "20",
+    "marginRight": "20",
+    "fontSize": "24",
+    "color": "#777777"
+  },
+  "model-pay-list": {
     "display": "flex",
     "flexDirection": "row",
-    "justifyContent": "space-around",
+    "justifyContent": "space-between",
     "alignItems": "center",
-    "borderTopWidth": "1",
-    "borderTopColor": "#eeeeee",
-    "borderTopStyle": "solid",
-    "backgroundColor": "#ffffff"
+    "paddingTop": "20",
+    "paddingBottom": "20",
+    "paddingLeft": "20",
+    "paddingRight": "20",
+    "borderBottomWidth": "1",
+    "borderBottomStyle": "solid",
+    "borderBottomColor": "#f4f4f4"
   },
-  "tab-list": {
-    "width": "150",
-    "height": "110",
-    "textAlign": "center",
+  "model-pay-list-left": {
     "display": "flex",
+    "flexDirection": "row",
     "justifyContent": "center",
-    "flexWarp": "warp",
-    "alignItems": "center",
-    "flexDirection": "column"
+    "alignItems": "center"
   },
-  "nav-img": {
-    "width": "50",
-    "height": "50",
-    "marginTop": "15"
+  "pay-image": {
+    "width": "33",
+    "height": "33",
+    "marginRight": "32"
   },
-  "nav-cn": {
-    "fontSize": "20",
+  "pay-dui": {
+    "width": "30",
+    "height": "30"
+  },
+  "pay-title": {
+    "fontSize": "24",
+    "color": "#333333"
+  },
+  "widthdraw": {
+    "marginTop": "40",
+    "paddingLeft": "20",
+    "paddingRight": "20",
+    "borderBottomWidth": "1",
+    "borderBottomStyle": "solid",
+    "borderBottomColor": "#f4f4f4"
+  },
+  "widthdraw-input-box": {
+    "marginTop": "12",
+    "marginBottom": "10",
+    "display": "flex",
+    "flexDirection": "row",
+    "justifyContent": "flex-start",
+    "alignItems": "center"
+  },
+  "pay-doller": {
+    "marginLeft": "20",
+    "width": "16",
+    "height": "23"
+  },
+  "widthdraw-input": {
+    "flex": 1,
+    "marginLeft": "15",
+    "height": "63"
+  },
+  "person-btn": {
+    "width": "710",
+    "marginLeft": "20",
+    "marginTop": "150",
+    "height": "80",
+    "lineHeight": "80",
     "textAlign": "center",
-    "marginTop": "10",
+    "fontSize": "36",
+    "color": "#333333",
+    "borderRadius": "8.8",
+    "backgroundColor": "#ffd46b"
+  },
+  "icon": {
+    "position": "absolute",
+    "width": "30",
+    "height": "30",
+    "left": "0"
+  },
+  "icon-bottom": {
+    "top": "40"
+  },
+  "times": {
+    "marginTop": "100"
+  },
+  "list": {
+    "marginLeft": "55",
+    "paddingLeft": "15",
+    "position": "relative",
+    "display": "flex",
+    "flexDirection": "row",
+    "alignItems": "flex-start",
+    "height": "110"
+  },
+  "result-text": {
+    "height": "110",
+    "borderLeftWidth": "2",
+    "borderLeftColor": "#ffd262",
+    "borderLeftStyle": "solid"
+  },
+  "protext": {
+    "marginLeft": "50",
+    "marginBottom": "15",
+    "fontSize": "26",
+    "color": "#333333",
+    "fontWeight": "bold"
+  },
+  "protextact": {
+    "color": "#cca032"
+  },
+  "time": {
+    "marginLeft": "50",
+    "fontSize": "22",
     "color": "#777777"
   },
-  "nav-cn-active": {
-    "fontSize": "20",
-    "textAlign": "center",
-    "marginTop": "10",
-    "color": "#73cc00"
-  },
-  "nav-image": {
-    "fontSize": "50",
-    "color": "#777777"
-  },
-  "nav-image-active": {
-    "fontSize": "50",
-    "color": "#73cc00"
+  "result-text-bottom": {
+    "display": "flex",
+    "flexDirection": "column",
+    "justifyContent": "flex-end"
   }
 }
 
 /***/ }),
 /* 73 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _header = __webpack_require__(74);
+
+var _header2 = _interopRequireDefault(_header);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = {
+  data: function data() {
+    return {
+      model: {
+        boolSign: false,
+        payInfo: false,
+        title: '提示',
+        payment: {
+          alipay: '支付宝',
+          alipayImage: '../src/common/img/d1.png',
+          alipayselect: '../src/common/img/dui.png',
+          wechat: '微信',
+          wechatImage: '../src/common/img/d2.png',
+          wechatselect: '../src/common/img/quans.png',
+          money: '500',
+          moneyImaeg: '../src/common/img/d3.png',
+          select: '../src/common/img/dui.png',
+          unselect: '../src/common/img/quans.png'
+        }
+      }
+    };
+  },
+
+  methods: {
+    selectPay: function selectPay(msg) {
+      if (msg == 'alipay') {
+        this.model.payment.wechatselect = this.model.payment.unselect;
+        this.model.payment.alipayselect = this.model.payment.select;
+      } else if (msg == 'wechat') {
+        this.model.payment.alipayselect = this.model.payment.unselect;
+        this.model.payment.wechatselect = this.model.payment.select;
+      }
+    }
+  },
+  components: {
+    'v-header': _header2.default
+  }
+}; //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/***/ }),
+/* 74 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __vue_exports__, __vue_options__
+var __vue_styles__ = []
+
+/* styles */
+__vue_styles__.push(__webpack_require__(75)
+)
+
+/* script */
+__vue_exports__ = __webpack_require__(76)
+
+/* template */
+var __vue_template__ = __webpack_require__(77)
+__vue_options__ = __vue_exports__ = __vue_exports__ || {}
+if (
+  typeof __vue_exports__.default === "object" ||
+  typeof __vue_exports__.default === "function"
+) {
+if (Object.keys(__vue_exports__).some(function (key) { return key !== "default" && key !== "__esModule" })) {console.error("named exports are not supported in *.vue files.")}
+__vue_options__ = __vue_exports__ = __vue_exports__.default
+}
+if (typeof __vue_options__ === "function") {
+  __vue_options__ = __vue_options__.options
+}
+__vue_options__.__file = "F:\\WebApp\\cabbage\\src\\components\\aabbcc\\header.vue"
+__vue_options__.render = __vue_template__.render
+__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
+__vue_options__._scopeId = "data-v-cba97a2e"
+__vue_options__.style = __vue_options__.style || {}
+__vue_styles__.forEach(function (module) {
+  for (var name in module) {
+    __vue_options__.style[name] = module[name]
+  }
+})
+if (typeof __register_static_styles__ === "function") {
+  __register_static_styles__(__vue_options__._scopeId, __vue_styles__)
+}
+
+module.exports = __vue_exports__
+
+
+/***/ }),
+/* 75 */
+/***/ (function(module, exports) {
+
+module.exports = {
+  "headerBox_G": {
+    "height": "90",
+    "width": "750",
+    "borderBottomWidth": "2",
+    "borderBottomColor": "#eaeaea",
+    "borderBottomStyle": "solid"
+  },
+  "headerBox_G_toBack": {
+    "position": "absolute",
+    "left": "20",
+    "top": "22"
+  },
+  "headerBox_G_pageTip": {
+    "color": "#333333",
+    "fontSize": "36",
+    "lineHeight": "88",
+    "textAlign": "center"
+  }
+}
+
+/***/ }),
+/* 76 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10112,159 +10374,95 @@ Object.defineProperty(exports, "__esModule", {
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 exports.default = {
-    data: {
-        navIndex: 'home',
-        nav: [{
-            title: '首页',
-            iconText: '&#xe605;',
-            srco: '../src/common/images/home.png',
-            srct: '../src/common/images/home_act.png',
-            path: 'home'
-        }, {
-            title: '分类',
-            iconText: '&#xe645;',
-            srco: '../src/common/images/class.png',
-            srct: '../src/common/images/class_act.png',
-            path: 'classes'
-        }, {
-            title: '购物车',
-            iconText: '&#xe607;',
-            srco: '../src/common/images/shop.png',
-            srct: '../src/common/images/shop_act.png',
-            path: 'shop'
-        }, {
-            title: '取货',
-            iconText: '&#xe69e;',
-            srco: '../src/common/images/goods.png',
-            srct: '../src/common/images/goods_act.png',
-            path: 'goods'
-        }, {
-            title: '我的',
-            iconText: '&#xe612;',
-            srco: '../src/common/images/my.png',
-            srct: '../src/common/images/my_act.png',
-            path: 'my'
-        }]
+    props: ['title'],
+    data: function data() {
+        return {
+            headerBox_G_toBack: 'http://192.168.2.201:8082/images/toBack.png'
+        };
     },
+
     methods: {
-        jump: function jump(msg) {
-            // this.navIndex = index;
-            this.$router.push(msg);
-            this.navIndex = msg;
+        toBack_G: function toBack_G() {
+            this.$router.back(-1);
         }
-    },
-    created: function created() {
-        var fontModule = weex.requireModule("dom");
-        fontModule.addRule('fontFace', {
-            'fontFamily': "iconfont",
-            'src': "url('//at.alicdn.com/t/font_948634_kqdokb9dv2i.ttf')"
-        });
     }
 };
 
 /***/ }),
-/* 74 */
+/* 77 */
 /***/ (function(module, exports) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
-    staticClass: ["wrapper"]
-  }, [_c('router-view'), _c('div', {
-    staticClass: ["tab"]
-  }, [_c('div', {
-    staticClass: ["tab-list"],
-    on: {
-      "click": function($event) {
-        _vm.jump('home')
-      }
-    }
+    staticClass: ["headerBox_G"]
   }, [_c('text', {
-    staticClass: ["iconFont"],
-    class: [_vm.navIndex == 'home' ? 'nav-image-active' : 'nav-image']
-  }, [_vm._v("")]), _c('text', {
-    class: [_vm.navIndex == 'home' ? 'nav-cn-active' : 'nav-cn']
-  }, [_vm._v("首页")])]), _c('div', {
-    staticClass: ["tab-list"],
+    staticClass: ["headerBox_G_pageTip"]
+  }, [_vm._v(_vm._s(_vm.title))]), _c('image', {
+    staticClass: ["headerBox_G_toBack"],
+    staticStyle: {
+      width: "31px",
+      height: "44px"
+    },
+    attrs: {
+      "src": _vm.headerBox_G_toBack
+    },
     on: {
-      "click": function($event) {
-        _vm.jump('classes')
-      }
+      "click": _vm.toBack_G
     }
-  }, [_c('text', {
-    staticClass: ["iconFont"],
-    class: [_vm.navIndex == 'classes' ? 'nav-image-active' : 'nav-image']
-  }, [_vm._v("")]), _c('text', {
-    class: [_vm.navIndex == 'classes' ? 'nav-cn-active' : 'nav-cn']
-  }, [_vm._v("分类")])]), _c('div', {
-    staticClass: ["tab-list"],
-    on: {
-      "click": function($event) {
-        _vm.jump('shop')
-      }
-    }
-  }, [_c('text', {
-    staticClass: ["iconFont"],
-    class: [_vm.navIndex == 'shop' ? 'nav-image-active' : 'nav-image']
-  }, [_vm._v("")]), _c('text', {
-    class: [_vm.navIndex == 'shop' ? 'nav-cn-active' : 'nav-cn']
-  }, [_vm._v("购物车")])]), _c('div', {
-    staticClass: ["tab-list"],
-    on: {
-      "click": function($event) {
-        _vm.jump('goods')
-      }
-    }
-  }, [_c('text', {
-    staticClass: ["iconFont"],
-    class: [_vm.navIndex == 'goods' ? 'nav-image-active' : 'nav-image']
-  }, [_vm._v("")]), _c('text', {
-    class: [_vm.navIndex == 'goods' ? 'nav-cn-active' : 'nav-cn']
-  }, [_vm._v("取货")])]), _c('div', {
-    staticClass: ["tab-list"],
-    on: {
-      "click": function($event) {
-        _vm.jump('my')
-      }
-    }
-  }, [_c('text', {
-    staticClass: ["iconFont"],
-    class: [_vm.navIndex == 'my' ? 'nav-image-active' : 'nav-image']
-  }, [_vm._v("")]), _c('text', {
-    class: [_vm.navIndex == 'my' ? 'nav-cn-active' : 'nav-cn']
-  }, [_vm._v("我的")])])])], 1)
+  })])
 },staticRenderFns: []}
+module.exports.render._withStripped = true
+
+/***/ }),
+/* 78 */
+/***/ (function(module, exports) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _vm._m(0)
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: ["act"]
+  }, [_c('list', [_c('cell', {
+    appendAsTree: true,
+    attrs: {
+      "append": "tree"
+    }
+  }, [_c('div', {
+    staticClass: ["result"]
+  }, [_c('div', {
+    staticClass: ["times"]
+  }, [_c('div', {
+    staticClass: ["list", "payment"]
+  }, [_c('div', {
+    staticClass: ["result-text"]
+  }, [_c('text', {
+    staticClass: ["protext", "protextact"]
+  }, [_vm._v("提现申请已提交，等待系统处理")]), _c('text', {
+    staticClass: ["time"]
+  }, [_vm._v("05-09  13:32")])]), _c('image', {
+    staticClass: ["icon"],
+    attrs: {
+      "src": "../src/common/img/dui.png"
+    }
+  })]), _c('div', {
+    staticClass: ["list", "not"]
+  }, [_c('div', {
+    staticClass: ["result-text", "result-text-bottom"]
+  }, [_c('text', {
+    staticClass: ["protext"]
+  }, [_vm._v("预计到账时间")]), _c('text', {
+    staticClass: ["time"]
+  }, [_vm._v("05-09  13:32")])]), _c('image', {
+    staticClass: ["icon", "icon-bottom"],
+    attrs: {
+      "src": "../src/common/img/qian.png"
+    }
+  })])])]), _c('text', {
+    staticClass: ["person-btn"]
+  }, [_vm._v("查看账户余额")])])])])
+}]}
 module.exports.render._withStripped = true
 
 /***/ })
