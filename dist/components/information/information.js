@@ -62,7 +62,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 179);
+/******/ 	return __webpack_require__(__webpack_require__.s = 150);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -527,21 +527,21 @@ module.exports = __vue_exports__
 
 /***/ }),
 
-/***/ 179:
+/***/ 150:
 /***/ (function(module, exports, __webpack_require__) {
 
 var __vue_exports__, __vue_options__
 var __vue_styles__ = []
 
 /* styles */
-__vue_styles__.push(__webpack_require__(180)
+__vue_styles__.push(__webpack_require__(151)
 )
 
 /* script */
-__vue_exports__ = __webpack_require__(181)
+__vue_exports__ = __webpack_require__(152)
 
 /* template */
-var __vue_template__ = __webpack_require__(182)
+var __vue_template__ = __webpack_require__(153)
 __vue_options__ = __vue_exports__ = __vue_exports__ || {}
 if (
   typeof __vue_exports__.default === "object" ||
@@ -574,7 +574,7 @@ new Vue(module.exports)
 
 /***/ }),
 
-/***/ 180:
+/***/ 151:
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -672,7 +672,7 @@ module.exports = {
 
 /***/ }),
 
-/***/ 181:
+/***/ 152:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -755,7 +755,7 @@ exports.default = {
 
 /***/ }),
 
-/***/ 182:
+/***/ 153:
 /***/ (function(module, exports) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -821,14 +821,14 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('image', {
     staticClass: ["info-body-image"],
     attrs: {
-      "src": "../src/components/information/bell@42x52.png"
+      "src": "http://47.92.164.211:8011/PublicImage/bell@42x52.png"
     }
   })]), _c('text', {
     staticClass: ["info-body-text"]
   }, [_vm._v("您有订单逾期未付款，已自动取消")])]), _c('image', {
     staticClass: ["info-body-more"],
     attrs: {
-      "src": "../src/common/images/moreImage@16x25.png"
+      "src": "http://47.92.164.211:8011/PublicImage/moreImage@16x25.png"
     }
   })])
 }]}

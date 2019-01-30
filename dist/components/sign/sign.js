@@ -62,7 +62,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 241);
+/******/ 	return __webpack_require__(__webpack_require__.s = 212);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -527,21 +527,21 @@ module.exports = __vue_exports__
 
 /***/ }),
 
-/***/ 241:
+/***/ 212:
 /***/ (function(module, exports, __webpack_require__) {
 
 var __vue_exports__, __vue_options__
 var __vue_styles__ = []
 
 /* styles */
-__vue_styles__.push(__webpack_require__(242)
+__vue_styles__.push(__webpack_require__(213)
 )
 
 /* script */
-__vue_exports__ = __webpack_require__(243)
+__vue_exports__ = __webpack_require__(214)
 
 /* template */
-var __vue_template__ = __webpack_require__(244)
+var __vue_template__ = __webpack_require__(215)
 __vue_options__ = __vue_exports__ = __vue_exports__ || {}
 if (
   typeof __vue_exports__.default === "object" ||
@@ -574,7 +574,7 @@ new Vue(module.exports)
 
 /***/ }),
 
-/***/ 242:
+/***/ 213:
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -800,7 +800,7 @@ module.exports = {
 
 /***/ }),
 
-/***/ 243:
+/***/ 214:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -885,7 +885,7 @@ exports.default = {
 
 /***/ }),
 
-/***/ 244:
+/***/ 215:
 /***/ (function(module, exports) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -908,7 +908,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('image', {
     staticClass: ["sign-bg"],
     attrs: {
-      "src": "../src/components/sign/sign@bg.png"
+      "src": "http://47.92.164.211:8011/PublicImage/sign@bg.png"
     }
   }), _c('text', {
     staticClass: ["sign-body", "sign-people-num"]
@@ -927,7 +927,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }, [_c('image', {
       staticClass: ["sign-gift-body-sub-list-bg"],
       attrs: {
-        "src": "../src/components/sign/card@165x237.png"
+        "src": "http://47.92.164.211:8011/PublicImage/card@165x237.png"
       }
     }), _c('div', {
       staticClass: ["sign-gift-body-sub-list-title"]
@@ -936,7 +936,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }, [_vm._v("9月11日")]), _c('image', {
       staticClass: ["sign-gift-body-sub-list-money"],
       attrs: {
-        "src": "../src/components/sign/mondy@84x61.png"
+        "src": "http://47.92.164.211:8011/PublicImage/mondy@84x61.png"
       }
     }), _c('text', {
       staticClass: ["sign-gift-body-sub-list-btn"],
@@ -951,7 +951,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('image', {
     staticClass: ["record-bg"],
     attrs: {
-      "src": "../src/components/sign/record@129x129.png"
+      "src": "http://47.92.164.211:8011/PublicImage/record@129x129.png"
     }
   }), _c('text', {
     staticClass: ["record-text"]
@@ -964,7 +964,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('image', {
     staticClass: ["sign-bottom-bg"],
     attrs: {
-      "src": "../src/components/sign/signbottom@704x450.png"
+      "src": "http://47.92.164.211:8011/PublicImage/signbottom@704x450.png"
     }
   }), _c('div', {
     staticClass: ["sign-bottom-text-box"]
@@ -977,7 +977,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('image', {
     staticClass: ["sign-num-bg"],
     attrs: {
-      "src": "../src/components/sign/sign1@27x28.png"
+      "src": "http://47.92.164.211:8011/PublicImage/sign1@27x28.png"
     }
   }), _c('text', {
     staticClass: ["sign-num-text"]
@@ -986,7 +986,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('image', {
     staticClass: ["sign-num-bg"],
     attrs: {
-      "src": "../src/components/sign/sign2@27x28.png"
+      "src": "http://47.92.164.211:8011/PublicImage/sign2@27x28.png"
     }
   }), _c('text', {
     staticClass: ["sign-num-text"]
@@ -995,7 +995,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('image', {
     staticClass: ["sign-num-bg"],
     attrs: {
-      "src": "../src/components/sign/sign3@27x28.png"
+      "src": "http://47.92.164.211:8011/PublicImage/sign3@27x28.png"
     }
   }), _c('text', {
     staticClass: ["sign-num-text"]

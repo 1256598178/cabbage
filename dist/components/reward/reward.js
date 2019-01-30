@@ -62,7 +62,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 216);
+/******/ 	return __webpack_require__(__webpack_require__.s = 187);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -9465,6 +9465,253 @@ module.exports = function required(port, protocol) {
 
 /***/ }),
 
+/***/ 187:
+/***/ (function(module, exports, __webpack_require__) {
+
+var __vue_exports__, __vue_options__
+var __vue_styles__ = []
+
+/* styles */
+__vue_styles__.push(__webpack_require__(188)
+)
+
+/* script */
+__vue_exports__ = __webpack_require__(189)
+
+/* template */
+var __vue_template__ = __webpack_require__(191)
+__vue_options__ = __vue_exports__ = __vue_exports__ || {}
+if (
+  typeof __vue_exports__.default === "object" ||
+  typeof __vue_exports__.default === "function"
+) {
+if (Object.keys(__vue_exports__).some(function (key) { return key !== "default" && key !== "__esModule" })) {console.error("named exports are not supported in *.vue files.")}
+__vue_options__ = __vue_exports__ = __vue_exports__.default
+}
+if (typeof __vue_options__ === "function") {
+  __vue_options__ = __vue_options__.options
+}
+__vue_options__.__file = "F:\\WebApp\\cabbage\\src\\components\\reward\\reward.vue"
+__vue_options__.render = __vue_template__.render
+__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
+__vue_options__._scopeId = "data-v-297e53c4"
+__vue_options__.style = __vue_options__.style || {}
+__vue_styles__.forEach(function (module) {
+  for (var name in module) {
+    __vue_options__.style[name] = module[name]
+  }
+})
+if (typeof __register_static_styles__ === "function") {
+  __register_static_styles__(__vue_options__._scopeId, __vue_styles__)
+}
+
+module.exports = __vue_exports__
+module.exports.el = 'true'
+new Vue(module.exports)
+
+
+/***/ }),
+
+/***/ 188:
+/***/ (function(module, exports) {
+
+module.exports = {
+  "congra-body-wrapper": {
+    "paddingTop": "20",
+    "paddingLeft": "20",
+    "paddingRight": "20",
+    "paddingBottom": "20",
+    "backgroundColor": "#ffffff"
+  },
+  "find-title-boxs": {
+    "height": "10",
+    "width": "750",
+    "backgroundColor": "#f5f5f5"
+  },
+  "wxc-tab-page": {
+    "marginTop": "10"
+  },
+  "item-container": {
+    "width": "750",
+    "backgroundColor": "#f5f5f5"
+  },
+  "border-cell": {
+    "backgroundColor": "#f2f3f4",
+    "width": "750",
+    "height": "24",
+    "alignItems": "center",
+    "justifyContent": "center"
+  },
+  "cell": {
+    "backgroundColor": "#ffffff"
+  },
+  "content": {
+    "width": "750",
+    "height": "300",
+    "borderBottomWidth": "1",
+    "alignItems": "center",
+    "justifyContent": "center"
+  },
+  "reward-no-content": {
+    "display": "flex",
+    "flexDirection": "row",
+    "alignItems": "center",
+    "justifyContent": "center",
+    "width": "750",
+    "height": "470"
+  },
+  "reward-no-icon": {
+    "display": "flex",
+    "flexDirection": "column",
+    "alignItems": "center"
+  },
+  "reward-no-image": {
+    "width": "195",
+    "height": "172",
+    "fontSize": "22",
+    "color": "#777777",
+    "marginTop": "20",
+    "textAlign": "center"
+  }
+}
+
+/***/ }),
+
+/***/ 189:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _wxcPanItem = __webpack_require__(20);
+
+var _wxcPanItem2 = _interopRequireDefault(_wxcPanItem);
+
+var _wxcTabPage = __webpack_require__(24);
+
+var _wxcTabPage2 = _interopRequireDefault(_wxcTabPage);
+
+var _bindEnv = __webpack_require__(40);
+
+var _bindEnv2 = _interopRequireDefault(_bindEnv);
+
+var _utils = __webpack_require__(2);
+
+var _utils2 = _interopRequireDefault(_utils);
+
+var _orderHeader = __webpack_require__(12);
+
+var _orderHeader2 = _interopRequireDefault(_orderHeader);
+
+var _config = __webpack_require__(190);
+
+var _config2 = _interopRequireDefault(_config);
+
+var _vue = __webpack_require__(15);
+
+var _vue2 = _interopRequireDefault(_vue);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } } //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+var dom = weex.requireModule('dom');
+// https://github.com/alibaba/weex-ui/blob/master/example/tab-page/config.js
+exports.default = {
+	data: function data() {
+		return {
+			titleName: '我的奖励',
+			rewardContent: false, //是否有内容
+			refreshing: false, //下拉刷新
+			loadinging: false, //上拉加载
+			tabTitles: _config2.default.tabTitles,
+			tabStyles: _config2.default.tabStyles,
+			tabList: [],
+			demoList: [1, 2, 3, 4, 5, 6, 7, 8, 9],
+			tabPageHeight: 1334
+		};
+	},
+
+	methods: {
+		onrefresh: function onrefresh() {
+			var _this = this;
+
+			this.refreshing = true;
+			setTimeout(function () {
+				_this.refreshing = false;
+			}, 2000);
+		},
+		onloading: function onloading() {
+			var _this2 = this;
+
+			this.loadinging = true;
+			setTimeout(function () {
+				_this2.loadinging = false;
+			}, 2000);
+		},
+		wxcTabPageCurrentTabSelected: function wxcTabPageCurrentTabSelected(e) {
+			var self = this;
+			var index = e.page;
+			/* Unloaded tab analog data request */
+			if (!_utils2.default.isNonEmptyArray(self.tabList[index])) {
+				setTimeout(function () {
+					_vue2.default.set(self.tabList, index, self.demoList);
+				}, 100);
+			}
+		},
+		wxcPanItemPan: function wxcPanItemPan(e) {
+			if (_bindEnv2.default.supportsEBForAndroid()) {
+				this.$refs['wxc-tab-page'].bindExp(e.element);
+			}
+		}
+	},
+	components: {
+		"v-header": _orderHeader2.default,
+		WxcTabPage: _wxcTabPage2.default,
+		WxcPanItem: _wxcPanItem2.default
+	},
+	created: function created() {
+		this.tabPageHeight = _utils2.default.env.getPageHeight();
+		this.tabList = [].concat(_toConsumableArray(Array(this.tabTitles.length).keys())).map(function (i) {
+			return [];
+		});
+		_vue2.default.set(this.tabList, 0, this.demoList);
+	}
+};
+
+/***/ }),
+
 /***/ 19:
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -9557,6 +9804,98 @@ function querystringify(obj, prefix) {
 //
 exports.stringify = querystringify;
 exports.parse = querystring;
+
+/***/ }),
+
+/***/ 190:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = {
+
+  tabTitles: [{
+    title: '白菜粉奖励'
+  }, {
+    title: '白菜丝奖励'
+  }],
+  tabStyles: {
+    bgColor: '#FFFFFF',
+    titleColor: '#777777',
+    activeTitleColor: '#73cc00',
+    activeBgColor: '#FFFFFF',
+    isActiveTitleBold: true,
+    width: 170,
+    height: 70,
+    fontSize: 24,
+    hasActiveBottom: true,
+    activeBottomColor: '#73cc00',
+    activeBottomHeight: 6,
+    activeBottomWidth: 122,
+    textPaddingLeft: 10,
+    textPaddingRight: 10,
+    leftOffset: 205
+  }
+};
+
+/***/ }),
+
+/***/ 191:
+/***/ (function(module, exports) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: ["reward"]
+  }, [_c('div', {
+    staticClass: ["find-title-box"]
+  }, [_c('v-header', {
+    attrs: {
+      "titleName": _vm.titleName,
+      "backPage": true
+    }
+  }), _c('div', {
+    staticClass: ["find-title-boxs"]
+  })], 1), _c('wxc-tab-page', {
+    ref: "wxc-tab-page",
+    attrs: {
+      "tabTitles": _vm.tabTitles,
+      "tabStyles": _vm.tabStyles,
+      "titleType": "icon",
+      "tabPageHeight": _vm.tabPageHeight
+    },
+    on: {
+      "wxcTabPageCurrentTabSelected": _vm.wxcTabPageCurrentTabSelected
+    }
+  }, _vm._l((_vm.tabList), function(v, index) {
+    return _c('list', {
+      key: index,
+      staticClass: ["item-container"],
+      style: {
+        height: (_vm.tabPageHeight - _vm.tabStyles.height - 122) + 'px'
+      }
+    }, [(_vm.rewardContent) ? _c('cell', {
+      staticClass: ["reward-no-content"],
+      appendAsTree: true,
+      attrs: {
+        "append": "tree"
+      }
+    }, [_c('div', {
+      staticClass: ["reward-no-icon"]
+    }, [_c('image', {
+      staticClass: ["reward-no-image"],
+      attrs: {
+        "src": "http://47.92.164.211:8011/PublicImage/reward@195x172.png"
+      }
+    }), _c('text', {
+      staticClass: ["reward-no-image"]
+    }, [_vm._v("暂无信息！")])])]) : _vm._e()])
+  }))], 1)
+},staticRenderFns: []}
+module.exports.render._withStripped = true
 
 /***/ }),
 
@@ -9915,346 +10254,7 @@ exports.default = Utils;
 
 /***/ }),
 
-/***/ 216:
-/***/ (function(module, exports, __webpack_require__) {
-
-var __vue_exports__, __vue_options__
-var __vue_styles__ = []
-
-/* styles */
-__vue_styles__.push(__webpack_require__(217)
-)
-
-/* script */
-__vue_exports__ = __webpack_require__(218)
-
-/* template */
-var __vue_template__ = __webpack_require__(220)
-__vue_options__ = __vue_exports__ = __vue_exports__ || {}
-if (
-  typeof __vue_exports__.default === "object" ||
-  typeof __vue_exports__.default === "function"
-) {
-if (Object.keys(__vue_exports__).some(function (key) { return key !== "default" && key !== "__esModule" })) {console.error("named exports are not supported in *.vue files.")}
-__vue_options__ = __vue_exports__ = __vue_exports__.default
-}
-if (typeof __vue_options__ === "function") {
-  __vue_options__ = __vue_options__.options
-}
-__vue_options__.__file = "F:\\WebApp\\cabbage\\src\\components\\reward\\reward.vue"
-__vue_options__.render = __vue_template__.render
-__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
-__vue_options__._scopeId = "data-v-297e53c4"
-__vue_options__.style = __vue_options__.style || {}
-__vue_styles__.forEach(function (module) {
-  for (var name in module) {
-    __vue_options__.style[name] = module[name]
-  }
-})
-if (typeof __register_static_styles__ === "function") {
-  __register_static_styles__(__vue_options__._scopeId, __vue_styles__)
-}
-
-module.exports = __vue_exports__
-module.exports.el = 'true'
-new Vue(module.exports)
-
-
-/***/ }),
-
-/***/ 217:
-/***/ (function(module, exports) {
-
-module.exports = {
-  "congra-body-wrapper": {
-    "paddingTop": "20",
-    "paddingLeft": "20",
-    "paddingRight": "20",
-    "paddingBottom": "20",
-    "backgroundColor": "#ffffff"
-  },
-  "find-title-boxs": {
-    "height": "10",
-    "width": "750",
-    "backgroundColor": "#f5f5f5"
-  },
-  "wxc-tab-page": {
-    "marginTop": "10"
-  },
-  "item-container": {
-    "width": "750",
-    "backgroundColor": "#f5f5f5"
-  },
-  "border-cell": {
-    "backgroundColor": "#f2f3f4",
-    "width": "750",
-    "height": "24",
-    "alignItems": "center",
-    "justifyContent": "center"
-  },
-  "cell": {
-    "backgroundColor": "#ffffff"
-  },
-  "content": {
-    "width": "750",
-    "height": "300",
-    "borderBottomWidth": "1",
-    "alignItems": "center",
-    "justifyContent": "center"
-  },
-  "reward-no-content": {
-    "display": "flex",
-    "flexDirection": "row",
-    "alignItems": "center",
-    "justifyContent": "center",
-    "width": "750",
-    "height": "470"
-  },
-  "reward-no-icon": {
-    "display": "flex",
-    "flexDirection": "column",
-    "alignItems": "center"
-  },
-  "reward-no-image": {
-    "width": "195",
-    "height": "172",
-    "fontSize": "22",
-    "color": "#777777",
-    "marginTop": "20",
-    "textAlign": "center"
-  }
-}
-
-/***/ }),
-
-/***/ 218:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-	value: true
-});
-
-var _wxcPanItem = __webpack_require__(24);
-
-var _wxcPanItem2 = _interopRequireDefault(_wxcPanItem);
-
-var _wxcTabPage = __webpack_require__(28);
-
-var _wxcTabPage2 = _interopRequireDefault(_wxcTabPage);
-
-var _bindEnv = __webpack_require__(44);
-
-var _bindEnv2 = _interopRequireDefault(_bindEnv);
-
-var _utils = __webpack_require__(2);
-
-var _utils2 = _interopRequireDefault(_utils);
-
-var _orderHeader = __webpack_require__(12);
-
-var _orderHeader2 = _interopRequireDefault(_orderHeader);
-
-var _config = __webpack_require__(219);
-
-var _config2 = _interopRequireDefault(_config);
-
-var _vue = __webpack_require__(15);
-
-var _vue2 = _interopRequireDefault(_vue);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } } //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-var dom = weex.requireModule('dom');
-// https://github.com/alibaba/weex-ui/blob/master/example/tab-page/config.js
-exports.default = {
-	data: function data() {
-		return {
-			titleName: '我的奖励',
-			rewardContent: false, //是否有内容
-			refreshing: false, //下拉刷新
-			loadinging: false, //上拉加载
-			tabTitles: _config2.default.tabTitles,
-			tabStyles: _config2.default.tabStyles,
-			tabList: [],
-			demoList: [1, 2, 3, 4, 5, 6, 7, 8, 9],
-			tabPageHeight: 1334
-		};
-	},
-
-	methods: {
-		onrefresh: function onrefresh() {
-			var _this = this;
-
-			this.refreshing = true;
-			setTimeout(function () {
-				_this.refreshing = false;
-			}, 2000);
-		},
-		onloading: function onloading() {
-			var _this2 = this;
-
-			this.loadinging = true;
-			setTimeout(function () {
-				_this2.loadinging = false;
-			}, 2000);
-		},
-		wxcTabPageCurrentTabSelected: function wxcTabPageCurrentTabSelected(e) {
-			var self = this;
-			var index = e.page;
-			/* Unloaded tab analog data request */
-			if (!_utils2.default.isNonEmptyArray(self.tabList[index])) {
-				setTimeout(function () {
-					_vue2.default.set(self.tabList, index, self.demoList);
-				}, 100);
-			}
-		},
-		wxcPanItemPan: function wxcPanItemPan(e) {
-			if (_bindEnv2.default.supportsEBForAndroid()) {
-				this.$refs['wxc-tab-page'].bindExp(e.element);
-			}
-		}
-	},
-	components: {
-		"v-header": _orderHeader2.default,
-		WxcTabPage: _wxcTabPage2.default,
-		WxcPanItem: _wxcPanItem2.default
-	},
-	created: function created() {
-		this.tabPageHeight = _utils2.default.env.getPageHeight();
-		this.tabList = [].concat(_toConsumableArray(Array(this.tabTitles.length).keys())).map(function (i) {
-			return [];
-		});
-		_vue2.default.set(this.tabList, 0, this.demoList);
-	}
-};
-
-/***/ }),
-
-/***/ 219:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = {
-
-  tabTitles: [{
-    title: '白菜粉奖励'
-  }, {
-    title: '白菜丝奖励'
-  }],
-  tabStyles: {
-    bgColor: '#FFFFFF',
-    titleColor: '#777777',
-    activeTitleColor: '#73cc00',
-    activeBgColor: '#FFFFFF',
-    isActiveTitleBold: true,
-    width: 170,
-    height: 70,
-    fontSize: 24,
-    hasActiveBottom: true,
-    activeBottomColor: '#73cc00',
-    activeBottomHeight: 6,
-    activeBottomWidth: 122,
-    textPaddingLeft: 10,
-    textPaddingRight: 10,
-    leftOffset: 205
-  }
-};
-
-/***/ }),
-
-/***/ 220:
-/***/ (function(module, exports) {
-
-module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: ["reward"]
-  }, [_c('div', {
-    staticClass: ["find-title-box"]
-  }, [_c('v-header', {
-    attrs: {
-      "titleName": _vm.titleName,
-      "backPage": true
-    }
-  }), _c('div', {
-    staticClass: ["find-title-boxs"]
-  })], 1), _c('wxc-tab-page', {
-    ref: "wxc-tab-page",
-    attrs: {
-      "tabTitles": _vm.tabTitles,
-      "tabStyles": _vm.tabStyles,
-      "titleType": "icon",
-      "tabPageHeight": _vm.tabPageHeight
-    },
-    on: {
-      "wxcTabPageCurrentTabSelected": _vm.wxcTabPageCurrentTabSelected
-    }
-  }, _vm._l((_vm.tabList), function(v, index) {
-    return _c('list', {
-      key: index,
-      staticClass: ["item-container"],
-      style: {
-        height: (_vm.tabPageHeight - _vm.tabStyles.height - 122) + 'px'
-      }
-    }, [(_vm.rewardContent) ? _c('cell', {
-      staticClass: ["reward-no-content"],
-      appendAsTree: true,
-      attrs: {
-        "append": "tree"
-      }
-    }, [_c('div', {
-      staticClass: ["reward-no-icon"]
-    }, [_c('image', {
-      staticClass: ["reward-no-image"],
-      attrs: {
-        "src": "../src/common/images/reward@195x172.png"
-      }
-    }), _c('text', {
-      staticClass: ["reward-no-image"]
-    }, [_vm._v("暂无信息！")])])]) : _vm._e()])
-  }))], 1)
-},staticRenderFns: []}
-module.exports.render._withStripped = true
-
-/***/ }),
-
-/***/ 24:
+/***/ 20:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10264,7 +10264,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _index = __webpack_require__(25);
+var _index = __webpack_require__(21);
 
 Object.defineProperty(exports, 'default', {
   enumerable: true,
@@ -10277,17 +10277,17 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 /***/ }),
 
-/***/ 25:
+/***/ 21:
 /***/ (function(module, exports, __webpack_require__) {
 
 var __vue_exports__, __vue_options__
 var __vue_styles__ = []
 
 /* script */
-__vue_exports__ = __webpack_require__(26)
+__vue_exports__ = __webpack_require__(22)
 
 /* template */
-var __vue_template__ = __webpack_require__(27)
+var __vue_template__ = __webpack_require__(23)
 __vue_options__ = __vue_exports__ = __vue_exports__ || {}
 if (
   typeof __vue_exports__.default === "object" ||
@@ -10317,7 +10317,7 @@ module.exports = __vue_exports__
 
 /***/ }),
 
-/***/ 26:
+/***/ 22:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10423,7 +10423,7 @@ exports.default = {
 
 /***/ }),
 
-/***/ 27:
+/***/ 23:
 /***/ (function(module, exports) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -10446,7 +10446,7 @@ module.exports.render._withStripped = true
 
 /***/ }),
 
-/***/ 28:
+/***/ 24:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10456,7 +10456,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _index = __webpack_require__(29);
+var _index = __webpack_require__(25);
 
 Object.defineProperty(exports, 'default', {
   enumerable: true,
@@ -10469,21 +10469,21 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 /***/ }),
 
-/***/ 29:
+/***/ 25:
 /***/ (function(module, exports, __webpack_require__) {
 
 var __vue_exports__, __vue_options__
 var __vue_styles__ = []
 
 /* styles */
-__vue_styles__.push(__webpack_require__(30)
+__vue_styles__.push(__webpack_require__(26)
 )
 
 /* script */
-__vue_exports__ = __webpack_require__(31)
+__vue_exports__ = __webpack_require__(27)
 
 /* template */
-var __vue_template__ = __webpack_require__(32)
+var __vue_template__ = __webpack_require__(28)
 __vue_options__ = __vue_exports__ = __vue_exports__ || {}
 if (
   typeof __vue_exports__.default === "object" ||
@@ -10514,38 +10514,7 @@ module.exports = __vue_exports__
 
 /***/ }),
 
-/***/ 3:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-var g;
-
-// This works in non-strict mode
-g = function () {
-	return this;
-}();
-
-try {
-	// This works if eval is allowed (see CSP)
-	g = g || Function("return this")() || (1, eval)("this");
-} catch (e) {
-	// This works if the window reference is available
-	if ((typeof window === "undefined" ? "undefined" : _typeof(window)) === "object") g = window;
-}
-
-// g can still be undefined, but nothing to do about it...
-// We return undefined, instead of nothing here, so it's
-// easier to handle this case. if(!global) { ...}
-
-module.exports = g;
-
-/***/ }),
-
-/***/ 30:
+/***/ 26:
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -10581,7 +10550,7 @@ module.exports = {
 
 /***/ }),
 
-/***/ 31:
+/***/ 27:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10936,7 +10905,7 @@ exports.default = {
 
 /***/ }),
 
-/***/ 32:
+/***/ 28:
 /***/ (function(module, exports) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -11030,7 +10999,38 @@ module.exports.render._withStripped = true
 
 /***/ }),
 
-/***/ 44:
+/***/ 3:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+var g;
+
+// This works in non-strict mode
+g = function () {
+	return this;
+}();
+
+try {
+	// This works if eval is allowed (see CSP)
+	g = g || Function("return this")() || (1, eval)("this");
+} catch (e) {
+	// This works if the window reference is available
+	if ((typeof window === "undefined" ? "undefined" : _typeof(window)) === "object") g = window;
+}
+
+// g can still be undefined, but nothing to do about it...
+// We return undefined, instead of nothing here, so it's
+// easier to handle this case. if(!global) { ...}
+
+module.exports = g;
+
+/***/ }),
+
+/***/ 40:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";

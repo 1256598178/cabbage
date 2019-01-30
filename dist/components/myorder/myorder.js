@@ -62,7 +62,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 191);
+/******/ 	return __webpack_require__(__webpack_require__.s = 162);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -8525,6 +8525,892 @@ process.umask = function () {
 
 /***/ }),
 
+/***/ 162:
+/***/ (function(module, exports, __webpack_require__) {
+
+var __vue_exports__, __vue_options__
+var __vue_styles__ = []
+
+/* styles */
+__vue_styles__.push(__webpack_require__(163)
+)
+
+/* script */
+__vue_exports__ = __webpack_require__(164)
+
+/* template */
+var __vue_template__ = __webpack_require__(166)
+__vue_options__ = __vue_exports__ = __vue_exports__ || {}
+if (
+  typeof __vue_exports__.default === "object" ||
+  typeof __vue_exports__.default === "function"
+) {
+if (Object.keys(__vue_exports__).some(function (key) { return key !== "default" && key !== "__esModule" })) {console.error("named exports are not supported in *.vue files.")}
+__vue_options__ = __vue_exports__ = __vue_exports__.default
+}
+if (typeof __vue_options__ === "function") {
+  __vue_options__ = __vue_options__.options
+}
+__vue_options__.__file = "F:\\WebApp\\cabbage\\src\\components\\myorder\\myorder.vue"
+__vue_options__.render = __vue_template__.render
+__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
+__vue_options__._scopeId = "data-v-7ca934ec"
+__vue_options__.style = __vue_options__.style || {}
+__vue_styles__.forEach(function (module) {
+  for (var name in module) {
+    __vue_options__.style[name] = module[name]
+  }
+})
+if (typeof __register_static_styles__ === "function") {
+  __register_static_styles__(__vue_options__._scopeId, __vue_styles__)
+}
+
+module.exports = __vue_exports__
+module.exports.el = 'true'
+new Vue(module.exports)
+
+
+/***/ }),
+
+/***/ 163:
+/***/ (function(module, exports) {
+
+module.exports = {
+  "listBar": {
+    "position": "fixed",
+    "top": "100",
+    "bottom": 0,
+    "left": 0,
+    "right": 0
+  },
+  "title": {
+    "fontSize": "42",
+    "color": "#ffffff"
+  },
+  "item-container": {
+    "width": "750",
+    "backgroundColor": "#f5f5f5",
+    "marginTop": "10"
+  },
+  "border-cell": {
+    "backgroundColor": "#f5f5f5",
+    "width": "750",
+    "height": "10",
+    "alignItems": "center",
+    "justifyContent": "center"
+  },
+  "cell": {
+    "backgroundColor": "#ffffff"
+  },
+  "content": {
+    "width": "750",
+    "height": "300",
+    "borderBottomWidth": "1",
+    "alignItems": "center",
+    "justifyContent": "center"
+  },
+  "item_title": {
+    "flexDirection": "row",
+    "justifyContent": "space-between",
+    "paddingTop": "10",
+    "paddingRight": "20",
+    "paddingBottom": "10",
+    "paddingLeft": "20",
+    "borderBottomWidth": "2",
+    "borderBottomStyle": "solid",
+    "borderBottomColor": "#f4f4f4"
+  },
+  "item_left_title": {
+    "width": "100",
+    "height": "40",
+    "borderRadius": "5",
+    "fontSize": "20",
+    "lineHeight": "40",
+    "textAlign": "center",
+    "color": "#ffffff",
+    "backgroundColor": "#f99191"
+  },
+  "item_right_title": {
+    "width": "100",
+    "height": "40",
+    "fontSize": "22",
+    "lineHeight": "40",
+    "textAlign": "right",
+    "color": "#f26100"
+  },
+  "item_content": {
+    "flexDirection": "row",
+    "paddingTop": "20",
+    "paddingRight": "20",
+    "paddingBottom": "20",
+    "paddingLeft": "10",
+    "borderBottomWidth": "2",
+    "borderBottomStyle": "solid",
+    "borderBottomColor": "#f4f4f4"
+  },
+  "item_text": {
+    "flex": 1,
+    "flexDirection": "row",
+    "marginLeft": "20"
+  },
+  "item_name": {
+    "fontSize": "22",
+    "lineHeight": "40",
+    "textAlign": "left",
+    "color": "#333333",
+    "marginRight": "16"
+  },
+  "text_create_time": {
+    "fontSize": "22",
+    "lineHeight": "40",
+    "color": "#999999"
+  },
+  "text_order": {
+    "marginLeft": "165",
+    "fontSize": "28",
+    "color": "#333333"
+  },
+  "sec-nav-list": {
+    "flex": 1,
+    "flexDirection": "row"
+  },
+  "product-img": {
+    "width": "150",
+    "height": "150",
+    "marginTop": 0,
+    "marginRight": "10",
+    "marginBottom": 0,
+    "marginLeft": "10"
+  },
+  "iconFont": {
+    "fontFamily": "iconfont"
+  },
+  "slideShow-icon": {
+    "width": "50",
+    "background": "#fff",
+    "color": "#cdcdcd",
+    "lineHeight": "150",
+    "textAlign": "center"
+  },
+  "item-price": {
+    "flexDirection": "row",
+    "justifyContent": "flex-end",
+    "paddingTop": "20",
+    "paddingRight": "20",
+    "paddingBottom": "20",
+    "paddingLeft": "20"
+  },
+  "item-l": {
+    "marginRight": "20"
+  },
+  "item-r": {
+    "flexDirection": "row"
+  },
+  "item-num": {
+    "fontSize": "22",
+    "lineHeight": "40",
+    "color": "#333333"
+  },
+  "item-m": {
+    "fontSize": "22",
+    "lineHeight": "40",
+    "color": "#333333",
+    "marginRight": "10"
+  },
+  "item-p": {
+    "fontSize": "22",
+    "lineHeight": "40",
+    "color": "#f26100"
+  },
+  "item-bottom": {
+    "flexDirection": "row",
+    "justifyContent": "flex-end",
+    "paddingTop": "20",
+    "paddingRight": "20",
+    "paddingBottom": "20",
+    "paddingLeft": "20",
+    "borderTopWidth": "2",
+    "borderTopStyle": "solid",
+    "borderTopColor": "#f4f4f4"
+  },
+  "item-bottoms": {
+    "height": "0",
+    "overflow": "hidden"
+  },
+  "item-sh": {
+    "width": "100",
+    "height": "40",
+    "lineHeight": "38",
+    "fontSize": "20",
+    "color": "#999999",
+    "textAlign": "center",
+    "borderWidth": "1",
+    "borderColor": "#bfbfbf",
+    "borderStyle": "solid",
+    "borderRadius": "5"
+  },
+  "item-dpj": {
+    "width": "100",
+    "height": "40",
+    "lineHeight": "38",
+    "fontSize": "20",
+    "color": "#999999",
+    "textAlign": "center",
+    "borderWidth": "1",
+    "borderColor": "#bfbfbf",
+    "borderStyle": "solid",
+    "borderRadius": "5"
+  }
+}
+
+/***/ }),
+
+/***/ 164:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _utils = __webpack_require__(2);
+
+var _utils2 = _interopRequireDefault(_utils);
+
+var _bindEnv = __webpack_require__(40);
+
+var _bindEnv2 = _interopRequireDefault(_bindEnv);
+
+var _wxcPanItem = __webpack_require__(20);
+
+var _wxcPanItem2 = _interopRequireDefault(_wxcPanItem);
+
+var _wxcTabPage = __webpack_require__(24);
+
+var _wxcTabPage2 = _interopRequireDefault(_wxcTabPage);
+
+var _wxcMinibar = __webpack_require__(4);
+
+var _wxcMinibar2 = _interopRequireDefault(_wxcMinibar);
+
+var _config = __webpack_require__(165);
+
+var _config2 = _interopRequireDefault(_config);
+
+var _vue = __webpack_require__(15);
+
+var _vue2 = _interopRequireDefault(_vue);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+var dom = weex.requireModule('dom');
+
+// https://github.com/alibaba/weex-ui/blob/master/example/tab-page/config.js
+//import orderItem from './order-item.vue'
+
+var navigator = weex.requireModule('navigator');
+var modal = weex.requireModule('modal');
+var stream = weex.requireModule('stream');
+var storage = weex.requireModule('storage');
+
+exports.default = {
+	components: {
+		WxcMinibar: _wxcMinibar2.default,
+		WxcTabPage: _wxcTabPage2.default,
+		WxcPanItem: _wxcPanItem2.default,
+		Config: _config2.default
+		//orderItem
+	},
+	data: function data() {
+		return {
+			tabTitles: _config2.default.tabTitles,
+			tabStyles: _config2.default.tabStyles,
+			tabList: [],
+			needSlider: true,
+			demoList: [1, 2, 3, 4, 5, 6, 7, 8, 9],
+			supportSlide: true,
+			isTabView: true,
+			tabPageHeight: 1334,
+			orderList: [],
+			createTime: '180009900',
+			workorder: '99999999'
+		};
+	},
+	methods: {
+		getOrderData: function getOrderData(curpage) {
+			var self = this;
+			var flag = 0;
+			switch (curpage) {
+				case 0:
+					// 全部订单 
+					flag = 0;
+					break;
+				case 1:
+					// 待付款
+					flag = 1;
+					break;
+				case 2:
+					// 待取货
+					flag = 2;
+					break;
+				case 3:
+					// 待评价
+					flag = 3;
+					break;
+				case 4:
+					// 退款服务
+					flag = 4;
+					break;
+				case 5:
+					// 售后服务
+					flag = 5;
+					break;
+			} //这里url自己写就好
+			var url = '../src/components/myorder/order' + flag + '.json';
+			console.log('geturl----' + url);
+
+			stream.fetch({
+				method: 'GET',
+				url: url,
+				type: 'json'
+			}, function (response) {
+				console.log(response);
+				self.orderList = response.data.orderList; // 刷新当前页面的数据 // tablist是对于tab的集合 需要v-for //orderlist是对应tab下的list数据的集合 需要v-for
+				//console.log(response.data.orderList);
+				_vue2.default.set(self.tabList, curpage, self.orderList);
+				console.log(self.orderList.length);
+			}, function (response) {
+				console.log('http in progress');
+			});
+		},
+		wxcTabPageCurrentTabSelected: function wxcTabPageCurrentTabSelected(e) {
+			var self = this;
+			var index = e.page;
+			// 接口调用
+			this.getOrderData(index);
+		},
+		wxcPanItemPan: function wxcPanItemPan(e) {
+			if (_bindEnv2.default.supportsEBForAndroid()) {
+				this.$refs['wxc-tab-page'].bindExp(e.element);
+			}
+		},
+		minibarLeftButtonClick: function minibarLeftButtonClick() {
+			this.$router.push('-1');
+		}
+	},
+	created: function created() {
+		var fontModule = weex.requireModule("dom");
+		fontModule.addRule('fontFace', {
+			'fontFamily': "iconfont",
+			'src': "url('//at.alicdn.com/t/font_948634_1eyn0d2flea.ttf')"
+		});
+		this.tabPageHeight = _utils2.default.env.getPageHeight();
+		//this.tabList = [...Array(this.tabTitles.length).keys()].map(i => []);
+		//Vue.set(this.tabList, 0, this.demoList);
+		this.getOrderData(0);
+	}
+};
+
+/***/ }),
+
+/***/ 165:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+/**
+ * Created by Tw93 on 2016/11/4.
+ */
+
+exports.default = {
+	tabTitles: [{
+		title: '全部订单'
+		//icon: 'https://gw.alicdn.com/tfs/TB1MWXdSpXXXXcmXXXXXXXXXXXX-72-72.png',
+		//activeIcon: 'https://gw.alicdn.com/tfs/TB1kCk2SXXXXXXFXFXXXXXXXXXX-72-72.png',
+	}, {
+		title: '待付款'
+		//icon: 'https://gw.alicdn.com/tfs/TB1ARoKSXXXXXc9XVXXXXXXXXXX-72-72.png',
+		//activeIcon: 'https://gw.alicdn.com/tfs/TB19Z72SXXXXXamXFXXXXXXXXXX-72-72.png'
+	}, {
+		title: '待取货'
+		//icon: 'https://gw.alicdn.com/tfs/TB1VKMISXXXXXbyaXXXXXXXXXXX-72-72.png',
+		//activeIcon: 'https://gw.alicdn.com/tfs/TB1aTgZSXXXXXazXFXXXXXXXXXX-72-72.png'
+	}, {
+		title: '待评价'
+		//icon: 'https://gw.alicdn.com/tfs/TB1Do3tSXXXXXXMaFXXXXXXXXXX-72-72.png',
+		//activeIcon: 'https://gw.alicdn.com/tfs/TB1LiNhSpXXXXaWXXXXXXXXXXXX-72-72.png'
+	}, {
+		title: '退款服务'
+		//icon: 'https://gw.alicdn.com/tfs/TB1jFsLSXXXXXX_aXXXXXXXXXXX-72-72.png',
+		//activeIcon: 'https://gw.alicdn.com/tfs/TB1_Kc.SXXXXXa8XpXXXXXXXXXX-72-72.png'
+	}, {
+		title: '售后服务'
+		//icon: 'https://gw.alicdn.com/tfs/TB199sPSXXXXXb4XVXXXXXXXXXX-72-72.png',
+		//activeIcon: 'https://gw.alicdn.com/tfs/TB1DR.3SXXXXXc2XpXXXXXXXXXX-72-72.png'
+	}],
+	tabStyles: {
+		bgColor: '#FFFFFF',
+		titleColor: '#777777',
+		activeTitleColor: '#73cc00',
+		activeBgColor: '#FFFFFF',
+		isActiveTitleBold: true,
+		iconWidth: 70,
+		iconHeight: 70,
+		width: 140,
+		height: 80,
+		fontSize: 24,
+		hasActiveBottom: true,
+		activeBottomColor: '#73cc00',
+		activeBottomHeight: 2,
+		activeBottomWidth: 100,
+		textPaddingLeft: 10,
+		textPaddingRight: 10
+	},
+	// 使用 iconfont 模式的tab title配置
+	tabIconFontTitles: [{
+		title: '首页',
+		codePoint: '\uE623'
+	}, {
+		title: '特别推荐',
+		codePoint: '\uE608'
+	}, {
+		title: '消息中心',
+		codePoint: '\uE752',
+		badge: 5
+	}, {
+		title: '我的主页',
+		codePoint: '\uE601',
+		dot: true
+	}],
+	tabIconFontStyles: {
+		bgColor: '#FFFFFF',
+		titleColor: '#666666',
+		activeTitleColor: '#3D3D3D',
+		activeBgColor: '#FFFFFF',
+		isActiveTitleBold: true,
+		width: 160,
+		height: 120,
+		fontSize: 24,
+		textPaddingLeft: 10,
+		textPaddingRight: 10,
+		iconFontSize: 50,
+		iconFontColor: '#333333',
+		iconFontMarginBottom: 8,
+		activeIconFontColor: 'red',
+		iconFontUrl: '//at.alicdn.com/t/font_501019_mauqv15evc1pp66r.ttf'
+	}
+};
+
+/***/ }),
+
+/***/ 166:
+/***/ (function(module, exports) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', [_c('div', {
+    staticClass: ["titleBar"]
+  }, [_c('text', {
+    staticClass: ["statusbar"]
+  }), _c('wxc-minibar', {
+    attrs: {
+      "title": "我的订单",
+      "backgroundColor": "#73cc00",
+      "textColor": "#FFFFFF",
+      "leftButton": "http://47.92.164.211:8011/PublicImage/backImage.png"
+    },
+    on: {
+      "wxcMinibarLeftButtonClicked": _vm.minibarLeftButtonClick
+    }
+  }, [_c('text', {
+    staticClass: ["title"],
+    attrs: {
+      "slot": "middle"
+    },
+    slot: "middle"
+  }, [_vm._v("我的订单")])]), _c('text', {
+    staticClass: ["border-cell"]
+  })], 1), _c('wxc-tab-page', {
+    ref: "wxc-tab-page",
+    staticClass: ["listBar"],
+    attrs: {
+      "tabTitles": _vm.tabTitles,
+      "tabStyles": _vm.tabStyles,
+      "titleType": "text",
+      "tabPageHeight": _vm.tabPageHeight
+    },
+    on: {
+      "wxcTabPageCurrentTabSelected": _vm.wxcTabPageCurrentTabSelected
+    }
+  }, _vm._l((_vm.tabList), function(v, index) {
+    return _c('list', {
+      key: index,
+      staticClass: ["item-container"],
+      style: {
+        height: (_vm.tabPageHeight - _vm.tabStyles.height - 100) + 'px'
+      }
+    }, _vm._l((v), function(item, key) {
+      return _c('cell', {
+        key: key,
+        staticClass: ["cell"],
+        appendAsTree: true,
+        attrs: {
+          "append": "tree"
+        }
+      }, [_c('div', {
+        staticClass: ["item_whole"]
+      }, [_c('div', {
+        staticClass: ["item_title"]
+      }, [_c('text', {
+        staticClass: ["item_left_title"]
+      }, [_vm._v(_vm._s(item.pWay))]), _c('div', {
+        staticClass: ["item_text"]
+      }, [_c('text', {
+        staticClass: ["item_name"]
+      }, [_vm._v("订单号")]), _c('text', {
+        staticClass: ["text_create_time"]
+      }, [_vm._v(_vm._s(item.orderNum))])]), _c('text', {
+        staticClass: ["item_right_title"]
+      }, [_vm._v(_vm._s(item.orderType))])]), _c('div', {
+        staticClass: ["item_content"]
+      }, [_c('scroller', {
+        staticClass: ["sec-nav-list"],
+        attrs: {
+          "showScrollbar": "false",
+          "scrollDirection": "horizontal"
+        }
+      }, _vm._l((item.orderProduct), function(nums, indexs) {
+        return _c('div', {
+          key: indexs,
+          staticClass: ["cells"]
+        }, [_c('image', {
+          staticClass: ["product-img"],
+          attrs: {
+            "src": nums
+          }
+        })])
+      })), _c('div', {
+        staticClass: ["slideShow"]
+      }, [_c('text', {
+        ref: "slideBtn",
+        refInFor: true,
+        staticClass: ["iconFont", "slideShow-icon"]
+      }, [_vm._v("")])])]), _c('div', {
+        staticClass: ["item-price"]
+      }, [_c('div', {
+        staticClass: ["item-l"]
+      }, [_c('text', {
+        staticClass: ["item-num"]
+      }, [_vm._v("共" + _vm._s(item.orderProduct.length) + "件商品")])]), _c('div', {
+        staticClass: ["item-r"]
+      }, [_c('text', {
+        staticClass: ["item-m"]
+      }, [_vm._v("金额:")]), _c('text', {
+        staticClass: ["item-p"]
+      }, [_vm._v("￥" + _vm._s(item.money) + "元")])])]), _c('div', {
+        class: [item.orderStatus === '3' ? 'item-bottom' : 'item-bottoms']
+      }, [_c('div', {
+        staticClass: ["item-l"]
+      }, [_c('text', {
+        staticClass: ["item-sh"]
+      }, [_vm._v("申请售后")])]), _c('div', {
+        staticClass: ["item-r"]
+      }, [_c('text', {
+        staticClass: ["item-dpj"]
+      }, [_vm._v("待评价")])])])]), _c('text', {
+        staticClass: ["border-cell"]
+      })])
+    }))
+  }))], 1)
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+
+/***/ }),
+
 /***/ 17:
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -9100,892 +9986,6 @@ exports.parse = querystring;
 
 /***/ }),
 
-/***/ 191:
-/***/ (function(module, exports, __webpack_require__) {
-
-var __vue_exports__, __vue_options__
-var __vue_styles__ = []
-
-/* styles */
-__vue_styles__.push(__webpack_require__(192)
-)
-
-/* script */
-__vue_exports__ = __webpack_require__(193)
-
-/* template */
-var __vue_template__ = __webpack_require__(195)
-__vue_options__ = __vue_exports__ = __vue_exports__ || {}
-if (
-  typeof __vue_exports__.default === "object" ||
-  typeof __vue_exports__.default === "function"
-) {
-if (Object.keys(__vue_exports__).some(function (key) { return key !== "default" && key !== "__esModule" })) {console.error("named exports are not supported in *.vue files.")}
-__vue_options__ = __vue_exports__ = __vue_exports__.default
-}
-if (typeof __vue_options__ === "function") {
-  __vue_options__ = __vue_options__.options
-}
-__vue_options__.__file = "F:\\WebApp\\cabbage\\src\\components\\myorder\\myorder.vue"
-__vue_options__.render = __vue_template__.render
-__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
-__vue_options__._scopeId = "data-v-7ca934ec"
-__vue_options__.style = __vue_options__.style || {}
-__vue_styles__.forEach(function (module) {
-  for (var name in module) {
-    __vue_options__.style[name] = module[name]
-  }
-})
-if (typeof __register_static_styles__ === "function") {
-  __register_static_styles__(__vue_options__._scopeId, __vue_styles__)
-}
-
-module.exports = __vue_exports__
-module.exports.el = 'true'
-new Vue(module.exports)
-
-
-/***/ }),
-
-/***/ 192:
-/***/ (function(module, exports) {
-
-module.exports = {
-  "listBar": {
-    "position": "fixed",
-    "top": "100",
-    "bottom": 0,
-    "left": 0,
-    "right": 0
-  },
-  "title": {
-    "fontSize": "42",
-    "color": "#ffffff"
-  },
-  "item-container": {
-    "width": "750",
-    "backgroundColor": "#f5f5f5",
-    "marginTop": "10"
-  },
-  "border-cell": {
-    "backgroundColor": "#f5f5f5",
-    "width": "750",
-    "height": "10",
-    "alignItems": "center",
-    "justifyContent": "center"
-  },
-  "cell": {
-    "backgroundColor": "#ffffff"
-  },
-  "content": {
-    "width": "750",
-    "height": "300",
-    "borderBottomWidth": "1",
-    "alignItems": "center",
-    "justifyContent": "center"
-  },
-  "item_title": {
-    "flexDirection": "row",
-    "justifyContent": "space-between",
-    "paddingTop": "10",
-    "paddingRight": "20",
-    "paddingBottom": "10",
-    "paddingLeft": "20",
-    "borderBottomWidth": "2",
-    "borderBottomStyle": "solid",
-    "borderBottomColor": "#f4f4f4"
-  },
-  "item_left_title": {
-    "width": "100",
-    "height": "40",
-    "borderRadius": "5",
-    "fontSize": "20",
-    "lineHeight": "40",
-    "textAlign": "center",
-    "color": "#ffffff",
-    "backgroundColor": "#f99191"
-  },
-  "item_right_title": {
-    "width": "100",
-    "height": "40",
-    "fontSize": "22",
-    "lineHeight": "40",
-    "textAlign": "right",
-    "color": "#f26100"
-  },
-  "item_content": {
-    "flexDirection": "row",
-    "paddingTop": "20",
-    "paddingRight": "20",
-    "paddingBottom": "20",
-    "paddingLeft": "10",
-    "borderBottomWidth": "2",
-    "borderBottomStyle": "solid",
-    "borderBottomColor": "#f4f4f4"
-  },
-  "item_text": {
-    "flex": 1,
-    "flexDirection": "row",
-    "marginLeft": "20"
-  },
-  "item_name": {
-    "fontSize": "22",
-    "lineHeight": "40",
-    "textAlign": "left",
-    "color": "#333333",
-    "marginRight": "16"
-  },
-  "text_create_time": {
-    "fontSize": "22",
-    "lineHeight": "40",
-    "color": "#999999"
-  },
-  "text_order": {
-    "marginLeft": "165",
-    "fontSize": "28",
-    "color": "#333333"
-  },
-  "sec-nav-list": {
-    "flex": 1,
-    "flexDirection": "row"
-  },
-  "product-img": {
-    "width": "150",
-    "height": "150",
-    "marginTop": 0,
-    "marginRight": "10",
-    "marginBottom": 0,
-    "marginLeft": "10"
-  },
-  "iconFont": {
-    "fontFamily": "iconfont"
-  },
-  "slideShow-icon": {
-    "width": "50",
-    "background": "#fff",
-    "color": "#cdcdcd",
-    "lineHeight": "150",
-    "textAlign": "center"
-  },
-  "item-price": {
-    "flexDirection": "row",
-    "justifyContent": "flex-end",
-    "paddingTop": "20",
-    "paddingRight": "20",
-    "paddingBottom": "20",
-    "paddingLeft": "20"
-  },
-  "item-l": {
-    "marginRight": "20"
-  },
-  "item-r": {
-    "flexDirection": "row"
-  },
-  "item-num": {
-    "fontSize": "22",
-    "lineHeight": "40",
-    "color": "#333333"
-  },
-  "item-m": {
-    "fontSize": "22",
-    "lineHeight": "40",
-    "color": "#333333",
-    "marginRight": "10"
-  },
-  "item-p": {
-    "fontSize": "22",
-    "lineHeight": "40",
-    "color": "#f26100"
-  },
-  "item-bottom": {
-    "flexDirection": "row",
-    "justifyContent": "flex-end",
-    "paddingTop": "20",
-    "paddingRight": "20",
-    "paddingBottom": "20",
-    "paddingLeft": "20",
-    "borderTopWidth": "2",
-    "borderTopStyle": "solid",
-    "borderTopColor": "#f4f4f4"
-  },
-  "item-bottoms": {
-    "height": "0",
-    "overflow": "hidden"
-  },
-  "item-sh": {
-    "width": "100",
-    "height": "40",
-    "lineHeight": "38",
-    "fontSize": "20",
-    "color": "#999999",
-    "textAlign": "center",
-    "borderWidth": "1",
-    "borderColor": "#bfbfbf",
-    "borderStyle": "solid",
-    "borderRadius": "5"
-  },
-  "item-dpj": {
-    "width": "100",
-    "height": "40",
-    "lineHeight": "38",
-    "fontSize": "20",
-    "color": "#999999",
-    "textAlign": "center",
-    "borderWidth": "1",
-    "borderColor": "#bfbfbf",
-    "borderStyle": "solid",
-    "borderRadius": "5"
-  }
-}
-
-/***/ }),
-
-/***/ 193:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-	value: true
-});
-
-var _utils = __webpack_require__(2);
-
-var _utils2 = _interopRequireDefault(_utils);
-
-var _bindEnv = __webpack_require__(44);
-
-var _bindEnv2 = _interopRequireDefault(_bindEnv);
-
-var _wxcPanItem = __webpack_require__(24);
-
-var _wxcPanItem2 = _interopRequireDefault(_wxcPanItem);
-
-var _wxcTabPage = __webpack_require__(28);
-
-var _wxcTabPage2 = _interopRequireDefault(_wxcTabPage);
-
-var _wxcMinibar = __webpack_require__(4);
-
-var _wxcMinibar2 = _interopRequireDefault(_wxcMinibar);
-
-var _config = __webpack_require__(194);
-
-var _config2 = _interopRequireDefault(_config);
-
-var _vue = __webpack_require__(15);
-
-var _vue2 = _interopRequireDefault(_vue);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-var dom = weex.requireModule('dom');
-
-// https://github.com/alibaba/weex-ui/blob/master/example/tab-page/config.js
-//import orderItem from './order-item.vue'
-
-var navigator = weex.requireModule('navigator');
-var modal = weex.requireModule('modal');
-var stream = weex.requireModule('stream');
-var storage = weex.requireModule('storage');
-
-exports.default = {
-	components: {
-		WxcMinibar: _wxcMinibar2.default,
-		WxcTabPage: _wxcTabPage2.default,
-		WxcPanItem: _wxcPanItem2.default,
-		Config: _config2.default
-		//orderItem
-	},
-	data: function data() {
-		return {
-			tabTitles: _config2.default.tabTitles,
-			tabStyles: _config2.default.tabStyles,
-			tabList: [],
-			needSlider: true,
-			demoList: [1, 2, 3, 4, 5, 6, 7, 8, 9],
-			supportSlide: true,
-			isTabView: true,
-			tabPageHeight: 1334,
-			orderList: [],
-			createTime: '180009900',
-			workorder: '99999999'
-		};
-	},
-	methods: {
-		getOrderData: function getOrderData(curpage) {
-			var self = this;
-			var flag = 0;
-			switch (curpage) {
-				case 0:
-					// 全部订单 
-					flag = 0;
-					break;
-				case 1:
-					// 待付款
-					flag = 1;
-					break;
-				case 2:
-					// 待取货
-					flag = 2;
-					break;
-				case 3:
-					// 待评价
-					flag = 3;
-					break;
-				case 4:
-					// 退款服务
-					flag = 4;
-					break;
-				case 5:
-					// 售后服务
-					flag = 5;
-					break;
-			} //这里url自己写就好
-			var url = '../src/components/myorder/order' + flag + '.json';
-			console.log('geturl----' + url);
-
-			stream.fetch({
-				method: 'GET',
-				url: url,
-				type: 'json'
-			}, function (response) {
-				console.log(response);
-				self.orderList = response.data.orderList; // 刷新当前页面的数据 // tablist是对于tab的集合 需要v-for //orderlist是对应tab下的list数据的集合 需要v-for
-				//console.log(response.data.orderList);
-				_vue2.default.set(self.tabList, curpage, self.orderList);
-				console.log(self.orderList.length);
-			}, function (response) {
-				console.log('http in progress');
-			});
-		},
-		wxcTabPageCurrentTabSelected: function wxcTabPageCurrentTabSelected(e) {
-			var self = this;
-			var index = e.page;
-			// 接口调用
-			this.getOrderData(index);
-		},
-		wxcPanItemPan: function wxcPanItemPan(e) {
-			if (_bindEnv2.default.supportsEBForAndroid()) {
-				this.$refs['wxc-tab-page'].bindExp(e.element);
-			}
-		},
-		minibarLeftButtonClick: function minibarLeftButtonClick() {
-			this.$router.push('-1');
-		}
-	},
-	created: function created() {
-		var fontModule = weex.requireModule("dom");
-		fontModule.addRule('fontFace', {
-			'fontFamily': "iconfont",
-			'src': "url('//at.alicdn.com/t/font_948634_1eyn0d2flea.ttf')"
-		});
-		this.tabPageHeight = _utils2.default.env.getPageHeight();
-		//this.tabList = [...Array(this.tabTitles.length).keys()].map(i => []);
-		//Vue.set(this.tabList, 0, this.demoList);
-		this.getOrderData(0);
-	}
-};
-
-/***/ }),
-
-/***/ 194:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-	value: true
-});
-/**
- * Created by Tw93 on 2016/11/4.
- */
-
-exports.default = {
-	tabTitles: [{
-		title: '全部订单'
-		//icon: 'https://gw.alicdn.com/tfs/TB1MWXdSpXXXXcmXXXXXXXXXXXX-72-72.png',
-		//activeIcon: 'https://gw.alicdn.com/tfs/TB1kCk2SXXXXXXFXFXXXXXXXXXX-72-72.png',
-	}, {
-		title: '待付款'
-		//icon: 'https://gw.alicdn.com/tfs/TB1ARoKSXXXXXc9XVXXXXXXXXXX-72-72.png',
-		//activeIcon: 'https://gw.alicdn.com/tfs/TB19Z72SXXXXXamXFXXXXXXXXXX-72-72.png'
-	}, {
-		title: '待取货'
-		//icon: 'https://gw.alicdn.com/tfs/TB1VKMISXXXXXbyaXXXXXXXXXXX-72-72.png',
-		//activeIcon: 'https://gw.alicdn.com/tfs/TB1aTgZSXXXXXazXFXXXXXXXXXX-72-72.png'
-	}, {
-		title: '待评价'
-		//icon: 'https://gw.alicdn.com/tfs/TB1Do3tSXXXXXXMaFXXXXXXXXXX-72-72.png',
-		//activeIcon: 'https://gw.alicdn.com/tfs/TB1LiNhSpXXXXaWXXXXXXXXXXXX-72-72.png'
-	}, {
-		title: '退款服务'
-		//icon: 'https://gw.alicdn.com/tfs/TB1jFsLSXXXXXX_aXXXXXXXXXXX-72-72.png',
-		//activeIcon: 'https://gw.alicdn.com/tfs/TB1_Kc.SXXXXXa8XpXXXXXXXXXX-72-72.png'
-	}, {
-		title: '售后服务'
-		//icon: 'https://gw.alicdn.com/tfs/TB199sPSXXXXXb4XVXXXXXXXXXX-72-72.png',
-		//activeIcon: 'https://gw.alicdn.com/tfs/TB1DR.3SXXXXXc2XpXXXXXXXXXX-72-72.png'
-	}],
-	tabStyles: {
-		bgColor: '#FFFFFF',
-		titleColor: '#777777',
-		activeTitleColor: '#73cc00',
-		activeBgColor: '#FFFFFF',
-		isActiveTitleBold: true,
-		iconWidth: 70,
-		iconHeight: 70,
-		width: 140,
-		height: 80,
-		fontSize: 24,
-		hasActiveBottom: true,
-		activeBottomColor: '#73cc00',
-		activeBottomHeight: 2,
-		activeBottomWidth: 100,
-		textPaddingLeft: 10,
-		textPaddingRight: 10
-	},
-	// 使用 iconfont 模式的tab title配置
-	tabIconFontTitles: [{
-		title: '首页',
-		codePoint: '\uE623'
-	}, {
-		title: '特别推荐',
-		codePoint: '\uE608'
-	}, {
-		title: '消息中心',
-		codePoint: '\uE752',
-		badge: 5
-	}, {
-		title: '我的主页',
-		codePoint: '\uE601',
-		dot: true
-	}],
-	tabIconFontStyles: {
-		bgColor: '#FFFFFF',
-		titleColor: '#666666',
-		activeTitleColor: '#3D3D3D',
-		activeBgColor: '#FFFFFF',
-		isActiveTitleBold: true,
-		width: 160,
-		height: 120,
-		fontSize: 24,
-		textPaddingLeft: 10,
-		textPaddingRight: 10,
-		iconFontSize: 50,
-		iconFontColor: '#333333',
-		iconFontMarginBottom: 8,
-		activeIconFontColor: 'red',
-		iconFontUrl: '//at.alicdn.com/t/font_501019_mauqv15evc1pp66r.ttf'
-	}
-};
-
-/***/ }),
-
-/***/ 195:
-/***/ (function(module, exports) {
-
-module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', [_c('div', {
-    staticClass: ["titleBar"]
-  }, [_c('text', {
-    staticClass: ["statusbar"]
-  }), _c('wxc-minibar', {
-    attrs: {
-      "title": "我的订单",
-      "backgroundColor": "#73cc00",
-      "textColor": "#FFFFFF",
-      "leftButton": "../src/common/images/backImage.png"
-    },
-    on: {
-      "wxcMinibarLeftButtonClicked": _vm.minibarLeftButtonClick
-    }
-  }, [_c('text', {
-    staticClass: ["title"],
-    attrs: {
-      "slot": "middle"
-    },
-    slot: "middle"
-  }, [_vm._v("我的订单")])]), _c('text', {
-    staticClass: ["border-cell"]
-  })], 1), _c('wxc-tab-page', {
-    ref: "wxc-tab-page",
-    staticClass: ["listBar"],
-    attrs: {
-      "tabTitles": _vm.tabTitles,
-      "tabStyles": _vm.tabStyles,
-      "titleType": "text",
-      "tabPageHeight": _vm.tabPageHeight
-    },
-    on: {
-      "wxcTabPageCurrentTabSelected": _vm.wxcTabPageCurrentTabSelected
-    }
-  }, _vm._l((_vm.tabList), function(v, index) {
-    return _c('list', {
-      key: index,
-      staticClass: ["item-container"],
-      style: {
-        height: (_vm.tabPageHeight - _vm.tabStyles.height - 100) + 'px'
-      }
-    }, _vm._l((v), function(item, key) {
-      return _c('cell', {
-        key: key,
-        staticClass: ["cell"],
-        appendAsTree: true,
-        attrs: {
-          "append": "tree"
-        }
-      }, [_c('div', {
-        staticClass: ["item_whole"]
-      }, [_c('div', {
-        staticClass: ["item_title"]
-      }, [_c('text', {
-        staticClass: ["item_left_title"]
-      }, [_vm._v(_vm._s(item.pWay))]), _c('div', {
-        staticClass: ["item_text"]
-      }, [_c('text', {
-        staticClass: ["item_name"]
-      }, [_vm._v("订单号")]), _c('text', {
-        staticClass: ["text_create_time"]
-      }, [_vm._v(_vm._s(item.orderNum))])]), _c('text', {
-        staticClass: ["item_right_title"]
-      }, [_vm._v(_vm._s(item.orderType))])]), _c('div', {
-        staticClass: ["item_content"]
-      }, [_c('scroller', {
-        staticClass: ["sec-nav-list"],
-        attrs: {
-          "showScrollbar": "false",
-          "scrollDirection": "horizontal"
-        }
-      }, _vm._l((item.orderProduct), function(nums, indexs) {
-        return _c('div', {
-          key: indexs,
-          staticClass: ["cells"]
-        }, [_c('image', {
-          staticClass: ["product-img"],
-          attrs: {
-            "src": nums
-          }
-        })])
-      })), _c('div', {
-        staticClass: ["slideShow"]
-      }, [_c('text', {
-        ref: "slideBtn",
-        refInFor: true,
-        staticClass: ["iconFont", "slideShow-icon"]
-      }, [_vm._v("")])])]), _c('div', {
-        staticClass: ["item-price"]
-      }, [_c('div', {
-        staticClass: ["item-l"]
-      }, [_c('text', {
-        staticClass: ["item-num"]
-      }, [_vm._v("共" + _vm._s(item.orderProduct.length) + "件商品")])]), _c('div', {
-        staticClass: ["item-r"]
-      }, [_c('text', {
-        staticClass: ["item-m"]
-      }, [_vm._v("金额:")]), _c('text', {
-        staticClass: ["item-p"]
-      }, [_vm._v("￥" + _vm._s(item.money) + "元")])])]), _c('div', {
-        class: [item.orderStatus === '3' ? 'item-bottom' : 'item-bottoms']
-      }, [_c('div', {
-        staticClass: ["item-l"]
-      }, [_c('text', {
-        staticClass: ["item-sh"]
-      }, [_vm._v("申请售后")])]), _c('div', {
-        staticClass: ["item-r"]
-      }, [_c('text', {
-        staticClass: ["item-dpj"]
-      }, [_vm._v("待评价")])])])]), _c('text', {
-        staticClass: ["border-cell"]
-      })])
-    }))
-  }))], 1)
-},staticRenderFns: []}
-module.exports.render._withStripped = true
-
-/***/ }),
-
 /***/ 2:
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10341,7 +10341,7 @@ exports.default = Utils;
 
 /***/ }),
 
-/***/ 24:
+/***/ 20:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10351,7 +10351,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _index = __webpack_require__(25);
+var _index = __webpack_require__(21);
 
 Object.defineProperty(exports, 'default', {
   enumerable: true,
@@ -10364,17 +10364,17 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 /***/ }),
 
-/***/ 25:
+/***/ 21:
 /***/ (function(module, exports, __webpack_require__) {
 
 var __vue_exports__, __vue_options__
 var __vue_styles__ = []
 
 /* script */
-__vue_exports__ = __webpack_require__(26)
+__vue_exports__ = __webpack_require__(22)
 
 /* template */
-var __vue_template__ = __webpack_require__(27)
+var __vue_template__ = __webpack_require__(23)
 __vue_options__ = __vue_exports__ = __vue_exports__ || {}
 if (
   typeof __vue_exports__.default === "object" ||
@@ -10404,7 +10404,7 @@ module.exports = __vue_exports__
 
 /***/ }),
 
-/***/ 26:
+/***/ 22:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10510,7 +10510,7 @@ exports.default = {
 
 /***/ }),
 
-/***/ 27:
+/***/ 23:
 /***/ (function(module, exports) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -10533,7 +10533,7 @@ module.exports.render._withStripped = true
 
 /***/ }),
 
-/***/ 28:
+/***/ 24:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10543,7 +10543,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _index = __webpack_require__(29);
+var _index = __webpack_require__(25);
 
 Object.defineProperty(exports, 'default', {
   enumerable: true,
@@ -10556,21 +10556,21 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 /***/ }),
 
-/***/ 29:
+/***/ 25:
 /***/ (function(module, exports, __webpack_require__) {
 
 var __vue_exports__, __vue_options__
 var __vue_styles__ = []
 
 /* styles */
-__vue_styles__.push(__webpack_require__(30)
+__vue_styles__.push(__webpack_require__(26)
 )
 
 /* script */
-__vue_exports__ = __webpack_require__(31)
+__vue_exports__ = __webpack_require__(27)
 
 /* template */
-var __vue_template__ = __webpack_require__(32)
+var __vue_template__ = __webpack_require__(28)
 __vue_options__ = __vue_exports__ = __vue_exports__ || {}
 if (
   typeof __vue_exports__.default === "object" ||
@@ -10601,38 +10601,7 @@ module.exports = __vue_exports__
 
 /***/ }),
 
-/***/ 3:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-var g;
-
-// This works in non-strict mode
-g = function () {
-	return this;
-}();
-
-try {
-	// This works if eval is allowed (see CSP)
-	g = g || Function("return this")() || (1, eval)("this");
-} catch (e) {
-	// This works if the window reference is available
-	if ((typeof window === "undefined" ? "undefined" : _typeof(window)) === "object") g = window;
-}
-
-// g can still be undefined, but nothing to do about it...
-// We return undefined, instead of nothing here, so it's
-// easier to handle this case. if(!global) { ...}
-
-module.exports = g;
-
-/***/ }),
-
-/***/ 30:
+/***/ 26:
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -10668,7 +10637,7 @@ module.exports = {
 
 /***/ }),
 
-/***/ 31:
+/***/ 27:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11023,7 +10992,7 @@ exports.default = {
 
 /***/ }),
 
-/***/ 32:
+/***/ 28:
 /***/ (function(module, exports) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -11117,6 +11086,37 @@ module.exports.render._withStripped = true
 
 /***/ }),
 
+/***/ 3:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+var g;
+
+// This works in non-strict mode
+g = function () {
+	return this;
+}();
+
+try {
+	// This works if eval is allowed (see CSP)
+	g = g || Function("return this")() || (1, eval)("this");
+} catch (e) {
+	// This works if the window reference is available
+	if ((typeof window === "undefined" ? "undefined" : _typeof(window)) === "object") g = window;
+}
+
+// g can still be undefined, but nothing to do about it...
+// We return undefined, instead of nothing here, so it's
+// easier to handle this case. if(!global) { ...}
+
+module.exports = g;
+
+/***/ }),
+
 /***/ 4:
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -11140,7 +11140,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 /***/ }),
 
-/***/ 44:
+/***/ 40:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";

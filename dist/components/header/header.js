@@ -62,7 +62,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 171);
+/******/ 	return __webpack_require__(__webpack_require__.s = 142);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -331,21 +331,21 @@ exports.default = AIstorage;
 
 /***/ }),
 
-/***/ 171:
+/***/ 142:
 /***/ (function(module, exports, __webpack_require__) {
 
 var __vue_exports__, __vue_options__
 var __vue_styles__ = []
 
 /* styles */
-__vue_styles__.push(__webpack_require__(69)
+__vue_styles__.push(__webpack_require__(65)
 )
 
 /* script */
-__vue_exports__ = __webpack_require__(70)
+__vue_exports__ = __webpack_require__(66)
 
 /* template */
-var __vue_template__ = __webpack_require__(71)
+var __vue_template__ = __webpack_require__(67)
 __vue_options__ = __vue_exports__ = __vue_exports__ || {}
 if (
   typeof __vue_exports__.default === "object" ||
@@ -378,7 +378,7 @@ new Vue(module.exports)
 
 /***/ }),
 
-/***/ 69:
+/***/ 65:
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -435,7 +435,7 @@ module.exports = {
 
 /***/ }),
 
-/***/ 70:
+/***/ 66:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -454,11 +454,11 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 exports.default = {
   data: function data() {
     return {
-      logo: "../src/components/header/logo.png", //logo图
-      address: "../src/components/header/address.png", // 定位图标
-      arrow: "../src/components/header/arrow.png",
-      magnifier: "../src/components/header/search.png", // 放大镜图标
-      scan: "../src/components/header/scan.png", // 扫一扫图标
+      logo: "http://47.92.164.211:8011/PublicImage/logo.png", //logo图
+      address: "http://47.92.164.211:8011/PublicImage/address.png", // 定位图标
+      arrow: "http://47.92.164.211:8011/PublicImage/arrow.png",
+      magnifier: "http://47.92.164.211:8011/PublicImage/search.png", // 放大镜图标
+      scan: "http://47.92.164.211:8011/PublicImage/scan.png", // 扫一扫图标
       position: '合肥市滨湖春融苑店'
     };
   },
@@ -486,7 +486,7 @@ exports.default = {
 
 /***/ }),
 
-/***/ 71:
+/***/ 67:
 /***/ (function(module, exports) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;

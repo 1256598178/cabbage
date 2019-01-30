@@ -62,7 +62,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 125);
+/******/ 	return __webpack_require__(__webpack_require__.s = 96);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -527,21 +527,90 @@ module.exports = __vue_exports__
 
 /***/ }),
 
-/***/ 125:
+/***/ 9:
+/***/ (function(module, exports) {
+
+module.exports = {
+  "iconFont": {
+    "fontFamily": "iconfont"
+  },
+  "backBtn": {
+    "position": "absolute",
+    "left": "20",
+    "top": "25.5",
+    "width": "28",
+    "height": "41"
+  },
+  "shareBtn": {
+    "position": "absolute",
+    "top": "23",
+    "right": "20",
+    "width": "46",
+    "height": "46"
+  },
+  "layoutBtn-44": {
+    "position": "absolute",
+    "top": "24",
+    "right": "20",
+    "width": "44",
+    "height": "44"
+  },
+  "shop-header-title-wrapper": {
+    "position": "relative",
+    "display": "flex",
+    "flexDirection": "row",
+    "justifyContent": "center",
+    "alignItems": "center",
+    "height": "92",
+    "paddingLeft": "20",
+    "paddingRight": "20",
+    "backgroundColor": "#73cc46"
+  },
+  "shop-header-title": {
+    "width": "500",
+    "fontSize": "42",
+    "color": "#ffffff",
+    "textAlign": "center",
+    "textOverflow": "ellipsis",
+    "lines": 1
+  },
+  "shop-header-delet": {
+    "position": "absolute",
+    "right": "20",
+    "top": 0,
+    "marginTop": "27",
+    "fontSize": "34",
+    "lineHeight": "38",
+    "color": "#c1e6a3"
+  },
+  "shop-header-info": {
+    "position": "absolute",
+    "right": "20",
+    "top": 0,
+    "marginTop": "27",
+    "fontSize": "34",
+    "lineHeight": "38",
+    "color": "#ffffff"
+  }
+}
+
+/***/ }),
+
+/***/ 96:
 /***/ (function(module, exports, __webpack_require__) {
 
 var __vue_exports__, __vue_options__
 var __vue_styles__ = []
 
 /* styles */
-__vue_styles__.push(__webpack_require__(126)
+__vue_styles__.push(__webpack_require__(97)
 )
 
 /* script */
-__vue_exports__ = __webpack_require__(127)
+__vue_exports__ = __webpack_require__(98)
 
 /* template */
-var __vue_template__ = __webpack_require__(128)
+var __vue_template__ = __webpack_require__(99)
 __vue_options__ = __vue_exports__ = __vue_exports__ || {}
 if (
   typeof __vue_exports__.default === "object" ||
@@ -574,7 +643,7 @@ new Vue(module.exports)
 
 /***/ }),
 
-/***/ 126:
+/***/ 97:
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -700,7 +769,7 @@ module.exports = {
 
 /***/ }),
 
-/***/ 127:
+/***/ 98:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -790,7 +859,7 @@ exports.default = {
 
 /***/ }),
 
-/***/ 128:
+/***/ 99:
 /***/ (function(module, exports) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -827,7 +896,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }, [_c('image', {
       staticClass: ["seafood-image"],
       attrs: {
-        "src": "../src/components/seafood/seafood_01.png"
+        "src": "http://47.92.164.211:8011/PublicImage/seafood_01.png"
       }
     }), _vm._m(0, true)])
   }))]), _c('loading', {
@@ -867,80 +936,11 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_vm._v("¥21.40")])]), _c('image', {
     staticClass: ["seafood-bottom-shop-car"],
     attrs: {
-      "src": "../src/common/images/shop-car.png"
+      "src": "http://47.92.164.211:8011/PublicImage/shop-car.png"
     }
   })])])
 }]}
 module.exports.render._withStripped = true
-
-/***/ }),
-
-/***/ 9:
-/***/ (function(module, exports) {
-
-module.exports = {
-  "iconFont": {
-    "fontFamily": "iconfont"
-  },
-  "backBtn": {
-    "position": "absolute",
-    "left": "20",
-    "top": "25.5",
-    "width": "28",
-    "height": "41"
-  },
-  "shareBtn": {
-    "position": "absolute",
-    "top": "23",
-    "right": "20",
-    "width": "46",
-    "height": "46"
-  },
-  "layoutBtn-44": {
-    "position": "absolute",
-    "top": "24",
-    "right": "20",
-    "width": "44",
-    "height": "44"
-  },
-  "shop-header-title-wrapper": {
-    "position": "relative",
-    "display": "flex",
-    "flexDirection": "row",
-    "justifyContent": "center",
-    "alignItems": "center",
-    "height": "92",
-    "paddingLeft": "20",
-    "paddingRight": "20",
-    "backgroundColor": "#73cc46"
-  },
-  "shop-header-title": {
-    "width": "500",
-    "fontSize": "42",
-    "color": "#ffffff",
-    "textAlign": "center",
-    "textOverflow": "ellipsis",
-    "lines": 1
-  },
-  "shop-header-delet": {
-    "position": "absolute",
-    "right": "20",
-    "top": 0,
-    "marginTop": "27",
-    "fontSize": "34",
-    "lineHeight": "38",
-    "color": "#c1e6a3"
-  },
-  "shop-header-info": {
-    "position": "absolute",
-    "right": "20",
-    "top": 0,
-    "marginTop": "27",
-    "fontSize": "34",
-    "lineHeight": "38",
-    "color": "#ffffff"
-  }
-}
 
 /***/ })
 

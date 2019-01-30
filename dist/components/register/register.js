@@ -62,7 +62,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 208);
+/******/ 	return __webpack_require__(__webpack_require__.s = 179);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -7933,21 +7933,21 @@ process.umask = function () {
 
 /***/ }),
 
-/***/ 208:
+/***/ 179:
 /***/ (function(module, exports, __webpack_require__) {
 
 var __vue_exports__, __vue_options__
 var __vue_styles__ = []
 
 /* styles */
-__vue_styles__.push(__webpack_require__(209)
+__vue_styles__.push(__webpack_require__(180)
 )
 
 /* script */
-__vue_exports__ = __webpack_require__(210)
+__vue_exports__ = __webpack_require__(181)
 
 /* template */
-var __vue_template__ = __webpack_require__(211)
+var __vue_template__ = __webpack_require__(182)
 __vue_options__ = __vue_exports__ = __vue_exports__ || {}
 if (
   typeof __vue_exports__.default === "object" ||
@@ -7980,7 +7980,7 @@ new Vue(module.exports)
 
 /***/ }),
 
-/***/ 209:
+/***/ 180:
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -8151,7 +8151,7 @@ module.exports = {
 
 /***/ }),
 
-/***/ 210:
+/***/ 181:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8434,14 +8434,14 @@ exports.default = {
 
 /***/ }),
 
-/***/ 211:
+/***/ 182:
 /***/ (function(module, exports) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', [_c('image', {
     staticClass: ["login-bg"],
     attrs: {
-      "src": "../src/common/images/login-bg.png"
+      "src": "http://47.92.164.211:8011/PublicImage/login-bg.png"
     }
   }), _c('div', {
     staticClass: ["titleBar"]
@@ -8452,7 +8452,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "title": "",
       "backgroundColor": "transparent",
       "textColor": "#000",
-      "leftButton": "../src/common/images/backImages.png"
+      "leftButton": "http://47.92.164.211:8011/PublicImage/backImages.png"
     },
     on: {
       "wxcMinibarLeftButtonClicked": _vm.minibarLeftButtonClick
@@ -8515,7 +8515,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }), _c('image', {
     staticClass: ["pBtn"],
     attrs: {
-      "src": _vm.pBtn === true ? '../src/common/images/biyan-icon.png' : '../src/common/images/zhenyan-icon.png'
+      "src": _vm.pBtn === true ? 'http://47.92.164.211:8011/PublicImage/biyan-icon.png' : 'http://47.92.164.211:8011/PublicImage/zhenyan-icon.png'
     },
     on: {
       "click": _vm.typeSelect

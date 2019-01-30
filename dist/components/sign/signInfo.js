@@ -62,7 +62,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 245);
+/******/ 	return __webpack_require__(__webpack_require__.s = 216);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -527,21 +527,21 @@ module.exports = __vue_exports__
 
 /***/ }),
 
-/***/ 245:
+/***/ 216:
 /***/ (function(module, exports, __webpack_require__) {
 
 var __vue_exports__, __vue_options__
 var __vue_styles__ = []
 
 /* styles */
-__vue_styles__.push(__webpack_require__(246)
+__vue_styles__.push(__webpack_require__(217)
 )
 
 /* script */
-__vue_exports__ = __webpack_require__(247)
+__vue_exports__ = __webpack_require__(218)
 
 /* template */
-var __vue_template__ = __webpack_require__(248)
+var __vue_template__ = __webpack_require__(219)
 __vue_options__ = __vue_exports__ = __vue_exports__ || {}
 if (
   typeof __vue_exports__.default === "object" ||
@@ -574,7 +574,7 @@ new Vue(module.exports)
 
 /***/ }),
 
-/***/ 246:
+/***/ 217:
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -636,7 +636,7 @@ module.exports = {
 
 /***/ }),
 
-/***/ 247:
+/***/ 218:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -686,7 +686,7 @@ exports.default = {
 
 /***/ }),
 
-/***/ 248:
+/***/ 219:
 /***/ (function(module, exports) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -720,7 +720,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('image', {
     staticClass: ["logo"],
     attrs: {
-      "src": "../src/common/images/logo@45x45.png"
+      "src": "http://47.92.164.211:8011/PublicImage/logo@45x45.png"
     }
   }), _c('text', {
     staticClass: ["signInfo-name"]

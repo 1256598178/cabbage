@@ -62,7 +62,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 163);
+/******/ 	return __webpack_require__(__webpack_require__.s = 134);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -1132,6 +1132,947 @@ var _typeof2 = typeof Symbol === "function" && typeof Symbol.iterator === "symbo
     /******/)
   );
 });;
+
+/***/ }),
+
+/***/ 134:
+/***/ (function(module, exports, __webpack_require__) {
+
+var __vue_exports__, __vue_options__
+var __vue_styles__ = []
+
+/* styles */
+__vue_styles__.push(__webpack_require__(135)
+)
+
+/* script */
+__vue_exports__ = __webpack_require__(136)
+
+/* template */
+var __vue_template__ = __webpack_require__(137)
+__vue_options__ = __vue_exports__ = __vue_exports__ || {}
+if (
+  typeof __vue_exports__.default === "object" ||
+  typeof __vue_exports__.default === "function"
+) {
+if (Object.keys(__vue_exports__).some(function (key) { return key !== "default" && key !== "__esModule" })) {console.error("named exports are not supported in *.vue files.")}
+__vue_options__ = __vue_exports__ = __vue_exports__.default
+}
+if (typeof __vue_options__ === "function") {
+  __vue_options__ = __vue_options__.options
+}
+__vue_options__.__file = "F:\\WebApp\\cabbage\\src\\components\\GoodsInfo\\Goods.vue"
+__vue_options__.render = __vue_template__.render
+__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
+__vue_options__._scopeId = "data-v-8edc1700"
+__vue_options__.style = __vue_options__.style || {}
+__vue_styles__.forEach(function (module) {
+  for (var name in module) {
+    __vue_options__.style[name] = module[name]
+  }
+})
+if (typeof __register_static_styles__ === "function") {
+  __register_static_styles__(__vue_options__._scopeId, __vue_styles__)
+}
+
+module.exports = __vue_exports__
+module.exports.el = 'true'
+new Vue(module.exports)
+
+
+/***/ }),
+
+/***/ 135:
+/***/ (function(module, exports) {
+
+module.exports = {
+  "iconFont": {
+    "fontFamily": "iconfont"
+  },
+  "shop-header": {
+    "width": "750",
+    "height": "90",
+    "flexDirection": "row",
+    "borderBottomWidth": "1",
+    "borderBottomStyle": "solid",
+    "borderBottomColor": "#dcdcdc"
+  },
+  "back-box": {
+    "width": "70",
+    "height": "90",
+    "justifyContent": "center",
+    "alignItems": "center"
+  },
+  "back-btn": {
+    "width": "28",
+    "height": "41"
+  },
+  "shop-header-title-wrapper": {
+    "position": "relative",
+    "flex": 1,
+    "flexDirection": "row",
+    "justifyContent": "center",
+    "paddingTop": "32",
+    "height": "90",
+    "marginRight": "70"
+  },
+  "shop-header-title": {
+    "width": "70",
+    "fontSize": "30",
+    "lineHeight": "32",
+    "color": "#333333",
+    "textAlign": "center",
+    "marginLeft": "10",
+    "marginRight": "10",
+    "borderBottomWidth": "5",
+    "borderBottomStyle": "solid",
+    "borderBottomColor": "rgba(0,0,0,0)",
+    "paddingBottom": "20"
+  },
+  "crt": {
+    "borderBottomColor": "#73cc00",
+    "color": "#73cc00"
+  },
+  "shop-header-delet": {
+    "position": "absolute",
+    "right": 0,
+    "top": 0,
+    "marginTop": "29",
+    "fontSize": "34",
+    "color": "#c1e6a3"
+  },
+  "shop-address-wrapper": {
+    "display": "flex",
+    "flexDirection": "row",
+    "alignItems": "center",
+    "paddingTop": "21"
+  },
+  "border-cell": {
+    "backgroundColor": "#f5f5f5",
+    "width": "750",
+    "height": "10",
+    "alignItems": "center",
+    "justifyContent": "center"
+  },
+  "list-box": {
+    "position": "fixed",
+    "top": "90",
+    "bottom": "100",
+    "left": 0,
+    "right": 0
+  },
+  "slider": {
+    "width": "750",
+    "height": "650"
+  },
+  "goods-image": {
+    "width": "750",
+    "height": "600"
+  },
+  "indicator": {
+    "width": "750",
+    "height": "20",
+    "itemColor": "#a0a0a0",
+    "itemSelectedColor": "#73cc00",
+    "itemSize": "14",
+    "position": "absolute",
+    "top": "630",
+    "left": 0
+  },
+  "goods-price-box": {
+    "flexDirection": "row",
+    "paddingLeft": "20",
+    "paddingRight": "20",
+    "alignItems": "center",
+    "marginTop": "30"
+  },
+  "goods-price": {
+    "flex": 1,
+    "fontSize": "36",
+    "lineHeight": "56",
+    "color": "#f26100"
+  },
+  "goods-share": {
+    "flexDirection": "row"
+  },
+  "share-img": {
+    "width": "34",
+    "height": "34",
+    "lineHeight": "34",
+    "borderWidth": "1",
+    "borderStyle": "solid",
+    "borderColor": "#999999",
+    "borderRadius": "17",
+    "fontSize": "30",
+    "color": "#999999",
+    "marginRight": "5",
+    "textAlign": "center"
+  },
+  "share-text": {
+    "fontSize": "22",
+    "lineHeight": "34",
+    "color": "#999999"
+  },
+  "goods-name-box": {
+    "paddingLeft": "20",
+    "paddingRight": "20"
+  },
+  "goods-name": {
+    "fontSize": "30",
+    "lineHeight": "50",
+    "color": "#333333"
+  },
+  "goods-tip": {
+    "fontSize": "22",
+    "lineHeight": "38",
+    "color": "#999999",
+    "paddingBottom": "10"
+  },
+  "payment-method": {
+    "flexDirection": "row",
+    "paddingTop": "15",
+    "paddingRight": 0,
+    "paddingBottom": "15",
+    "paddingLeft": 0,
+    "marginTop": 0,
+    "marginRight": "20",
+    "marginBottom": 0,
+    "marginLeft": "20"
+  },
+  "border-t": {
+    "borderTopWidth": "1",
+    "borderTopStyle": "solid",
+    "borderTopColor": "#dcdcdc"
+  },
+  "payment-l": {
+    "width": "180",
+    "flexDirection": "row"
+  },
+  "payment-icon": {
+    "fontSize": "30",
+    "lineHeight": "40",
+    "color": "#999999",
+    "marginRight": "10"
+  },
+  "payment-title": {
+    "fontSize": "24",
+    "lineHeight": "40",
+    "color": "#999999"
+  },
+  "payment-content": {
+    "flex": 1,
+    "fontSize": "24",
+    "lineHeight": "40",
+    "color": "#333333"
+  },
+  "bottom-box": {
+    "height": "100",
+    "flexDirection": "row",
+    "alignItems": "center",
+    "position": "fixed",
+    "left": 0,
+    "right": 0,
+    "bottom": 0,
+    "backgroundColor": "#ffffff",
+    "paddingLeft": "20",
+    "paddingRight": "20",
+    "boxShadow": "0 -1px 6px rgba(0, 0, 0, 0.1)"
+  },
+  "shop-car": {
+    "width": "60",
+    "height": "60",
+    "borderRadius": "30",
+    "backgroundColor": "#73cc00",
+    "marginRight": "20"
+  },
+  "shop-car-icon": {
+    "fontSize": "32",
+    "lineHeight": "60",
+    "textAlign": "center",
+    "color": "#ffffff"
+  },
+  "shop-car-num": {
+    "minWidth": "10",
+    "height": "20",
+    "paddingTop": 0,
+    "paddingRight": "5",
+    "paddingBottom": 0,
+    "paddingLeft": "5",
+    "borderRadius": "10",
+    "backgroundColor": "#ff0000",
+    "fontSize": "14",
+    "lineHeight": "20",
+    "color": "#ffffff",
+    "textAlign": "center",
+    "position": "absolute",
+    "top": 0,
+    "left": "45"
+  },
+  "collection": {
+    "width": "60",
+    "height": "60",
+    "borderRadius": "30",
+    "backgroundColor": "#ff5d61",
+    "marginRight": "60"
+  },
+  "collection-icon": {
+    "fontSize": "32",
+    "lineHeight": "60",
+    "textAlign": "center",
+    "color": "#ffffff"
+  },
+  "add-box": {
+    "flex": 1
+  },
+  "add-btn": {
+    "height": "70",
+    "borderRadius": "35",
+    "fontSize": "30",
+    "lineHeight": "70",
+    "textAlign": "center",
+    "color": "#ffffff",
+    "backgroundColor": "#73cc00"
+  }
+}
+
+/***/ }),
+
+/***/ 136:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _wxcPanItem = __webpack_require__(20);
+
+var _wxcPanItem2 = _interopRequireDefault(_wxcPanItem);
+
+var _wxcTabPage = __webpack_require__(24);
+
+var _wxcTabPage2 = _interopRequireDefault(_wxcTabPage);
+
+var _wxcMinibar = __webpack_require__(4);
+
+var _wxcMinibar2 = _interopRequireDefault(_wxcMinibar);
+
+var _utils = __webpack_require__(0);
+
+var _utils2 = _interopRequireDefault(_utils);
+
+var _config = __webpack_require__(64);
+
+var _config2 = _interopRequireDefault(_config);
+
+var _vue = __webpack_require__(15);
+
+var _vue2 = _interopRequireDefault(_vue);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+var dom = weex.requireModule('dom');
+
+// https://github.com/alibaba/weex-ui/blob/master/example/tab-page/config.js
+//import orderItem from './order-item.vue'
+
+var navigator = weex.requireModule('navigator');
+var modal = weex.requireModule('modal');
+var stream = weex.requireModule('stream');
+var storage = weex.requireModule('storage');
+
+exports.default = {
+	components: {
+		WxcMinibar: _wxcMinibar2.default,
+		WxcTabPage: _wxcTabPage2.default,
+		WxcPanItem: _wxcPanItem2.default,
+		Config: _config2.default
+		//orderItem
+	},
+	data: function data() {
+		return {
+			imgList: [/* {
+             src: '../src/components/GoodsInfo/goods-img01.png',
+             }, {
+             src: '../src/components/GoodsInfo/goods-img01.png',
+             }, {
+             src: '../src/components/GoodsInfo/goods-img01.png',
+             } */],
+			cIndex: 1,
+			len: 0,
+			LOGIN_URL: 'api/product/getprodcutdetail',
+			USERID: 'user_id',
+			TOKEN: 'user_token',
+			PRODUCTID: '',
+			ProductName: '',
+			SubTitle: '',
+			Introduce: '',
+			ImageUrl: '',
+			Price: '',
+			SalesPrice: '',
+			Unit: '',
+			CarNum: '',
+			NumType: false
+
+		};
+	},
+
+	methods: {
+		getOrderData: function getOrderData(curpage) {
+			var self = this;
+		},
+		minibarLeftButtonClick: function minibarLeftButtonClick() {
+			this.$router.push('-1');
+		},
+		link: function link(urls) {
+			_utils2.default.jump(urls);
+		}
+	},
+	created: function created() {
+		var _this = this;
+
+		var fontModule = weex.requireModule("dom");
+		fontModule.addRule('fontFace', {
+			'fontFamily': "iconfont",
+			'src': "url('//at.alicdn.com/t/font_948634_j56el7oqed.ttf')"
+		});
+		var self = this;
+		if (self.CarNum == 0 || self.CarNum == '') {
+			self.NumType = false;
+		} else {
+			self.NumType = true;
+		}
+		var GoodsInfo = new BroadcastChannel('Avengers');
+		GoodsInfo.onmessage = function (event) {
+			console.log(event.data); // Assemble!
+		};
+		storage.getItem(this.USERID, function (event) {
+			self.USERID = event.data;
+			storage.getItem(_this.TOKEN, function (event) {
+				self.TOKEN = event.data;
+				_utils2.default.WeexAjax({
+					url: self.LOGIN_URL + '?prodcutId=' + _utils2.default.analAjax().ProductId + '&UserId=' + self.USERID,
+					//url: self.LOGIN_URL + '?categoryId=1',	
+					method: 'GET',
+					type: 'JSON',
+					token: self.TOKEN,
+					callback: function callback(ret) {
+						if (ret.Status == 1) {
+							//self.loginBool = true;
+							self.imgList = ret.obj.ImageList;
+							self.ProductName = ret.obj.ProductName;
+							self.SubTitle = ret.obj.SubTitle;
+							self.Price = ret.obj.Price;
+							self.SalesPrice = ret.obj.SalesPrice;
+							self.Unit = ret.obj.Unit;
+							self.Introduce = ret.obj.Introduce;
+							self.ImageUrl = ret.obj.ImageUrl;
+							console.log(ret);
+						}
+					}
+				});
+			});
+		});
+	}
+};
+
+/***/ }),
+
+/***/ 137:
+/***/ (function(module, exports) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', [_c('header', {
+    staticClass: ["shop-header"],
+    appendAsTree: true,
+    attrs: {
+      "append": "tree"
+    }
+  }, [_vm._m(0), _c('div', {
+    staticClass: ["shop-header-title-wrapper"]
+  }, [_c('text', {
+    staticClass: ["shop-header-title", "crt"]
+  }, [_vm._v("商品")]), _c('text', {
+    staticClass: ["shop-header-title"],
+    on: {
+      "click": function($event) {
+        _vm.link('components/GoodsInfo/GoodsInfo.js')
+      }
+    }
+  }, [_vm._v("详情")])])]), _c('list', {
+    staticClass: ["list-box"]
+  }, [_c('cell', {
+    appendAsTree: true,
+    attrs: {
+      "append": "tree"
+    }
+  }, [_c('slider', {
+    staticClass: ["slider"],
+    attrs: {
+      "interval": "3000",
+      "autoPlay": "false"
+    }
+  }, [_vm._l((_vm.imgList), function(num) {
+    return _c('div', {
+      staticClass: ["frame"]
+    }, [_c('image', {
+      staticClass: ["goods-image"],
+      attrs: {
+        "src": num.src,
+        "resize": "contain"
+      }
+    })])
+  }), _c('indicator', {
+    staticClass: ["indicator"]
+  })], 2), _c('div', {
+    staticClass: ["goods-price-box"]
+  }, [_c('text', {
+    staticClass: ["goods-price"]
+  }, [_vm._v("¥" + _vm._s(_vm.SalesPrice) + "元/份")]), _vm._m(1)]), _c('div', {
+    staticClass: ["goods-name-box"]
+  }, [_c('text', {
+    staticClass: ["goods-name"]
+  }, [_vm._v(_vm._s(_vm.ProductName))]), _c('text', {
+    staticClass: ["goods-tip"]
+  }, [_vm._v(_vm._s(_vm.SubTitle))])]), _c('text', {
+    staticClass: ["border-cell"]
+  }), _c('div', {
+    staticClass: ["payment-box"]
+  }, [_c('div', {
+    staticClass: ["payment-method"]
+  }, [_vm._m(2), _c('text', {
+    staticClass: ["payment-content"]
+  }, [_vm._v("折合" + _vm._s(_vm.SalesPrice) + "元/份")])]), _vm._m(3)]), _c('text', {
+    staticClass: ["border-cell"]
+  }), _c('div', {
+    staticClass: ["goods-info"]
+  }, [_c('div', {
+    staticClass: ["payment-method"]
+  }, [_vm._m(4), _c('text', {
+    staticClass: ["payment-content"]
+  }, [_vm._v(_vm._s(_vm.Introduce))])])])])]), _c('div', {
+    staticClass: ["bottom-box"]
+  }, [_c('div', {
+    staticClass: ["shop-car"]
+  }, [_c('text', {
+    staticClass: ["shop-car-icon", "iconFont"]
+  }, [_vm._v("")]), (_vm.NumType) ? _c('text', {
+    staticClass: ["shop-car-num"]
+  }, [_vm._v(_vm._s(_vm.CarNum))]) : _vm._e()]), _vm._m(5), _vm._m(6)])])
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: ["back-box"]
+  }, [_c('image', {
+    staticClass: ["back-btn"],
+    attrs: {
+      "src": "http://47.92.164.211:8011/PublicImage/backImages.png"
+    }
+  })])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: ["goods-share"]
+  }, [_c('text', {
+    staticClass: ["share-img", "iconFont"]
+  }, [_vm._v("")]), _c('text', {
+    staticClass: ["share-text"]
+  }, [_vm._v("分享")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: ["payment-l"]
+  }, [_c('text', {
+    staticClass: ["payment-icon", "iconFont"]
+  }, [_vm._v("")]), _c('text', {
+    staticClass: ["payment-title"]
+  }, [_vm._v("结算方式")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: ["payment-method", "border-t"]
+  }, [_c('div', {
+    staticClass: ["payment-l"]
+  }, [_c('text', {
+    staticClass: ["payment-icon", "iconFont"]
+  }, [_vm._v("")]), _c('text', {
+    staticClass: ["payment-title"]
+  }, [_vm._v("每份数量")])]), _c('text', {
+    staticClass: ["payment-content"]
+  }, [_vm._v("份")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: ["payment-l"]
+  }, [_c('text', {
+    staticClass: ["payment-icon", "iconFont"]
+  }, [_vm._v("")]), _c('text', {
+    staticClass: ["payment-title"]
+  }, [_vm._v("商品详情")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: ["collection"]
+  }, [_c('text', {
+    staticClass: ["collection-icon", "iconFont"]
+  }, [_vm._v("")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: ["add-box"]
+  }, [_c('text', {
+    staticClass: ["add-btn"]
+  }, [_vm._v("加入购物车")])])
+}]}
+module.exports.render._withStripped = true
 
 /***/ }),
 
@@ -8789,947 +9730,6 @@ process.umask = function () {
 
 /***/ }),
 
-/***/ 163:
-/***/ (function(module, exports, __webpack_require__) {
-
-var __vue_exports__, __vue_options__
-var __vue_styles__ = []
-
-/* styles */
-__vue_styles__.push(__webpack_require__(164)
-)
-
-/* script */
-__vue_exports__ = __webpack_require__(165)
-
-/* template */
-var __vue_template__ = __webpack_require__(166)
-__vue_options__ = __vue_exports__ = __vue_exports__ || {}
-if (
-  typeof __vue_exports__.default === "object" ||
-  typeof __vue_exports__.default === "function"
-) {
-if (Object.keys(__vue_exports__).some(function (key) { return key !== "default" && key !== "__esModule" })) {console.error("named exports are not supported in *.vue files.")}
-__vue_options__ = __vue_exports__ = __vue_exports__.default
-}
-if (typeof __vue_options__ === "function") {
-  __vue_options__ = __vue_options__.options
-}
-__vue_options__.__file = "F:\\WebApp\\cabbage\\src\\components\\GoodsInfo\\Goods.vue"
-__vue_options__.render = __vue_template__.render
-__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
-__vue_options__._scopeId = "data-v-8edc1700"
-__vue_options__.style = __vue_options__.style || {}
-__vue_styles__.forEach(function (module) {
-  for (var name in module) {
-    __vue_options__.style[name] = module[name]
-  }
-})
-if (typeof __register_static_styles__ === "function") {
-  __register_static_styles__(__vue_options__._scopeId, __vue_styles__)
-}
-
-module.exports = __vue_exports__
-module.exports.el = 'true'
-new Vue(module.exports)
-
-
-/***/ }),
-
-/***/ 164:
-/***/ (function(module, exports) {
-
-module.exports = {
-  "iconFont": {
-    "fontFamily": "iconfont"
-  },
-  "shop-header": {
-    "width": "750",
-    "height": "90",
-    "flexDirection": "row",
-    "borderBottomWidth": "1",
-    "borderBottomStyle": "solid",
-    "borderBottomColor": "#dcdcdc"
-  },
-  "back-box": {
-    "width": "70",
-    "height": "90",
-    "justifyContent": "center",
-    "alignItems": "center"
-  },
-  "back-btn": {
-    "width": "28",
-    "height": "41"
-  },
-  "shop-header-title-wrapper": {
-    "position": "relative",
-    "flex": 1,
-    "flexDirection": "row",
-    "justifyContent": "center",
-    "paddingTop": "32",
-    "height": "90",
-    "marginRight": "70"
-  },
-  "shop-header-title": {
-    "width": "70",
-    "fontSize": "30",
-    "lineHeight": "32",
-    "color": "#333333",
-    "textAlign": "center",
-    "marginLeft": "10",
-    "marginRight": "10",
-    "borderBottomWidth": "5",
-    "borderBottomStyle": "solid",
-    "borderBottomColor": "rgba(0,0,0,0)",
-    "paddingBottom": "20"
-  },
-  "crt": {
-    "borderBottomColor": "#73cc00",
-    "color": "#73cc00"
-  },
-  "shop-header-delet": {
-    "position": "absolute",
-    "right": 0,
-    "top": 0,
-    "marginTop": "29",
-    "fontSize": "34",
-    "color": "#c1e6a3"
-  },
-  "shop-address-wrapper": {
-    "display": "flex",
-    "flexDirection": "row",
-    "alignItems": "center",
-    "paddingTop": "21"
-  },
-  "border-cell": {
-    "backgroundColor": "#f5f5f5",
-    "width": "750",
-    "height": "10",
-    "alignItems": "center",
-    "justifyContent": "center"
-  },
-  "list-box": {
-    "position": "fixed",
-    "top": "90",
-    "bottom": "100",
-    "left": 0,
-    "right": 0
-  },
-  "slider": {
-    "width": "750",
-    "height": "650"
-  },
-  "goods-image": {
-    "width": "750",
-    "height": "600"
-  },
-  "indicator": {
-    "width": "750",
-    "height": "20",
-    "itemColor": "#a0a0a0",
-    "itemSelectedColor": "#73cc00",
-    "itemSize": "14",
-    "position": "absolute",
-    "top": "630",
-    "left": 0
-  },
-  "goods-price-box": {
-    "flexDirection": "row",
-    "paddingLeft": "20",
-    "paddingRight": "20",
-    "alignItems": "center",
-    "marginTop": "30"
-  },
-  "goods-price": {
-    "flex": 1,
-    "fontSize": "36",
-    "lineHeight": "56",
-    "color": "#f26100"
-  },
-  "goods-share": {
-    "flexDirection": "row"
-  },
-  "share-img": {
-    "width": "34",
-    "height": "34",
-    "lineHeight": "34",
-    "borderWidth": "1",
-    "borderStyle": "solid",
-    "borderColor": "#999999",
-    "borderRadius": "17",
-    "fontSize": "30",
-    "color": "#999999",
-    "marginRight": "5",
-    "textAlign": "center"
-  },
-  "share-text": {
-    "fontSize": "22",
-    "lineHeight": "34",
-    "color": "#999999"
-  },
-  "goods-name-box": {
-    "paddingLeft": "20",
-    "paddingRight": "20"
-  },
-  "goods-name": {
-    "fontSize": "30",
-    "lineHeight": "50",
-    "color": "#333333"
-  },
-  "goods-tip": {
-    "fontSize": "22",
-    "lineHeight": "38",
-    "color": "#999999",
-    "paddingBottom": "10"
-  },
-  "payment-method": {
-    "flexDirection": "row",
-    "paddingTop": "15",
-    "paddingRight": 0,
-    "paddingBottom": "15",
-    "paddingLeft": 0,
-    "marginTop": 0,
-    "marginRight": "20",
-    "marginBottom": 0,
-    "marginLeft": "20"
-  },
-  "border-t": {
-    "borderTopWidth": "1",
-    "borderTopStyle": "solid",
-    "borderTopColor": "#dcdcdc"
-  },
-  "payment-l": {
-    "width": "180",
-    "flexDirection": "row"
-  },
-  "payment-icon": {
-    "fontSize": "30",
-    "lineHeight": "40",
-    "color": "#999999",
-    "marginRight": "10"
-  },
-  "payment-title": {
-    "fontSize": "24",
-    "lineHeight": "40",
-    "color": "#999999"
-  },
-  "payment-content": {
-    "flex": 1,
-    "fontSize": "24",
-    "lineHeight": "40",
-    "color": "#333333"
-  },
-  "bottom-box": {
-    "height": "100",
-    "flexDirection": "row",
-    "alignItems": "center",
-    "position": "fixed",
-    "left": 0,
-    "right": 0,
-    "bottom": 0,
-    "backgroundColor": "#ffffff",
-    "paddingLeft": "20",
-    "paddingRight": "20",
-    "boxShadow": "0 -1px 6px rgba(0, 0, 0, 0.1)"
-  },
-  "shop-car": {
-    "width": "60",
-    "height": "60",
-    "borderRadius": "30",
-    "backgroundColor": "#73cc00",
-    "marginRight": "20"
-  },
-  "shop-car-icon": {
-    "fontSize": "32",
-    "lineHeight": "60",
-    "textAlign": "center",
-    "color": "#ffffff"
-  },
-  "shop-car-num": {
-    "minWidth": "10",
-    "height": "20",
-    "paddingTop": 0,
-    "paddingRight": "5",
-    "paddingBottom": 0,
-    "paddingLeft": "5",
-    "borderRadius": "10",
-    "backgroundColor": "#ff0000",
-    "fontSize": "14",
-    "lineHeight": "20",
-    "color": "#ffffff",
-    "textAlign": "center",
-    "position": "absolute",
-    "top": 0,
-    "left": "45"
-  },
-  "collection": {
-    "width": "60",
-    "height": "60",
-    "borderRadius": "30",
-    "backgroundColor": "#ff5d61",
-    "marginRight": "60"
-  },
-  "collection-icon": {
-    "fontSize": "32",
-    "lineHeight": "60",
-    "textAlign": "center",
-    "color": "#ffffff"
-  },
-  "add-box": {
-    "flex": 1
-  },
-  "add-btn": {
-    "height": "70",
-    "borderRadius": "35",
-    "fontSize": "30",
-    "lineHeight": "70",
-    "textAlign": "center",
-    "color": "#ffffff",
-    "backgroundColor": "#73cc00"
-  }
-}
-
-/***/ }),
-
-/***/ 165:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-	value: true
-});
-
-var _wxcPanItem = __webpack_require__(24);
-
-var _wxcPanItem2 = _interopRequireDefault(_wxcPanItem);
-
-var _wxcTabPage = __webpack_require__(28);
-
-var _wxcTabPage2 = _interopRequireDefault(_wxcTabPage);
-
-var _wxcMinibar = __webpack_require__(4);
-
-var _wxcMinibar2 = _interopRequireDefault(_wxcMinibar);
-
-var _utils = __webpack_require__(0);
-
-var _utils2 = _interopRequireDefault(_utils);
-
-var _config = __webpack_require__(68);
-
-var _config2 = _interopRequireDefault(_config);
-
-var _vue = __webpack_require__(15);
-
-var _vue2 = _interopRequireDefault(_vue);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-var dom = weex.requireModule('dom');
-
-// https://github.com/alibaba/weex-ui/blob/master/example/tab-page/config.js
-//import orderItem from './order-item.vue'
-
-var navigator = weex.requireModule('navigator');
-var modal = weex.requireModule('modal');
-var stream = weex.requireModule('stream');
-var storage = weex.requireModule('storage');
-
-exports.default = {
-	components: {
-		WxcMinibar: _wxcMinibar2.default,
-		WxcTabPage: _wxcTabPage2.default,
-		WxcPanItem: _wxcPanItem2.default,
-		Config: _config2.default
-		//orderItem
-	},
-	data: function data() {
-		return {
-			imgList: [/* {
-             src: '../src/components/GoodsInfo/goods-img01.png',
-             }, {
-             src: '../src/components/GoodsInfo/goods-img01.png',
-             }, {
-             src: '../src/components/GoodsInfo/goods-img01.png',
-             } */],
-			cIndex: 1,
-			len: 0,
-			LOGIN_URL: 'api/product/getprodcutdetail',
-			USERID: 'user_id',
-			TOKEN: 'user_token',
-			PRODUCTID: '',
-			ProductName: '',
-			SubTitle: '',
-			Introduce: '',
-			ImageUrl: '',
-			Price: '',
-			SalesPrice: '',
-			Unit: '',
-			CarNum: '',
-			NumType: false
-
-		};
-	},
-
-	methods: {
-		getOrderData: function getOrderData(curpage) {
-			var self = this;
-		},
-		minibarLeftButtonClick: function minibarLeftButtonClick() {
-			this.$router.push('-1');
-		},
-		link: function link(urls) {
-			_utils2.default.jump(urls);
-		}
-	},
-	created: function created() {
-		var _this = this;
-
-		var fontModule = weex.requireModule("dom");
-		fontModule.addRule('fontFace', {
-			'fontFamily': "iconfont",
-			'src': "url('//at.alicdn.com/t/font_948634_j56el7oqed.ttf')"
-		});
-		var self = this;
-		if (self.CarNum == 0 || self.CarNum == '') {
-			self.NumType = false;
-		} else {
-			self.NumType = true;
-		}
-		var GoodsInfo = new BroadcastChannel('Avengers');
-		GoodsInfo.onmessage = function (event) {
-			console.log(event.data); // Assemble!
-		};
-		storage.getItem(this.USERID, function (event) {
-			self.USERID = event.data;
-			storage.getItem(_this.TOKEN, function (event) {
-				self.TOKEN = event.data;
-				_utils2.default.WeexAjax({
-					url: self.LOGIN_URL + '?prodcutId=' + _utils2.default.analAjax().ProductId + '&UserId=' + self.USERID,
-					//url: self.LOGIN_URL + '?categoryId=1',	
-					method: 'GET',
-					type: 'JSON',
-					token: self.TOKEN,
-					callback: function callback(ret) {
-						if (ret.Status == 1) {
-							//self.loginBool = true;
-							self.imgList = ret.obj.ImageList;
-							self.ProductName = ret.obj.ProductName;
-							self.SubTitle = ret.obj.SubTitle;
-							self.Price = ret.obj.Price;
-							self.SalesPrice = ret.obj.SalesPrice;
-							self.Unit = ret.obj.Unit;
-							self.Introduce = ret.obj.Introduce;
-							self.ImageUrl = ret.obj.ImageUrl;
-							console.log(ret);
-						}
-					}
-				});
-			});
-		});
-	}
-};
-
-/***/ }),
-
-/***/ 166:
-/***/ (function(module, exports) {
-
-module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', [_c('header', {
-    staticClass: ["shop-header"],
-    appendAsTree: true,
-    attrs: {
-      "append": "tree"
-    }
-  }, [_vm._m(0), _c('div', {
-    staticClass: ["shop-header-title-wrapper"]
-  }, [_c('text', {
-    staticClass: ["shop-header-title", "crt"]
-  }, [_vm._v("商品")]), _c('text', {
-    staticClass: ["shop-header-title"],
-    on: {
-      "click": function($event) {
-        _vm.link('components/GoodsInfo/GoodsInfo.js')
-      }
-    }
-  }, [_vm._v("详情")])])]), _c('list', {
-    staticClass: ["list-box"]
-  }, [_c('cell', {
-    appendAsTree: true,
-    attrs: {
-      "append": "tree"
-    }
-  }, [_c('slider', {
-    staticClass: ["slider"],
-    attrs: {
-      "interval": "3000",
-      "autoPlay": "false"
-    }
-  }, [_vm._l((_vm.imgList), function(num) {
-    return _c('div', {
-      staticClass: ["frame"]
-    }, [_c('image', {
-      staticClass: ["goods-image"],
-      attrs: {
-        "src": num.src,
-        "resize": "contain"
-      }
-    })])
-  }), _c('indicator', {
-    staticClass: ["indicator"]
-  })], 2), _c('div', {
-    staticClass: ["goods-price-box"]
-  }, [_c('text', {
-    staticClass: ["goods-price"]
-  }, [_vm._v("¥" + _vm._s(_vm.SalesPrice) + "元/份")]), _vm._m(1)]), _c('div', {
-    staticClass: ["goods-name-box"]
-  }, [_c('text', {
-    staticClass: ["goods-name"]
-  }, [_vm._v(_vm._s(_vm.ProductName))]), _c('text', {
-    staticClass: ["goods-tip"]
-  }, [_vm._v(_vm._s(_vm.SubTitle))])]), _c('text', {
-    staticClass: ["border-cell"]
-  }), _c('div', {
-    staticClass: ["payment-box"]
-  }, [_c('div', {
-    staticClass: ["payment-method"]
-  }, [_vm._m(2), _c('text', {
-    staticClass: ["payment-content"]
-  }, [_vm._v("折合" + _vm._s(_vm.SalesPrice) + "元/份")])]), _vm._m(3)]), _c('text', {
-    staticClass: ["border-cell"]
-  }), _c('div', {
-    staticClass: ["goods-info"]
-  }, [_c('div', {
-    staticClass: ["payment-method"]
-  }, [_vm._m(4), _c('text', {
-    staticClass: ["payment-content"]
-  }, [_vm._v(_vm._s(_vm.Introduce))])])])])]), _c('div', {
-    staticClass: ["bottom-box"]
-  }, [_c('div', {
-    staticClass: ["shop-car"]
-  }, [_c('text', {
-    staticClass: ["shop-car-icon", "iconFont"]
-  }, [_vm._v("")]), (_vm.NumType) ? _c('text', {
-    staticClass: ["shop-car-num"]
-  }, [_vm._v(_vm._s(_vm.CarNum))]) : _vm._e()]), _vm._m(5), _vm._m(6)])])
-},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: ["back-box"]
-  }, [_c('image', {
-    staticClass: ["back-btn"],
-    attrs: {
-      "src": "../src/common/images/backImages.png"
-    }
-  })])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: ["goods-share"]
-  }, [_c('text', {
-    staticClass: ["share-img", "iconFont"]
-  }, [_vm._v("")]), _c('text', {
-    staticClass: ["share-text"]
-  }, [_vm._v("分享")])])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: ["payment-l"]
-  }, [_c('text', {
-    staticClass: ["payment-icon", "iconFont"]
-  }, [_vm._v("")]), _c('text', {
-    staticClass: ["payment-title"]
-  }, [_vm._v("结算方式")])])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: ["payment-method", "border-t"]
-  }, [_c('div', {
-    staticClass: ["payment-l"]
-  }, [_c('text', {
-    staticClass: ["payment-icon", "iconFont"]
-  }, [_vm._v("")]), _c('text', {
-    staticClass: ["payment-title"]
-  }, [_vm._v("每份数量")])]), _c('text', {
-    staticClass: ["payment-content"]
-  }, [_vm._v("份")])])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: ["payment-l"]
-  }, [_c('text', {
-    staticClass: ["payment-icon", "iconFont"]
-  }, [_vm._v("")]), _c('text', {
-    staticClass: ["payment-title"]
-  }, [_vm._v("商品详情")])])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: ["collection"]
-  }, [_c('text', {
-    staticClass: ["collection-icon", "iconFont"]
-  }, [_vm._v("")])])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: ["add-box"]
-  }, [_c('text', {
-    staticClass: ["add-btn"]
-  }, [_vm._v("加入购物车")])])
-}]}
-module.exports.render._withStripped = true
-
-/***/ }),
-
 /***/ 17:
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10660,7 +10660,7 @@ exports.default = Utils;
 
 /***/ }),
 
-/***/ 24:
+/***/ 20:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10670,7 +10670,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _index = __webpack_require__(25);
+var _index = __webpack_require__(21);
 
 Object.defineProperty(exports, 'default', {
   enumerable: true,
@@ -10683,17 +10683,17 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 /***/ }),
 
-/***/ 25:
+/***/ 21:
 /***/ (function(module, exports, __webpack_require__) {
 
 var __vue_exports__, __vue_options__
 var __vue_styles__ = []
 
 /* script */
-__vue_exports__ = __webpack_require__(26)
+__vue_exports__ = __webpack_require__(22)
 
 /* template */
-var __vue_template__ = __webpack_require__(27)
+var __vue_template__ = __webpack_require__(23)
 __vue_options__ = __vue_exports__ = __vue_exports__ || {}
 if (
   typeof __vue_exports__.default === "object" ||
@@ -10723,7 +10723,7 @@ module.exports = __vue_exports__
 
 /***/ }),
 
-/***/ 26:
+/***/ 22:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10829,7 +10829,7 @@ exports.default = {
 
 /***/ }),
 
-/***/ 27:
+/***/ 23:
 /***/ (function(module, exports) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -10852,7 +10852,7 @@ module.exports.render._withStripped = true
 
 /***/ }),
 
-/***/ 28:
+/***/ 24:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10862,7 +10862,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _index = __webpack_require__(29);
+var _index = __webpack_require__(25);
 
 Object.defineProperty(exports, 'default', {
   enumerable: true,
@@ -10875,21 +10875,21 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 /***/ }),
 
-/***/ 29:
+/***/ 25:
 /***/ (function(module, exports, __webpack_require__) {
 
 var __vue_exports__, __vue_options__
 var __vue_styles__ = []
 
 /* styles */
-__vue_styles__.push(__webpack_require__(30)
+__vue_styles__.push(__webpack_require__(26)
 )
 
 /* script */
-__vue_exports__ = __webpack_require__(31)
+__vue_exports__ = __webpack_require__(27)
 
 /* template */
-var __vue_template__ = __webpack_require__(32)
+var __vue_template__ = __webpack_require__(28)
 __vue_options__ = __vue_exports__ = __vue_exports__ || {}
 if (
   typeof __vue_exports__.default === "object" ||
@@ -10920,38 +10920,7 @@ module.exports = __vue_exports__
 
 /***/ }),
 
-/***/ 3:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-var g;
-
-// This works in non-strict mode
-g = function () {
-	return this;
-}();
-
-try {
-	// This works if eval is allowed (see CSP)
-	g = g || Function("return this")() || (1, eval)("this");
-} catch (e) {
-	// This works if the window reference is available
-	if ((typeof window === "undefined" ? "undefined" : _typeof(window)) === "object") g = window;
-}
-
-// g can still be undefined, but nothing to do about it...
-// We return undefined, instead of nothing here, so it's
-// easier to handle this case. if(!global) { ...}
-
-module.exports = g;
-
-/***/ }),
-
-/***/ 30:
+/***/ 26:
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -10987,7 +10956,7 @@ module.exports = {
 
 /***/ }),
 
-/***/ 31:
+/***/ 27:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11342,7 +11311,7 @@ exports.default = {
 
 /***/ }),
 
-/***/ 32:
+/***/ 28:
 /***/ (function(module, exports) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -11433,6 +11402,37 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_vm._t("default")], 2)])])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
+
+/***/ }),
+
+/***/ 3:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+var g;
+
+// This works in non-strict mode
+g = function () {
+	return this;
+}();
+
+try {
+	// This works if eval is allowed (see CSP)
+	g = g || Function("return this")() || (1, eval)("this");
+} catch (e) {
+	// This works if the window reference is available
+	if ((typeof window === "undefined" ? "undefined" : _typeof(window)) === "object") g = window;
+}
+
+// g can still be undefined, but nothing to do about it...
+// We return undefined, instead of nothing here, so it's
+// easier to handle this case. if(!global) { ...}
+
+module.exports = g;
 
 /***/ }),
 
@@ -11547,7 +11547,7 @@ module.exports = {
 
 /***/ }),
 
-/***/ 68:
+/***/ 64:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";

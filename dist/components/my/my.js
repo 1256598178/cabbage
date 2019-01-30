@@ -62,7 +62,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 187);
+/******/ 	return __webpack_require__(__webpack_require__.s = 158);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -331,21 +331,21 @@ exports.default = AIstorage;
 
 /***/ }),
 
-/***/ 187:
+/***/ 158:
 /***/ (function(module, exports, __webpack_require__) {
 
 var __vue_exports__, __vue_options__
 var __vue_styles__ = []
 
 /* styles */
-__vue_styles__.push(__webpack_require__(188)
+__vue_styles__.push(__webpack_require__(159)
 )
 
 /* script */
-__vue_exports__ = __webpack_require__(189)
+__vue_exports__ = __webpack_require__(160)
 
 /* template */
-var __vue_template__ = __webpack_require__(190)
+var __vue_template__ = __webpack_require__(161)
 __vue_options__ = __vue_exports__ = __vue_exports__ || {}
 if (
   typeof __vue_exports__.default === "object" ||
@@ -378,7 +378,7 @@ new Vue(module.exports)
 
 /***/ }),
 
-/***/ 188:
+/***/ 159:
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -747,7 +747,7 @@ module.exports = {
 
 /***/ }),
 
-/***/ 189:
+/***/ 160:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -882,23 +882,23 @@ exports.default = {
 			myInfo: {}, //我的信息
 			ConTool: [{
 				title: '我的收藏',
-				ImageUrl: '../src/components/my/tool_01.png',
+				ImageUrl: 'http://47.92.164.211:8011/PublicImage/tool_01.png',
 				navigationUrl: 'components/my/my.js'
 			}, {
 				title: '发现',
-				ImageUrl: '../src/components/my/tool_02.png',
+				ImageUrl: 'http://47.92.164.211:8011/PublicImage/tool_02.png',
 				navigationUrl: 'components/my/my.js'
 			}, {
 				title: '分享APP',
-				ImageUrl: '../src/components/my/tool_03.png',
+				ImageUrl: 'http://47.92.164.211:8011/PublicImage/tool_03.png',
 				navigationUrl: 'components/my/my.js'
 			}, {
 				title: '用户协议',
-				ImageUrl: '../src/components/my/tool_04.png',
+				ImageUrl: 'http://47.92.164.211:8011/PublicImage/tool_04.png',
 				navigationUrl: 'components/my/my.js'
 			}, {
 				title: '设置',
-				ImageUrl: '../src/components/my/tool_05.png',
+				ImageUrl: 'http://47.92.164.211:8011/PublicImage/tool_05.png',
 				navigationUrl: 'components/setUp/setUp.js'
 			}]
 		};
@@ -906,7 +906,7 @@ exports.default = {
 
 	methods: {
 		loginBtn: function loginBtn() {
-			// Util.bindThis(Util.jump('components/login/login.js'),this.$getConfig())
+			_utils2.default.bindThis(_utils2.default.jump('components/login/login.js'), this.$getConfig());
 		}
 	},
 	created: function created() {
@@ -943,7 +943,7 @@ exports.default = {
 
 /***/ }),
 
-/***/ 190:
+/***/ 161:
 /***/ (function(module, exports) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -1000,7 +1000,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }, [_c('image', {
       staticClass: ["my-member-area-body-list-image"],
       attrs: {
-        "src": "../src/components/my/merage_01.png"
+        "src": "http://47.92.164.211:8011/PublicImage/merage_01.png"
       }
     }), _c('text', {
       staticClass: ["my-member-area-body-list-text"]
@@ -1020,7 +1020,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }, [_c('image', {
       staticClass: ["my-order-body-list-image"],
       attrs: {
-        "src": "../src/components/my/order_04.png"
+        "src": "http://47.92.164.211:8011/PublicImage/order_04.png"
       }
     }), _c('text', {
       staticClass: ["info-number", "my-order-body-list-number"]
@@ -1064,7 +1064,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('image', {
     staticClass: ["my-info-logo"],
     attrs: {
-      "src": "../src/components/my/logo.png"
+      "src": "http://47.92.164.211:8011/PublicImage/logo.png"
     }
   })])
 },function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -1109,7 +1109,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_vm._v("全部订单")]), _c('image', {
     staticClass: ["my-all-order-title-icon"],
     attrs: {
-      "src": "../src/components/my/order@left.png"
+      "src": "http://47.92.164.211:8011/PublicImage/order@left.png"
     }
   })])])
 },function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -1123,12 +1123,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('image', {
     staticClass: ["my-tell-me-image"],
     attrs: {
-      "src": "../src/components/my/link_01.png"
+      "src": "http://47.92.164.211:8011/PublicImage/link_01.png"
     }
   }), _c('image', {
     staticClass: ["my-tell-me-image"],
     attrs: {
-      "src": "../src/components/my/link_02.png"
+      "src": "http://47.92.164.211:8011/PublicImage/link_02.png"
     }
   })])])
 },function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;

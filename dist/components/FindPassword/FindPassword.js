@@ -62,7 +62,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 155);
+/******/ 	return __webpack_require__(__webpack_require__.s = 126);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -328,6 +328,595 @@ var AIstorage = {
     }
 };
 exports.default = AIstorage;
+
+/***/ }),
+
+/***/ 126:
+/***/ (function(module, exports, __webpack_require__) {
+
+var __vue_exports__, __vue_options__
+var __vue_styles__ = []
+
+/* styles */
+__vue_styles__.push(__webpack_require__(127)
+)
+
+/* script */
+__vue_exports__ = __webpack_require__(128)
+
+/* template */
+var __vue_template__ = __webpack_require__(129)
+__vue_options__ = __vue_exports__ = __vue_exports__ || {}
+if (
+  typeof __vue_exports__.default === "object" ||
+  typeof __vue_exports__.default === "function"
+) {
+if (Object.keys(__vue_exports__).some(function (key) { return key !== "default" && key !== "__esModule" })) {console.error("named exports are not supported in *.vue files.")}
+__vue_options__ = __vue_exports__ = __vue_exports__.default
+}
+if (typeof __vue_options__ === "function") {
+  __vue_options__ = __vue_options__.options
+}
+__vue_options__.__file = "F:\\WebApp\\cabbage\\src\\components\\FindPassword\\FindPassword.vue"
+__vue_options__.render = __vue_template__.render
+__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
+__vue_options__._scopeId = "data-v-e3f1f504"
+__vue_options__.style = __vue_options__.style || {}
+__vue_styles__.forEach(function (module) {
+  for (var name in module) {
+    __vue_options__.style[name] = module[name]
+  }
+})
+if (typeof __register_static_styles__ === "function") {
+  __register_static_styles__(__vue_options__._scopeId, __vue_styles__)
+}
+
+module.exports = __vue_exports__
+module.exports.el = 'true'
+new Vue(module.exports)
+
+
+/***/ }),
+
+/***/ 127:
+/***/ (function(module, exports) {
+
+module.exports = {
+  "iconFont": {
+    "fontFamily": "iconfont"
+  },
+  "login-bg": {
+    "position": "fixed",
+    "top": 0,
+    "bottom": 0,
+    "left": 0,
+    "right": 0
+  },
+  "login-title": {
+    "borderBottomWidth": "1",
+    "borderBottomColor": "#a0a0a0",
+    "borderBottomStyle": "solid",
+    "paddingLeft": "20"
+  },
+  "login-title-text": {
+    "fontSize": "48",
+    "lineHeight": "90",
+    "color": "#333333"
+  },
+  "login-box": {
+    "paddingLeft": "20",
+    "paddingRight": "20",
+    "position": "fixed",
+    "top": "210",
+    "left": 0,
+    "right": 0,
+    "bottom": 0,
+    "zIndex": 100
+  },
+  "username": {
+    "flexDirection": "row",
+    "alignItems": "center",
+    "paddingTop": "20",
+    "paddingBottom": "20",
+    "borderBottomWidth": "1",
+    "borderBottomColor": "#dcdcdc",
+    "borderBottomStyle": "solid"
+  },
+  "username-img": {
+    "width": "54",
+    "fontSize": "34",
+    "lineHeight": "70",
+    "color": "#999999",
+    "textAlign": "left"
+  },
+  "password-img": {
+    "width": "54",
+    "fontSize": "32",
+    "lineHeight": "70",
+    "color": "#999999",
+    "textAlign": "left"
+  },
+  "pBtn": {
+    "width": "34",
+    "height": "22"
+  },
+  "code-btn": {
+    "width": "170",
+    "height": "50",
+    "borderWidth": "1",
+    "borderColor": "#a0a0a0",
+    "borderStyle": "solid",
+    "borderRadius": "25",
+    "fontSize": "24",
+    "lineHeight": "48",
+    "color": "#707070",
+    "textAlign": "center"
+  },
+  "code-btn-logo": {
+    "color": "#73cc00"
+  },
+  "code-btn-active": {
+    "color": "#707070"
+  },
+  "input": {
+    "flex": 1,
+    "height": "70",
+    "lineHeight": "70",
+    "fontSize": "30",
+    "backgroundColor": "rgba(0,0,0,0)",
+    "outline": "none"
+  },
+  "login-tip-box": {
+    "width": "710",
+    "height": "60"
+  },
+  "login-tip": {
+    "fontSize": "24",
+    "lineHeight": "40",
+    "color": "#ff0000",
+    "textAlign": "center"
+  },
+  "login-btn": {
+    "height": "80",
+    "fontSize": "30",
+    "lineHeight": "80",
+    "borderRadius": "40",
+    "color": "#ffffff",
+    "textAlign": "center",
+    "backgroundColor": "#abd475"
+  },
+  "login-btns": {
+    "height": "80",
+    "fontSize": "30",
+    "lineHeight": "80",
+    "borderRadius": "40",
+    "color": "#ffffff",
+    "textAlign": "center",
+    "backgroundColor": "#73cc00"
+  },
+  "reg": {
+    "flexDirection": "row",
+    "marginTop": "15"
+  },
+  "forgot": {
+    "flex": 1
+  },
+  "forgot-text": {
+    "fontSize": "24",
+    "lineHeight": "30",
+    "color": "#73cc00"
+  },
+  "register": {
+    "flexDirection": "row"
+  },
+  "reg-text": {
+    "fontSize": "24",
+    "lineHeight": "30",
+    "color": "#666666"
+  },
+  "other": {
+    "justifyContent": "center",
+    "textAlign": "center",
+    "marginTop": "230"
+  },
+  "other-text": {
+    "fontSize": "24",
+    "lineHeight": "30",
+    "color": "#666666",
+    "textAlign": "center"
+  },
+  "other-line": {
+    "width": "40",
+    "height": "1",
+    "backgroundColor": "#a0a0a0",
+    "marginTop": "20",
+    "marginBottom": "25",
+    "marginLeft": "335",
+    "marginRight": "335"
+  },
+  "other-login": {
+    "flexDirection": "row",
+    "justifyContent": "center"
+  },
+  "login-way": {
+    "width": "86",
+    "height": "86",
+    "marginLeft": "15",
+    "marginRight": "15"
+  }
+}
+
+/***/ }),
+
+/***/ 128:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _wxcMinibar = __webpack_require__(4);
+
+var _wxcMinibar2 = _interopRequireDefault(_wxcMinibar);
+
+var _utils = __webpack_require__(0);
+
+var _utils2 = _interopRequireDefault(_utils);
+
+var _vue = __webpack_require__(15);
+
+var _vue2 = _interopRequireDefault(_vue);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+//var navigator = weex.requireModule('navigator') 
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+var modal = weex.requireModule('modal');
+
+// https://github.com/alibaba/weex-ui/blob/master/example/tab-page/config.js
+//import orderItem from './order-item.vue'
+//import Config from './config'
+
+//const dom = weex.requireModule('dom');
+
+var stream = weex.requireModule('stream');
+//const storage = weex.requireModule('storage') 
+exports.default = {
+	components: {
+		WxcMinibar: _wxcMinibar2.default
+	},
+	data: function data() {
+		return {
+			objSetInval: {
+				phoneCode: '获取验证码',
+				boolSetInval: false, //判断验证码按钮是否为可以点击
+				time: 1000 //倒计时为一分钟
+			},
+			callback: '',
+			pBtn: true,
+			login: false,
+			logoTel: false,
+			loginTip: "",
+			loginValue: {
+				name: "", // 手机号码
+				word: "", // 手机密码
+				code: "", // 短信验证码
+				codes: "" // 邀请码
+			},
+			ss: ""
+		};
+	},
+	methods: {
+		minibarLeftButtonClick: function minibarLeftButtonClick() {
+			this.$router.push('-1');
+		},
+		typeSelect: function typeSelect() {
+			if (this.pBtn) {
+				this.pBtn = false;
+			} else {
+				this.pBtn = true;
+			}
+		},
+		toParams: function toParams(obj) {
+			var param = "";
+			for (var name in obj) {
+				if (typeof obj[name] != 'function') {
+					param += "&" + name + "=" + encodeURI(obj[name]);
+				}
+			}
+			return param.substring(1);
+		},
+		input1: function input1(e) {
+			this.loginValue.name = e.value;
+			if (/^1[34578]\d{9}$/.test(this.loginValue.name)) {
+				this.logoTel = true;
+				// console.log(this.logoTel)
+			} else {
+				this.logoTel = false;
+			}
+			if (/^1[34578]\d{9}$/.test(this.loginValue.name) && this.loginValue.word.length >= 6 && this.loginValue.code.length == 4) {
+				this.login = true;
+			} else {
+				this.login = false;
+			}
+		},
+		input2: function input2(e) {
+			this.loginValue.word = e.value;
+			if (/^1[34578]\d{9}$/.test(this.loginValue.name) && this.loginValue.word.length >= 6 && this.loginValue.code.length == 4) {
+				this.login = true;
+			} else {
+				this.login = false;
+			}
+		},
+		input3: function input3(e) {
+			this.loginValue.code = e.value;
+			if (/^1[34578]\d{9}$/.test(this.loginValue.name) && this.loginValue.word.length >= 6 && this.loginValue.code.length == 4) {
+				this.login = true;
+			} else {
+				this.login = false;
+			}
+		},
+
+		// 短信验证交互
+		codeBtn: function codeBtn() {
+			var self = this;
+			// 判断倒计时是否结束 和 手机号是否正确
+			if (!this.objSetInval.boolSetInval && this.logoTel) {
+				//判断是否点击执行
+				var second = 60;
+				var _this = this;
+				_this.objSetInval.boolSetInval = true;
+				var time = setInterval(function () {
+					second--;
+					_this.objSetInval.phoneCode = '(' + second + ')秒可重发';
+					if (second <= 0) {
+						clearInterval(time);
+						_this.objSetInval.phoneCode = '获取验证码';
+						_this.objSetInval.boolSetInval = false;
+					}
+				}, _this.objSetInval.time);
+				_utils2.default.WeexAjax({
+					url: 'api/account/getsmscode',
+					method: 'POST',
+					type: 'JSON',
+					body: {
+						'MobilePhone': +this.loginValue.name
+					},
+					callback: function callback(ret) {
+						var rets = JSON.parse(ret);
+						if (rets.Status == 0) {
+							self.loginTip = rets.Message + '请稍后重试';
+						}
+					}
+				});
+			} else {
+				this.loginTip = '请输入正确的手机号';
+			}
+		},
+		register: function register() {
+			var self = this;
+			/** 获取元素的value值，但是是初始设置值 */
+			//var name = this.$refs.username.value;
+			//var word = this.$refs.passwords.value;
+			if (this.login) {
+				// console.log(this.loginValue.code)
+				if (/^[a-z0-9_]{6,15}$/.test(this.loginValue.word)) {
+					_utils2.default.WeexAjax({
+						url: 'api/account/findpassword',
+						method: 'POST',
+						type: 'JSON',
+						body: {
+							// 手机号
+							'MobilePhone': this.loginValue.name,
+							// 短信验证码
+							'ValidateCode': this.loginValue.code,
+							// 密码
+							'PassWord': this.loginValue.word
+						},
+						callback: function callback(ret) {
+							if (_utils2.default.device() == 0 || _utils2.default.device() == 2) {
+								var rets = JSON.parse(ret);
+								//console.log(rets)
+								//self.ss = rets;
+								if (rets.Status == 0) {
+									modal.toast({
+										message: rets,
+										duration: 1
+									});
+									self.loginTip = rets.Message;
+								} else if (rets.Status == 1) {
+									modal.toast({
+										message: rets.Message,
+										duration: 1
+									});
+									_utils2.default.bindThis(_utils2.default.jump('components/my/my.js'), self.$getConfig());
+								}
+							} else if (_utils2.default.device() == 1) {
+								var _rets = eval(ret);
+								console.log(_rets);
+								self.ss = _rets;
+								if (_rets.Status == 0) {
+									modal.toast({
+										message: _rets.Message,
+										duration: 1
+									});
+									self.loginTip = _rets.Message;
+								} else if (_rets.Status == 1) {
+									modal.toast({
+										message: _rets.Message,
+										duration: 1
+									});
+									_utils2.default.bindThis(_utils2.default.jump('components/my/my.js'), self.$getConfig());
+								}
+							}
+						}
+					});
+				} else {
+					this.loginTip = '密码应以字母、数字、下划线开头';
+				}
+			}
+		}
+	},
+	created: function created() {
+		var fontModule = weex.requireModule("dom");
+		fontModule.addRule('fontFace', {
+			'fontFamily': "iconfont",
+			'src': "url('//at.alicdn.com/t/font_948634_hrhla0ojg9a.ttf')"
+		});
+	}
+};
+
+/***/ }),
+
+/***/ 129:
+/***/ (function(module, exports) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', [_c('image', {
+    staticClass: ["login-bg"],
+    attrs: {
+      "src": "http://47.92.164.211:8011/PublicImage/login-bg.png"
+    }
+  }), _c('div', {
+    staticClass: ["titleBar"]
+  }, [_c('text', {
+    staticClass: ["statusbar"]
+  }), _c('wxc-minibar', {
+    attrs: {
+      "title": "",
+      "backgroundColor": "transparent",
+      "textColor": "#000",
+      "leftButton": "http://47.92.164.211:8011/PublicImage/backImages.png"
+    },
+    on: {
+      "wxcMinibarLeftButtonClicked": _vm.minibarLeftButtonClick
+    }
+  })], 1), _vm._m(0), _c('div', {
+    staticClass: ["login-box"]
+  }, [_c('div', {
+    staticClass: ["username"]
+  }, [_c('text', {
+    staticClass: ["username-img", "iconFont"]
+  }, [_vm._v("")]), _c('input', {
+    ref: "username",
+    staticClass: ["input"],
+    attrs: {
+      "type": "text",
+      "placeholder": "请输入您的手机号码",
+      "value": ""
+    },
+    on: {
+      "input": _vm.input1
+    }
+  }), _c('text', {
+    staticClass: ["code-btn"],
+    class: [_vm.logoTel == true ? 'code-btn-logo' : '', _vm.objSetInval.boolSetInval == true ? 'code-btn-active' : ''],
+    on: {
+      "click": function($event) {
+        _vm.codeBtn()
+      }
+    }
+  }, [_vm._v(_vm._s(_vm.objSetInval.phoneCode))])]), _c('div', {
+    staticClass: ["username"]
+  }, [_c('text', {
+    staticClass: ["username-img", "iconFont"]
+  }, [_vm._v("")]), _c('input', {
+    ref: "username",
+    staticClass: ["input"],
+    attrs: {
+      "type": "text",
+      "maxlength": "4",
+      "placeholder": "请输入验证码",
+      "value": ""
+    },
+    on: {
+      "input": _vm.input3
+    }
+  })]), _c('div', {
+    staticClass: ["username"]
+  }, [_c('text', {
+    staticClass: ["password-img", "iconFont"]
+  }, [_vm._v("")]), _c('input', {
+    ref: "passwords",
+    staticClass: ["input"],
+    attrs: {
+      "type": _vm.pBtn === true ? 'password' : 'text',
+      "placeholder": "请输入新的密码"
+    },
+    on: {
+      "input": _vm.input2
+    }
+  }), _c('image', {
+    staticClass: ["pBtn"],
+    attrs: {
+      "src": _vm.pBtn === true ? 'http://47.92.164.211:8011/PublicImage/biyan-icon.png' : 'http://47.92.164.211:8011/PublicImage/zhenyan-icon.png'
+    },
+    on: {
+      "click": _vm.typeSelect
+    }
+  })]), _c('div', {
+    staticClass: ["login-tip-box"]
+  }, [_c('text', {
+    staticClass: ["login-tip"]
+  }, [_vm._v(_vm._s(_vm.loginTip))])]), _c('div', {
+    staticClass: ["login-btn-box"]
+  }, [_c('text', {
+    class: [_vm.login === true ? 'login-btns' : 'login-btn'],
+    on: {
+      "click": _vm.register
+    }
+  }, [_vm._v("完成修改")])])])])
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: ["login-title"]
+  }, [_c('text', {
+    staticClass: ["login-title-text"]
+  }, [_vm._v("更改密码")])])
+}]}
+module.exports.render._withStripped = true
 
 /***/ }),
 
@@ -7736,595 +8325,6 @@ if (inBrowser) {
 
 exports.default = Vue;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(16), __webpack_require__(3)))
-
-/***/ }),
-
-/***/ 155:
-/***/ (function(module, exports, __webpack_require__) {
-
-var __vue_exports__, __vue_options__
-var __vue_styles__ = []
-
-/* styles */
-__vue_styles__.push(__webpack_require__(156)
-)
-
-/* script */
-__vue_exports__ = __webpack_require__(157)
-
-/* template */
-var __vue_template__ = __webpack_require__(158)
-__vue_options__ = __vue_exports__ = __vue_exports__ || {}
-if (
-  typeof __vue_exports__.default === "object" ||
-  typeof __vue_exports__.default === "function"
-) {
-if (Object.keys(__vue_exports__).some(function (key) { return key !== "default" && key !== "__esModule" })) {console.error("named exports are not supported in *.vue files.")}
-__vue_options__ = __vue_exports__ = __vue_exports__.default
-}
-if (typeof __vue_options__ === "function") {
-  __vue_options__ = __vue_options__.options
-}
-__vue_options__.__file = "F:\\WebApp\\cabbage\\src\\components\\FindPassword\\FindPassword.vue"
-__vue_options__.render = __vue_template__.render
-__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
-__vue_options__._scopeId = "data-v-e3f1f504"
-__vue_options__.style = __vue_options__.style || {}
-__vue_styles__.forEach(function (module) {
-  for (var name in module) {
-    __vue_options__.style[name] = module[name]
-  }
-})
-if (typeof __register_static_styles__ === "function") {
-  __register_static_styles__(__vue_options__._scopeId, __vue_styles__)
-}
-
-module.exports = __vue_exports__
-module.exports.el = 'true'
-new Vue(module.exports)
-
-
-/***/ }),
-
-/***/ 156:
-/***/ (function(module, exports) {
-
-module.exports = {
-  "iconFont": {
-    "fontFamily": "iconfont"
-  },
-  "login-bg": {
-    "position": "fixed",
-    "top": 0,
-    "bottom": 0,
-    "left": 0,
-    "right": 0
-  },
-  "login-title": {
-    "borderBottomWidth": "1",
-    "borderBottomColor": "#a0a0a0",
-    "borderBottomStyle": "solid",
-    "paddingLeft": "20"
-  },
-  "login-title-text": {
-    "fontSize": "48",
-    "lineHeight": "90",
-    "color": "#333333"
-  },
-  "login-box": {
-    "paddingLeft": "20",
-    "paddingRight": "20",
-    "position": "fixed",
-    "top": "210",
-    "left": 0,
-    "right": 0,
-    "bottom": 0,
-    "zIndex": 100
-  },
-  "username": {
-    "flexDirection": "row",
-    "alignItems": "center",
-    "paddingTop": "20",
-    "paddingBottom": "20",
-    "borderBottomWidth": "1",
-    "borderBottomColor": "#dcdcdc",
-    "borderBottomStyle": "solid"
-  },
-  "username-img": {
-    "width": "54",
-    "fontSize": "34",
-    "lineHeight": "70",
-    "color": "#999999",
-    "textAlign": "left"
-  },
-  "password-img": {
-    "width": "54",
-    "fontSize": "32",
-    "lineHeight": "70",
-    "color": "#999999",
-    "textAlign": "left"
-  },
-  "pBtn": {
-    "width": "34",
-    "height": "22"
-  },
-  "code-btn": {
-    "width": "170",
-    "height": "50",
-    "borderWidth": "1",
-    "borderColor": "#a0a0a0",
-    "borderStyle": "solid",
-    "borderRadius": "25",
-    "fontSize": "24",
-    "lineHeight": "48",
-    "color": "#707070",
-    "textAlign": "center"
-  },
-  "code-btn-logo": {
-    "color": "#73cc00"
-  },
-  "code-btn-active": {
-    "color": "#707070"
-  },
-  "input": {
-    "flex": 1,
-    "height": "70",
-    "lineHeight": "70",
-    "fontSize": "30",
-    "backgroundColor": "rgba(0,0,0,0)",
-    "outline": "none"
-  },
-  "login-tip-box": {
-    "width": "710",
-    "height": "60"
-  },
-  "login-tip": {
-    "fontSize": "24",
-    "lineHeight": "40",
-    "color": "#ff0000",
-    "textAlign": "center"
-  },
-  "login-btn": {
-    "height": "80",
-    "fontSize": "30",
-    "lineHeight": "80",
-    "borderRadius": "40",
-    "color": "#ffffff",
-    "textAlign": "center",
-    "backgroundColor": "#abd475"
-  },
-  "login-btns": {
-    "height": "80",
-    "fontSize": "30",
-    "lineHeight": "80",
-    "borderRadius": "40",
-    "color": "#ffffff",
-    "textAlign": "center",
-    "backgroundColor": "#73cc00"
-  },
-  "reg": {
-    "flexDirection": "row",
-    "marginTop": "15"
-  },
-  "forgot": {
-    "flex": 1
-  },
-  "forgot-text": {
-    "fontSize": "24",
-    "lineHeight": "30",
-    "color": "#73cc00"
-  },
-  "register": {
-    "flexDirection": "row"
-  },
-  "reg-text": {
-    "fontSize": "24",
-    "lineHeight": "30",
-    "color": "#666666"
-  },
-  "other": {
-    "justifyContent": "center",
-    "textAlign": "center",
-    "marginTop": "230"
-  },
-  "other-text": {
-    "fontSize": "24",
-    "lineHeight": "30",
-    "color": "#666666",
-    "textAlign": "center"
-  },
-  "other-line": {
-    "width": "40",
-    "height": "1",
-    "backgroundColor": "#a0a0a0",
-    "marginTop": "20",
-    "marginBottom": "25",
-    "marginLeft": "335",
-    "marginRight": "335"
-  },
-  "other-login": {
-    "flexDirection": "row",
-    "justifyContent": "center"
-  },
-  "login-way": {
-    "width": "86",
-    "height": "86",
-    "marginLeft": "15",
-    "marginRight": "15"
-  }
-}
-
-/***/ }),
-
-/***/ 157:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-	value: true
-});
-
-var _wxcMinibar = __webpack_require__(4);
-
-var _wxcMinibar2 = _interopRequireDefault(_wxcMinibar);
-
-var _utils = __webpack_require__(0);
-
-var _utils2 = _interopRequireDefault(_utils);
-
-var _vue = __webpack_require__(15);
-
-var _vue2 = _interopRequireDefault(_vue);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-//var navigator = weex.requireModule('navigator') 
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-var modal = weex.requireModule('modal');
-
-// https://github.com/alibaba/weex-ui/blob/master/example/tab-page/config.js
-//import orderItem from './order-item.vue'
-//import Config from './config'
-
-//const dom = weex.requireModule('dom');
-
-var stream = weex.requireModule('stream');
-//const storage = weex.requireModule('storage') 
-exports.default = {
-	components: {
-		WxcMinibar: _wxcMinibar2.default
-	},
-	data: function data() {
-		return {
-			objSetInval: {
-				phoneCode: '获取验证码',
-				boolSetInval: false, //判断验证码按钮是否为可以点击
-				time: 1000 //倒计时为一分钟
-			},
-			callback: '',
-			pBtn: true,
-			login: false,
-			logoTel: false,
-			loginTip: "",
-			loginValue: {
-				name: "", // 手机号码
-				word: "", // 手机密码
-				code: "", // 短信验证码
-				codes: "" // 邀请码
-			},
-			ss: ""
-		};
-	},
-	methods: {
-		minibarLeftButtonClick: function minibarLeftButtonClick() {
-			this.$router.push('-1');
-		},
-		typeSelect: function typeSelect() {
-			if (this.pBtn) {
-				this.pBtn = false;
-			} else {
-				this.pBtn = true;
-			}
-		},
-		toParams: function toParams(obj) {
-			var param = "";
-			for (var name in obj) {
-				if (typeof obj[name] != 'function') {
-					param += "&" + name + "=" + encodeURI(obj[name]);
-				}
-			}
-			return param.substring(1);
-		},
-		input1: function input1(e) {
-			this.loginValue.name = e.value;
-			if (/^1[34578]\d{9}$/.test(this.loginValue.name)) {
-				this.logoTel = true;
-				// console.log(this.logoTel)
-			} else {
-				this.logoTel = false;
-			}
-			if (/^1[34578]\d{9}$/.test(this.loginValue.name) && this.loginValue.word.length >= 6 && this.loginValue.code.length == 4) {
-				this.login = true;
-			} else {
-				this.login = false;
-			}
-		},
-		input2: function input2(e) {
-			this.loginValue.word = e.value;
-			if (/^1[34578]\d{9}$/.test(this.loginValue.name) && this.loginValue.word.length >= 6 && this.loginValue.code.length == 4) {
-				this.login = true;
-			} else {
-				this.login = false;
-			}
-		},
-		input3: function input3(e) {
-			this.loginValue.code = e.value;
-			if (/^1[34578]\d{9}$/.test(this.loginValue.name) && this.loginValue.word.length >= 6 && this.loginValue.code.length == 4) {
-				this.login = true;
-			} else {
-				this.login = false;
-			}
-		},
-
-		// 短信验证交互
-		codeBtn: function codeBtn() {
-			var self = this;
-			// 判断倒计时是否结束 和 手机号是否正确
-			if (!this.objSetInval.boolSetInval && this.logoTel) {
-				//判断是否点击执行
-				var second = 60;
-				var _this = this;
-				_this.objSetInval.boolSetInval = true;
-				var time = setInterval(function () {
-					second--;
-					_this.objSetInval.phoneCode = '(' + second + ')秒可重发';
-					if (second <= 0) {
-						clearInterval(time);
-						_this.objSetInval.phoneCode = '获取验证码';
-						_this.objSetInval.boolSetInval = false;
-					}
-				}, _this.objSetInval.time);
-				_utils2.default.WeexAjax({
-					url: 'api/account/getsmscode',
-					method: 'POST',
-					type: 'JSON',
-					body: {
-						'MobilePhone': +this.loginValue.name
-					},
-					callback: function callback(ret) {
-						var rets = JSON.parse(ret);
-						if (rets.Status == 0) {
-							self.loginTip = rets.Message + '请稍后重试';
-						}
-					}
-				});
-			} else {
-				this.loginTip = '请输入正确的手机号';
-			}
-		},
-		register: function register() {
-			var self = this;
-			/** 获取元素的value值，但是是初始设置值 */
-			//var name = this.$refs.username.value;
-			//var word = this.$refs.passwords.value;
-			if (this.login) {
-				// console.log(this.loginValue.code)
-				if (/^[a-z0-9_]{6,15}$/.test(this.loginValue.word)) {
-					_utils2.default.WeexAjax({
-						url: 'api/account/findpassword',
-						method: 'POST',
-						type: 'JSON',
-						body: {
-							// 手机号
-							'MobilePhone': this.loginValue.name,
-							// 短信验证码
-							'ValidateCode': this.loginValue.code,
-							// 密码
-							'PassWord': this.loginValue.word
-						},
-						callback: function callback(ret) {
-							if (_utils2.default.device() == 0 || _utils2.default.device() == 2) {
-								var rets = JSON.parse(ret);
-								//console.log(rets)
-								//self.ss = rets;
-								if (rets.Status == 0) {
-									modal.toast({
-										message: rets,
-										duration: 1
-									});
-									self.loginTip = rets.Message;
-								} else if (rets.Status == 1) {
-									modal.toast({
-										message: rets.Message,
-										duration: 1
-									});
-									_utils2.default.bindThis(_utils2.default.jump('components/my/my.js'), self.$getConfig());
-								}
-							} else if (_utils2.default.device() == 1) {
-								var _rets = eval(ret);
-								console.log(_rets);
-								self.ss = _rets;
-								if (_rets.Status == 0) {
-									modal.toast({
-										message: _rets.Message,
-										duration: 1
-									});
-									self.loginTip = _rets.Message;
-								} else if (_rets.Status == 1) {
-									modal.toast({
-										message: _rets.Message,
-										duration: 1
-									});
-									_utils2.default.bindThis(_utils2.default.jump('components/my/my.js'), self.$getConfig());
-								}
-							}
-						}
-					});
-				} else {
-					this.loginTip = '密码应以字母、数字、下划线开头';
-				}
-			}
-		}
-	},
-	created: function created() {
-		var fontModule = weex.requireModule("dom");
-		fontModule.addRule('fontFace', {
-			'fontFamily': "iconfont",
-			'src': "url('//at.alicdn.com/t/font_948634_hrhla0ojg9a.ttf')"
-		});
-	}
-};
-
-/***/ }),
-
-/***/ 158:
-/***/ (function(module, exports) {
-
-module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', [_c('image', {
-    staticClass: ["login-bg"],
-    attrs: {
-      "src": "../src/common/images/login-bg.png"
-    }
-  }), _c('div', {
-    staticClass: ["titleBar"]
-  }, [_c('text', {
-    staticClass: ["statusbar"]
-  }), _c('wxc-minibar', {
-    attrs: {
-      "title": "",
-      "backgroundColor": "transparent",
-      "textColor": "#000",
-      "leftButton": "../src/common/images/backImages.png"
-    },
-    on: {
-      "wxcMinibarLeftButtonClicked": _vm.minibarLeftButtonClick
-    }
-  })], 1), _vm._m(0), _c('div', {
-    staticClass: ["login-box"]
-  }, [_c('div', {
-    staticClass: ["username"]
-  }, [_c('text', {
-    staticClass: ["username-img", "iconFont"]
-  }, [_vm._v("")]), _c('input', {
-    ref: "username",
-    staticClass: ["input"],
-    attrs: {
-      "type": "text",
-      "placeholder": "请输入您的手机号码",
-      "value": ""
-    },
-    on: {
-      "input": _vm.input1
-    }
-  }), _c('text', {
-    staticClass: ["code-btn"],
-    class: [_vm.logoTel == true ? 'code-btn-logo' : '', _vm.objSetInval.boolSetInval == true ? 'code-btn-active' : ''],
-    on: {
-      "click": function($event) {
-        _vm.codeBtn()
-      }
-    }
-  }, [_vm._v(_vm._s(_vm.objSetInval.phoneCode))])]), _c('div', {
-    staticClass: ["username"]
-  }, [_c('text', {
-    staticClass: ["username-img", "iconFont"]
-  }, [_vm._v("")]), _c('input', {
-    ref: "username",
-    staticClass: ["input"],
-    attrs: {
-      "type": "text",
-      "maxlength": "4",
-      "placeholder": "请输入验证码",
-      "value": ""
-    },
-    on: {
-      "input": _vm.input3
-    }
-  })]), _c('div', {
-    staticClass: ["username"]
-  }, [_c('text', {
-    staticClass: ["password-img", "iconFont"]
-  }, [_vm._v("")]), _c('input', {
-    ref: "passwords",
-    staticClass: ["input"],
-    attrs: {
-      "type": _vm.pBtn === true ? 'password' : 'text',
-      "placeholder": "请输入新的密码"
-    },
-    on: {
-      "input": _vm.input2
-    }
-  }), _c('image', {
-    staticClass: ["pBtn"],
-    attrs: {
-      "src": _vm.pBtn === true ? '../src/common/images/biyan-icon.png' : '../src/common/images/zhenyan-icon.png'
-    },
-    on: {
-      "click": _vm.typeSelect
-    }
-  })]), _c('div', {
-    staticClass: ["login-tip-box"]
-  }, [_c('text', {
-    staticClass: ["login-tip"]
-  }, [_vm._v(_vm._s(_vm.loginTip))])]), _c('div', {
-    staticClass: ["login-btn-box"]
-  }, [_c('text', {
-    class: [_vm.login === true ? 'login-btns' : 'login-btn'],
-    on: {
-      "click": _vm.register
-    }
-  }, [_vm._v("完成修改")])])])])
-},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: ["login-title"]
-  }, [_c('text', {
-    staticClass: ["login-title-text"]
-  }, [_vm._v("更改密码")])])
-}]}
-module.exports.render._withStripped = true
 
 /***/ }),
 

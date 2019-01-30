@@ -144,7 +144,7 @@ export default {
 	},
 	methods: {
 		loginBtn(){
-			// Util.bindThis(Util.jump('components/login/login.js'),this.$getConfig())
+			Util.bindThis(Util.jump('components/login/login.js'),this.$getConfig())
 		}
 	},
 	created() {
@@ -199,7 +199,7 @@ export default {
 .my-header-title-wrapper{
 	position: relative;
 	width: 750px;
-	height: 92px;  /*26 + 40 + 26*/
+	height: 92px;
 	padding-left: 20px;
 	padding-right: 20px;
 	display: flex;
@@ -356,13 +356,9 @@ export default {
 .my-member-area{
 	display: flex;
 	flex-direction: column;
-	// justify-content: space-around;
-	// align-items: flex-start;
 	top: -15px;
 	width: 710px;
-	// height: 160px;
 	padding-top: 20px;
-	// padding-bottom: 20px;
 	padding-left: 20px;
 	padding-right: 20px;
 	margin-left: 20px;
@@ -436,9 +432,7 @@ export default {
 	margin-top: 0;
 	display: flex;
 	flex-direction: column;
-	// height: 180px;
 	padding-top: 20px;
-	// padding-bottom: 20px;
 	padding-left: 20px;
 	padding-right: 20px;
 	background-color: #fff;

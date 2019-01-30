@@ -62,26 +62,26 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 146);
+/******/ 	return __webpack_require__(__webpack_require__.s = 117);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 146:
+/***/ 117:
 /***/ (function(module, exports, __webpack_require__) {
 
 var __vue_exports__, __vue_options__
 var __vue_styles__ = []
 
 /* styles */
-__vue_styles__.push(__webpack_require__(147)
+__vue_styles__.push(__webpack_require__(118)
 )
 
 /* script */
-__vue_exports__ = __webpack_require__(148)
+__vue_exports__ = __webpack_require__(119)
 
 /* template */
-var __vue_template__ = __webpack_require__(154)
+var __vue_template__ = __webpack_require__(125)
 __vue_options__ = __vue_exports__ = __vue_exports__ || {}
 if (
   typeof __vue_exports__.default === "object" ||
@@ -114,7 +114,7 @@ new Vue(module.exports)
 
 /***/ }),
 
-/***/ 147:
+/***/ 118:
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -247,7 +247,7 @@ module.exports = {
 
 /***/ }),
 
-/***/ 148:
+/***/ 119:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -257,7 +257,7 @@ Object.defineProperty(exports, "__esModule", {
 	value: true
 });
 
-var _wxcMask = __webpack_require__(149);
+var _wxcMask = __webpack_require__(120);
 
 var _wxcMask2 = _interopRequireDefault(_wxcMask);
 
@@ -337,10 +337,10 @@ exports.default = {
 			hasAnimation: true,
 			crt: '',
 			gList: [{
-				imageUrl: "../src/components/exchange/game-img01.png",
+				imageUrl: "http://47.92.164.211:8011/PublicImage/game-img01.png",
 				linkUrl: ""
 			}, {
-				imageUrl: "../src/components/exchange/game-img02.png",
+				imageUrl: "http://47.92.164.211:8011/PublicImage/game-img02.png",
 				linkUrl: ""
 			}],
 			mList: [{
@@ -404,7 +404,7 @@ exports.default = {
 
 /***/ }),
 
-/***/ 149:
+/***/ 120:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -414,7 +414,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _index = __webpack_require__(150);
+var _index = __webpack_require__(121);
 
 Object.defineProperty(exports, 'default', {
   enumerable: true,
@@ -427,21 +427,21 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 /***/ }),
 
-/***/ 150:
+/***/ 121:
 /***/ (function(module, exports, __webpack_require__) {
 
 var __vue_exports__, __vue_options__
 var __vue_styles__ = []
 
 /* styles */
-__vue_styles__.push(__webpack_require__(151)
+__vue_styles__.push(__webpack_require__(122)
 )
 
 /* script */
-__vue_exports__ = __webpack_require__(152)
+__vue_exports__ = __webpack_require__(123)
 
 /* template */
-var __vue_template__ = __webpack_require__(153)
+var __vue_template__ = __webpack_require__(124)
 __vue_options__ = __vue_exports__ = __vue_exports__ || {}
 if (
   typeof __vue_exports__.default === "object" ||
@@ -472,7 +472,7 @@ module.exports = __vue_exports__
 
 /***/ }),
 
-/***/ 151:
+/***/ 122:
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -503,7 +503,7 @@ module.exports = {
 
 /***/ }),
 
-/***/ 152:
+/***/ 123:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -517,7 +517,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-var _wxcOverlay = __webpack_require__(33);
+var _wxcOverlay = __webpack_require__(29);
 
 var _wxcOverlay2 = _interopRequireDefault(_wxcOverlay);
 
@@ -763,7 +763,7 @@ exports.default = {
 
 /***/ }),
 
-/***/ 153:
+/***/ 124:
 /***/ (function(module, exports) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -807,7 +807,7 @@ module.exports.render._withStripped = true
 
 /***/ }),
 
-/***/ 154:
+/***/ 125:
 /***/ (function(module, exports) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -822,7 +822,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "title": "白菜币兑换",
       "backgroundColor": "#73cc00",
       "textColor": "#FFFFFF",
-      "leftButton": "../src/common/images/backImage.png",
+      "leftButton": "http://47.92.164.211:8011/PublicImage/backImage.png",
       "rightText": "兑换说明"
     },
     on: {
@@ -914,7 +914,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('image', {
     staticClass: ["my-image"],
     attrs: {
-      "src": "../src/components/exchange/exchange-bg.png"
+      "src": "http://47.92.164.211:8011/PublicImage/exchange-bg.png"
     }
   }), _c('text', {
     staticClass: ["my-title"]
@@ -926,7 +926,7 @@ module.exports.render._withStripped = true
 
 /***/ }),
 
-/***/ 33:
+/***/ 29:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -936,7 +936,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _index = __webpack_require__(34);
+var _index = __webpack_require__(30);
 
 Object.defineProperty(exports, 'default', {
   enumerable: true,
@@ -949,21 +949,21 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 /***/ }),
 
-/***/ 34:
+/***/ 30:
 /***/ (function(module, exports, __webpack_require__) {
 
 var __vue_exports__, __vue_options__
 var __vue_styles__ = []
 
 /* styles */
-__vue_styles__.push(__webpack_require__(35)
+__vue_styles__.push(__webpack_require__(31)
 )
 
 /* script */
-__vue_exports__ = __webpack_require__(36)
+__vue_exports__ = __webpack_require__(32)
 
 /* template */
-var __vue_template__ = __webpack_require__(37)
+var __vue_template__ = __webpack_require__(33)
 __vue_options__ = __vue_exports__ = __vue_exports__ || {}
 if (
   typeof __vue_exports__.default === "object" ||
@@ -994,7 +994,7 @@ module.exports = __vue_exports__
 
 /***/ }),
 
-/***/ 35:
+/***/ 31:
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -1010,7 +1010,7 @@ module.exports = {
 
 /***/ }),
 
-/***/ 36:
+/***/ 32:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1131,7 +1131,7 @@ exports.default = {
 
 /***/ }),
 
-/***/ 37:
+/***/ 33:
 /***/ (function(module, exports) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
