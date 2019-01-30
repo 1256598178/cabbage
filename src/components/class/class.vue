@@ -30,7 +30,7 @@
                         <div class="cellp" v-for="(parent,index) in classsubArr" :key="index" ref="item">
                             <text class="nav-title">{{parent.CategoryName}}</text>
                             <list>
-                                <cell class="cellps" v-for="(child,cindex) in classsubArr[index].product" :key="cindex">
+                                <cell class="cellps" v-for="(child,cindex) in classsubArr[index].product" @click="jump('components/GoodsInfo/Goods.js?ProductId=' + child.ProductId)" :key="cindex">
                                     <image class="product-img" :src="child.ImageUrl"></image>
                                     <div class="pro-news">
                                         <text class="product-title">{{child.ProductName}}</text>
@@ -38,7 +38,7 @@
                                         <div class="pro-m">
                                             <text class="product-price">￥{{child.SalesPrice}}元/{{child.Unit}}</text>
                                             <text class="product-prices">￥{{child.Price}}元</text>
-                                            <image class="shop-car-icon" src="../src/components/class/shop-car-icon.png"></image>
+                                            <image class="shop-car-icon" src="http://47.92.164.211:8011/PublicImage/shop-car-icon.png" @click="addShopCar(child.ProductId)"></image>
                                         </div>
                                     </div>
                                 </cell>
@@ -66,10 +66,12 @@ import Util from '../../common/utils/utils.js'
 import sHeader from '../header/searchHeader.vue'
 import { WxcPopup } from 'weex-ui'
 const dom = weex.requireModule('dom')
+const storage = weex.requireModule('storage')
 const animation = weex.requireModule('animation')
 const modal = weex.requireModule('modal')
 const CLASS_URL = 'api/product/getcagegorylist'
 const SELECT_URL = 'api/product/getprodcutlist?categoryId='
+const SHOPCAR_URL = 'api/cart/addCart'
 export default {
     data() {
         return {
@@ -92,7 +94,9 @@ export default {
             classsubArr: [],
             navIndex: 0,
             navIndexs: 0,
-            bool: true
+            bool: true,
+            USERID: 'user_id',
+            TOKEN: 'user_token',
         }
     },
     //2.然后,在components中写入子组件
@@ -236,6 +240,38 @@ export default {
                 delay: 0 //ms
             });
             this.bool = true;
+        },
+        addShopCar(Product_Id) {
+            var self = this;
+            console.log(Product_Id)
+            Util.WeexAjax({
+                url: SHOPCAR_URL,
+                //url: self.LOGIN_URL + '?categoryId=1',    
+                method: 'POST',
+                type: 'JSON',
+                token: self.TOKEN,
+                body: {
+                    "UserId": self.USERID,
+                    "ProductId": Product_Id,
+                    "CartNum": 1
+                },
+                callback: function(ret) {
+                    if (ret.Status == 1) {
+                        modal.toast({
+                            message: ret.Message,
+                            duration: 1
+                        })
+                    }else{
+                        modal.toast({
+                            message: '请求错误',
+                            duration: 1
+                        })
+                    }
+                }
+            })
+        },
+        jump(href) {
+            Util.bindThis(Util.jump(href),this.$getConfig())
         }
     },
     created() {
@@ -295,6 +331,13 @@ export default {
         fontModule.addRule('fontFace', {
             'fontFamily': "iconfont",
             'src': "url('//at.alicdn.com/t/font_948634_gubgm8w1dr.ttf')"
+        });
+        storage.getItem(_this.USERID, event => {
+            _this.USERID = event.data
+            storage.getItem(_this.TOKEN, event => {
+                _this.TOKEN = event.data
+                
+            })
         });
     }
 }

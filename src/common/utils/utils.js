@@ -59,6 +59,7 @@ let utils = {
     jump(href, event) {
         var bundleUrl = this.bundleUrl;
         var url = decodeURI(weex.config.bundleUrl); //取得整个地址栏
+        // 获取ip+端口
         var result = url.match(new RegExp("[a-zA-z]+://[^\s]{19}", "g"));
         if (WXEnvironment.platform === 'Web') {
             console.warn('Web端跳转待开发')
@@ -116,7 +117,7 @@ let utils = {
         };
     },
     analAjax() {
-        var url = decodeURI(weex.config.bundleUrl) + '?CategoryId=' + 12; //取得整个地址栏
+        var url = decodeURI(weex.config.bundleUrl); //取得整个地址栏
         console.log(url)
         var result = url.match(new RegExp(/\?\w*\=\w*(\&\w*\=\w*)*/, "g"))[0].slice(1);
         // console.log(result)

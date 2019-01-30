@@ -2,7 +2,7 @@
 // import router from './router'
 /* weex initialized here, please do not move this line */
 const router = require('./router');
-// const App = require('@/index.vue');
+const App = require('@/index.vue');
 // const App = require('@/components/class/class.	vue');//分类
 // const App = require('@/components/shop/shop.vue');//购物
 // const App = require('@/components/shop/setlemet.vue');//
@@ -20,13 +20,7 @@ const router = require('./router');
 // const App = require('@/components/reward/reward.vue');//我的奖励
 // const App = require('@/components/register/register.vue');//注册
 // const App = require('@/components/login/login.vue');//登录
-// const App = require('@/components/map/map.vue');//测试
-// const App = require('@/components/aabbcc/actdet.vue');//测试
-// const App = require('@/components/aabbcc/my.vue');//测试
-// const App = require('@/components/aabbcc/personlInfo.vue');//测试
-// const App = require('@/components/aabbcc/InviteFriends.vue');//测试
-// const App = require('@/components/aabbcc/withdrawal.vue');//测试
-const App = require('@/components/aabbcc/ResultsWithdrawals.vue');//测试
+// const App = require('@/components/checkstand/checkstand.vue');//测试
 /* eslint-disable no-new */
 new Vue(Vue.util.extend({el: '#root', router}, App));
 router.push('/');

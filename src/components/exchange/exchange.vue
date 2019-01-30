@@ -5,12 +5,12 @@
 			<!--状态栏-->
 			<text class="statusbar"></text>
 			<!--标题栏-->
-			<wxc-minibar title="白菜币兑换" background-color="#73cc00" text-color="#FFFFFF" left-button='../src/common/images/backImage.png' right-text="兑换说明" @wxcMinibarLeftButtonClicked="minibarLeftButtonClick" @wxcMinibarRightButtonClicked="openMask">
+			<wxc-minibar title="白菜币兑换" background-color="#73cc00" text-color="#FFFFFF" left-button='http://47.92.164.211:8011/PublicImage/backImage.png' right-text="兑换说明" @wxcMinibarLeftButtonClicked="minibarLeftButtonClick" @wxcMinibarRightButtonClicked="openMask">
 				<text class="title" slot="middle">白菜币兑换</text>
 			</wxc-minibar>
 		</div>
 		<div class="my-currency">
-			<image class="my-image" src="../src/components/exchange/exchange-bg.png"></image>
+			<image class="my-image" src="http://47.92.164.211:8011/PublicImage/exchange-bg.png"></image>
 			<text class="my-title">我的白菜币</text>
 			<text class="my-number">10</text>
 		</div>
@@ -72,10 +72,10 @@
       		crt: '',
 			gList:[
 				{
-					imageUrl:"../src/components/exchange/game-img01.png",
+					imageUrl:"http://47.92.164.211:8011/PublicImage/game-img01.png",
 					linkUrl:""
 				},{
-					imageUrl:"../src/components/exchange/game-img02.png",
+					imageUrl:"http://47.92.164.211:8011/PublicImage/game-img02.png",
 					linkUrl:""
 				}
 			],

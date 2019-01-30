@@ -62,7 +62,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 96);
+/******/ 	return __webpack_require__(__webpack_require__.s = 125);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -140,6 +140,7 @@ var utils = {
     jump: function jump(href, event) {
         var bundleUrl = this.bundleUrl;
         var url = decodeURI(weex.config.bundleUrl); //取得整个地址栏
+        // 获取ip+端口
         var result = url.match(new RegExp("[a-zA-z]+://[^\s]{19}", "g"));
         if (WXEnvironment.platform === 'Web') {
             console.warn('Web端跳转待开发');
@@ -199,7 +200,7 @@ var utils = {
         };
     },
     analAjax: function analAjax() {
-        var url = decodeURI(weex.config.bundleUrl) + '?CategoryId=' + 12; //取得整个地址栏
+        var url = decodeURI(weex.config.bundleUrl); //取得整个地址栏
         console.log(url);
         var result = url.match(new RegExp(/\?\w*\=\w*(\&\w*\=\w*)*/, "g"))[0].slice(1);
         // console.log(result)
@@ -346,7 +347,7 @@ var _utils2 = _interopRequireDefault(_utils);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var navigator = weex.requireModule('navigator'); //
+var MODIFYSHOPNUM_URL = 'api/cart/changeCart'; //
 //
 //
 //
@@ -358,6 +359,7 @@ var navigator = weex.requireModule('navigator'); //
 //
 //
 
+var navigator = weex.requireModule('navigator');
 var modal = weex.requireModule('modal');
 exports.default = {
     props: {
@@ -406,6 +408,9 @@ exports.default = {
         },
         layoutClick: function layoutClick() {
             this.$emit("layoutAct", this.layoutActBool = !this.layoutActBool);
+        },
+        deletFoods: function deletFoods() {
+            this.$emit("fetch");
         }
     },
     created: function created() {
@@ -522,90 +527,21 @@ module.exports = __vue_exports__
 
 /***/ }),
 
-/***/ 9:
-/***/ (function(module, exports) {
-
-module.exports = {
-  "iconFont": {
-    "fontFamily": "iconfont"
-  },
-  "backBtn": {
-    "position": "absolute",
-    "left": "20",
-    "top": "25.5",
-    "width": "28",
-    "height": "41"
-  },
-  "shareBtn": {
-    "position": "absolute",
-    "top": "23",
-    "right": "20",
-    "width": "46",
-    "height": "46"
-  },
-  "layoutBtn-44": {
-    "position": "absolute",
-    "top": "24",
-    "right": "20",
-    "width": "44",
-    "height": "44"
-  },
-  "shop-header-title-wrapper": {
-    "position": "relative",
-    "display": "flex",
-    "flexDirection": "row",
-    "justifyContent": "center",
-    "alignItems": "center",
-    "height": "92",
-    "paddingLeft": "20",
-    "paddingRight": "20",
-    "backgroundColor": "#73cc46"
-  },
-  "shop-header-title": {
-    "width": "500",
-    "fontSize": "42",
-    "color": "#ffffff",
-    "textAlign": "center",
-    "textOverflow": "ellipsis",
-    "lines": 1
-  },
-  "shop-header-delet": {
-    "position": "absolute",
-    "right": "20",
-    "top": 0,
-    "marginTop": "27",
-    "fontSize": "34",
-    "lineHeight": "38",
-    "color": "#c1e6a3"
-  },
-  "shop-header-info": {
-    "position": "absolute",
-    "right": "20",
-    "top": 0,
-    "marginTop": "27",
-    "fontSize": "34",
-    "lineHeight": "38",
-    "color": "#ffffff"
-  }
-}
-
-/***/ }),
-
-/***/ 96:
+/***/ 125:
 /***/ (function(module, exports, __webpack_require__) {
 
 var __vue_exports__, __vue_options__
 var __vue_styles__ = []
 
 /* styles */
-__vue_styles__.push(__webpack_require__(97)
+__vue_styles__.push(__webpack_require__(126)
 )
 
 /* script */
-__vue_exports__ = __webpack_require__(98)
+__vue_exports__ = __webpack_require__(127)
 
 /* template */
-var __vue_template__ = __webpack_require__(99)
+var __vue_template__ = __webpack_require__(128)
 __vue_options__ = __vue_exports__ = __vue_exports__ || {}
 if (
   typeof __vue_exports__.default === "object" ||
@@ -638,7 +574,7 @@ new Vue(module.exports)
 
 /***/ }),
 
-/***/ 97:
+/***/ 126:
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -764,7 +700,7 @@ module.exports = {
 
 /***/ }),
 
-/***/ 98:
+/***/ 127:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -854,7 +790,7 @@ exports.default = {
 
 /***/ }),
 
-/***/ 99:
+/***/ 128:
 /***/ (function(module, exports) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -936,6 +872,75 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   })])])
 }]}
 module.exports.render._withStripped = true
+
+/***/ }),
+
+/***/ 9:
+/***/ (function(module, exports) {
+
+module.exports = {
+  "iconFont": {
+    "fontFamily": "iconfont"
+  },
+  "backBtn": {
+    "position": "absolute",
+    "left": "20",
+    "top": "25.5",
+    "width": "28",
+    "height": "41"
+  },
+  "shareBtn": {
+    "position": "absolute",
+    "top": "23",
+    "right": "20",
+    "width": "46",
+    "height": "46"
+  },
+  "layoutBtn-44": {
+    "position": "absolute",
+    "top": "24",
+    "right": "20",
+    "width": "44",
+    "height": "44"
+  },
+  "shop-header-title-wrapper": {
+    "position": "relative",
+    "display": "flex",
+    "flexDirection": "row",
+    "justifyContent": "center",
+    "alignItems": "center",
+    "height": "92",
+    "paddingLeft": "20",
+    "paddingRight": "20",
+    "backgroundColor": "#73cc46"
+  },
+  "shop-header-title": {
+    "width": "500",
+    "fontSize": "42",
+    "color": "#ffffff",
+    "textAlign": "center",
+    "textOverflow": "ellipsis",
+    "lines": 1
+  },
+  "shop-header-delet": {
+    "position": "absolute",
+    "right": "20",
+    "top": 0,
+    "marginTop": "27",
+    "fontSize": "34",
+    "lineHeight": "38",
+    "color": "#c1e6a3"
+  },
+  "shop-header-info": {
+    "position": "absolute",
+    "right": "20",
+    "top": 0,
+    "marginTop": "27",
+    "fontSize": "34",
+    "lineHeight": "38",
+    "color": "#ffffff"
+  }
+}
 
 /***/ })
 

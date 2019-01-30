@@ -62,7 +62,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 138);
+/******/ 	return __webpack_require__(__webpack_require__.s = 167);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -140,6 +140,7 @@ var utils = {
     jump: function jump(href, event) {
         var bundleUrl = this.bundleUrl;
         var url = decodeURI(weex.config.bundleUrl); //取得整个地址栏
+        // 获取ip+端口
         var result = url.match(new RegExp("[a-zA-z]+://[^\s]{19}", "g"));
         if (WXEnvironment.platform === 'Web') {
             console.warn('Web端跳转待开发');
@@ -199,7 +200,7 @@ var utils = {
         };
     },
     analAjax: function analAjax() {
-        var url = decodeURI(weex.config.bundleUrl) + '?CategoryId=' + 12; //取得整个地址栏
+        var url = decodeURI(weex.config.bundleUrl); //取得整个地址栏
         console.log(url);
         var result = url.match(new RegExp(/\?\w*\=\w*(\&\w*\=\w*)*/, "g"))[0].slice(1);
         // console.log(result)
@@ -1134,200 +1135,6 @@ var _typeof2 = typeof Symbol === "function" && typeof Symbol.iterator === "symbo
 
 /***/ }),
 
-/***/ 138:
-/***/ (function(module, exports, __webpack_require__) {
-
-var __vue_exports__, __vue_options__
-var __vue_styles__ = []
-
-/* styles */
-__vue_styles__.push(__webpack_require__(139)
-)
-
-/* script */
-__vue_exports__ = __webpack_require__(140)
-
-/* template */
-var __vue_template__ = __webpack_require__(141)
-__vue_options__ = __vue_exports__ = __vue_exports__ || {}
-if (
-  typeof __vue_exports__.default === "object" ||
-  typeof __vue_exports__.default === "function"
-) {
-if (Object.keys(__vue_exports__).some(function (key) { return key !== "default" && key !== "__esModule" })) {console.error("named exports are not supported in *.vue files.")}
-__vue_options__ = __vue_exports__ = __vue_exports__.default
-}
-if (typeof __vue_options__ === "function") {
-  __vue_options__ = __vue_options__.options
-}
-__vue_options__.__file = "F:\\WebApp\\cabbage\\src\\components\\GoodsInfo\\GoodsInfo.vue"
-__vue_options__.render = __vue_template__.render
-__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
-__vue_options__._scopeId = "data-v-9bc6fb64"
-__vue_options__.style = __vue_options__.style || {}
-__vue_styles__.forEach(function (module) {
-  for (var name in module) {
-    __vue_options__.style[name] = module[name]
-  }
-})
-if (typeof __register_static_styles__ === "function") {
-  __register_static_styles__(__vue_options__._scopeId, __vue_styles__)
-}
-
-module.exports = __vue_exports__
-module.exports.el = 'true'
-new Vue(module.exports)
-
-
-/***/ }),
-
-/***/ 139:
-/***/ (function(module, exports) {
-
-module.exports = {
-  "iconFont": {
-    "fontFamily": "iconfont"
-  },
-  "shop-header": {
-    "width": "750",
-    "height": "90",
-    "flexDirection": "row",
-    "borderBottomWidth": "1",
-    "borderBottomStyle": "solid",
-    "borderBottomColor": "#dcdcdc"
-  },
-  "back-box": {
-    "width": "70",
-    "height": "90",
-    "justifyContent": "center",
-    "alignItems": "center"
-  },
-  "back-btn": {
-    "width": "28",
-    "height": "41"
-  },
-  "shop-header-title-wrapper": {
-    "position": "relative",
-    "flex": 1,
-    "flexDirection": "row",
-    "justifyContent": "center",
-    "paddingTop": "32",
-    "height": "90",
-    "marginRight": "70"
-  },
-  "shop-header-title": {
-    "width": "70",
-    "fontSize": "30",
-    "lineHeight": "32",
-    "color": "#333333",
-    "textAlign": "center",
-    "marginLeft": "10",
-    "marginRight": "10",
-    "borderBottomWidth": "5",
-    "borderBottomStyle": "solid",
-    "borderBottomColor": "rgba(0,0,0,0)",
-    "paddingBottom": "20"
-  },
-  "crt": {
-    "borderBottomColor": "#73cc00",
-    "color": "#73cc00"
-  },
-  "shop-header-delet": {
-    "position": "absolute",
-    "right": 0,
-    "top": 0,
-    "marginTop": "29",
-    "fontSize": "34",
-    "color": "#c1e6a3"
-  },
-  "shop-address-wrapper": {
-    "display": "flex",
-    "flexDirection": "row",
-    "alignItems": "center",
-    "paddingTop": "21"
-  },
-  "list-box": {
-    "position": "fixed",
-    "top": "90",
-    "bottom": "100",
-    "left": 0,
-    "right": 0
-  },
-  "goods-info-img": {
-    "width": "750"
-  },
-  "bottom-box": {
-    "height": "100",
-    "flexDirection": "row",
-    "alignItems": "center",
-    "position": "fixed",
-    "left": 0,
-    "right": 0,
-    "bottom": 0,
-    "backgroundColor": "#ffffff",
-    "paddingLeft": "20",
-    "paddingRight": "20",
-    "boxShadow": "0 -1px 6px rgba(0, 0, 0, 0.1)"
-  },
-  "shop-car": {
-    "width": "60",
-    "height": "60",
-    "borderRadius": "30",
-    "backgroundColor": "#73cc00",
-    "marginRight": "20"
-  },
-  "shop-car-icon": {
-    "fontSize": "32",
-    "lineHeight": "60",
-    "textAlign": "center",
-    "color": "#ffffff"
-  },
-  "shop-car-num": {
-    "minWidth": "10",
-    "height": "20",
-    "paddingTop": 0,
-    "paddingRight": "5",
-    "paddingBottom": 0,
-    "paddingLeft": "5",
-    "borderRadius": "10",
-    "backgroundColor": "#ff0000",
-    "fontSize": "14",
-    "lineHeight": "20",
-    "color": "#ffffff",
-    "textAlign": "center",
-    "position": "absolute",
-    "top": 0,
-    "left": "45"
-  },
-  "collection": {
-    "width": "60",
-    "height": "60",
-    "borderRadius": "30",
-    "backgroundColor": "#ff5d61",
-    "marginRight": "60"
-  },
-  "collection-icon": {
-    "fontSize": "32",
-    "lineHeight": "60",
-    "textAlign": "center",
-    "color": "#ffffff"
-  },
-  "add-box": {
-    "flex": 1
-  },
-  "add-btn": {
-    "height": "70",
-    "borderRadius": "35",
-    "fontSize": "30",
-    "lineHeight": "70",
-    "textAlign": "center",
-    "color": "#ffffff",
-    "backgroundColor": "#73cc00"
-  }
-}
-
-/***/ }),
-
 /***/ 14:
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1377,414 +1184,6 @@ var BindEnv = {
 };
 
 exports.default = BindEnv;
-
-/***/ }),
-
-/***/ 140:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-	value: true
-});
-
-var _wxcPanItem = __webpack_require__(20);
-
-var _wxcPanItem2 = _interopRequireDefault(_wxcPanItem);
-
-var _wxcTabPage = __webpack_require__(24);
-
-var _wxcTabPage2 = _interopRequireDefault(_wxcTabPage);
-
-var _wxcMinibar = __webpack_require__(4);
-
-var _wxcMinibar2 = _interopRequireDefault(_wxcMinibar);
-
-var _utils = __webpack_require__(0);
-
-var _utils2 = _interopRequireDefault(_utils);
-
-var _config = __webpack_require__(64);
-
-var _config2 = _interopRequireDefault(_config);
-
-var _vue = __webpack_require__(15);
-
-var _vue2 = _interopRequireDefault(_vue);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-var dom = weex.requireModule('dom');
-var animation = weex.requireModule('animation');
-
-// https://github.com/alibaba/weex-ui/blob/master/example/tab-page/config.js
-//import orderItem from './order-item.vue'
-
-var navigator = weex.requireModule('navigator');
-var modal = weex.requireModule('modal');
-var stream = weex.requireModule('stream');
-var storage = weex.requireModule('storage');
-
-exports.default = {
-	components: {
-		WxcMinibar: _wxcMinibar2.default,
-		WxcTabPage: _wxcTabPage2.default,
-		WxcPanItem: _wxcPanItem2.default,
-		Config: _config2.default
-		//orderItem
-	},
-	data: function data() {
-		return {
-			cIndex: 1,
-			len: 0,
-			LOGIN_URL: 'api/product/getprodcutdetail',
-			USERID: 'user_id',
-			TOKEN: 'user_token',
-			PRODUCTID: '',
-			ImageUrl: '',
-			CarNum: '',
-			NumType: false
-		};
-	},
-
-	methods: {
-		onImageLoad: function onImageLoad(event) {
-			console.log(event.size.naturalWidth + ',' + event.size.naturalHeight);
-			var that = this;
-			var scales = 750 / event.size.naturalWidth;
-			console.log('eventTarget = ' + event.target);
-			var view = that.$refs['img'];
-			console.log(view);
-			if (event.success) {
-				if (WXEnvironment.platform === 'Web') {
-					view.style.width = event.size.naturalWidth * scales + 'px';
-					view.style.height = event.size.naturalHeight * scales + 'px';
-				} else {
-					animation.transition(view, {
-						styles: {
-							//width: event.size.naturalWidth*scales + 'px',
-							height: event.size.naturalHeight * scales + 'px'
-						},
-						duration: 0, //需要设置为0，否则无效
-						timingFunction: 'ease',
-						delay: 0,
-						needLayout: true //变化后刷新界面
-					});
-				}
-			}
-		},
-		minibarLeftButtonClick: function minibarLeftButtonClick() {
-			this.$router.push('-1');
-		},
-		link: function link(urls) {
-			_utils2.default.jump(urls);
-		}
-	},
-	created: function created() {
-		var _this = this;
-
-		var fontModule = weex.requireModule("dom");
-		fontModule.addRule('fontFace', {
-			'fontFamily': "iconfont",
-			'src': "url('//at.alicdn.com/t/font_948634_j56el7oqed.ttf')"
-		});
-		var self = this;
-		if (self.CarNum == 0 || self.CarNum == '') {
-			self.NumType = false;
-		} else {
-			self.NumType = true;
-		}
-		var GoodsInfo = new BroadcastChannel('Avengers');
-		GoodsInfo.onmessage = function (event) {
-			console.log(event.data); // Assemble!
-		};
-		storage.getItem(this.USERID, function (event) {
-			self.USERID = event.data;
-			storage.getItem(_this.TOKEN, function (event) {
-				self.TOKEN = event.data;
-				_utils2.default.WeexAjax({
-					url: self.LOGIN_URL + '?prodcutId=1',
-					//url: self.LOGIN_URL + '?categoryId=1',	
-					method: 'GET',
-					type: 'JSON',
-					token: self.TOKEN,
-					callback: function callback(ret) {
-						if (ret.Status == 1) {
-							//self.loginBool = true;
-							self.ImageUrl = ret.obj.ImageUrl;
-							console.log(ret);
-							//self.onImageLoad();
-						}
-					}
-				});
-			});
-		});
-	}
-};
-
-/***/ }),
-
-/***/ 141:
-/***/ (function(module, exports) {
-
-module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', [_c('header', {
-    staticClass: ["shop-header"],
-    appendAsTree: true,
-    attrs: {
-      "append": "tree"
-    }
-  }, [_vm._m(0), _c('div', {
-    staticClass: ["shop-header-title-wrapper"]
-  }, [_c('text', {
-    staticClass: ["shop-header-title"],
-    on: {
-      "click": function($event) {
-        _vm.link('components/GoodsInfo/Goods.js')
-      }
-    }
-  }, [_vm._v("商品")]), _c('text', {
-    staticClass: ["shop-header-title", "crt"]
-  }, [_vm._v("详情")])])]), _c('list', {
-    staticClass: ["list-box"]
-  }, [_c('cell', {
-    appendAsTree: true,
-    attrs: {
-      "append": "tree"
-    }
-  }, [_c('image', {
-    ref: "img",
-    staticClass: ["goods-info-img"],
-    attrs: {
-      "src": _vm.ImageUrl
-    },
-    on: {
-      "load": _vm.onImageLoad
-    }
-  })])]), _c('div', {
-    staticClass: ["bottom-box"]
-  }, [_c('div', {
-    staticClass: ["shop-car"]
-  }, [_c('text', {
-    staticClass: ["shop-car-icon", "iconFont"]
-  }, [_vm._v("")]), (_vm.NumType) ? _c('text', {
-    staticClass: ["shop-car-num"]
-  }, [_vm._v(_vm._s(_vm.CarNum))]) : _vm._e()]), _vm._m(1), _vm._m(2)])])
-},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: ["back-box"]
-  }, [_c('image', {
-    staticClass: ["back-btn"],
-    attrs: {
-      "src": "../src/common/images/backImages.png"
-    }
-  })])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: ["collection"]
-  }, [_c('text', {
-    staticClass: ["collection-icon", "iconFont"]
-  }, [_vm._v("")])])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: ["add-box"]
-  }, [_c('text', {
-    staticClass: ["add-btn"]
-  }, [_vm._v("加入购物车")])])
-}]}
-module.exports.render._withStripped = true
 
 /***/ }),
 
@@ -9390,6 +8789,536 @@ process.umask = function () {
 
 /***/ }),
 
+/***/ 167:
+/***/ (function(module, exports, __webpack_require__) {
+
+var __vue_exports__, __vue_options__
+var __vue_styles__ = []
+
+/* styles */
+__vue_styles__.push(__webpack_require__(168)
+)
+
+/* script */
+__vue_exports__ = __webpack_require__(169)
+
+/* template */
+var __vue_template__ = __webpack_require__(170)
+__vue_options__ = __vue_exports__ = __vue_exports__ || {}
+if (
+  typeof __vue_exports__.default === "object" ||
+  typeof __vue_exports__.default === "function"
+) {
+if (Object.keys(__vue_exports__).some(function (key) { return key !== "default" && key !== "__esModule" })) {console.error("named exports are not supported in *.vue files.")}
+__vue_options__ = __vue_exports__ = __vue_exports__.default
+}
+if (typeof __vue_options__ === "function") {
+  __vue_options__ = __vue_options__.options
+}
+__vue_options__.__file = "F:\\WebApp\\cabbage\\src\\components\\GoodsInfo\\GoodsInfo.vue"
+__vue_options__.render = __vue_template__.render
+__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
+__vue_options__._scopeId = "data-v-9bc6fb64"
+__vue_options__.style = __vue_options__.style || {}
+__vue_styles__.forEach(function (module) {
+  for (var name in module) {
+    __vue_options__.style[name] = module[name]
+  }
+})
+if (typeof __register_static_styles__ === "function") {
+  __register_static_styles__(__vue_options__._scopeId, __vue_styles__)
+}
+
+module.exports = __vue_exports__
+module.exports.el = 'true'
+new Vue(module.exports)
+
+
+/***/ }),
+
+/***/ 168:
+/***/ (function(module, exports) {
+
+module.exports = {
+  "iconFont": {
+    "fontFamily": "iconfont"
+  },
+  "shop-header": {
+    "width": "750",
+    "height": "90",
+    "flexDirection": "row",
+    "borderBottomWidth": "1",
+    "borderBottomStyle": "solid",
+    "borderBottomColor": "#dcdcdc"
+  },
+  "back-box": {
+    "width": "70",
+    "height": "90",
+    "justifyContent": "center",
+    "alignItems": "center"
+  },
+  "back-btn": {
+    "width": "28",
+    "height": "41"
+  },
+  "shop-header-title-wrapper": {
+    "position": "relative",
+    "flex": 1,
+    "flexDirection": "row",
+    "justifyContent": "center",
+    "paddingTop": "32",
+    "height": "90",
+    "marginRight": "70"
+  },
+  "shop-header-title": {
+    "width": "70",
+    "fontSize": "30",
+    "lineHeight": "32",
+    "color": "#333333",
+    "textAlign": "center",
+    "marginLeft": "10",
+    "marginRight": "10",
+    "borderBottomWidth": "5",
+    "borderBottomStyle": "solid",
+    "borderBottomColor": "rgba(0,0,0,0)",
+    "paddingBottom": "20"
+  },
+  "crt": {
+    "borderBottomColor": "#73cc00",
+    "color": "#73cc00"
+  },
+  "shop-header-delet": {
+    "position": "absolute",
+    "right": 0,
+    "top": 0,
+    "marginTop": "29",
+    "fontSize": "34",
+    "color": "#c1e6a3"
+  },
+  "shop-address-wrapper": {
+    "display": "flex",
+    "flexDirection": "row",
+    "alignItems": "center",
+    "paddingTop": "21"
+  },
+  "list-box": {
+    "position": "fixed",
+    "top": "90",
+    "bottom": "100",
+    "left": 0,
+    "right": 0
+  },
+  "goods-info-img": {
+    "width": "750"
+  },
+  "bottom-box": {
+    "height": "100",
+    "flexDirection": "row",
+    "alignItems": "center",
+    "position": "fixed",
+    "left": 0,
+    "right": 0,
+    "bottom": 0,
+    "backgroundColor": "#ffffff",
+    "paddingLeft": "20",
+    "paddingRight": "20",
+    "boxShadow": "0 -1px 6px rgba(0, 0, 0, 0.1)"
+  },
+  "shop-car": {
+    "width": "60",
+    "height": "60",
+    "borderRadius": "30",
+    "backgroundColor": "#73cc00",
+    "marginRight": "20"
+  },
+  "shop-car-icon": {
+    "fontSize": "32",
+    "lineHeight": "60",
+    "textAlign": "center",
+    "color": "#ffffff"
+  },
+  "shop-car-num": {
+    "minWidth": "10",
+    "height": "20",
+    "paddingTop": 0,
+    "paddingRight": "5",
+    "paddingBottom": 0,
+    "paddingLeft": "5",
+    "borderRadius": "10",
+    "backgroundColor": "#ff0000",
+    "fontSize": "14",
+    "lineHeight": "20",
+    "color": "#ffffff",
+    "textAlign": "center",
+    "position": "absolute",
+    "top": 0,
+    "left": "45"
+  },
+  "collection": {
+    "width": "60",
+    "height": "60",
+    "borderRadius": "30",
+    "backgroundColor": "#ff5d61",
+    "marginRight": "60"
+  },
+  "collection-icon": {
+    "fontSize": "32",
+    "lineHeight": "60",
+    "textAlign": "center",
+    "color": "#ffffff"
+  },
+  "add-box": {
+    "flex": 1
+  },
+  "add-btn": {
+    "height": "70",
+    "borderRadius": "35",
+    "fontSize": "30",
+    "lineHeight": "70",
+    "textAlign": "center",
+    "color": "#ffffff",
+    "backgroundColor": "#73cc00"
+  }
+}
+
+/***/ }),
+
+/***/ 169:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _wxcPanItem = __webpack_require__(24);
+
+var _wxcPanItem2 = _interopRequireDefault(_wxcPanItem);
+
+var _wxcTabPage = __webpack_require__(28);
+
+var _wxcTabPage2 = _interopRequireDefault(_wxcTabPage);
+
+var _wxcMinibar = __webpack_require__(4);
+
+var _wxcMinibar2 = _interopRequireDefault(_wxcMinibar);
+
+var _utils = __webpack_require__(0);
+
+var _utils2 = _interopRequireDefault(_utils);
+
+var _config = __webpack_require__(68);
+
+var _config2 = _interopRequireDefault(_config);
+
+var _vue = __webpack_require__(15);
+
+var _vue2 = _interopRequireDefault(_vue);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+var dom = weex.requireModule('dom');
+var animation = weex.requireModule('animation');
+
+// https://github.com/alibaba/weex-ui/blob/master/example/tab-page/config.js
+//import orderItem from './order-item.vue'
+
+var navigator = weex.requireModule('navigator');
+var modal = weex.requireModule('modal');
+var stream = weex.requireModule('stream');
+var storage = weex.requireModule('storage');
+
+exports.default = {
+	components: {
+		WxcMinibar: _wxcMinibar2.default,
+		WxcTabPage: _wxcTabPage2.default,
+		WxcPanItem: _wxcPanItem2.default,
+		Config: _config2.default
+		//orderItem
+	},
+	data: function data() {
+		return {
+			cIndex: 1,
+			len: 0,
+			LOGIN_URL: 'api/product/getprodcutdetail',
+			USERID: 'user_id',
+			TOKEN: 'user_token',
+			PRODUCTID: '',
+			ImageUrl: '',
+			CarNum: '',
+			NumType: false
+		};
+	},
+
+	methods: {
+		onImageLoad: function onImageLoad(event) {
+			console.log(event.size.naturalWidth + ',' + event.size.naturalHeight);
+			var that = this;
+			var scales = 750 / event.size.naturalWidth;
+			console.log('eventTarget = ' + event.target);
+			var view = that.$refs['img'];
+			console.log(view);
+			if (event.success) {
+				if (WXEnvironment.platform === 'Web') {
+					view.style.width = event.size.naturalWidth * scales + 'px';
+					view.style.height = event.size.naturalHeight * scales + 'px';
+				} else {
+					animation.transition(view, {
+						styles: {
+							//width: event.size.naturalWidth*scales + 'px',
+							height: event.size.naturalHeight * scales + 'px'
+						},
+						duration: 0, //需要设置为0，否则无效
+						timingFunction: 'ease',
+						delay: 0,
+						needLayout: true //变化后刷新界面
+					});
+				}
+			}
+		},
+		minibarLeftButtonClick: function minibarLeftButtonClick() {
+			this.$router.push('-1');
+		},
+		link: function link(urls) {
+			_utils2.default.jump(urls);
+		}
+	},
+	created: function created() {
+		var _this = this;
+
+		var fontModule = weex.requireModule("dom");
+		fontModule.addRule('fontFace', {
+			'fontFamily': "iconfont",
+			'src': "url('//at.alicdn.com/t/font_948634_j56el7oqed.ttf')"
+		});
+		var self = this;
+		if (self.CarNum == 0 || self.CarNum == '') {
+			self.NumType = false;
+		} else {
+			self.NumType = true;
+		}
+		var GoodsInfo = new BroadcastChannel('Avengers');
+		GoodsInfo.onmessage = function (event) {
+			console.log(event.data); // Assemble!
+		};
+		storage.getItem(this.USERID, function (event) {
+			self.USERID = event.data;
+			storage.getItem(_this.TOKEN, function (event) {
+				self.TOKEN = event.data;
+				_utils2.default.WeexAjax({
+					url: self.LOGIN_URL + '?prodcutId=1',
+					//url: self.LOGIN_URL + '?categoryId=1',	
+					method: 'GET',
+					type: 'JSON',
+					token: self.TOKEN,
+					callback: function callback(ret) {
+						if (ret.Status == 1) {
+							//self.loginBool = true;
+							self.ImageUrl = ret.obj.ImageUrl;
+							console.log(ret);
+							//self.onImageLoad();
+						}
+					}
+				});
+			});
+		});
+	}
+};
+
+/***/ }),
+
 /***/ 17:
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -9821,6 +9750,78 @@ Url.qs = qs;
 
 module.exports = Url;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
+
+/***/ }),
+
+/***/ 170:
+/***/ (function(module, exports) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', [_c('header', {
+    staticClass: ["shop-header"],
+    appendAsTree: true,
+    attrs: {
+      "append": "tree"
+    }
+  }, [_vm._m(0), _c('div', {
+    staticClass: ["shop-header-title-wrapper"]
+  }, [_c('text', {
+    staticClass: ["shop-header-title"],
+    on: {
+      "click": function($event) {
+        _vm.link('components/GoodsInfo/Goods.js')
+      }
+    }
+  }, [_vm._v("商品")]), _c('text', {
+    staticClass: ["shop-header-title", "crt"]
+  }, [_vm._v("详情")])])]), _c('list', {
+    staticClass: ["list-box"]
+  }, [_c('cell', {
+    appendAsTree: true,
+    attrs: {
+      "append": "tree"
+    }
+  }, [_c('image', {
+    ref: "img",
+    staticClass: ["goods-info-img"],
+    attrs: {
+      "src": _vm.ImageUrl
+    },
+    on: {
+      "load": _vm.onImageLoad
+    }
+  })])]), _c('div', {
+    staticClass: ["bottom-box"]
+  }, [_c('div', {
+    staticClass: ["shop-car"]
+  }, [_c('text', {
+    staticClass: ["shop-car-icon", "iconFont"]
+  }, [_vm._v("")]), (_vm.NumType) ? _c('text', {
+    staticClass: ["shop-car-num"]
+  }, [_vm._v(_vm._s(_vm.CarNum))]) : _vm._e()]), _vm._m(1), _vm._m(2)])])
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: ["back-box"]
+  }, [_c('image', {
+    staticClass: ["back-btn"],
+    attrs: {
+      "src": "../src/common/images/backImages.png"
+    }
+  })])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: ["collection"]
+  }, [_c('text', {
+    staticClass: ["collection-icon", "iconFont"]
+  }, [_vm._v("")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: ["add-box"]
+  }, [_c('text', {
+    staticClass: ["add-btn"]
+  }, [_vm._v("加入购物车")])])
+}]}
+module.exports.render._withStripped = true
 
 /***/ }),
 
@@ -10320,7 +10321,7 @@ exports.default = Utils;
 
 /***/ }),
 
-/***/ 20:
+/***/ 24:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10330,7 +10331,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _index = __webpack_require__(21);
+var _index = __webpack_require__(25);
 
 Object.defineProperty(exports, 'default', {
   enumerable: true,
@@ -10343,17 +10344,17 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 /***/ }),
 
-/***/ 21:
+/***/ 25:
 /***/ (function(module, exports, __webpack_require__) {
 
 var __vue_exports__, __vue_options__
 var __vue_styles__ = []
 
 /* script */
-__vue_exports__ = __webpack_require__(22)
+__vue_exports__ = __webpack_require__(26)
 
 /* template */
-var __vue_template__ = __webpack_require__(23)
+var __vue_template__ = __webpack_require__(27)
 __vue_options__ = __vue_exports__ = __vue_exports__ || {}
 if (
   typeof __vue_exports__.default === "object" ||
@@ -10383,7 +10384,7 @@ module.exports = __vue_exports__
 
 /***/ }),
 
-/***/ 22:
+/***/ 26:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10489,7 +10490,7 @@ exports.default = {
 
 /***/ }),
 
-/***/ 23:
+/***/ 27:
 /***/ (function(module, exports) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -10512,7 +10513,7 @@ module.exports.render._withStripped = true
 
 /***/ }),
 
-/***/ 24:
+/***/ 28:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10522,7 +10523,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _index = __webpack_require__(25);
+var _index = __webpack_require__(29);
 
 Object.defineProperty(exports, 'default', {
   enumerable: true,
@@ -10535,21 +10536,21 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 /***/ }),
 
-/***/ 25:
+/***/ 29:
 /***/ (function(module, exports, __webpack_require__) {
 
 var __vue_exports__, __vue_options__
 var __vue_styles__ = []
 
 /* styles */
-__vue_styles__.push(__webpack_require__(26)
+__vue_styles__.push(__webpack_require__(30)
 )
 
 /* script */
-__vue_exports__ = __webpack_require__(27)
+__vue_exports__ = __webpack_require__(31)
 
 /* template */
-var __vue_template__ = __webpack_require__(28)
+var __vue_template__ = __webpack_require__(32)
 __vue_options__ = __vue_exports__ = __vue_exports__ || {}
 if (
   typeof __vue_exports__.default === "object" ||
@@ -10580,7 +10581,38 @@ module.exports = __vue_exports__
 
 /***/ }),
 
-/***/ 26:
+/***/ 3:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+var g;
+
+// This works in non-strict mode
+g = function () {
+	return this;
+}();
+
+try {
+	// This works if eval is allowed (see CSP)
+	g = g || Function("return this")() || (1, eval)("this");
+} catch (e) {
+	// This works if the window reference is available
+	if ((typeof window === "undefined" ? "undefined" : _typeof(window)) === "object") g = window;
+}
+
+// g can still be undefined, but nothing to do about it...
+// We return undefined, instead of nothing here, so it's
+// easier to handle this case. if(!global) { ...}
+
+module.exports = g;
+
+/***/ }),
+
+/***/ 30:
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -10616,7 +10648,7 @@ module.exports = {
 
 /***/ }),
 
-/***/ 27:
+/***/ 31:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10971,7 +11003,7 @@ exports.default = {
 
 /***/ }),
 
-/***/ 28:
+/***/ 32:
 /***/ (function(module, exports) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -11062,37 +11094,6 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_vm._t("default")], 2)])])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
-
-/***/ }),
-
-/***/ 3:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-var g;
-
-// This works in non-strict mode
-g = function () {
-	return this;
-}();
-
-try {
-	// This works if eval is allowed (see CSP)
-	g = g || Function("return this")() || (1, eval)("this");
-} catch (e) {
-	// This works if the window reference is available
-	if ((typeof window === "undefined" ? "undefined" : _typeof(window)) === "object") g = window;
-}
-
-// g can still be undefined, but nothing to do about it...
-// We return undefined, instead of nothing here, so it's
-// easier to handle this case. if(!global) { ...}
-
-module.exports = g;
 
 /***/ }),
 
@@ -11207,7 +11208,7 @@ module.exports = {
 
 /***/ }),
 
-/***/ 64:
+/***/ 68:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";

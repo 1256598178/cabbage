@@ -16,10 +16,10 @@
 						</div>
 						<div class="info-body-wrapper">
 							<div class="info-body-left">
-								<div class="info-body-bell"><image class="info-body-image" src="../src/components/information/bell@42x52.png"></image></div>
+								<div class="info-body-bell"><image class="info-body-image" src="http://47.92.164.211:8011/PublicImage/bell@42x52.png"></image></div>
 								<text class="info-body-text">您有订单逾期未付款，已自动取消</text>
 							</div>
-							<image class="info-body-more" src="../src/common/images/moreImage@16x25.png"></image>
+							<image class="info-body-more" src="http://47.92.164.211:8011/PublicImage/moreImage@16x25.png"></image>
 						</div>
 					</div>
 				</div>

@@ -5,7 +5,7 @@
 		</div>
 		<list class="congra-body-wrapper">
 			<cell>
-				<image class="sign-bg" src="../src/components/sign/sign@bg.png"></image>
+				<image class="sign-bg" src="http://47.92.164.211:8011/PublicImage/sign@bg.png"></image>
 				<text class="sign-body sign-people-num">今日签到人数：23565人</text>
 				<!-- 签到 -->
 				<div class="sign-body sign-gift">
@@ -13,10 +13,10 @@
 					<div class="sign-gift-body-wrapper">
 						<div class="sign-gift-body-sub-wrapper">
 							<div class="sign-gift-body-sub-list" v-for="(item,index) in 5" :key="index">
-								<image class="sign-gift-body-sub-list-bg" src="../src/components/sign/card@165x237.png"></image>
+								<image class="sign-gift-body-sub-list-bg" src="http://47.92.164.211:8011/PublicImage/card@165x237.png"></image>
 								<div class="sign-gift-body-sub-list-title">
 									<text class="sign-gift-body-sub-list-title-name">9月11日</text>
-									<image class="sign-gift-body-sub-list-money" src="../src/components/sign/mondy@84x61.png"></image>
+									<image class="sign-gift-body-sub-list-money" src="http://47.92.164.211:8011/PublicImage/mondy@84x61.png"></image>
 									<text class="sign-gift-body-sub-list-btn" :class="[index == 0 ? 'sign-gift-body-sub-list-btn-active' : '']">已签到</text><!-- sign-gift-body-sub-list-btn-active -->
 								</div>
 							</div>
@@ -26,24 +26,24 @@
 				</div>
 				<!-- 签到记录 -->
 				<div class="record">
-					<image class="record-bg" src="../src/components/sign/record@129x129.png"></image>
+					<image class="record-bg" src="http://47.92.164.211:8011/PublicImage/record@129x129.png"></image>
 					<text class="record-text">签到</text>
 					<text class="record-text">记录</text>
 				</div>
 				<!-- 签到说明 -->
 				<div class="sign-bottom-wrapper">
-					<image class="sign-bottom-bg" src="../src/components/sign/signbottom@704x450.png"></image>
+					<image class="sign-bottom-bg" src="http://47.92.164.211:8011/PublicImage/signbottom@704x450.png"></image>
 					<div class="sign-bottom-text-box">
 						<text class="sign-bottom-text-title">活动规则</text>
 						<div class="sign-bottom-list-box">
 							<div class="sign-bottom-list-box-list">
-								<image class="sign-num-bg" src="../src/components/sign/sign1@27x28.png"></image><text class="sign-num-text">活动时间:2018年9月11日-10月15日</text>
+								<image class="sign-num-bg" src="http://47.92.164.211:8011/PublicImage/sign1@27x28.png"></image><text class="sign-num-text">活动时间:2018年9月11日-10月15日</text>
 							</div>
 							<div class="sign-bottom-list-box-list">
-								<image class="sign-num-bg" src="../src/components/sign/sign2@27x28.png"></image><text class="sign-num-text">活动期间，签到所得抵用券奖励实时发放；</text>
+								<image class="sign-num-bg" src="http://47.92.164.211:8011/PublicImage/sign2@27x28.png"></image><text class="sign-num-text">活动期间，签到所得抵用券奖励实时发放；</text>
 							</div>
 							<div class="sign-bottom-list-box-list">
-								<image class="sign-num-bg" src="../src/components/sign/sign3@27x28.png"></image><text class="sign-num-text">返现奖励发放规则：连续签到5天，活动结束时，在本平台的待收本金>1000元的用户可得10元返现，活动结束的下一个工作日发放奖励。</text>
+								<image class="sign-num-bg" src="http://47.92.164.211:8011/PublicImage/sign3@27x28.png"></image><text class="sign-num-text">返现奖励发放规则：连续签到5天，活动结束时，在本平台的待收本金>1000元的用户可得10元返现，活动结束的下一个工作日发放奖励。</text>
 							</div>
 						</div>
 					</div>

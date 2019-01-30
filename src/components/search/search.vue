@@ -2,7 +2,7 @@
 	<div class="search">
 		<div class="shop-header-title-wrapper">
 			<input autofocus="true" class="searchInput" type="text" placeholder="搜索商品名称" name="">
-			<image class="input-image" src="../src/common/images/search.png"></image>
+			<image class="input-image" :src="searchImage"></image>
 			<text class="shop-header-delet">取消</text>
 		</div>
 		<div class="search-body">
@@ -17,7 +17,7 @@
 			<div class="search-hot">
 				<div class="search-hot-title-box">
 				    <text class="search-hot-title">历史搜索</text>
-				    <image class="delet" src="../src/common/images/trash.png"></image>
+				    <image class="delet" src="http://47.92.164.211:8011/PublicImage/trash.png"></image>
 				</div>
 				<div class="search-hot-wrappe-history">
 					<div class="search-hot-list-history" v-for="item in 10"><text class="search-hot-list-text search-hot-list-text-history">叶菜类叶菜叶菜类叶菜叶菜类叶菜叶菜类叶菜叶菜类叶菜叶菜类叶菜叶菜类叶菜</text></div>
@@ -31,6 +31,7 @@
 export default {
 	data() {
 		return {
+			searchImage: 'http://47.92.164.211:8011/PublicImage/search.png'
 		}
 	}
 }
@@ -42,7 +43,7 @@ export default {
 	display: flex;
 	flex-direction: row;
 	align-items: center;
-	height: 92px;  /*26 + 40 + 26*/
+	height: 92px;
 	padding-left: 20px;
 	padding-right: 20px;
 	background-color: rgb(115,204,70);
@@ -73,8 +74,6 @@ export default {
 	height: 33px;
 }
 
-
-//////////////////////////////////////
 .search-body{
 	padding-top: 20px;
 	padding-left: 20px;

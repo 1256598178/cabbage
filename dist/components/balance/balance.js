@@ -62,10 +62,93 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 68);
+/******/ 	return __webpack_require__(__webpack_require__.s = 97);
 /******/ })
 /************************************************************************/
 /******/ ({
+
+/***/ 100:
+/***/ (function(module, exports) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: ["wrap"]
+  }, [_c('div', {
+    staticClass: ["titleBar"]
+  }, [_c('text', {
+    staticClass: ["statusbar"]
+  }), _c('wxc-minibar', {
+    attrs: {
+      "title": "余额",
+      "backgroundColor": "#73cc00",
+      "textColor": "#FFFFFF",
+      "leftButton": "../src/common/images/backImage.png",
+      "rightText": "明细"
+    },
+    on: {
+      "wxcMinibarLeftButtonClicked": _vm.minibarLeftButtonClick,
+      "wxcMinibarRightButtonClicked": function($event) {}
+    }
+  }, [_c('text', {
+    staticClass: ["title"],
+    attrs: {
+      "slot": "middle"
+    },
+    slot: "middle"
+  }, [_vm._v("余额")])])], 1), _vm._m(0), _c('div', {
+    staticClass: ["points"]
+  }, [_c('text', {
+    staticClass: ["points-title"]
+  }, [_vm._v("余额充值")]), _c('div', {
+    staticClass: ["points-list"]
+  }, _vm._l((_vm.mList), function(nums, indexs) {
+    return _c('div', {
+      key: indexs,
+      class: [_vm.crt === indexs ? 'points-cell-crt' : 'points-cell'],
+      on: {
+        "click": function($event) {
+          _vm.selects(indexs)
+        }
+      }
+    }, [_c('text', {
+      class: [_vm.crt === indexs ? 'points-text01-crt' : 'points-text01']
+    }, [_vm._v(_vm._s(nums.money) + "元")]), _c('text', {
+      class: [_vm.crt === indexs ? 'points-text02-crt' : 'points-text02']
+    }, [_vm._v("送" + _vm._s(nums.points) + "白菜币")])])
+  }))]), _vm._m(1), _vm._m(2)])
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: ["my-currency"]
+  }, [_c('image', {
+    staticClass: ["my-image"],
+    attrs: {
+      "src": "../src/components/balance/balance-bg.png"
+    }
+  }), _c('text', {
+    staticClass: ["my-title"]
+  }, [_vm._v("我的余额（元）")]), _c('text', {
+    staticClass: ["my-number"]
+  }, [_vm._v("0.00")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: ["login-btn-box"]
+  }, [_c('text', {
+    staticClass: ["login-btns"]
+  }, [_vm._v("确认充值")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: ["reg"]
+  }, [_c('div', {
+    staticClass: ["register"]
+  }, [_c('text', {
+    staticClass: ["reg-text"]
+  }, [_vm._v("确认充值代表已阅读并同意")]), _c('text', {
+    staticClass: ["forgot-text"]
+  }, [_vm._v("《绿白菜充值条款》")])])])
+}]}
+module.exports.render._withStripped = true
+
+/***/ }),
 
 /***/ 4:
 /***/ (function(module, exports, __webpack_require__) {
@@ -178,21 +261,233 @@ module.exports = {
 
 /***/ }),
 
-/***/ 68:
+/***/ 7:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+var Navigator = weex.requireModule('navigator');
+exports.default = {
+  props: {
+    backgroundColor: {
+      type: String,
+      default: '#FFC900'
+    },
+    leftButton: {
+      type: String,
+      default: 'https://gw.alicdn.com/tfs/TB1x18VpwMPMeJjy1XdXXasrXXa-21-36.png'
+    },
+    textColor: {
+      type: String,
+      default: '#3D3D3D'
+    },
+    rightButton: {
+      type: String,
+      default: ''
+    },
+    title: {
+      type: String,
+      default: '标题'
+    },
+    leftText: {
+      type: String,
+      default: ''
+    },
+    rightText: {
+      type: String,
+      default: ''
+    },
+    useDefaultReturn: {
+      type: Boolean,
+      default: true
+    },
+    show: {
+      type: Boolean,
+      default: true
+    },
+    barStyle: {
+      type: Object
+    }
+  },
+  computed: {
+    newBarStyle: function newBarStyle() {
+      var backgroundColor = this.backgroundColor,
+          barStyle = this.barStyle;
+
+      return _extends({
+        backgroundColor: backgroundColor
+      }, barStyle);
+    }
+  },
+  methods: {
+    leftButtonClicked: function leftButtonClicked() {
+      if (this.useDefaultReturn) {
+        Navigator.pop({}, function (e) {});
+      }
+      this.$emit('wxcMinibarLeftButtonClicked', {});
+    },
+    rightButtonClicked: function rightButtonClicked() {
+      var hasRightContent = this.rightText || this.rightButton || this.$slots && this.$slots.right;
+      hasRightContent && this.$emit('wxcMinibarRightButtonClicked', {});
+    }
+  }
+};
+
+/***/ }),
+
+/***/ 8:
+/***/ (function(module, exports) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return (_vm.show) ? _c('div', {
+    staticClass: ["wxc-minibar"],
+    style: _vm.newBarStyle
+  }, [_c('div', {
+    staticClass: ["left"],
+    attrs: {
+      "ariaLabel": "返回",
+      "accessible": true
+    },
+    on: {
+      "click": _vm.leftButtonClicked
+    }
+  }, [_vm._t("left", [(_vm.leftButton && !_vm.leftText) ? _c('image', {
+    staticClass: ["left-button"],
+    attrs: {
+      "src": _vm.leftButton
+    }
+  }) : _vm._e(), (_vm.leftText) ? _c('text', {
+    staticClass: ["icon-text"],
+    style: {
+      color: _vm.textColor
+    }
+  }, [_vm._v(_vm._s(_vm.leftText))]) : _vm._e()])], 2), _vm._t("middle", [_c('text', {
+    staticClass: ["middle-title"],
+    style: {
+      color: _vm.textColor
+    }
+  }, [_vm._v(_vm._s(_vm.title))])]), _c('div', {
+    staticClass: ["right"],
+    on: {
+      "click": _vm.rightButtonClicked
+    }
+  }, [_vm._t("right", [(_vm.rightButton && !_vm.rightText) ? _c('image', {
+    staticClass: ["right-button"],
+    attrs: {
+      "src": _vm.rightButton,
+      "ariaHidden": true
+    }
+  }) : _vm._e(), (_vm.rightText) ? _c('text', {
+    staticClass: ["icon-text"],
+    style: {
+      color: _vm.textColor
+    }
+  }, [_vm._v(_vm._s(_vm.rightText))]) : _vm._e()])], 2)], 2) : _vm._e()
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+
+/***/ }),
+
+/***/ 97:
 /***/ (function(module, exports, __webpack_require__) {
 
 var __vue_exports__, __vue_options__
 var __vue_styles__ = []
 
 /* styles */
-__vue_styles__.push(__webpack_require__(69)
+__vue_styles__.push(__webpack_require__(98)
 )
 
 /* script */
-__vue_exports__ = __webpack_require__(70)
+__vue_exports__ = __webpack_require__(99)
 
 /* template */
-var __vue_template__ = __webpack_require__(71)
+var __vue_template__ = __webpack_require__(100)
 __vue_options__ = __vue_exports__ = __vue_exports__ || {}
 if (
   typeof __vue_exports__.default === "object" ||
@@ -225,7 +520,7 @@ new Vue(module.exports)
 
 /***/ }),
 
-/***/ 69:
+/***/ 98:
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -401,166 +696,7 @@ module.exports = {
 
 /***/ }),
 
-/***/ 7:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-var Navigator = weex.requireModule('navigator');
-exports.default = {
-  props: {
-    backgroundColor: {
-      type: String,
-      default: '#FFC900'
-    },
-    leftButton: {
-      type: String,
-      default: 'https://gw.alicdn.com/tfs/TB1x18VpwMPMeJjy1XdXXasrXXa-21-36.png'
-    },
-    textColor: {
-      type: String,
-      default: '#3D3D3D'
-    },
-    rightButton: {
-      type: String,
-      default: ''
-    },
-    title: {
-      type: String,
-      default: '标题'
-    },
-    leftText: {
-      type: String,
-      default: ''
-    },
-    rightText: {
-      type: String,
-      default: ''
-    },
-    useDefaultReturn: {
-      type: Boolean,
-      default: true
-    },
-    show: {
-      type: Boolean,
-      default: true
-    },
-    barStyle: {
-      type: Object
-    }
-  },
-  computed: {
-    newBarStyle: function newBarStyle() {
-      var backgroundColor = this.backgroundColor,
-          barStyle = this.barStyle;
-
-      return _extends({
-        backgroundColor: backgroundColor
-      }, barStyle);
-    }
-  },
-  methods: {
-    leftButtonClicked: function leftButtonClicked() {
-      if (this.useDefaultReturn) {
-        Navigator.pop({}, function (e) {});
-      }
-      this.$emit('wxcMinibarLeftButtonClicked', {});
-    },
-    rightButtonClicked: function rightButtonClicked() {
-      var hasRightContent = this.rightText || this.rightButton || this.$slots && this.$slots.right;
-      hasRightContent && this.$emit('wxcMinibarRightButtonClicked', {});
-    }
-  }
-};
-
-/***/ }),
-
-/***/ 70:
+/***/ 99:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -687,142 +823,6 @@ exports.default = {
 		//this.selects(0);
 	}
 };
-
-/***/ }),
-
-/***/ 71:
-/***/ (function(module, exports) {
-
-module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: ["wrap"]
-  }, [_c('div', {
-    staticClass: ["titleBar"]
-  }, [_c('text', {
-    staticClass: ["statusbar"]
-  }), _c('wxc-minibar', {
-    attrs: {
-      "title": "余额",
-      "backgroundColor": "#73cc00",
-      "textColor": "#FFFFFF",
-      "leftButton": "../src/common/images/backImage.png",
-      "rightText": "明细"
-    },
-    on: {
-      "wxcMinibarLeftButtonClicked": _vm.minibarLeftButtonClick,
-      "wxcMinibarRightButtonClicked": function($event) {}
-    }
-  }, [_c('text', {
-    staticClass: ["title"],
-    attrs: {
-      "slot": "middle"
-    },
-    slot: "middle"
-  }, [_vm._v("余额")])])], 1), _vm._m(0), _c('div', {
-    staticClass: ["points"]
-  }, [_c('text', {
-    staticClass: ["points-title"]
-  }, [_vm._v("余额充值")]), _c('div', {
-    staticClass: ["points-list"]
-  }, _vm._l((_vm.mList), function(nums, indexs) {
-    return _c('div', {
-      key: indexs,
-      class: [_vm.crt === indexs ? 'points-cell-crt' : 'points-cell'],
-      on: {
-        "click": function($event) {
-          _vm.selects(indexs)
-        }
-      }
-    }, [_c('text', {
-      class: [_vm.crt === indexs ? 'points-text01-crt' : 'points-text01']
-    }, [_vm._v(_vm._s(nums.money) + "元")]), _c('text', {
-      class: [_vm.crt === indexs ? 'points-text02-crt' : 'points-text02']
-    }, [_vm._v("送" + _vm._s(nums.points) + "白菜币")])])
-  }))]), _vm._m(1), _vm._m(2)])
-},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: ["my-currency"]
-  }, [_c('image', {
-    staticClass: ["my-image"],
-    attrs: {
-      "src": "../src/components/balance/balance-bg.png"
-    }
-  }), _c('text', {
-    staticClass: ["my-title"]
-  }, [_vm._v("我的余额（元）")]), _c('text', {
-    staticClass: ["my-number"]
-  }, [_vm._v("0.00")])])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: ["login-btn-box"]
-  }, [_c('text', {
-    staticClass: ["login-btns"]
-  }, [_vm._v("确认充值")])])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: ["reg"]
-  }, [_c('div', {
-    staticClass: ["register"]
-  }, [_c('text', {
-    staticClass: ["reg-text"]
-  }, [_vm._v("确认充值代表已阅读并同意")]), _c('text', {
-    staticClass: ["forgot-text"]
-  }, [_vm._v("《绿白菜充值条款》")])])])
-}]}
-module.exports.render._withStripped = true
-
-/***/ }),
-
-/***/ 8:
-/***/ (function(module, exports) {
-
-module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return (_vm.show) ? _c('div', {
-    staticClass: ["wxc-minibar"],
-    style: _vm.newBarStyle
-  }, [_c('div', {
-    staticClass: ["left"],
-    attrs: {
-      "ariaLabel": "返回",
-      "accessible": true
-    },
-    on: {
-      "click": _vm.leftButtonClicked
-    }
-  }, [_vm._t("left", [(_vm.leftButton && !_vm.leftText) ? _c('image', {
-    staticClass: ["left-button"],
-    attrs: {
-      "src": _vm.leftButton
-    }
-  }) : _vm._e(), (_vm.leftText) ? _c('text', {
-    staticClass: ["icon-text"],
-    style: {
-      color: _vm.textColor
-    }
-  }, [_vm._v(_vm._s(_vm.leftText))]) : _vm._e()])], 2), _vm._t("middle", [_c('text', {
-    staticClass: ["middle-title"],
-    style: {
-      color: _vm.textColor
-    }
-  }, [_vm._v(_vm._s(_vm.title))])]), _c('div', {
-    staticClass: ["right"],
-    on: {
-      "click": _vm.rightButtonClicked
-    }
-  }, [_vm._t("right", [(_vm.rightButton && !_vm.rightText) ? _c('image', {
-    staticClass: ["right-button"],
-    attrs: {
-      "src": _vm.rightButton,
-      "ariaHidden": true
-    }
-  }) : _vm._e(), (_vm.rightText) ? _c('text', {
-    staticClass: ["icon-text"],
-    style: {
-      color: _vm.textColor
-    }
-  }, [_vm._v(_vm._s(_vm.rightText))]) : _vm._e()])], 2)], 2) : _vm._e()
-},staticRenderFns: []}
-module.exports.render._withStripped = true
 
 /***/ })
 

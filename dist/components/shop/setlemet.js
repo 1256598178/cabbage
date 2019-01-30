@@ -62,7 +62,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 204);
+/******/ 	return __webpack_require__(__webpack_require__.s = 233);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -140,6 +140,7 @@ var utils = {
     jump: function jump(href, event) {
         var bundleUrl = this.bundleUrl;
         var url = decodeURI(weex.config.bundleUrl); //取得整个地址栏
+        // 获取ip+端口
         var result = url.match(new RegExp("[a-zA-z]+://[^\s]{19}", "g"));
         if (WXEnvironment.platform === 'Web') {
             console.warn('Web端跳转待开发');
@@ -199,7 +200,7 @@ var utils = {
         };
     },
     analAjax: function analAjax() {
-        var url = decodeURI(weex.config.bundleUrl) + '?CategoryId=' + 12; //取得整个地址栏
+        var url = decodeURI(weex.config.bundleUrl); //取得整个地址栏
         console.log(url);
         var result = url.match(new RegExp(/\?\w*\=\w*(\&\w*\=\w*)*/, "g"))[0].slice(1);
         // console.log(result)
@@ -346,7 +347,7 @@ var _utils2 = _interopRequireDefault(_utils);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var navigator = weex.requireModule('navigator'); //
+var MODIFYSHOPNUM_URL = 'api/cart/changeCart'; //
 //
 //
 //
@@ -358,6 +359,7 @@ var navigator = weex.requireModule('navigator'); //
 //
 //
 
+var navigator = weex.requireModule('navigator');
 var modal = weex.requireModule('modal');
 exports.default = {
     props: {
@@ -406,6 +408,9 @@ exports.default = {
         },
         layoutClick: function layoutClick() {
             this.$emit("layoutAct", this.layoutActBool = !this.layoutActBool);
+        },
+        deletFoods: function deletFoods() {
+            this.$emit("fetch");
         }
     },
     created: function created() {
@@ -522,21 +527,21 @@ module.exports = __vue_exports__
 
 /***/ }),
 
-/***/ 204:
+/***/ 233:
 /***/ (function(module, exports, __webpack_require__) {
 
 var __vue_exports__, __vue_options__
 var __vue_styles__ = []
 
 /* styles */
-__vue_styles__.push(__webpack_require__(205)
+__vue_styles__.push(__webpack_require__(234)
 )
 
 /* script */
-__vue_exports__ = __webpack_require__(206)
+__vue_exports__ = __webpack_require__(235)
 
 /* template */
-var __vue_template__ = __webpack_require__(207)
+var __vue_template__ = __webpack_require__(236)
 __vue_options__ = __vue_exports__ = __vue_exports__ || {}
 if (
   typeof __vue_exports__.default === "object" ||
@@ -569,7 +574,7 @@ new Vue(module.exports)
 
 /***/ }),
 
-/***/ 205:
+/***/ 234:
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -589,10 +594,8 @@ module.exports = {
     "flexDirection": "row",
     "justifyContent": "center",
     "alignItems": "center",
-    "width": "710",
-    "height": "92",
-    "marginLeft": "20",
-    "marginRight": "20"
+    "width": "750",
+    "height": "92"
   },
   "shop-header-title": {
     "fontSize": "43",
@@ -795,14 +798,14 @@ module.exports = {
     "position": "fixed",
     "left": 0,
     "top": "92",
-    "bottom": "265",
+    "bottom": "130",
     "width": "750"
   },
   "good-bottom-wrapper": {
     "position": "fixed",
     "display": "flex",
     "flexDirection": "column",
-    "bottom": "109",
+    "bottom": "0",
     "height": "155",
     "width": "750"
   },
@@ -875,7 +878,7 @@ module.exports = {
 
 /***/ }),
 
-/***/ 206:
+/***/ 235:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -889,33 +892,241 @@ var _orderHeader = __webpack_require__(12);
 
 var _orderHeader2 = _interopRequireDefault(_orderHeader);
 
+var _utils = __webpack_require__(0);
+
+var _utils2 = _interopRequireDefault(_utils);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+// import Storage from '../../common/utils/storage.js'
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+var storage = weex.requireModule('storage');
+var GETMYCARTCHOSTLIST_URL = 'api/cart/getMyCartChoseList?UserId=';
+var SUBMITORDER_URL = 'api/cart/sumbitOrder';
+
+var modal = weex.requireModule('modal');
+var stream = weex.requireModule('stream');
+var picker = weex.requireModule('picker');
 exports.default = {
 	data: function data() {
 		return {
 			titleName: '订单结算',
-			refreshing: false, //下拉刷新
-			loadinging: false //上拉加载
+			DATEURLS: 'api/cart/getPickingDateTime',
+			TIMEURLS: 'api/cart/getPickingTime',
+			dates: '',
+			lemet: {},
+			datesList: [],
+			PickingId: [],
+			pickid: '',
+			times: '请选择',
+			timeList: [],
+			numList: [],
+			USERID: 'user_id',
+			TOKEN: 'user_token'
 		};
 	},
 
 	methods: {
-		onrefresh: function onrefresh() {
+		pickDate: function pickDate() {
 			var _this = this;
 
-			this.refreshing = true;
-			setTimeout(function () {
-				_this.refreshing = false;
-			}, 2000);
+			picker.pick({
+				items: this.datesList
+			}, function (event) {
+				if (event.result === 'success') {
+					_this.dates = _this.datesList[event.data];
+					self.times = '请选择';
+				}
+			});
+			var self = this;
+			_utils2.default.WeexAjax({
+				url: self.TIMEURLS + '?date=' + self.dates,
+				method: 'GET',
+				type: 'JSON',
+				callback: function callback(ret) {
+					// let rets = Util.JsonFormat(ret);
+					if (ret.Status == 0) {} else if (ret.Status == 1) {
+						console.log(ret);
+						var arr = [];
+						var num = [];
+						for (var i = 0; i < ret.obj.length; i++) {
+							arr.push(ret.obj[i].PickingTime);
+							num.push(ret.obj[i].PickingNum);
+						}
+						self.timeList = arr;
+						self.numList = num;
+					}
+				}
+			});
+			//self.times = self.timeList[0].PickingTime
 		},
-		onloading: function onloading() {
-			var _this2 = this;
+		pickTime: function pickTime() {
+			var self = this;
+			picker.pick({
+				items: self.timeList
+			}, function (event) {
+				if (event.result === 'success') {
+					if (self.numList[event.data] != 0) {
+						self.times = self.timeList[event.data];
+						self.pickid = self.PickingId[event.data];
+					} else {
+						modal.toast({
+							message: '预约已满，请选择其他时间',
+							duration: 0.3
+						});
+					}
+				}
+			});
+		},
+		analCartIds: function analCartIds() {
+			// var url = decodeURI(weex.config.bundleUrl) + '?CartIds=279,280,281,282,283'; //取得整个地址栏
+			var url = decodeURI(weex.config.bundleUrl); //取得整个地址栏
+			console.log(url);
+			var result = url.match(new RegExp(/\?\w*\=\w*(\&\w*\=\w*)*/, "g"))[0].slice(1);
+			// console.log(result)
+			var key = result.match(new RegExp(/\w*\=/, "g"));
+			// console.log(key)
+			var value = url.match(new RegExp(/\=(\w*\,*)*/, "g"));
+			console.log(value);
+			var warp = {};
+			for (var indexes in value) {
+				key[indexes] = key[indexes].slice(0, key[indexes].length - 1);
+				value[indexes] = value[indexes].slice(1);
+				// console.log(value[indexes])
+				warp[key[indexes]] = value[indexes];
+			}
+			return warp;
+		},
 
-			this.loadinging = true;
-			setTimeout(function () {
-				_this2.loadinging = false;
-			}, 2000);
+		// 提交订单
+		submitBtn: function submitBtn() {
+			var self = this;
+			_utils2.default.WeexAjax({
+				url: SUBMITORDER_URL,
+				method: 'POST',
+				type: 'JSON',
+				token: self.TOKEN,
+				body: {
+					"UserId": self.USERID,
+					"CartIds": self.analCartIds().CartIds,
+					"CouponId": 0,
+					"ShopId": 1,
+					"PickingDate": self.dates,
+					"PickingTimeId": self.pickid
+				},
+				callback: function callback(ret) {
+					if (ret.Status == 1) {
+						_utils2.default.NavigatUrl({
+							message: ret.Message,
+							duration: 1,
+							urls: 'components/checkstand/checkstand.js?TotalPrice=' + self.lemet.TotalPrice,
+							_this: self.$getConfig()
+						});
+					} else {
+						modal.toast({
+							message: ret.Message,
+							duration: 1
+						});
+					}
+				}
+			});
 		}
 	},
 	created: function created() {
@@ -924,132 +1135,87 @@ exports.default = {
 			'fontFamily': "iconfont",
 			'src': "url('//at.alicdn.com/t/font_948634_q51n034oj8.ttf')"
 		});
+		// 获取日期请求
+		var self = this;
+		_utils2.default.WeexAjax({
+			url: self.DATEURLS,
+			method: 'GET',
+			type: 'JSON',
+			callback: function callback(ret) {
+				// let rets = Util.JsonFormat(ret);
+				if (ret.Status == 0) {} else if (ret.Status == 1) {
+					console.log(ret);
+					var arr = [];
+					self.dates = ret.obj.PickingDateList[0].PickingDateText;
+					for (var i = 0; i < ret.obj.PickingDateList.length; i++) {
+						arr.push(ret.obj.PickingDateList[i].PickingDateText);
+					}
+					self.datesList = arr;
+				}
+			}
+		});
+		// 获取时间请求
+		_utils2.default.WeexAjax({
+			url: self.TIMEURLS + '?date=' + self.dates,
+			method: 'GET',
+			type: 'JSON',
+			callback: function callback(ret) {
+				// let rets = Util.JsonFormat(ret);
+				if (ret.Status == 0) {} else if (ret.Status == 1) {
+					console.log(ret);
+					var arr = [];
+					var num = [];
+					var Id = [];
+					//self.dates = ret.obj.PickingDateList[0].PickingDateText
+					for (var i = 0; i < ret.obj.length; i++) {
+						arr.push(ret.obj[i].PickingTime);
+						num.push(ret.obj[i].PickingNum);
+						Id.push(ret.obj[i].PickingId);
+					}
+					self.timeList = arr;
+					self.numList = num;
+					self.PickingId = Id;
+					console.log(self.PickingId);
+					console.log(self.timeList);
+					console.log(self.numList);
+				}
+			}
+		});
+		// 获取选中的购物车
+		var self = this;
+		storage.getItem(self.USERID, function (event) {
+			self.USERID = event.data;
+			storage.getItem(self.TOKEN, function (event) {
+				self.TOKEN = event.data;
+				_utils2.default.WeexAjax({
+					url: GETMYCARTCHOSTLIST_URL + self.USERID + '&CartIds=' + self.analCartIds().CartIds,
+					method: 'GET',
+					type: 'JSON',
+					token: self.TOKEN,
+					callback: function callback(ret) {
+						if (ret.Status == 1) {
+							self.lemet = ret.obj;
+							console.log(self.lemet);
+						} else {
+							modal.toast({
+								message: '请求错误',
+								duration: 1
+							});
+						}
+					}
+				});
+			});
+		});
 	},
 
 	components: {
 		"v-header": _orderHeader2.default
 	}
-}; //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+};
 
 /***/ }),
 
-/***/ 207:
+/***/ 236:
 /***/ (function(module, exports) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -1068,28 +1234,86 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   })], 1), _c('list', {
     staticClass: ["shop-wrapper"]
-  }, [_c('refresh', {
+  }, [_c('cell', {
+    appendAsTree: true,
     attrs: {
-      "display": _vm.refreshing ? 'show' : 'hide'
-    },
+      "append": "tree"
+    }
+  }, [_c('div', {
+    staticClass: ["lemet-body", "lemet-address-wrapper"]
+  }, [_vm._m(0), _c('div', {
+    staticClass: ["lemet-address-box"]
+  }, [_c('text', {
+    staticClass: ["lemet-address-box-text"]
+  }, [_vm._v("合肥市滨湖区南京路与天柱山路交口春融苑" + _vm._s(_vm.titleName))]), _c('text', {
+    staticClass: ["lemet-address-box-text"]
+  }, [_vm._v("联系电话：400 1234 4567")])])]), _c('div', {
+    staticClass: ["lemet-body", "lemet-food-time"]
+  }, [_c('div', {
+    staticClass: ["lemet-food-time-list"],
     on: {
-      "refresh": _vm.onrefresh
+      "click": _vm.pickDate
     }
   }, [_c('text', {
-    staticClass: ["refresh"]
-  }, [_vm._v("下拉刷新...")])]), _vm._m(0), _vm._m(1), _c('loading', {
-    staticClass: ["loading"],
-    attrs: {
-      "display": _vm.loadinging ? 'show' : 'hide'
-    },
-    on: {
-      "loading": _vm.onloading
-    }
+    staticClass: ["lemet-food-time-name"]
+  }, [_vm._v("预约取货日期")]), _c('div', {
+    staticClass: ["lemet-food-time-info"]
   }, [_c('text', {
-    staticClass: ["loading"]
-  }, [_vm._v("加载更多...")]), _c('loading-indicator', {
-    staticClass: ["indicators"]
+    staticClass: ["lemet-food-time-num", "lemet-food-time-name-active"]
+  }, [_vm._v(_vm._s(_vm.dates))]), _c('image', {
+    staticClass: ["moreImage-14x9"],
+    attrs: {
+      "src": "../src/common/images/moreImage@14x9.png"
+    }
   })])]), _c('div', {
+    staticClass: ["lemet-food-time-list"],
+    on: {
+      "click": _vm.pickTime
+    }
+  }, [_c('text', {
+    staticClass: ["lemet-food-time-name"]
+  }, [_vm._v("预约取货时间")]), _c('div', {
+    staticClass: ["lemet-food-time-info"]
+  }, [_c('text', {
+    staticClass: ["lemet-food-time-num"]
+  }, [_vm._v(_vm._s(_vm.times))]), _c('image', {
+    staticClass: ["moreImage-14x9"],
+    attrs: {
+      "src": "../src/common/images/moreImage@14x9.png"
+    }
+  })])]), _vm._m(1), _vm._m(2)])]), _c('cell', {
+    appendAsTree: true,
+    attrs: {
+      "append": "tree"
+    }
+  }, [_c('div', {
+    staticClass: ["lemet-body", "lemet-trade-wrapper"]
+  }, [_vm._m(3), _c('div', {
+    staticClass: ["lemet-trade-foods-wrapper"]
+  }, _vm._l((_vm.lemet.CartList), function(item, index) {
+    return _c('div', {
+      staticClass: ["cellps"]
+    }, [_c('image', {
+      staticClass: ["product-img"],
+      attrs: {
+        "src": item.ImageUrl
+      }
+    }), _c('div', {
+      staticClass: ["pro-news"]
+    }, [_c('div', {
+      staticClass: ["pro-r"]
+    }, [_c('text', {
+      staticClass: ["product-title"]
+    }, [_vm._v(_vm._s(item.ProductName))]), _c('text', {
+      staticClass: ["product-title-weight"]
+    }, [_vm._v(_vm._s(item.Weight))])]), _c('div', {
+      staticClass: ["pro-m"]
+    }, [_c('text', {
+      staticClass: ["product-price"]
+    }, [_vm._v("¥" + _vm._s(item.SalesPrice) + "元/" + _vm._s(item.Unit))]), _c('text', {
+      staticClass: ["product-price-number"]
+    }, [_vm._v("×" + _vm._s(item.CartNum))])])])])
+  }))])])]), _c('div', {
     staticClass: ["good-bottom-wrapper"]
   }, [_c('div', {
     staticClass: ["good-bottom-member-wrapper"]
@@ -1099,7 +1323,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: ["member-text"]
   }, [_vm._v("升级会员，本单可为您节省")]), _c('text', {
     staticClass: ["member-text-num"]
-  }, [_vm._v(_vm._s(123))]), _c('text', {
+  }, [_vm._v(_vm._s((_vm.lemet.TotalPrice - (_vm.lemet.Discount * _vm.lemet.TotalPrice)).toFixed(2)))]), _c('text', {
     staticClass: ["member-text"]
   }, [_vm._v("元!")])]), _c('div', {
     staticClass: ["good-bottom-list-wrapper"]
@@ -1109,20 +1333,18 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: ["good-bottom-total-text"]
   }, [_vm._v("预付款:")]), _c('text', {
     staticClass: ["good-bottom-total-money"]
-  }, [_vm._v("￥" + _vm._s(123) + "元")])]), _c('div', {
+  }, [_vm._v("￥" + _vm._s(_vm.lemet.TotalPrice) + "元")])]), _c('div', {
     staticClass: ["good-bottom-total-button"]
   }, [_c('text', {
-    staticClass: ["good-bottom-total-button-text"]
-  }, [_vm._v("结算(" + _vm._s(123) + ")")])])])])])
-},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('cell', {
-    appendAsTree: true,
-    attrs: {
-      "append": "tree"
+    staticClass: ["good-bottom-total-button-text"],
+    on: {
+      "click": function($event) {
+        _vm.submitBtn()
+      }
     }
-  }, [_c('div', {
-    staticClass: ["lemet-body", "lemet-address-wrapper"]
-  }, [_c('div', {
+  }, [_vm._v("提交订单")])])])])])
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
     staticClass: ["lemet-title-address"]
   }, [_c('div', {
     staticClass: ["lemet-title-address-left"]
@@ -1135,41 +1357,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "src": "../src/common/images/moreImage@16x25.png"
     }
-  })]), _c('div', {
-    staticClass: ["lemet-address-box"]
-  }, [_c('text', {
-    staticClass: ["lemet-address-box-text"]
-  }, [_vm._v("合肥市滨湖区南京路与天柱山路交口春融苑")]), _c('text', {
-    staticClass: ["lemet-address-box-text"]
-  }, [_vm._v("联系电话：400 1234 4567")])])]), _c('div', {
-    staticClass: ["lemet-body", "lemet-food-time"]
-  }, [_c('div', {
-    staticClass: ["lemet-food-time-list"]
-  }, [_c('text', {
-    staticClass: ["lemet-food-time-name"]
-  }, [_vm._v("预约取货日期")]), _c('div', {
-    staticClass: ["lemet-food-time-info"]
-  }, [_c('text', {
-    staticClass: ["lemet-food-time-num", "lemet-food-time-name-active"]
-  }, [_vm._v("2018-12-01(明天)")]), _c('image', {
-    staticClass: ["moreImage-14x9"],
-    attrs: {
-      "src": "../src/common/images/moreImage@14x9.png"
-    }
-  })])]), _c('div', {
-    staticClass: ["lemet-food-time-list"]
-  }, [_c('text', {
-    staticClass: ["lemet-food-time-name"]
-  }, [_vm._v("预约取货时间")]), _c('div', {
-    staticClass: ["lemet-food-time-info"]
-  }, [_c('text', {
-    staticClass: ["lemet-food-time-num"]
-  }, [_vm._v("2018-12-01(明天)")]), _c('image', {
-    staticClass: ["moreImage-14x9"],
-    attrs: {
-      "src": "../src/common/images/moreImage@14x9.png"
-    }
-  })])]), _c('div', {
+  })])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
     staticClass: ["lemet-food-time-list"]
   }, [_c('text', {
     staticClass: ["lemet-food-time-name"]
@@ -1182,7 +1372,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "src": "../src/common/images/moreImage@14x9.png"
     }
-  })])]), _c('div', {
+  })])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
     staticClass: ["lemet-food-time-list"]
   }, [_c('text', {
     staticClass: ["lemet-food-time-name"]
@@ -1190,71 +1382,20 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: ["lemet-food-time-info"]
   }, [_c('text', {
     staticClass: ["lemet-food-time-num"]
-  }, [_vm._v("2018-12-01(明天)")]), _c('image', {
+  }, [_vm._v("否")]), _c('image', {
     staticClass: ["moreImage-14x9"],
     attrs: {
       "src": "../src/common/images/moreImage@14x9.png"
     }
-  })])])])])
+  })])])
 },function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('cell', {
-    appendAsTree: true,
-    attrs: {
-      "append": "tree"
-    }
-  }, [_c('div', {
-    staticClass: ["lemet-body", "lemet-trade-wrapper"]
-  }, [_c('div', {
+  return _c('div', {
     staticClass: ["lemet-trade-title-wrapper"]
   }, [_c('div', {
     staticClass: ["lemet-trade-title-line"]
   }), _c('text', {
     staticClass: ["lemet-trade-title-name"]
-  }, [_vm._v("商品品名")])]), _c('div', {
-    staticClass: ["lemet-trade-foods-wrapper"]
-  }, [_c('div', {
-    staticClass: ["cellps"]
-  }, [_c('image', {
-    staticClass: ["product-img"],
-    attrs: {
-      "src": "../src/components/shop/product-img01.png"
-    }
-  }), _c('div', {
-    staticClass: ["pro-news"]
-  }, [_c('div', {
-    staticClass: ["pro-r"]
-  }, [_c('text', {
-    staticClass: ["product-title"]
-  }, [_vm._v("乌菜")]), _c('text', {
-    staticClass: ["product-title-weight"]
-  }, [_vm._v("500g")])]), _c('div', {
-    staticClass: ["pro-m"]
-  }, [_c('text', {
-    staticClass: ["product-price"]
-  }, [_vm._v("¥0.50元/斤")]), _c('text', {
-    staticClass: ["product-price-number"]
-  }, [_vm._v("×2")])])])]), _c('div', {
-    staticClass: ["cellps"]
-  }, [_c('image', {
-    staticClass: ["product-img"],
-    attrs: {
-      "src": "../src/components/shop/product-img01.png"
-    }
-  }), _c('div', {
-    staticClass: ["pro-news"]
-  }, [_c('div', {
-    staticClass: ["pro-r"]
-  }, [_c('text', {
-    staticClass: ["product-title"]
-  }, [_vm._v("乌菜")]), _c('text', {
-    staticClass: ["product-title-weight"]
-  }, [_vm._v("500g")])]), _c('div', {
-    staticClass: ["pro-m"]
-  }, [_c('text', {
-    staticClass: ["product-price"]
-  }, [_vm._v("¥0.50元/斤")]), _c('text', {
-    staticClass: ["product-price-number"]
-  }, [_vm._v("×2")])])])])])])])
+  }, [_vm._v("商品品名")])])
 }]}
 module.exports.render._withStripped = true
 

@@ -13,7 +13,7 @@
 					</div>
 					<div class="congra-body-box">
 						<text class="congra-body-box-name">新年到，绿白菜恭祝广大用户新春愉快，阖家欢乐！！！</text>
-						<image class="congra-body-box-image" src="../src/components/other/news_02.png"></image>
+						<image class="congra-body-box-image" src="http://47.92.164.211:8011/PublicImage/news_02.png"></image>
 					</div>
 				</cell>
 			</list>

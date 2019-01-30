@@ -109,9 +109,9 @@ export default {
                 navWrapperList: []
             },
             service: {
-                wechatImage: '../src/components/home/wechatBg.png',
-                wechat: '../src/components/home/wechat.png',
-                telImage: '../src/components/home/phone.png',
+                wechatImage: 'http://47.92.164.211:8011/PublicImage/wechatBg.png',
+                wechat: 'http://47.92.164.211:8011/PublicImage/wechat.png',
+                telImage: 'http://47.92.164.211:8011/PublicImage/phone.png',
                 names: '绿白菜 • 滨湖春融苑店',
                 linkr: '扫码添加微信实惠更多>',
                 telName: '服务热线',
@@ -173,38 +173,32 @@ export default {
 	  		Util.bindThis(Util.jump(href),this.$getConfig())
 	  	},
         addShopCar(Product_Id) {
-            console.log(Product_Id)
-            storage.getItem(this.USERID, event => {
-                self.USERID = event.data
-                storage.getItem(this.TOKEN, event => {
-                    self.TOKEN = event.data
-                    Util.WeexAjax({
-                        url: SHOPCAR_URL,
-                        //url: self.LOGIN_URL + '?categoryId=1',    
-                        method: 'POST',
-                        type: 'JSON',
-                        token: self.TOKEN,
-                        body: {
-                            "UserId": self.USERID,
-                            "ProductId": Product_Id,
-                            "CartNum": 1
-                        },
-                        callback: function(ret) {
-                            if (ret.Status == 1) {
-                                modal.toast({
-                                    message: ret.Message,
-                                    duration: 1
-                                })
-                            }else{
-                                modal.toast({
-                                    message: '请求错误',
-                                    duration: 1
-                                })
-                            }
-                        }
-                    })
-                })
-            });
+            var self = this;
+            Util.WeexAjax({
+                url: SHOPCAR_URL,
+                //url: self.LOGIN_URL + '?categoryId=1',    
+                method: 'POST',
+                type: 'JSON',
+                token: self.TOKEN,
+                body: {
+                    "UserId": self.USERID,
+                    "ProductId": Product_Id,
+                    "CartNum": 1
+                },
+                callback: function(ret) {
+                    if (ret.Status == 1) {
+                        modal.toast({
+                            message: ret.Message,
+                            duration: 1
+                        })
+                    }else{
+                        modal.toast({
+                            message: '请求错误',
+                            duration: 1
+                        })
+                    }
+                }
+            })
         }
     },
     components: {
@@ -252,6 +246,12 @@ export default {
                 }
             }
         })
+        storage.getItem(_this.USERID, event => {
+            _this.USERID = event.data
+            storage.getItem(_this.TOKEN, event => {
+                _this.TOKEN = event.data
+            })
+        });
         // 初始化专区数组
         for(var i = 0; i < 5; i++){
             _this.boolArr.push(false)
@@ -382,7 +382,7 @@ export default {
 }
 
 ._fication {
-    border-radius: 50%;
+    border-radius: 100px;
     margin-left: 21px;
     width: 100px;
     height: 100px;

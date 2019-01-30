@@ -21,7 +21,7 @@
 									</div>
 								    <text class="seafood-bottom-shop-all-doller">¥{{items.SalesPrice  | droller}}</text>
 								</div>
-								<image class="seafood-bottom-shop-car" src="../src/common/images/shop-car.png"></image>
+								<image class="seafood-bottom-shop-car" src="http://47.92.164.211:8011/PublicImage/shop-car.png"></image>
 							</div>
 						</div>
 					</div>

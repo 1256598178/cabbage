@@ -131,7 +131,7 @@
             <!-- 是否有内容 -->
             <cell class="reward-no-content" v-if="rewardContent">
                 <div class="reward-no-icon">
-                    <image class="reward-no-image" src="../src/common/images/reward@195x172.png"></image>
+                    <image class="reward-no-image" src="http://47.92.164.211:8011/PublicImage/reward@195x172.png"></image>
                     <text class="reward-no-image">暂无优惠券！</text>
                 </div>
             </cell>
@@ -150,8 +150,8 @@ export default {
             loadinging: false, //上拉加载
             config: {
                 //初始单选框
-                unCheckedIcon: '../src/components/shop/unchecked.png',
-                checkedIcon: '../src/components/shop/checked.png',
+                unCheckedIcon: 'http://47.92.164.211:8011/PublicImage/unchecked.png',
+                checkedIcon: 'http://47.92.164.211:8011/PublicImage/checked.png',
                 disabledIcon: 'https://gw.alicdn.com/tfs/TB1PtN3pwMPMeJjy1XdXXasrXXa-72-72.png',
                 checkedDisabledIcon: 'https://gw.alicdn.com/tfs/TB1aPabpwMPMeJjy1XcXXXpppXa-72-72.png',
                 unCheckedDisabledIcon: 'https://gw.alicdn.com/tfs/TB1lTuzpwoQMeJjy0FoXXcShVXa-72-72.png',

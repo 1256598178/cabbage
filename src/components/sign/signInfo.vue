@@ -7,7 +7,7 @@
 			<cell v-for="(item,index) in 20" :key="index">
 				<div class="signInfo">
 					<div class="signInfo-wrapper">
-						<image class="logo" src="../src/common/images/logo@45x45.png"></image>
+						<image class="logo" src="http://47.92.164.211:8011/PublicImage/logo@45x45.png"></image>
 						<text class="signInfo-name">签到成功</text>
 						<text class="signInfo-subname">2018-09-11</text>
 					</div>

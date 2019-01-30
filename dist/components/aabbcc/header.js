@@ -62,26 +62,112 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 196);
+/******/ 	return __webpack_require__(__webpack_require__.s = 76);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 196:
+/***/ 20:
+/***/ (function(module, exports) {
+
+module.exports = {
+  "headerBox_G": {
+    "height": "90",
+    "width": "750",
+    "borderBottomWidth": "2",
+    "borderBottomColor": "#eaeaea",
+    "borderBottomStyle": "solid"
+  },
+  "headerBox_G_toBack": {
+    "position": "absolute",
+    "left": "20",
+    "top": "22"
+  },
+  "headerBox_G_pageTip": {
+    "color": "#333333",
+    "fontSize": "36",
+    "lineHeight": "88",
+    "textAlign": "center"
+  }
+}
+
+/***/ }),
+
+/***/ 21:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+//
+//
+//
+//
+//
+//
+//
+
+exports.default = {
+    props: ['title'],
+    data: function data() {
+        return {
+            headerBox_G_toBack: 'http://192.168.2.201:8082/images/toBack.png'
+        };
+    },
+
+    methods: {
+        toBack_G: function toBack_G() {
+            this.$router.back(-1);
+        }
+    }
+};
+
+/***/ }),
+
+/***/ 22:
+/***/ (function(module, exports) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: ["headerBox_G"]
+  }, [_c('text', {
+    staticClass: ["headerBox_G_pageTip"]
+  }, [_vm._v(_vm._s(_vm.title))]), _c('image', {
+    staticClass: ["headerBox_G_toBack"],
+    staticStyle: {
+      width: "31px",
+      height: "44px"
+    },
+    attrs: {
+      "src": _vm.headerBox_G_toBack
+    },
+    on: {
+      "click": _vm.toBack_G
+    }
+  })])
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+
+/***/ }),
+
+/***/ 76:
 /***/ (function(module, exports, __webpack_require__) {
 
 var __vue_exports__, __vue_options__
 var __vue_styles__ = []
 
 /* styles */
-__vue_styles__.push(__webpack_require__(197)
+__vue_styles__.push(__webpack_require__(20)
 )
 
 /* script */
-__vue_exports__ = __webpack_require__(198)
+__vue_exports__ = __webpack_require__(21)
 
 /* template */
-var __vue_template__ = __webpack_require__(199)
+var __vue_template__ = __webpack_require__(22)
 __vue_options__ = __vue_exports__ = __vue_exports__ || {}
 if (
   typeof __vue_exports__.default === "object" ||
@@ -93,10 +179,10 @@ __vue_options__ = __vue_exports__ = __vue_exports__.default
 if (typeof __vue_options__ === "function") {
   __vue_options__ = __vue_options__.options
 }
-__vue_options__.__file = "F:\\WebApp\\cabbage\\src\\components\\myorder\\order-item.vue"
+__vue_options__.__file = "F:\\WebApp\\cabbage\\src\\components\\aabbcc\\header.vue"
 __vue_options__.render = __vue_template__.render
 __vue_options__.staticRenderFns = __vue_template__.staticRenderFns
-__vue_options__._scopeId = "data-v-fbe0c20c"
+__vue_options__._scopeId = "data-v-c77d3f6a"
 __vue_options__.style = __vue_options__.style || {}
 __vue_styles__.forEach(function (module) {
   for (var name in module) {
@@ -111,218 +197,6 @@ module.exports = __vue_exports__
 module.exports.el = 'true'
 new Vue(module.exports)
 
-
-/***/ }),
-
-/***/ 197:
-/***/ (function(module, exports) {
-
-module.exports = {
-  "item_whole": {
-    "marginLeft": "20",
-    "marginRight": "20",
-    "marginTop": "20",
-    "marginBottom": "20",
-    "color": "#afddff"
-  },
-  "item_title": {
-    "flexDirection": "row",
-    "justifyContent": "space-between",
-    "marginBottom": "20"
-  },
-  "item_left_title": {
-    "fontSize": "32",
-    "color": "#000000"
-  },
-  "item_right_title": {
-    "fontSize": "32",
-    "color": "#F2A12F"
-  },
-  "item_content": {
-    "flexDirection": "column"
-  },
-  "item_text": {
-    "flexDirection": "row",
-    "fontSize": "28",
-    "color": "#333333",
-    "marginTop": "20"
-  },
-  "text_create_time": {
-    "marginLeft": "100",
-    "fontSize": "28",
-    "color": "#333333"
-  },
-  "text_order": {
-    "marginLeft": "165",
-    "fontSize": "28",
-    "color": "#333333"
-  }
-}
-
-/***/ }),
-
-/***/ 198:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-//存储
-storage.setItem('title', '单据详情-1', function (event) {
-  undefined.state = 'set success';
-  console.log('set success');
-}); //获取
-storage.getItem('title', function (event) {
-  undefined.title = 'value: ' + event.data;
-  modal.toast({ 'message': '收到' + undefined.title, 'duration': 1 });
-});
-
-/***/ }),
-
-/***/ 199:
-/***/ (function(module, exports) {
-
-module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: ["item_whole"]
-  }, [_c('div', {
-    staticClass: ["item_title"]
-  }, [_c('text', {
-    staticClass: ["item_left_title"]
-  }, [_vm._v(_vm._s(_vm.leftTitle))]), _c('text', {
-    staticClass: ["item_right_title"]
-  }, [_vm._v(_vm._s(_vm.rightTitle))])]), _c('div', {
-    staticClass: ["item_content"]
-  }, [_c('div', {
-    staticClass: ["item_text"]
-  }, [_c('text', {
-    staticClass: ["item_name"]
-  }, [_vm._v(_vm._s("创建时间"))]), _c('text', {
-    staticClass: ["text_create_time"]
-  }, [_vm._v(_vm._s(_vm.createTime))])]), _c('div', {
-    staticClass: ["item_text"]
-  }, [_c('text', {
-    staticClass: ["item_name"]
-  }, [_vm._v(_vm._s("作业单据"))]), _c('text', {
-    staticClass: ["text_create_time"]
-  }, [_vm._v(_vm._s(_vm.workOrder))])]), _c('div', {
-    staticClass: ["item_text"]
-  }, [_c('text', {
-    staticClass: ["item_name"]
-  }, [_vm._v(_vm._s("订单"))]), _c('text', {
-    staticClass: ["text_order"]
-  }, [_vm._v(_vm._s(_vm.order))])])])])
-},staticRenderFns: []}
-module.exports.render._withStripped = true
 
 /***/ })
 

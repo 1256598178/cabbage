@@ -7,28 +7,28 @@
 		<image class="_arrow" :src="arrow"></image>
 	</div>
 	<div class="search-wrapper">
-		<div class="magnifier"><image class="_magnifier" :src="magnifier"></image></div>
+		<div class="magnifier"><image class="_magnifier" :src="magnifier" @click="jump()"></image></div>
 		<div class="scan"><image class="_scan" :src="scan"></image></div>
 	</div>
   </header>
 </template>
 
 <script>
-import Utils from '../../common/utils/utils.js'
+import Util from '../../common/utils/utils.js'
 export default {
   data() {
   	return {
-  		logo: "../src/components/header/logo.png", //logo图
-  		address: "../src/components/header/address.png", // 定位图标
-  		arrow: "../src/components/header/arrow.png",
-  		magnifier: "../src/components/header/search.png",  // 放大镜图标
-  		scan: "../src/components/header/scan.png", // 扫一扫图标
+  		logo: "http://47.92.164.211:8011/PublicImage/logo.png", //logo图
+  		address: "http://47.92.164.211:8011/PublicImage/address.png", // 定位图标
+  		arrow: "http://47.92.164.211:8011/PublicImage/arrow.png",
+  		magnifier: "http://47.92.164.211:8011/PublicImage/search.png",  // 放大镜图标
+  		scan: "http://47.92.164.211:8011/PublicImage/scan.png", // 扫一扫图标
   		position: '合肥市滨湖春融苑店',
   	}
   },
   methods: {
   	jump(){
-  		// Utils.bindThis(Utils.jump('components/register/register.js'),this.$getConfig())
+  		Util.bindThis(Util.jump('components/search/search.js'),this.$getConfig())
   	}
   }
 }

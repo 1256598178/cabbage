@@ -62,7 +62,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 142);
+/******/ 	return __webpack_require__(__webpack_require__.s = 171);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -140,6 +140,7 @@ var utils = {
     jump: function jump(href, event) {
         var bundleUrl = this.bundleUrl;
         var url = decodeURI(weex.config.bundleUrl); //取得整个地址栏
+        // 获取ip+端口
         var result = url.match(new RegExp("[a-zA-z]+://[^\s]{19}", "g"));
         if (WXEnvironment.platform === 'Web') {
             console.warn('Web端跳转待开发');
@@ -199,7 +200,7 @@ var utils = {
         };
     },
     analAjax: function analAjax() {
-        var url = decodeURI(weex.config.bundleUrl) + '?CategoryId=' + 12; //取得整个地址栏
+        var url = decodeURI(weex.config.bundleUrl); //取得整个地址栏
         console.log(url);
         var result = url.match(new RegExp(/\?\w*\=\w*(\&\w*\=\w*)*/, "g"))[0].slice(1);
         // console.log(result)
@@ -330,21 +331,21 @@ exports.default = AIstorage;
 
 /***/ }),
 
-/***/ 142:
+/***/ 171:
 /***/ (function(module, exports, __webpack_require__) {
 
 var __vue_exports__, __vue_options__
 var __vue_styles__ = []
 
 /* styles */
-__vue_styles__.push(__webpack_require__(65)
+__vue_styles__.push(__webpack_require__(69)
 )
 
 /* script */
-__vue_exports__ = __webpack_require__(66)
+__vue_exports__ = __webpack_require__(70)
 
 /* template */
-var __vue_template__ = __webpack_require__(67)
+var __vue_template__ = __webpack_require__(71)
 __vue_options__ = __vue_exports__ = __vue_exports__ || {}
 if (
   typeof __vue_exports__.default === "object" ||
@@ -377,7 +378,7 @@ new Vue(module.exports)
 
 /***/ }),
 
-/***/ 65:
+/***/ 69:
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -434,7 +435,7 @@ module.exports = {
 
 /***/ }),
 
-/***/ 66:
+/***/ 70:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -464,7 +465,7 @@ exports.default = {
 
   methods: {
     jump: function jump() {
-      // Utils.bindThis(Utils.jump('components/register/register.js'),this.$getConfig())
+      _utils2.default.bindThis(_utils2.default.jump('components/search/search.js'), this.$getConfig());
     }
   }
 }; //
@@ -485,7 +486,7 @@ exports.default = {
 
 /***/ }),
 
-/***/ 67:
+/***/ 71:
 /***/ (function(module, exports) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -527,6 +528,11 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: ["_magnifier"],
     attrs: {
       "src": _vm.magnifier
+    },
+    on: {
+      "click": function($event) {
+        _vm.jump()
+      }
     }
   })]), _c('div', {
     staticClass: ["scan"]

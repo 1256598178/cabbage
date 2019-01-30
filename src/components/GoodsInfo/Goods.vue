@@ -2,7 +2,7 @@
 	<div>
 		<header class="shop-header">
 			<div class="back-box">
-				<image class="back-btn" src="../src/common/images/backImages.png"></image>
+				<image class="back-btn" src="http://47.92.164.211:8011/PublicImage/backImages.png"></image>
 			</div>
 			<div class="shop-header-title-wrapper">
 				<text class="shop-header-title crt">商品</text>

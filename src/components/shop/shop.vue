@@ -2,7 +2,11 @@
 	<div class="shop">
 		<header class="shop-header">
 			<!-- <div class="container"> -->
-				<v-header :titleName="titleName" :deleted="true"></v-header>
+				<div class="shop-header-title-wrapper">
+			        <text class="shop-header-title">{{titleName}}</text>
+			        <text class="shop-header-delet" @click="deletFoods()">删除</text>
+			    </div>
+				<!-- <v-header :titleName="titleName" :deleted="true" :USERIDs="USERID" :TOKENs="TOKEN" :shopCarArrs="shopCarArr" v-on:fetch="deletAll($event)"></v-header> -->
 				<!-- 待开发 -->
 				<div class="shop-address-wrapper">
 					<text class="iconFont iconfont-address">&#xe7e0;</text>
@@ -17,7 +21,7 @@
 					<image class="shop-list-image" :src="foods.ImageUrl"></image>
 					<div class="shop-list-info">
 						<div class="shop-list-info-title">
-							<text class="shop-list-info-name">{{foods.ProductName}}</text>
+							<text class="shop-list-info-name">{{foods.ProductName}}{{foods.checked}}</text>
 							<text class="shop-list-info-weight">{{foods.Weight}}g</text>
 						</div>
 						<div class="shop-list-money-wrapper">
@@ -27,7 +31,7 @@
 							</div>
 							<div class="shop-list-money-right">
 								<text class="iconFont shop-list-money-reduce" @click="reduceMoney(foods.CartNum,index)">&#xe600;</text>
-								<input type="text" class="shop-list-money-number" disabled="true" v-model="foods.CartNum"/>
+								<text type="text" class="shop-list-money-number">{{foods.CartNum}}</text>
 								<text class="iconFont shop-list-money-add" @click="addMoney(foods.CartNum,index)">&#xe601;</text>
 							</div>
 						</div>
@@ -42,14 +46,14 @@
 			</div>
 			<div class="good-bottom-list-wrapper">
 				<div class="good-bottom-select-wrapper">
-					<wxc-checkbox :config="config" :has-bottom-border="false" class="shop-list-checkout shop-bottom-checkout" @wxcCheckBoxItemChecked="wxcCheck"></wxc-checkbox>
+					<wxc-checkbox :config="config" :has-bottom-border="false" class="shop-list-checkout shop-bottom-checkout" :checked="selectAll" @wxcCheckBoxItemChecked="wxcCheck"></wxc-checkbox>
 				    <text class="good-bottom-checked-all">全选</text>
 				</div>
 				<div class="good-bottom-total-wrapper">
 					<text class="good-bottom-total-text">合计:</text>
 					<text class="good-bottom-total-money">￥{{total}}元</text>
 					<div class="good-bottom-total-button">
-						<text class="good-bottom-total-button-text">结算({{shopNumber}})</text>
+						<text class="good-bottom-total-button-text" @click="jump('components/shop/setlemet.js')">结算({{shopNumber}})</text>
 					</div>
 				</div>
 			</div>
@@ -68,13 +72,14 @@ const storage = weex.requireModule('storage')
 const SHOP_URL = 'api/cart/getMyCartList?userId='
 // 修改购物车数量
 const MODIFYSHOPNUM_URL = 'api/cart/changeCart'
+const SUBITORDER_URL = 'api/cart/sumbitOrder'
 export default {
 	data() {
 		return {
 			titleName: '购物车',
 			refreshing: false,//下拉刷新
 			loadinging: false,//上拉加载
-			selectAll: false,//是否全选
+			selectAll: true,//是否全选
 			selectOne: false,//是否单选
 			checkArr: [],//被选中产品的数组 用来做全部删除
 			USERID: 'user_id',
@@ -82,24 +87,26 @@ export default {
 			shopCarArr: {},
 			config: {
 				//初始单选框
-			    unCheckedIcon: 'http://47.92.164.211:8011/PublicImage//unchecked.png',
-				checkedIcon:'http://47.92.164.211:8011/PublicImage//checked.png',
+			    unCheckedIcon: 'http://47.92.164.211:8011/PublicImage/unchecked.png',
+				checkedIcon:'http://47.92.164.211:8011/PublicImage/checked.png',
 			    disabledIcon:'https://gw.alicdn.com/tfs/TB1PtN3pwMPMeJjy1XdXXasrXXa-72-72.png',
 			    checkedDisabledIcon:'https://gw.alicdn.com/tfs/TB1aPabpwMPMeJjy1XcXXXpppXa-72-72.png',
 			    unCheckedDisabledIcon:'https://gw.alicdn.com/tfs/TB1lTuzpwoQMeJjy0FoXXcShVXa-72-72.png',
 			    checkedColor: '#f40',
 			},
 			shopCar: {},// 物品对象
-			discounts: 0.8,//折扣价
+			discounts: 0.0,//折扣价
 			// moneyValue: 0,//购买商品数
 			// total: 0,//总价
 			// shopNumber: 0,//商品个数
         }
 	},
 	methods: {
+		// 去除商品
 		reduceMoney(num,index) {
 			var self = this,
-				CartNums = self.shopCarArr.CartList[index].CartNum - 1
+				// 本地修改
+				CartNums = num - 1
 	        Util.WeexAjax({
 	            url: MODIFYSHOPNUM_URL,
 	            method: 'POST',
@@ -113,8 +120,12 @@ export default {
 	            callback: function(ret) {
 	            	if(ret.Status == 1){
 	            		var rets = ret.obj;
-						self.shopCarArr.CartList[index].CartNum = parseInt(CartNums) - 1
-	            		console.log(rets)
+						self.shopCarArr.CartList[index].CartNum = parseInt(CartNums)
+						if(self.shopCarArr.CartList[index].CartNum <= 0){
+							self.checkArr.splice(index, 1)
+							self.shopCarArr.CartList.splice(index, 1)
+						}
+						// console.log(self.checkArr)
 	            	}else{
                         modal.toast({
                             message: '请求错误',
@@ -125,7 +136,9 @@ export default {
 	        })
     		// this.shopCar[index].number = parseInt(this.shopCar[index].number) - 1;
     	},
-    	addMoney(num,index) {var self = this;
+    	// 增加商品
+    	addMoney(num,index) {
+    		var self = this;
 	        Util.WeexAjax({
 	            url: MODIFYSHOPNUM_URL,
 	            method: 'POST',
@@ -134,13 +147,13 @@ export default {
 	            body: {
 	            	"UserId": self.USERID,
 	            	"CartId": self.shopCarArr.CartList[index].CartId,
-	            	"CartNum": (parseInt(self.shopCarArr.CartList[index].CartNum) + 1)
+	            	"CartNum": (parseInt(num) + 1)
 	            },
 	            callback: function(ret) {
 	            	if(ret.Status == 1){
 	            		var rets = ret.obj;
-						self.shopCarArr.CartList[index].CartNum = parseInt(self.shopCarArr.CartList[index].CartNum) + 1
-	            		console.log(rets)
+						self.shopCarArr.CartList[index].CartNum = parseInt(num) + 1
+	            		// console.log(self.shopCarArr.CartList)
 	            	}else{
                         modal.toast({
                             message: '请求错误',
@@ -153,43 +166,90 @@ export default {
     	},
 		_initCheckArr() {
 			for(var i = 0; i < this.shopCarArr.CartList.length; i++){
-				this.checkArr.push({value: i,checked: false})
+				// var aa =  this.shopCarArr.CartList[i]
+				this.checkArr.push({checked: true})
+				this.shopCarArr.CartList[i].checked = true;
 			}
+			// console.log(this.checkArr)
+			// console.log(this.shopCarArr)
 		},
 		// 选中
 		wxcCheckBoxItemChecked(e) {
-			this.selectOne = !this.selectOne;
+			// this.selectOne = !this.selectOne;
+			// console.log(this.selectOne)
 			var value = e.value;
-			if(this.selectOne){
-				this.checkArr[value].checked = true;
-				console.log(this.checkArr[value].checked)
-			}else{
-				this.checkArr[value].checked = false;
-				console.log(this.checkArr[value].checked)
-			}
+			this.checkArr[value].checked = e.checked;
+			this.shopCarArr.CartList[value].checked = e.checked;
+			console.log(this.checkArr)
+			console.log(this.shopCarArr)
 		},
 		// 全选按钮
-		wxcCheck(){
+		wxcCheck(e){
 			//判断是否全选
-			this.selectAll = !this.selectAll;
-			if(this.selectAll){
-				for(var i = 0; i < this.checkArr.length; i++){
-					this.checkArr[i].checked = true;
-				}
-			}else{
-				for(var i = 0; i < this.checkArr.length; i++){
-					this.checkArr[i].checked = false;
+			// this.selectAll = !this.selectAll;
+			var value = e.value;
+			// if(e.checked){
+			for(var i = 0; i < this.shopCarArr.CartList.length; i++){
+				this.checkArr[i].checked = e.checked;
+				this.shopCarArr.CartList[i].checked = e.checked;
+			}
+			// }else{
+			// 	for(var i = 0; i < this.shopCarArr.CartList.length; i++){
+			// 		this.checkArr[i].checked = false;
+			// 		this.shopCarArr.CartList[i].checked = false;
+			// 	}
+			// }
+			console.log(this.shopCarArr.CartList)
+		},
+		//删除按钮
+		deletFoods() {
+			// console.log(this.checkArr)
+			// var sb=this.checkArr;
+			// var index;
+			var self = this;
+			var arr = []
+			for(var i = this.checkArr.length - 1; i >= 0; i--){
+				if(this.checkArr[i].checked == true){
+					// console.log(i+'----')
+					var CartId = self.shopCarArr.CartList[i].CartId
+                    self.checkArr.splice(i,1)
+                    self.shopCarArr.CartList.splice(i,1)
+					Util.WeexAjax({
+	                    url: MODIFYSHOPNUM_URL,
+	                    method: 'POST',
+	                    type: 'JSON',
+	                    token: self.TOKEN,
+	                    body: {
+	                        "UserId": self.USERID,
+	                        "CartId": CartId,
+	                        "CartNum": 0
+	                    },
+	                    callback: function(ret) {
+	                        if(ret.Status == 1){
+	                            var rets = ret.obj;
+	                        }else{
+	                            modal.toast({
+	                                message: '请求错误',
+	                                duration: 1
+	                            })
+	                        }
+	                    }
+	                })
 				}
 			}
 		},
-		//全部删除按钮
-		deletFoods() {
-			for(var i = 0; i < this.checkArr.length; i++){
-				if(this.checkArr[i].checked == true){
-					this.shopCar.splice(i,1)
+		jump(href) {
+			var CartIds = '';
+			for(var i = 0; i < this.shopCarArr.CartList.length; i++){
+				if(this.shopCarArr.CartList[i].checked == true){
+					CartIds += this.shopCarArr.CartList[i].CartId + ','
 				}
 			}
-		}
+			// 替换字符串 替换掉最后一个逗号
+			CartIds = CartIds.replace(/(\,$)/g,"");
+			Util.bindThis(Util.jump(href+'?CartIds='+CartIds),this.$getConfig())
+			console.log(href+'?CartIds='+CartIds)
+	  	},
 	},
 	created() {
         var fontModule = weex.requireModule("dom");
@@ -211,6 +271,8 @@ export default {
 		            	if(ret.Status == 1){
 		            		var rets = ret.obj;
 		            		self.shopCarArr = rets
+		            		self.discounts = rets.Discount
+		            		// 初始化单选框
 		            		self._initCheckArr()
 		            		console.log(self.shopCarArr)
 		            	}else{
@@ -234,6 +296,7 @@ export default {
     	shopNumber() {
     		var num = 0;
     		var shopCarNum = 0;
+    		// console.log(this.shopCarArr.CartList.length)
     		for(var i = 0; i < this.shopCarArr.CartList.length; i++){
     			shopCarNum = this.shopCarArr.CartList[i].CartNum
     			num += parseInt(shopCarNum);
@@ -261,7 +324,7 @@ export default {
     			count += (parseFloat(shopCarPrice).toFixed(2) * parseInt(shopCarNum)) - (parseFloat(shopCarPrice).toFixed(2) * parseInt(shopCarNum) * this.discounts);
     		}
     		return count.toFixed(2);
-    	}
+    	},
     }
 }
 </script>
@@ -281,34 +344,13 @@ export default {
 	height: 240px;
 	background-color: rgb(115,204,70);
 }
-/*.shop-header-title-wrapper{
-	position: relative;
-	display: flex;
-	flex-direction: row;
-	justify-content: center;
-	align-items: center;
-	width: 710px;
-	height: 92px;  26 + 40 + 26
-}
-.shop-header-title{
-	font-size: 43px;
-	color: #fff;
-}
-.shop-header-delet{
-	position: absolute;
-	right: 0;
-	top: 0;
-	margin-top: 29px;
-	font-size: 34px;
-	color: #c1e6a3;
-}*/
 .shop-address-wrapper{
 	display: flex;
 	flex-direction: row;
 	align-items: center;
 	padding-left: 20px;
 	padding-right: 20px;
-	padding-top: 21px;  /*47 - 26*/
+	padding-top: 21px;
 }
 .iconfont-address{
 	margin-right: 15px;
@@ -477,5 +519,70 @@ export default {
 .good-bottom-total-button-text{
 	font-size: 30px;
 	color: #fff;
+}
+
+
+
+
+
+.backBtn {
+    position: absolute;
+    left: 20px;
+    top: 25.5px;
+    width: 28px;
+    height: 41px;
+}
+
+.shareBtn {
+    position: absolute;
+    top: 23px;
+    right: 20px;
+    width: 46px;
+    height: 46px;
+}
+
+.layoutBtn-44 {
+    position: absolute;
+    top: 24px;
+    right: 20px;
+    width: 44px;
+    height: 44px;
+}
+
+.shop-header-title-wrapper {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 92px;
+    /*26 + 40 + 26*/
+    padding-left: 20px;
+    padding-right: 20px;
+    background-color: rgb(115, 204, 70);
+}
+
+.shop-header-title {
+    width: 500px;
+    font-size: 42px;
+    color: #fff;
+    text-align: center;
+    text-overflow: ellipsis;
+    lines: 1;
+}
+
+.shop-header-delet,
+.shop-header-info {
+    position: absolute;
+    right: 20px;
+    top: 0;
+    margin-top: 27px;
+    font-size: 34px;
+    line-height: 38px;
+    color: #c1e6a3;
+}
+
+.shop-header-info {
+    color: #fff;
 }
 </style>

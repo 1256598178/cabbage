@@ -14,7 +14,7 @@
 								<text class="find-body-news-title-name">绿白菜恭祝广大用户新春愉快！</text>
 								<text class="find-body-news-title-subname">新年到，绿白菜恭祝大家新春愉快，合家欢乐！！</text>
 							</div>
-							<image class="find-body-news-image" src="../src/components/other/news_01.png"></image>
+							<image class="find-body-news-image" src="http://47.92.164.211:8011/PublicImage/news_01.png"></image>
 						</div>
 					</div>
 				</cell>

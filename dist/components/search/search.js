@@ -62,26 +62,26 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 196);
+/******/ 	return __webpack_require__(__webpack_require__.s = 225);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 196:
+/***/ 225:
 /***/ (function(module, exports, __webpack_require__) {
 
 var __vue_exports__, __vue_options__
 var __vue_styles__ = []
 
 /* styles */
-__vue_styles__.push(__webpack_require__(197)
+__vue_styles__.push(__webpack_require__(226)
 )
 
 /* script */
-__vue_exports__ = __webpack_require__(198)
+__vue_exports__ = __webpack_require__(227)
 
 /* template */
-var __vue_template__ = __webpack_require__(199)
+var __vue_template__ = __webpack_require__(228)
 __vue_options__ = __vue_exports__ = __vue_exports__ || {}
 if (
   typeof __vue_exports__.default === "object" ||
@@ -114,7 +114,7 @@ new Vue(module.exports)
 
 /***/ }),
 
-/***/ 197:
+/***/ 226:
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -231,7 +231,7 @@ module.exports = {
 
 /***/ }),
 
-/***/ 198:
+/***/ 227:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -272,43 +272,21 @@ Object.defineProperty(exports, "__esModule", {
 
 exports.default = {
 	data: function data() {
-		return {};
+		return {
+			searchImage: 'http://47.92.164.211:8011/PublicImage/search.png'
+		};
 	}
 };
 
 /***/ }),
 
-/***/ 199:
+/***/ 228:
 /***/ (function(module, exports) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: ["search"]
-  }, [_vm._m(0), _c('div', {
-    staticClass: ["search-body"]
   }, [_c('div', {
-    staticClass: ["search-hot", "search-hot-one"]
-  }, [_vm._m(1), _c('div', {
-    staticClass: ["search-hot-wrapper"]
-  }, _vm._l((10), function(item) {
-    return _c('div', {
-      staticClass: ["search-hot-list"]
-    }, [_c('text', {
-      staticClass: ["search-hot-list-text"]
-    }, [_vm._v("叶菜类")])])
-  }))]), _c('div', {
-    staticClass: ["search-hot"]
-  }, [_vm._m(2), _c('div', {
-    staticClass: ["search-hot-wrappe-history"]
-  }, _vm._l((10), function(item) {
-    return _c('div', {
-      staticClass: ["search-hot-list-history"]
-    }, [_c('text', {
-      staticClass: ["search-hot-list-text", "search-hot-list-text-history"]
-    }, [_vm._v("叶菜类叶菜叶菜类叶菜叶菜类叶菜叶菜类叶菜叶菜类叶菜叶菜类叶菜叶菜类叶菜")])])
-  }))])])])
-},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
     staticClass: ["shop-header-title-wrapper"]
   }, [_c('input', {
     staticClass: ["searchInput"],
@@ -321,12 +299,34 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }), _c('image', {
     staticClass: ["input-image"],
     attrs: {
-      "src": "../src/common/images/search.png"
+      "src": _vm.searchImage
     }
   }), _c('text', {
     staticClass: ["shop-header-delet"]
-  }, [_vm._v("取消")])])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  }, [_vm._v("取消")])]), _c('div', {
+    staticClass: ["search-body"]
+  }, [_c('div', {
+    staticClass: ["search-hot", "search-hot-one"]
+  }, [_vm._m(0), _c('div', {
+    staticClass: ["search-hot-wrapper"]
+  }, _vm._l((10), function(item) {
+    return _c('div', {
+      staticClass: ["search-hot-list"]
+    }, [_c('text', {
+      staticClass: ["search-hot-list-text"]
+    }, [_vm._v("叶菜类")])])
+  }))]), _c('div', {
+    staticClass: ["search-hot"]
+  }, [_vm._m(1), _c('div', {
+    staticClass: ["search-hot-wrappe-history"]
+  }, _vm._l((10), function(item) {
+    return _c('div', {
+      staticClass: ["search-hot-list-history"]
+    }, [_c('text', {
+      staticClass: ["search-hot-list-text", "search-hot-list-text-history"]
+    }, [_vm._v("叶菜类叶菜叶菜类叶菜叶菜类叶菜叶菜类叶菜叶菜类叶菜叶菜类叶菜叶菜类叶菜")])])
+  }))])])])
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: ["search-hot-title-box"]
   }, [_c('text', {

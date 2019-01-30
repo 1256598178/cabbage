@@ -13,7 +13,7 @@
 					<div class="my-info-wrapper">
 						<div class="my-info-wrapper-left">
 							<div class="my-info-logo-wrapper">
-								<image class="my-info-logo" src="../src/components/my/logo.png"></image>
+								<image class="my-info-logo" src="http://47.92.164.211:8011/PublicImage/logo.png"></image>
 							</div>
 							<!-- 登录过后信息 -->
 							<div class="my-info-sign-wrapper" v-if="loginBool">
@@ -51,7 +51,7 @@
 					</div>
 					<div class="my-member-area-body">
 						<div class="my-member-area-body-list" v-for="item in 6">
-							<image class="my-member-area-body-list-image" src="../src/components/my/merage_01.png"></image>
+							<image class="my-member-area-body-list-image" src="http://47.92.164.211:8011/PublicImage/merage_01.png"></image>
 							<text class="my-member-area-body-list-text">尊享黑卡</text>
 						</div>
 					</div>
@@ -63,12 +63,12 @@
 						<text class="my-order-title-text">我的订单</text>
 						<div class="my-all-order-title">
 							<text class="my-all-order-title">全部订单</text>
-							<image class="my-all-order-title-icon" src="../src/components/my/order@left.png"></image>
+							<image class="my-all-order-title-icon" src="http://47.92.164.211:8011/PublicImage/order@left.png"></image>
 						</div>
 					</div>
 					<div class="my-order-body">
 						<div class="my-order-body-list" v-for="item in 5">
-							<image class="my-order-body-list-image" src="../src/components/my/order_04.png"></image>
+							<image class="my-order-body-list-image" src="http://47.92.164.211:8011/PublicImage/order_04.png"></image>
 							<text class="info-number my-order-body-list-number">2</text>
 							<text class="my-order-body-list-image-text">待付款</text>
 						</div>
@@ -77,8 +77,8 @@
 			</cell>
 			<cell>
 				<div class="cell-box my-tell-me-wrapper">
-					<image class="my-tell-me-image" src="../src/components/my/link_01.png"></image>
-					<image class="my-tell-me-image" src="../src/components/my/link_02.png"></image>
+					<image class="my-tell-me-image" src="http://47.92.164.211:8011/PublicImage/link_01.png"></image>
+					<image class="my-tell-me-image" src="http://47.92.164.211:8011/PublicImage/link_02.png"></image>
 				</div>
 			</cell>
 			<cell>
@@ -116,27 +116,27 @@ export default {
 			ConTool: [
 			    {
 			      title: '我的收藏',
-			      ImageUrl: '../src/components/my/tool_01.png',
+			      ImageUrl: 'http://47.92.164.211:8011/PublicImage/tool_01.png',
 			      navigationUrl: 'components/my/my.js'
 			    },
 			    {
 			      title: '发现',
-			      ImageUrl: '../src/components/my/tool_02.png',
+			      ImageUrl: 'http://47.92.164.211:8011/PublicImage/tool_02.png',
 			      navigationUrl: 'components/my/my.js'
 			    },
 			    {
 			      title: '分享APP',
-			      ImageUrl: '../src/components/my/tool_03.png',
+			      ImageUrl: 'http://47.92.164.211:8011/PublicImage/tool_03.png',
 			      navigationUrl: 'components/my/my.js'
 			    },
 			    {
 			      title: '用户协议',
-			      ImageUrl: '../src/components/my/tool_04.png',
+			      ImageUrl: 'http://47.92.164.211:8011/PublicImage/tool_04.png',
 			      navigationUrl: 'components/my/my.js'
 			    },
 			    {
 			      title: '设置',
-			      ImageUrl: '../src/components/my/tool_05.png',
+			      ImageUrl: 'http://47.92.164.211:8011/PublicImage/tool_05.png',
 			      navigationUrl: 'components/setUp/setUp.js'
 			    }
 			]

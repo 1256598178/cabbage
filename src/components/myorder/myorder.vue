@@ -5,7 +5,7 @@
 			<!--状态栏-->
 			<text class="statusbar"></text>
 			<!--标题栏-->
-			<wxc-minibar title="我的订单" background-color="#73cc00" text-color="#FFFFFF" left-button='../src/common/images/backImage.png' @wxcMinibarLeftButtonClicked="minibarLeftButtonClick">
+			<wxc-minibar title="我的订单" background-color="#73cc00" text-color="#FFFFFF" left-button='http://47.92.164.211:8011/PublicImage/backImage.png' @wxcMinibarLeftButtonClicked="minibarLeftButtonClick">
 				<text class="title" slot="middle">我的订单</text>
 			</wxc-minibar>
 			<text class="border-cell"></text>

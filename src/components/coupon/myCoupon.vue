@@ -30,7 +30,7 @@
                 <!-- 是否有内容 -->
                 <cell class="reward-no-content" v-if="rewardContent">
                     <div class="reward-no-icon">
-                        <image class="reward-no-image" src="../src/common/images/reward@195x172.png"></image>
+                        <image class="reward-no-image" src="http://47.92.164.211:8011/PublicImage/reward@195x172.png"></image>
                         <text class="reward-no-image">暂无优惠券！</text>
                     </div>
                 </cell>

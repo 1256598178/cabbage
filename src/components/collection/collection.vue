@@ -11,7 +11,7 @@
 			<cell>
 				<div class="seafood-wrapper-layout">
 					<div class="seafood-wrapper-active" v-for="items in 10"><!-- seafood-wrapper-active -->
-						<image class="seafood-image" src="../src/components/seafood/seafood_01.png"></image>
+						<image class="seafood-image" src="http://47.92.164.211:8011/PublicImage/seafood_01.png"></image>
 						<div class="seafood-bottom-wrapper-active"><!-- seafood-bottom-wrapper-active -->
 							<div class="seafood-bottom-name-box">
 								<text class="seafood-bottom-name">越南进口巴沙鱼  100...</text>
@@ -24,7 +24,7 @@
 									</div>
 								    <text class="seafood-bottom-shop-all-doller">¥21.40</text>
 								</div>
-								<image class="seafood-bottom-shop-car" src="../src/common/images/shop-car.png"></image>
+								<image class="seafood-bottom-shop-car" src="http://47.92.164.211:8011/PublicImage/shop-car.png"></image>
 							</div>
 						</div>
 					</div>

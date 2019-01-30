@@ -3,14 +3,11 @@
 		<header class="shop-header">
 			<v-header :titleName="titleName" :backPage="true"></v-header>
 			<!-- <div class="shop-header-title-wrapper">
-				<image class="backBtn" src="../src/common/images/backImage.png"></image>
+				<image class="backBtn" src="http://47.92.164.211:8011/PublicImage/backImage.png"></image>
 				<text class="shop-header-title">订单结算</text>
 			</div> -->
-		</header><!-- /header -->
+		</header>
 		<list class="shop-wrapper">
-			<refresh @refresh="onrefresh" :display="refreshing ? 'show' : 'hide'">
-				<text class="refresh">下拉刷新...</text>
-			</refresh>
 			<cell>
 				<div class="lemet-body lemet-address-wrapper">
 					<div class="lemet-title-address">
@@ -18,40 +15,40 @@
 							<text class="iconFont lemet-body-title-iconfont">&#xe7e0;</text>
 					        <text class="lemet-body-title-name">绿白菜滨湖春融苑店</text>
 						</div>
-						<image class="lemet-title-address-right" src="../src/common/images/moreImage@16x25.png"></image>
+						<image class="lemet-title-address-right" src="http://47.92.164.211:8011/PublicImage/moreImage@16x25.png"></image>
 					</div>
 					<div class="lemet-address-box">
-						<text class="lemet-address-box-text">合肥市滨湖区南京路与天柱山路交口春融苑</text>
+						<text class="lemet-address-box-text">合肥市滨湖区南京路与天柱山路交口春融苑{{titleName}}</text>
 						<text class="lemet-address-box-text">联系电话：400 1234 4567</text>
 					</div>
 				</div>
 				<div class="lemet-body lemet-food-time">
-					<div class="lemet-food-time-list">
+					<div class="lemet-food-time-list" @click="pickDate">
 						<text class="lemet-food-time-name">预约取货日期</text>
 						<div class="lemet-food-time-info">
-							<text class="lemet-food-time-num lemet-food-time-name-active">2018-12-01(明天)</text>
-							<image class="moreImage-14x9" src="../src/common/images/moreImage@14x9.png"></image>
+							<text class="lemet-food-time-num lemet-food-time-name-active">{{dates}}</text>
+							<image class="moreImage-14x9" src="http://47.92.164.211:8011/PublicImage/moreImage@14x9.png"></image>
 						</div>
 					</div>
-					<div class="lemet-food-time-list">
+					<div class="lemet-food-time-list" @click="pickTime">
 						<text class="lemet-food-time-name">预约取货时间</text>
 						<div class="lemet-food-time-info">
-						    <text class="lemet-food-time-num">2018-12-01(明天)</text>
-							<image class="moreImage-14x9" src="../src/common/images/moreImage@14x9.png"></image>
+						    <text class="lemet-food-time-num">{{times}}</text>
+							<image class="moreImage-14x9" src="http://47.92.164.211:8011/PublicImage/moreImage@14x9.png"></image>
 						</div>
 					</div>
 					<div class="lemet-food-time-list">
 						<text class="lemet-food-time-name">是否使用优惠券</text>
 						<div class="lemet-food-time-info">
 						    <text class="lemet-food-time-num">请选择优惠券</text>
-							<image class="moreImage-14x9" src="../src/common/images/moreImage@14x9.png"></image>
+							<image class="moreImage-14x9" src="http://47.92.164.211:8011/PublicImage/moreImage@14x9.png"></image>
 						</div>
 					</div>
 					<div class="lemet-food-time-list">
 						<text class="lemet-food-time-name">是否需要购物袋</text>
 						<div class="lemet-food-time-info">
-						    <text class="lemet-food-time-num">2018-12-01(明天)</text>
-							<image class="moreImage-14x9" src="../src/common/images/moreImage@14x9.png"></image>
+						    <text class="lemet-food-time-num">否</text>
+							<image class="moreImage-14x9" src="http://47.92.164.211:8011/PublicImage/moreImage@14x9.png"></image>
 						</div>
 					</div>
 				</div>
@@ -63,52 +60,35 @@
 						<text class="lemet-trade-title-name">商品品名</text>
 					</div>
 					<div class="lemet-trade-foods-wrapper">
-						<div class="cellps">
-							<image class="product-img" src="../src/components/shop/product-img01.png"></image>
+						<div class="cellps" v-for="(item,index) in lemet.CartList">
+							<image class="product-img" :src="item.ImageUrl"></image>
 			        		<div class="pro-news">
 			        			<div class="pro-r">
-			        				<text class="product-title">乌菜</text>
-			        			    <text class="product-title-weight">500g</text>
+			        				<text class="product-title">{{item.ProductName}}</text>
+			        			    <text class="product-title-weight">{{item.Weight}}</text>
 			        			</div>
 			        			<div class="pro-m">
-			        				<text class="product-price">¥0.50元/斤</text>
-			        				<text class="product-price-number">×2</text>
-			        			</div>
-			        		</div>
-						</div>
-						<div class="cellps">
-							<image class="product-img" src="../src/components/shop/product-img01.png"></image>
-			        		<div class="pro-news">
-			        			<div class="pro-r">
-			        				<text class="product-title">乌菜</text>
-			        			    <text class="product-title-weight">500g</text>
-			        			</div>
-			        			<div class="pro-m">
-			        				<text class="product-price">¥0.50元/斤</text>
-			        				<text class="product-price-number">×2</text>
+			        				<text class="product-price">¥{{item.SalesPrice}}元/{{item.Unit}}</text>
+			        				<text class="product-price-number">×{{item.CartNum}}</text>
 			        			</div>
 			        		</div>
 						</div>
 					</div>
 				</div>
 			</cell>
-			<loading class="loading" @loading="onloading" :display="loadinging ? 'show' : 'hide'">
-				<text class="loading">加载更多...</text>
-				<loading-indicator class="indicators"></loading-indicator>
-			</loading>
 		</list>
 		<div class="good-bottom-wrapper">
 			<div class="good-bottom-member-wrapper">
 				<text class="iconFont member-image">&#xe641;</text>
-				<text class="member-text">升级会员，本单可为您节省</text><text class="member-text-num">{{123}}</text><text class="member-text">元!</text>
+				<text class="member-text">升级会员，本单可为您节省</text><text class="member-text-num">{{(lemet.TotalPrice - (lemet.Discount * lemet.TotalPrice)).toFixed(2)}}</text><text class="member-text">元!</text>
 			</div>
 			<div class="good-bottom-list-wrapper">
 				<div class="good-bottom-select-wrapper">
 					<text class="good-bottom-total-text">预付款:</text>
-					<text class="good-bottom-total-money">￥{{123}}元</text>
+					<text class="good-bottom-total-money">￥{{lemet.TotalPrice}}元</text>
 				</div>
 				<div class="good-bottom-total-button">
-					<text class="good-bottom-total-button-text">结算({{123}})</text>
+					<text class="good-bottom-total-button-text" @click="submitBtn()">提交订单</text>
 				</div>
 			</div>
 		</div>
@@ -117,27 +97,137 @@
 
 <script>
 import header from '../header/orderHeader.vue'
+import Util from '../../common/utils/utils.js'
+// import Storage from '../../common/utils/storage.js'
+const storage = weex.requireModule('storage')
+const GETMYCARTCHOSTLIST_URL = 'api/cart/getMyCartChoseList?UserId='
+const SUBMITORDER_URL = 'api/cart/sumbitOrder'
+
+const modal = weex.requireModule('modal')
+var stream = weex.requireModule('stream')
+const picker = weex.requireModule('picker')
 export default {
 	data() {
 		return {
 			titleName: '订单结算',
-			refreshing: false,//下拉刷新
-			loadinging: false,//上拉加载
+			DATEURLS:'api/cart/getPickingDateTime',
+			TIMEURLS:'api/cart/getPickingTime',
+			dates:'',
+			lemet: {},
+			datesList:[],
+			PickingId: [],
+			pickid: '',
+			times:'请选择',
+			timeList:[],
+			numList:[],
+			USERID: 'user_id',
+			TOKEN: 'user_token',
         }
 	},
 	methods: {
-		onrefresh (){
-			this.refreshing = true;
-			setTimeout(()=>{
-				this.refreshing = false;
-			},2000)
+		pickDate () {
+			picker.pick({
+			  items: this.datesList,
+			}, event => {
+			  if (event.result === 'success') {
+				this.dates = this.datesList[event.data]
+				self.times = '请选择'
+			  }
+			})
+			var self = this
+			Util.WeexAjax({
+			    url: self.TIMEURLS + '?date='+self.dates,
+			    method: 'GET',
+			    type: 'JSON',
+			    callback: function(ret) {
+			        // let rets = Util.JsonFormat(ret);
+			        if (ret.Status == 0) {
+			            
+			        } else if (ret.Status == 1) {
+			            console.log(ret)
+						var arr=[];
+						var num=[];
+						for(var i = 0;i<ret.obj.length;i++){
+							arr.push(ret.obj[i].PickingTime);
+							num.push(ret.obj[i].PickingNum)
+						}
+			            self.timeList = arr
+						self.numList = num
+			        }
+			    }
+			})
+			//self.times = self.timeList[0].PickingTime
 		},
-		onloading (){
-			this.loadinging = true;
-			setTimeout(()=>{
-				this.loadinging = false;
-			},2000)
+		pickTime () {
+			var self = this
+			picker.pick({
+			  items: self.timeList,
+			}, event => {
+			  if (event.result === 'success') {
+				if(self.numList[event.data]!=0){
+					self.times = self.timeList[event.data]
+					self.pickid = self.PickingId[event.data]
+				}else{
+					modal.toast({
+						message: '预约已满，请选择其他时间',
+						duration: 0.3
+					})
+				}
+			  }
+			}) 
 		},
+		analCartIds() {
+	        // var url = decodeURI(weex.config.bundleUrl) + '?CartIds=279,280,281,282,283'; //取得整个地址栏
+	        var url = decodeURI(weex.config.bundleUrl); //取得整个地址栏
+	        console.log(url)
+	        var result = url.match(new RegExp(/\?\w*\=\w*(\&\w*\=\w*)*/, "g"))[0].slice(1);
+	        // console.log(result)
+	        var key = result.match(new RegExp(/\w*\=/, "g"));
+	        // console.log(key)
+	        var value = url.match(new RegExp(/\=(\w*\,*)*/, "g"));
+	        console.log(value)
+	        var warp = {};
+	        for (var indexes in value) {
+	            key[indexes] = key[indexes].slice(0, key[indexes].length - 1)
+	            value[indexes] = value[indexes].slice(1)
+	            // console.log(value[indexes])
+	            warp[key[indexes]] = value[indexes]
+	        }
+	        return warp
+	    },
+	    // 提交订单
+	    submitBtn() {
+	    	var self = this;
+	        Util.WeexAjax({
+	            url: SUBMITORDER_URL,
+	            method: 'POST',
+	            type: 'JSON',
+	            token: self.TOKEN,
+	            body: {
+	            	"UserId": self.USERID,
+	            	"CartIds": self.analCartIds().CartIds,
+	            	"CouponId": 0,
+	            	"ShopId": 1,
+	            	"PickingDate": self.dates,
+	            	"PickingTimeId": self.pickid
+	            },
+	            callback: function(ret) {
+	            	if(ret.Status == 1){
+                        Util.NavigatUrl({
+                            message: ret.Message,
+                            duration: 1,
+                            urls: 'components/checkstand/checkstand.js?TotalPrice=' + self.lemet.TotalPrice,
+                            _this: self.$getConfig()
+                        })
+	            	}else{
+                        modal.toast({
+                            message: ret.Message,
+                            duration: 1
+                        })
+	            	}
+	            }
+	        })
+	    }
 	},
 	created() {
         var fontModule = weex.requireModule("dom");
@@ -145,6 +235,81 @@ export default {
             'fontFamily': "iconfont",
             'src': "url('//at.alicdn.com/t/font_948634_q51n034oj8.ttf')"
         })
+        // 获取日期请求
+		var self = this;
+		Util.WeexAjax({
+		    url: self.DATEURLS,
+		    method: 'GET',
+		    type: 'JSON',
+		    callback: function(ret) {
+		        // let rets = Util.JsonFormat(ret);
+		        if (ret.Status == 0) {
+		            
+		        } else if (ret.Status == 1) {
+		            console.log(ret)
+					var arr=[];
+					self.dates = ret.obj.PickingDateList[0].PickingDateText
+					for(var i = 0;i<ret.obj.PickingDateList.length;i++){
+						arr.push(ret.obj.PickingDateList[i].PickingDateText);
+					}
+		            self.datesList = arr
+		        }
+		    }
+		})
+        // 获取时间请求
+		Util.WeexAjax({
+		    url: self.TIMEURLS + '?date='+self.dates,
+		    method: 'GET',
+		    type: 'JSON',
+		    callback: function(ret) {
+		        // let rets = Util.JsonFormat(ret);
+		        if (ret.Status == 0) {
+		            
+		        } else if (ret.Status == 1) {
+		            console.log(ret)
+					var arr=[];
+					var num=[];
+					var Id = [];
+					//self.dates = ret.obj.PickingDateList[0].PickingDateText
+					for(var i = 0;i<ret.obj.length;i++){
+						arr.push(ret.obj[i].PickingTime);
+						num.push(ret.obj[i].PickingNum);
+						Id.push(ret.obj[i].PickingId)
+					}
+		            self.timeList = arr
+					self.numList = num
+					self.PickingId = Id
+					console.log(self.PickingId)
+					console.log(self.timeList)
+					console.log(self.numList)
+		        }
+		    }
+		})
+		// 获取选中的购物车
+		var self = this;
+        storage.getItem(self.USERID,event => {
+        	self.USERID = event.data
+        	storage.getItem(self.TOKEN,event => {
+        		self.TOKEN = event.data
+		        Util.WeexAjax({
+		            url: GETMYCARTCHOSTLIST_URL + self.USERID + '&CartIds=' + self.analCartIds().CartIds,
+		            method: 'GET',
+		            type: 'JSON',
+		            token: self.TOKEN,
+		            callback: function(ret) {
+		            	if(ret.Status == 1){
+		            		self.lemet = ret.obj;
+		            		console.log(self.lemet)
+		            	}else{
+                            modal.toast({
+                                message: '请求错误',
+                                duration: 1
+                            })
+		            	}
+		            }
+		        })
+        	})
+        });
     },
     components: {
     	"v-header": header 
@@ -153,15 +318,9 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-// 头部
 .iconFont{
     font-family: iconfont;
 }
-/*.container{
-	position: relative;
-	padding-left: 20px;
-	paddng-right: 20px;
-}*/
 .shop{
 	position: fixed;
 	width: 750px;
@@ -169,36 +328,19 @@ export default {
 	bottom: 110px;
 	background-color: #f5f5f5;
 }
-/*.shop-header{
-	width: 750px;
-	padding-left: 20px;
-	padding-right: 20px;
-	background-color: rgb(115,204,70);
-}*/
 .shop-header-title-wrapper{
 	position: relative;
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
 	align-items: center;
-	width: 710px;
-	height: 92px;  /*26 + 40 + 26*/
-	margin-left: 20px;
-	margin-right: 20px;
+	width: 750px;
+	height: 92px;
 }
 .shop-header-title{
 	font-size: 43px;
 	color: #fff;
 }
-/*.backBtn{
-	position: absolute;
-	left: 0px;
-	top: 25.5px;
-	width: 28px;
-	height: 41px;
-}*/
-
-////////////////////// 绿白菜滨湖春融苑店
 .lemet-body{
 	margin-bottom: 10px;
 } 
@@ -212,7 +354,6 @@ export default {
 	background-color: #fff;
 }
 
-//////横向左右两端上下居中布局
 .lemet-title-address,.lemet-food-time-list{  
 	display: flex;
 	flex-direction: row;
@@ -222,7 +363,6 @@ export default {
 .lemet-title-address{
 	margin-bottom: 20px;
 }
-//////横向上下居中布局
 .lemet-title-address-left,.lemet-food-time-info,.lemet-trade-title-wrapper,.pro-r{
 	display: flex;
 	flex-direction: row;
@@ -250,7 +390,6 @@ export default {
 
 
 
-//////////////////////////////预约时间
 .lemet-food-time-list,.lemet-trade-title-wrapper{
 	padding-top: 20px;
 	padding-bottom: 20px;
@@ -280,7 +419,6 @@ export default {
 	height: 9px;
 	margin-left: 12px;
 }
-// ///////////////////////////商品品名
 .lemet-trade-title-line{
 	margin-right: 15px;
 	width: 10px;
@@ -367,21 +505,18 @@ export default {
 	bottom: 0;
 	right: 0;
 }
-// ///////////////////////////////////////////////////
-
-// 中间部分
 .shop-wrapper{
 	position: fixed;
 	left: 0;
 	top: 92px;
-	bottom: 265px;
+	bottom: 130px;
 	width: 750px;
 }
 .good-bottom-wrapper{
 	position: fixed;
 	display: flex;
 	flex-direction: column;
-	bottom: 109px;
+	bottom: 0px;
 	height: 155px;
 	width: 750px;
 }

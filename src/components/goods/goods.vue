@@ -36,7 +36,7 @@
 					</div>
 				</div>
 				<div class="cabbage-img-box">
-					<image class="cabbage-image" src="../src/components/goods/cabbage-icon.png"></image>
+					<image class="cabbage-image" src="http://47.92.164.211:8011/PublicImage/cabbage-icon.png"></image>
 				</div>
 			</div>
 		</slider>

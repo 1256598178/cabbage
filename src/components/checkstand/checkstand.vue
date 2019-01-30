@@ -5,7 +5,7 @@
 			<!--状态栏-->
 			<text class="statusbar"></text>
 			<!--标题栏-->
-			<wxc-minibar title="收银台" background-color="#73cc00" text-color="#FFFFFF" left-button='../src/common/images/backImage.png' right-text="" @wxcMinibarLeftButtonClicked="minibarLeftButtonClick">
+			<wxc-minibar title="收银台" background-color="#73cc00" text-color="#FFFFFF" left-button='http://47.92.164.211:8011/PublicImage/backImage.png' right-text="" @wxcMinibarLeftButtonClicked="minibarLeftButtonClick">
 				<text class="title" slot="middle">收银台</text>
 			</wxc-minibar>
 			<text class="border-cell"></text>
@@ -58,7 +58,7 @@
 
 <script>
 	import { WxcMinibar, WxcDialog, WxcRadio } from 'weex-ui';
-	
+	import Util from '../../common/utils/utils.js'
 	const navigator = weex.requireModule('navigator') 
 	
 	export default {
@@ -77,7 +77,7 @@
 	        single: false,
 	        showNoPrompt: false,
 	        isChecked: false,
-	        money:"1.00",
+	        money:"0.00",
 	        pBtn:0,
 		}),
 		methods: {
@@ -128,6 +128,7 @@
 	            'fontFamily': "iconfont",
 	            'src': "url('//at.alicdn.com/t/font_948634_u3gqix2jlms.ttf')"
         	});
+        	this.money = Util.analAjax().TotalPrice
 		}
 	}
 </script>

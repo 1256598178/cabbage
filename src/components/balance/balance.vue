@@ -5,7 +5,7 @@
 			<!--状态栏-->
 			<text class="statusbar"></text>
 			<!--标题栏-->
-			<wxc-minibar title="余额" background-color="#73cc00" text-color="#FFFFFF" left-button='../src/common/images/backImage.png' right-text="明细" @wxcMinibarLeftButtonClicked="minibarLeftButtonClick" @wxcMinibarRightButtonClicked="">
+			<wxc-minibar title="余额" background-color="#73cc00" text-color="#FFFFFF" left-button='http://47.92.164.211:8011/PublicImage/backImage.png' right-text="明细" @wxcMinibarLeftButtonClicked="minibarLeftButtonClick" @wxcMinibarRightButtonClicked="">
 				<text class="title" slot="middle">余额</text>
 			</wxc-minibar>
 		</div>

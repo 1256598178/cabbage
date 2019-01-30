@@ -62,7 +62,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 208);
+/******/ 	return __webpack_require__(__webpack_require__.s = 237);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -140,6 +140,7 @@ var utils = {
     jump: function jump(href, event) {
         var bundleUrl = this.bundleUrl;
         var url = decodeURI(weex.config.bundleUrl); //取得整个地址栏
+        // 获取ip+端口
         var result = url.match(new RegExp("[a-zA-z]+://[^\s]{19}", "g"));
         if (WXEnvironment.platform === 'Web') {
             console.warn('Web端跳转待开发');
@@ -199,7 +200,7 @@ var utils = {
         };
     },
     analAjax: function analAjax() {
-        var url = decodeURI(weex.config.bundleUrl) + '?CategoryId=' + 12; //取得整个地址栏
+        var url = decodeURI(weex.config.bundleUrl); //取得整个地址栏
         console.log(url);
         var result = url.match(new RegExp(/\?\w*\=\w*(\&\w*\=\w*)*/, "g"))[0].slice(1);
         // console.log(result)
@@ -346,7 +347,7 @@ var _utils2 = _interopRequireDefault(_utils);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var navigator = weex.requireModule('navigator'); //
+var MODIFYSHOPNUM_URL = 'api/cart/changeCart'; //
 //
 //
 //
@@ -358,6 +359,7 @@ var navigator = weex.requireModule('navigator'); //
 //
 //
 
+var navigator = weex.requireModule('navigator');
 var modal = weex.requireModule('modal');
 exports.default = {
     props: {
@@ -406,6 +408,9 @@ exports.default = {
         },
         layoutClick: function layoutClick() {
             this.$emit("layoutAct", this.layoutActBool = !this.layoutActBool);
+        },
+        deletFoods: function deletFoods() {
+            this.$emit("fetch");
         }
     },
     created: function created() {
@@ -1452,21 +1457,21 @@ exports.default = Utils;
 
 /***/ }),
 
-/***/ 208:
+/***/ 237:
 /***/ (function(module, exports, __webpack_require__) {
 
 var __vue_exports__, __vue_options__
 var __vue_styles__ = []
 
 /* styles */
-__vue_styles__.push(__webpack_require__(209)
+__vue_styles__.push(__webpack_require__(238)
 )
 
 /* script */
-__vue_exports__ = __webpack_require__(210)
+__vue_exports__ = __webpack_require__(239)
 
 /* template */
-var __vue_template__ = __webpack_require__(211)
+var __vue_template__ = __webpack_require__(240)
 __vue_options__ = __vue_exports__ = __vue_exports__ || {}
 if (
   typeof __vue_exports__.default === "object" ||
@@ -1499,7 +1504,7 @@ new Vue(module.exports)
 
 /***/ }),
 
-/***/ 209:
+/***/ 238:
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -1704,12 +1709,70 @@ module.exports = {
   "good-bottom-total-button-text": {
     "fontSize": "30",
     "color": "#ffffff"
+  },
+  "backBtn": {
+    "position": "absolute",
+    "left": "20",
+    "top": "25.5",
+    "width": "28",
+    "height": "41"
+  },
+  "shareBtn": {
+    "position": "absolute",
+    "top": "23",
+    "right": "20",
+    "width": "46",
+    "height": "46"
+  },
+  "layoutBtn-44": {
+    "position": "absolute",
+    "top": "24",
+    "right": "20",
+    "width": "44",
+    "height": "44"
+  },
+  "shop-header-title-wrapper": {
+    "position": "relative",
+    "display": "flex",
+    "flexDirection": "row",
+    "justifyContent": "center",
+    "alignItems": "center",
+    "height": "92",
+    "paddingLeft": "20",
+    "paddingRight": "20",
+    "backgroundColor": "#73cc46"
+  },
+  "shop-header-title": {
+    "width": "500",
+    "fontSize": "42",
+    "color": "#ffffff",
+    "textAlign": "center",
+    "textOverflow": "ellipsis",
+    "lines": 1
+  },
+  "shop-header-delet": {
+    "position": "absolute",
+    "right": "20",
+    "top": 0,
+    "marginTop": "27",
+    "fontSize": "34",
+    "lineHeight": "38",
+    "color": "#c1e6a3"
+  },
+  "shop-header-info": {
+    "position": "absolute",
+    "right": "20",
+    "top": 0,
+    "marginTop": "27",
+    "fontSize": "34",
+    "lineHeight": "38",
+    "color": "#ffffff"
   }
 }
 
 /***/ }),
 
-/***/ 210:
+/***/ 239:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1719,15 +1782,15 @@ Object.defineProperty(exports, "__esModule", {
 	value: true
 });
 
-var _wxcStepper = __webpack_require__(50);
+var _wxcStepper = __webpack_require__(54);
 
 var _wxcStepper2 = _interopRequireDefault(_wxcStepper);
 
-var _wxcCheckboxList = __webpack_require__(55);
+var _wxcCheckboxList = __webpack_require__(59);
 
 var _wxcCheckboxList2 = _interopRequireDefault(_wxcCheckboxList);
 
-var _wxcCheckbox = __webpack_require__(63);
+var _wxcCheckbox = __webpack_require__(67);
 
 var _wxcCheckbox2 = _interopRequireDefault(_wxcCheckbox);
 
@@ -1800,6 +1863,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
+//
+//
+//
+//
 
 var modal = weex.requireModule('modal');
 var stream = weex.requireModule("stream");
@@ -1808,13 +1875,14 @@ var storage = weex.requireModule('storage');
 var SHOP_URL = 'api/cart/getMyCartList?userId=';
 // 修改购物车数量
 var MODIFYSHOPNUM_URL = 'api/cart/changeCart';
+var SUBITORDER_URL = 'api/cart/sumbitOrder';
 exports.default = {
 	data: function data() {
 		return {
 			titleName: '购物车',
 			refreshing: false, //下拉刷新
 			loadinging: false, //上拉加载
-			selectAll: false, //是否全选
+			selectAll: true, //是否全选
 			selectOne: false, //是否单选
 			checkArr: [], //被选中产品的数组 用来做全部删除
 			USERID: 'user_id',
@@ -1822,15 +1890,15 @@ exports.default = {
 			shopCarArr: {},
 			config: {
 				//初始单选框
-				unCheckedIcon: 'http://47.92.164.211:8011/PublicImage//unchecked.png',
-				checkedIcon: 'http://47.92.164.211:8011/PublicImage//checked.png',
+				unCheckedIcon: 'http://47.92.164.211:8011/PublicImage/unchecked.png',
+				checkedIcon: 'http://47.92.164.211:8011/PublicImage/checked.png',
 				disabledIcon: 'https://gw.alicdn.com/tfs/TB1PtN3pwMPMeJjy1XdXXasrXXa-72-72.png',
 				checkedDisabledIcon: 'https://gw.alicdn.com/tfs/TB1aPabpwMPMeJjy1XcXXXpppXa-72-72.png',
 				unCheckedDisabledIcon: 'https://gw.alicdn.com/tfs/TB1lTuzpwoQMeJjy0FoXXcShVXa-72-72.png',
 				checkedColor: '#f40'
 			},
 			shopCar: {}, // 物品对象
-			discounts: 0 //折扣价
+			discounts: 0.0 //折扣价
 			// moneyValue: 0,//购买商品数
 			// total: 0,//总价
 			// shopNumber: 0,//商品个数
@@ -1838,9 +1906,12 @@ exports.default = {
 	},
 
 	methods: {
+		// 去除商品
 		reduceMoney: function reduceMoney(num, index) {
-			this.shopCarArr.CartList[index].CartNum = parseInt(this.shopCarArr.CartList[index].CartNum) - 1;
-			var self = this;
+			var self = this,
+
+			// 本地修改
+			CartNums = num - 1;
 			_utils2.default.WeexAjax({
 				url: MODIFYSHOPNUM_URL,
 				method: 'POST',
@@ -1849,12 +1920,17 @@ exports.default = {
 				body: {
 					"UserId": self.USERID,
 					"CartId": self.shopCarArr.CartList[index].CartId,
-					"CartNum": self.shopCarArr.CartList[index].CartNum
+					"CartNum": CartNums
 				},
 				callback: function callback(ret) {
 					if (ret.Status == 1) {
 						var rets = ret.obj;
-						console.log(rets);
+						self.shopCarArr.CartList[index].CartNum = parseInt(CartNums);
+						if (self.shopCarArr.CartList[index].CartNum <= 0) {
+							self.checkArr.splice(index, 1);
+							self.shopCarArr.CartList.splice(index, 1);
+						}
+						// console.log(self.checkArr)
 					} else {
 						modal.toast({
 							message: '请求错误',
@@ -1865,51 +1941,123 @@ exports.default = {
 			});
 			// this.shopCar[index].number = parseInt(this.shopCar[index].number) - 1;
 		},
+
+		// 增加商品
 		addMoney: function addMoney(num, index) {
-			this.shopCarArr.CartList[index].CartNum = parseInt(this.shopCarArr.CartList[index].CartNum) + 1;
+			var self = this;
+			_utils2.default.WeexAjax({
+				url: MODIFYSHOPNUM_URL,
+				method: 'POST',
+				type: 'JSON',
+				token: self.TOKEN,
+				body: {
+					"UserId": self.USERID,
+					"CartId": self.shopCarArr.CartList[index].CartId,
+					"CartNum": parseInt(num) + 1
+				},
+				callback: function callback(ret) {
+					if (ret.Status == 1) {
+						var rets = ret.obj;
+						self.shopCarArr.CartList[index].CartNum = parseInt(num) + 1;
+						// console.log(self.shopCarArr.CartList)
+					} else {
+						modal.toast({
+							message: '请求错误',
+							duration: 1
+						});
+					}
+				}
+			});
 			// this.shopCar[index].number = parseInt(this.shopCar[index].number) + 1;
 		},
 		_initCheckArr: function _initCheckArr() {
 			for (var i = 0; i < this.shopCarArr.CartList.length; i++) {
-				this.checkArr.push({ value: i, checked: false });
+				// var aa =  this.shopCarArr.CartList[i]
+				this.checkArr.push({ checked: true });
+				this.shopCarArr.CartList[i].checked = true;
 			}
+			// console.log(this.checkArr)
+			// console.log(this.shopCarArr)
 		},
 
 		// 选中
 		wxcCheckBoxItemChecked: function wxcCheckBoxItemChecked(e) {
-			this.selectOne = !this.selectOne;
+			// this.selectOne = !this.selectOne;
+			// console.log(this.selectOne)
 			var value = e.value;
-			if (this.selectOne) {
-				this.checkArr[value].checked = true;
-				console.log(this.checkArr[value].checked);
-			} else {
-				this.checkArr[value].checked = false;
-				console.log(this.checkArr[value].checked);
-			}
+			this.checkArr[value].checked = e.checked;
+			this.shopCarArr.CartList[value].checked = e.checked;
+			console.log(this.checkArr);
+			console.log(this.shopCarArr);
 		},
 
 		// 全选按钮
-		wxcCheck: function wxcCheck() {
+		wxcCheck: function wxcCheck(e) {
 			//判断是否全选
-			this.selectAll = !this.selectAll;
-			if (this.selectAll) {
-				for (var i = 0; i < this.checkArr.length; i++) {
-					this.checkArr[i].checked = true;
-				}
-			} else {
-				for (var i = 0; i < this.checkArr.length; i++) {
-					this.checkArr[i].checked = false;
+			// this.selectAll = !this.selectAll;
+			var value = e.value;
+			// if(e.checked){
+			for (var i = 0; i < this.shopCarArr.CartList.length; i++) {
+				this.checkArr[i].checked = e.checked;
+				this.shopCarArr.CartList[i].checked = e.checked;
+			}
+			// }else{
+			// 	for(var i = 0; i < this.shopCarArr.CartList.length; i++){
+			// 		this.checkArr[i].checked = false;
+			// 		this.shopCarArr.CartList[i].checked = false;
+			// 	}
+			// }
+			console.log(this.shopCarArr.CartList);
+		},
+
+		//删除按钮
+		deletFoods: function deletFoods() {
+			// console.log(this.checkArr)
+			// var sb=this.checkArr;
+			// var index;
+			var self = this;
+			var arr = [];
+			for (var i = this.checkArr.length - 1; i >= 0; i--) {
+				if (this.checkArr[i].checked == true) {
+					// console.log(i+'----')
+					var CartId = self.shopCarArr.CartList[i].CartId;
+					self.checkArr.splice(i, 1);
+					self.shopCarArr.CartList.splice(i, 1);
+					_utils2.default.WeexAjax({
+						url: MODIFYSHOPNUM_URL,
+						method: 'POST',
+						type: 'JSON',
+						token: self.TOKEN,
+						body: {
+							"UserId": self.USERID,
+							"CartId": CartId,
+							"CartNum": 0
+						},
+						callback: function callback(ret) {
+							if (ret.Status == 1) {
+								var rets = ret.obj;
+							} else {
+								modal.toast({
+									message: '请求错误',
+									duration: 1
+								});
+							}
+						}
+					});
 				}
 			}
 		},
-
-		//全部删除按钮
-		deletFoods: function deletFoods() {
-			for (var i = 0; i < this.checkArr.length; i++) {
-				if (this.checkArr[i].checked == true) {
-					this.shopCar.splice(i, 1);
+		jump: function jump(href) {
+			var CartIds = '';
+			for (var i = 0; i < this.shopCarArr.CartList.length; i++) {
+				if (this.shopCarArr.CartList[i].checked == true) {
+					CartIds += this.shopCarArr.CartList[i].CartId + ',';
 				}
 			}
+			// 替换字符串 替换掉最后一个逗号
+			CartIds = CartIds.replace(/(\,$)/g, "");
+			_utils2.default.bindThis(_utils2.default.jump(href + '?CartIds=' + CartIds), this.$getConfig());
+			console.log(href + '?CartIds=' + CartIds);
 		}
 	},
 	created: function created() {
@@ -1934,8 +2082,10 @@ exports.default = {
 						if (ret.Status == 1) {
 							var rets = ret.obj;
 							self.shopCarArr = rets;
+							self.discounts = rets.Discount;
+							// 初始化单选框
 							self._initCheckArr();
-							console.log(self.shopCarArr.CartList);
+							console.log(self.shopCarArr);
 						} else {
 							modal.toast({
 								message: '请求错误',
@@ -1957,22 +2107,33 @@ exports.default = {
 	computed: {
 		shopNumber: function shopNumber() {
 			var num = 0;
-			for (var i = 0; i < this.shopCar.length; i++) {
-				num += parseInt(this.shopCar[i].number);
+			var shopCarNum = 0;
+			// console.log(this.shopCarArr.CartList.length)
+			for (var i = 0; i < this.shopCarArr.CartList.length; i++) {
+				shopCarNum = this.shopCarArr.CartList[i].CartNum;
+				num += parseInt(shopCarNum);
 			}
 			return num;
 		},
 		total: function total() {
 			var money = 0;
-			for (var i = 0; i < this.shopCar.length; i++) {
-				money += parseFloat(this.shopCar[i].price) * parseInt(this.shopCar[i].number);
+			var shopCarPrice = 0,
+			    shopCarNum = 0;
+			for (var i = 0; i < this.shopCarArr.CartList.length; i++) {
+				shopCarPrice = this.shopCarArr.CartList[i].SalesPrice;
+				shopCarNum = this.shopCarArr.CartList[i].CartNum;
+				money += parseFloat(shopCarPrice) * parseInt(shopCarNum);
 			}
 			return money.toFixed(2);
 		},
 		discount: function discount() {
 			var count = 0;
-			for (var i = 0; i < this.shopCar.length; i++) {
-				count += parseFloat(this.shopCar[i].price).toFixed(2) * parseInt(this.shopCar[i].number) - parseFloat(this.shopCar[i].price).toFixed(2) * parseInt(this.shopCar[i].number) * this.discounts;
+			var shopCarPrice = 0,
+			    shopCarNum = 0;
+			for (var i = 0; i < this.shopCarArr.CartList.length; i++) {
+				shopCarPrice = this.shopCarArr.CartList[i].SalesPrice;
+				shopCarNum = this.shopCarArr.CartList[i].CartNum;
+				count += parseFloat(shopCarPrice).toFixed(2) * parseInt(shopCarNum) - parseFloat(shopCarPrice).toFixed(2) * parseInt(shopCarNum) * this.discounts;
 			}
 			return count.toFixed(2);
 		}
@@ -1981,7 +2142,7 @@ exports.default = {
 
 /***/ }),
 
-/***/ 211:
+/***/ 240:
 /***/ (function(module, exports) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -1993,12 +2154,18 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "append": "tree"
     }
-  }, [_c('v-header', {
-    attrs: {
-      "titleName": _vm.titleName,
-      "deleted": true
+  }, [_c('div', {
+    staticClass: ["shop-header-title-wrapper"]
+  }, [_c('text', {
+    staticClass: ["shop-header-title"]
+  }, [_vm._v(_vm._s(_vm.titleName))]), _c('text', {
+    staticClass: ["shop-header-delet"],
+    on: {
+      "click": function($event) {
+        _vm.deletFoods()
+      }
     }
-  }), _vm._m(0)], 1), _c('list', {
+  }, [_vm._v("删除")])]), _vm._m(0)]), _c('list', {
     staticClass: ["shop-wrapper"]
   }, _vm._l((_vm.shopCarArr.CartList), function(foods, index) {
     return (foods.CartNum > 0) ? _c('cell', {
@@ -2031,7 +2198,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       staticClass: ["shop-list-info-title"]
     }, [_c('text', {
       staticClass: ["shop-list-info-name"]
-    }, [_vm._v(_vm._s(foods.ProductName))]), _c('text', {
+    }, [_vm._v(_vm._s(foods.ProductName) + _vm._s(foods.checked))]), _c('text', {
       staticClass: ["shop-list-info-weight"]
     }, [_vm._v(_vm._s(foods.Weight) + "g")])]), _c('div', {
       staticClass: ["shop-list-money-wrapper"]
@@ -2050,19 +2217,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
           _vm.reduceMoney(foods.CartNum, index)
         }
       }
-    }, [_vm._v("")]), _c('input', {
+    }, [_vm._v("")]), _c('text', {
       staticClass: ["shop-list-money-number"],
       attrs: {
-        "type": "text",
-        "disabled": "true",
-        "value": (foods.CartNum)
-      },
-      on: {
-        "input": function($event) {
-          _vm.$set(foods, "CartNum", $event.target.attr.value)
-        }
+        "type": "text"
       }
-    }), _c('text', {
+    }, [_vm._v(_vm._s(foods.CartNum))]), _c('text', {
       staticClass: ["iconFont", "shop-list-money-add"],
       on: {
         "click": function($event) {
@@ -2090,7 +2250,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: ["shop-list-checkout", "shop-bottom-checkout"],
     attrs: {
       "config": _vm.config,
-      "hasBottomBorder": false
+      "hasBottomBorder": false,
+      "checked": _vm.selectAll
     },
     on: {
       "wxcCheckBoxItemChecked": _vm.wxcCheck
@@ -2106,7 +2267,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_vm._v("￥" + _vm._s(_vm.total) + "元")]), _c('div', {
     staticClass: ["good-bottom-total-button"]
   }, [_c('text', {
-    staticClass: ["good-bottom-total-button-text"]
+    staticClass: ["good-bottom-total-button-text"],
+    on: {
+      "click": function($event) {
+        _vm.jump('components/shop/setlemet.js')
+      }
+    }
   }, [_vm._v("结算(" + _vm._s(_vm.shopNumber) + ")")])])])])])])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
@@ -2152,7 +2318,7 @@ module.exports = g;
 
 /***/ }),
 
-/***/ 34:
+/***/ 38:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2162,7 +2328,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _index = __webpack_require__(35);
+var _index = __webpack_require__(39);
 
 Object.defineProperty(exports, 'default', {
   enumerable: true,
@@ -2175,21 +2341,21 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 /***/ }),
 
-/***/ 35:
+/***/ 39:
 /***/ (function(module, exports, __webpack_require__) {
 
 var __vue_exports__, __vue_options__
 var __vue_styles__ = []
 
 /* styles */
-__vue_styles__.push(__webpack_require__(36)
+__vue_styles__.push(__webpack_require__(40)
 )
 
 /* script */
-__vue_exports__ = __webpack_require__(37)
+__vue_exports__ = __webpack_require__(41)
 
 /* template */
-var __vue_template__ = __webpack_require__(38)
+var __vue_template__ = __webpack_require__(42)
 __vue_options__ = __vue_exports__ = __vue_exports__ || {}
 if (
   typeof __vue_exports__.default === "object" ||
@@ -2220,7 +2386,7 @@ module.exports = __vue_exports__
 
 /***/ }),
 
-/***/ 36:
+/***/ 40:
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -2284,7 +2450,7 @@ module.exports = {
 
 /***/ }),
 
-/***/ 37:
+/***/ 41:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2470,7 +2636,7 @@ exports.default = {
 
 /***/ }),
 
-/***/ 38:
+/***/ 42:
 /***/ (function(module, exports) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -2506,21 +2672,21 @@ module.exports.render._withStripped = true
 
 /***/ }),
 
-/***/ 39:
+/***/ 43:
 /***/ (function(module, exports, __webpack_require__) {
 
 var __vue_exports__, __vue_options__
 var __vue_styles__ = []
 
 /* styles */
-__vue_styles__.push(__webpack_require__(58)
+__vue_styles__.push(__webpack_require__(62)
 )
 
 /* script */
-__vue_exports__ = __webpack_require__(59)
+__vue_exports__ = __webpack_require__(63)
 
 /* template */
-var __vue_template__ = __webpack_require__(61)
+var __vue_template__ = __webpack_require__(65)
 __vue_options__ = __vue_exports__ = __vue_exports__ || {}
 if (
   typeof __vue_exports__.default === "object" ||
@@ -2551,7 +2717,7 @@ module.exports = __vue_exports__
 
 /***/ }),
 
-/***/ 50:
+/***/ 54:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2561,7 +2727,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _index = __webpack_require__(51);
+var _index = __webpack_require__(55);
 
 Object.defineProperty(exports, 'default', {
   enumerable: true,
@@ -2574,21 +2740,21 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 /***/ }),
 
-/***/ 51:
+/***/ 55:
 /***/ (function(module, exports, __webpack_require__) {
 
 var __vue_exports__, __vue_options__
 var __vue_styles__ = []
 
 /* styles */
-__vue_styles__.push(__webpack_require__(52)
+__vue_styles__.push(__webpack_require__(56)
 )
 
 /* script */
-__vue_exports__ = __webpack_require__(53)
+__vue_exports__ = __webpack_require__(57)
 
 /* template */
-var __vue_template__ = __webpack_require__(54)
+var __vue_template__ = __webpack_require__(58)
 __vue_options__ = __vue_exports__ = __vue_exports__ || {}
 if (
   typeof __vue_exports__.default === "object" ||
@@ -2619,7 +2785,7 @@ module.exports = __vue_exports__
 
 /***/ }),
 
-/***/ 52:
+/***/ 56:
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -2659,7 +2825,7 @@ module.exports = {
 
 /***/ }),
 
-/***/ 53:
+/***/ 57:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2847,7 +3013,7 @@ exports.default = {
 
 /***/ }),
 
-/***/ 54:
+/***/ 58:
 /***/ (function(module, exports) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -2899,7 +3065,7 @@ module.exports.render._withStripped = true
 
 /***/ }),
 
-/***/ 55:
+/***/ 59:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2909,7 +3075,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _index = __webpack_require__(56);
+var _index = __webpack_require__(60);
 
 Object.defineProperty(exports, 'default', {
   enumerable: true,
@@ -2922,17 +3088,17 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 /***/ }),
 
-/***/ 56:
+/***/ 60:
 /***/ (function(module, exports, __webpack_require__) {
 
 var __vue_exports__, __vue_options__
 var __vue_styles__ = []
 
 /* script */
-__vue_exports__ = __webpack_require__(57)
+__vue_exports__ = __webpack_require__(61)
 
 /* template */
-var __vue_template__ = __webpack_require__(62)
+var __vue_template__ = __webpack_require__(66)
 __vue_options__ = __vue_exports__ = __vue_exports__ || {}
 if (
   typeof __vue_exports__.default === "object" ||
@@ -2962,7 +3128,7 @@ module.exports = __vue_exports__
 
 /***/ }),
 
-/***/ 57:
+/***/ 61:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2972,7 +3138,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _index = __webpack_require__(39);
+var _index = __webpack_require__(43);
 
 var _index2 = _interopRequireDefault(_index);
 
@@ -3038,7 +3204,7 @@ exports.default = {
 
 /***/ }),
 
-/***/ 58:
+/***/ 62:
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -3053,7 +3219,7 @@ module.exports = {
 
 /***/ }),
 
-/***/ 59:
+/***/ 63:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3063,11 +3229,11 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _wxcCell = __webpack_require__(34);
+var _wxcCell = __webpack_require__(38);
 
 var _wxcCell2 = _interopRequireDefault(_wxcCell);
 
-var _type = __webpack_require__(60);
+var _type = __webpack_require__(64);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -3196,7 +3362,7 @@ exports.default = {
 
 /***/ }),
 
-/***/ 60:
+/***/ 64:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3217,7 +3383,7 @@ var UNCHECKED_DISABLED = exports.UNCHECKED_DISABLED = 'https://gw.alicdn.com/tfs
 
 /***/ }),
 
-/***/ 61:
+/***/ 65:
 /***/ (function(module, exports) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -3253,7 +3419,7 @@ module.exports.render._withStripped = true
 
 /***/ }),
 
-/***/ 62:
+/***/ 66:
 /***/ (function(module, exports) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -3273,7 +3439,7 @@ module.exports.render._withStripped = true
 
 /***/ }),
 
-/***/ 63:
+/***/ 67:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3283,7 +3449,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _index = __webpack_require__(39);
+var _index = __webpack_require__(43);
 
 Object.defineProperty(exports, 'default', {
   enumerable: true,

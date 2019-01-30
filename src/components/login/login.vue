@@ -1,12 +1,12 @@
 <template>
     <div>
-        <image class="login-bg" src="../src/common/images/login-bg.png"></image>
+        <image class="login-bg" src="http://47.92.164.211:8011/PublicImage/login-bg.png"></image>
         <!--导航栏-->
         <div class="titleBar">
             <!--状态栏-->
             <text class="statusbar"></text>
             <!--标题栏-->
-            <wxc-minibar title="" background-color="transparent" text-color="#000" left-button='../src/common/images/backImages.png' @wxcMinibarLeftButtonClicked="minibarLeftButtonClick"></wxc-minibar>
+            <wxc-minibar title="" background-color="transparent" text-color="#000" left-button='http://47.92.164.211:8011/PublicImage/backImages.png' @wxcMinibarLeftButtonClicked="minibarLeftButtonClick"></wxc-minibar>
         </div>
         <div class="login-title">
             <text class="login-title-text">用户登录</text>
@@ -19,7 +19,7 @@
             <div class="username">
                 <text class="password-img iconFont">&#xe614;</text>
                 <input ref="passwords" @input="input2" :type="pBtn === true ? 'password' : 'text'" placeholder="请输入您的密码" class="input" />
-                <image class="pBtn" @click="typeSelect" :src="pBtn === true ? '../src/common/images/biyan-icon.png' : '../src/common/images/zhenyan-icon.png'"></image>
+                <image class="pBtn" @click="typeSelect" :src="pBtn === true ? 'http://47.92.164.211:8011/PublicImage/biyan-icon.png' : 'http://47.92.164.211:8011/PublicImage/zhenyan-icon.png'"></image>
             </div>
             <div class="login-tip-box">
                 <text class="login-tip">{{loginTip}}</text>
@@ -41,7 +41,7 @@
                 <text class="other-text">其他登录方式</text>
                 <div class="other-line"></div>
                 <div class="other-login">
-                    <image class="login-way" src="../src/components/login/wx.png"></image>
+                    <image class="login-way" src="http://47.92.164.211:8011/PublicImage/wx.png"></image>
                 </div>
             </div>
         </div>

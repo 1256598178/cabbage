@@ -1,11 +1,11 @@
 <template>
 	<div class="classes-head">
 		<div class="search-box">
-			<image class="search-icon" src="../src/components/header/search.png"></image>
+			<image class="search-icon" src="http://47.92.164.211:8011/PublicImage/search.png"></image>
 			<text class="search-text">搜索商品名称</text>
 		</div>
 		<div class="scan-btn">
-			<image class="scan-icon" src="../src/components/header/scan.png"></image>
+			<image class="scan-icon" src="http://47.92.164.211:8011/PublicImage/scan.png"></image>
 		</div>
 	</div>
 </template>

@@ -11,8 +11,9 @@
 </template>
 <script>
 import Util from '../../common/utils/utils.js'
-var navigator = weex.requireModule('navigator')
-var modal = weex.requireModule('modal')
+const MODIFYSHOPNUM_URL = 'api/cart/changeCart'
+const navigator = weex.requireModule('navigator')
+const modal = weex.requireModule('modal')
 export default {
     props: {
         titleName: {
@@ -59,6 +60,9 @@ export default {
         },
         layoutClick() {
             this.$emit("layoutAct", this.layoutActBool = !this.layoutActBool);
+        },
+        deletFoods() {
+            this.$emit("fetch", )
         }
     },
     created() {
