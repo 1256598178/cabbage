@@ -10,7 +10,7 @@ let utils = {
         let URL = obj.url;
         let Result = "loding...";
         if (obj.method == 'POST' || obj.method == 'GET') {
-            stream.fetch({
+            weex.requireModule('stream').fetch({
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': 'Bearer ' + obj.token },
                 method: obj.method,
                 url: AJAX_URL + URL,
@@ -56,46 +56,21 @@ let utils = {
         return rest;
     },
     // 页面跳转navigation
-    jump(href, event) {
-        var bundleUrl = this.bundleUrl;
-        var url = decodeURI(weex.config.bundleUrl); //取得整个地址栏
-        // 获取ip+端口
-        var result = url.match(new RegExp("[a-zA-z]+://[^\s]{19}", "g"));
+    jump(obj, event) {
         if (WXEnvironment.platform === 'Web') {
-            console.warn('Web端跳转待开发')
-            // window.location.href = 'http://192.168.1.103:8082/src/components/other/find.vue'
-            // window.location.href = href
+            obj.webJump();
         } else {
-            navigator.push({
-                // url: '../../../dist/components/other/find.js',
-                url: result + 'dist/' + href,
-                // url: 'http://192.168.1.104:8082/dist/components/other/find.js',
-                animated: "true"
-            }, event => {
-                // modal.toast({ message: 'callback: ' + event })
-            })
+            obj.phoneJump()
         }
     },
-    pops(event){
+    // 返回
+    pops(obj,event){
         if (WXEnvironment.platform === 'Web') {
-            console.warn('Web端跳转待开发')
+            // console.warn('Web端跳转待开发')
+            obj.webBack()
         } else {
-            navigator.pop({
-                animated: "true"
-            }, event => {
-            })
+            obj.phoneBack()
         }
-    },
-    //跳转延迟
-    NavigatUrl(obj) {
-        const self = this;
-        modal.toast({
-            message: obj.message,
-            duration: obj.duration
-        })
-        setTimeout(function() {
-            self.bindThis(self.jump(obj.urls), obj._this)
-        }, obj.duration)
     },
     // 判断当前处于哪个设备
     device() {
@@ -116,29 +91,64 @@ let utils = {
             return f.apply(oTarget, arguments);
         };
     },
-    analAjax() {
-        var url = decodeURI(weex.config.bundleUrl); //取得整个地址栏
-        console.log(url)
-        var result = url.match(new RegExp(/\?\w*\=\w*(\&\w*\=\w*)*/, "g"))[0].slice(1);
-        // console.log(result)
-        var key = result.match(new RegExp(/\w*\=/, "g"));
-        // console.log(key)
-        var value = result.match(new RegExp(/\=\w*/, "g"));
-        // console.log(value)
+    analAjax(obj) {
         var warp = {};
-        for (var indexes in value) {
-            key[indexes] = key[indexes].slice(0, key[indexes].length - 1)
-            value[indexes] = value[indexes].slice(1)
-            // console.log(value[indexes])
-            warp[key[indexes]] = value[indexes]
-        }
-        // console.log(warp)
+        // if (WXEnvironment.platform === 'Web') {
+            warp = obj.routerName();
+        // } else {
+        //     // var url = decodeURI(weex.config.bundleUrl); //取得整个地址栏
+        //     var url = this.urlPort().url;
+        //     console.log(url)
+        //     var result = url.match(new RegExp(/\?\w*\=\w*(\&\w*\=\w*)*/, "g"))[0].slice(1);
+        //     // console.log(result)
+        //     var key = result.match(new RegExp(/\w*\=/, "g"));
+        //     // console.log(key)
+        //     var value = result.match(new RegExp(/\=\w*/, "g"));
+        //     // console.log(value)
+        //     for (var indexes in value) {
+        //         key[indexes] = key[indexes].slice(0, key[indexes].length - 1)
+        //         value[indexes] = value[indexes].slice(1)
+        //         // console.log(value[indexes])
+        //         warp[key[indexes]] = value[indexes]
+        //     }
+        // }
+        console.log(warp)
         return warp
+    },
+    // 判断没有userid和token就前往登录页
+    goLogin(obj) {
+        if(obj.USERID == 'user_id' || obj.USERID == 'null' || obj.USERID == 'undefined' || obj.TOKEN == 'user_token' || obj.TOKEN == 'null' || obj.TOKEN == 'undefined'){
+             obj.fail()
+             console.log('请先登录')
+        }else{
+            obj.success()
+        }
+    },
+    // 获取url + ip
+    urlPort() {
+        var url = decodeURI(weex.config.bundleUrl); //取得整个地址栏
+        // 获取ip+端口
+        var result = url.match(new RegExp("[a-zA-z]+://[^\s]{19}", "g"));
+        return {
+            "url": url,
+            "urlAddPort": result
+        }
     }
 }
 export default utils;
 
 
+    // //跳转延迟
+    // NavigatUrl(obj) {
+    //     const self = this;
+    //     weex.requireModule('modal').toast({
+    //         message: obj.message,
+    //         duration: obj.duration
+    //     })
+    //     setTimeout(function() {
+    //         self.bindThis(self.jump(obj.urls), obj._this)
+    //     }, obj.duration * 1000)
+    // },
 // login () {
 //   navigator.push({url:this.getJumpBaseUrl('login')})
 // },
@@ -178,3 +188,43 @@ export default utils;
 //     }  
 //     return native;  
 // },
+// 
+// 
+// 
+// 
+// 
+// 
+// 
+// analAjax(obj) {
+//     var warp = {};
+//     if (WXEnvironment.platform === 'Web') {
+//         warp = obj.routerName();
+//     } else {
+//         // var url = decodeURI(weex.config.bundleUrl); //取得整个地址栏
+//         var url = this.urlPort().url;
+//         console.log(url)
+//         var result = url.match(new RegExp(/\?\w*\=\w*(\&\w*\=\w*)*/, "g"))[0].slice(1);
+//         // console.log(result)
+//         var key = result.match(new RegExp(/\w*\=/, "g"));
+//         // console.log(key)
+//         var value = result.match(new RegExp(/\=\w*/, "g"));
+//         // console.log(value)
+//         for (var indexes in value) {
+//             key[indexes] = key[indexes].slice(0, key[indexes].length - 1)
+//             value[indexes] = value[indexes].slice(1)
+//             // console.log(value[indexes])
+//             warp[key[indexes]] = value[indexes]
+//         }
+//     }
+//     console.log(warp)
+//     return warp
+// },
+// 
+// 
+// 
+// 
+// 
+// 
+// 
+// 
+// 

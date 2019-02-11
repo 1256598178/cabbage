@@ -42,13 +42,10 @@ const getRouterFileContent = (source) => {
 }
 
 const getEntryFile = () => {
-  // const loginFilePath = 'login.js'
   const entryFile = path.join(vueWebTemp, config.entryFilePath)
   const routerFile = path.join(vueWebTemp, config.routerFilePath)
-  // const loginFile = path.join(vueWebTemp, loginFilePath)
   fs.outputFileSync(entryFile, getEntryFileContent(helper.root(config.entryFilePath), routerFile));
   fs.outputFileSync(routerFile, getRouterFileContent(helper.root(config.routerFilePath)));
-  // fs.outputFileSync(loginFile, getEntryFileContent(helper.root(loginFilePath), routerFile));
  
   return {
     index: entryFile

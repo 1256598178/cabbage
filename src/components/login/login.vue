@@ -6,7 +6,7 @@
             <!--状态栏-->
             <text class="statusbar"></text>
             <!--标题栏-->
-            <wxc-minibar title="" background-color="transparent" text-color="#000" left-button='http://47.92.164.211:8011/PublicImage/backImages.png' @wxcMinibarLeftButtonClicked="minibarLeftButtonClick"></wxc-minibar>
+            <wxc-minibar title="" background-color="transparent" text-color="#000" left-button='http://47.92.164.211:8011/PublicImage/backImages.png' @wxcMinibarLeftButtonClicked="minibarLeftButtonClick()"></wxc-minibar>
         </div>
         <div class="login-title">
             <text class="login-title-text">用户登录</text>
@@ -29,14 +29,13 @@
             </div>
             <div class="reg">
                 <div class="forgot">
-                    <text class="forgot-text">忘记密码</text>
+                    <text class="forgot-text" @click="link('FindPassword')">忘记密码</text>
                 </div>
                 <div class="register">
                     <text class="reg-text">还没有账号?</text>
-                    <text class="forgot-text">免费注册</text>
+                    <text class="forgot-text" @click="link('register')">免费注册</text>
                 </div>
             </div>
-            <text class="forgot-text">{{ss}}</text>
             <div class="other">
                 <text class="other-text">其他登录方式</text>
                 <div class="other-line"></div>
@@ -51,15 +50,10 @@
 //const dom = weex.requireModule('dom');
 import { WxcMinibar } from 'weex-ui';
 import Util from '../../common/utils/utils.js'
+import api from '../../common/api/api.js'
 import Storage from '../../common/utils/storage.js'
-// https://github.com/alibaba/weex-ui/blob/master/example/tab-page/config.js
-//import orderItem from './order-item.vue'
-//import Config from './config'
-import Vue from 'vue'
-// var navigator = weex.requireModule('navigator') 
 const modal = weex.requireModule('modal')
 var stream = weex.requireModule('stream')
-//const storage = weex.requireModule('storage') 
 
 export default {
     components: {
@@ -73,11 +67,21 @@ export default {
             name: "",
             word: ""
         },
-        ss: ''
     }),
     methods: {
         minibarLeftButtonClick() {
-            this.$router.push('-1')
+            var self = this
+            // Util.pops({
+            //     "webBack": function(){
+            self.$router.go(-1)
+            //     },
+            //     "phoneBack": function(){
+            //         weex.requireModule('navigator').pop({
+            //             animated: "true"
+            //         }, event => {
+            //         })
+            //     }
+            // })
         },
         typeSelect() {
             if (this.pBtn) {
@@ -115,57 +119,79 @@ export default {
             /** 获取元素的value值，但是是初始设置值 */
             //var name = this.$refs.username.value;
             //var word = this.$refs.passwords.value;
-            if (this.login) {
-            // if (true) {
-                var self = this;
-                Util.WeexAjax({
-                    url: 'api/account/login',
-                    method: 'POST',
-                    type: 'JSON',
-                    body: {
-                        // 手机号
-                        'MobilePhone': this.loginValue.name,
-                        // 'MobilePhone': '17718157597',
-                        // 密码
-                        'PassWord': this.loginValue.word,
-                        // 'PassWord': '123456',
-                    },
-                    callback: function(ret) {
-                        // let rets = Util.JsonFormat(ret);
-                        if (ret.Status == 0) {
-                            self.loginTip = ret.Message;
-                        } else if (ret.Status == 1) {
-                            console.log(ret)
-                            Storage.setItems({
-                                'user_token': ret.obj.Token,
-                                'user_id': ret.obj.UserId
-                            })
-                            Util.NavigatUrl({
-                                message: '登录成功',
-                                duration: 1,
-                                urls: 'components/my/my.js',
-                                _this: self.$getConfig()
-                            })
-                            // modal.toast({
-                            //     message: '登录成功',
-                            //     duration: 1
-                            // })
-                            // setTimeout(function(){
-                            //     Util.bindThis(Util.jump('components/my/my.js'), self.$getConfig())
-                            // },1000)
-                            // self.ss = Storage.getItems('user_id','user_token')
+            // if (this.login) {
+                /** 获取元素的value值，但是是初始设置值 */
+                //var name = this.$refs.username.value;
+                //var word = this.$refs.passwords.value;
+                if (this.login) {
+                    var self = this;
+                    Util.WeexAjax({
+                        url: api.LOGIN_URL,
+                        method: 'POST',
+                        type: 'JSON',
+                        body: {
+                            // 手机号
+                            'MobilePhone': this.loginValue.name,
+                            // 'MobilePhone': '17718157597',
+                            // 密码
+                            'PassWord': this.loginValue.word,
+                            // 'PassWord': '123456',
+                        },
+                        callback: function(ret) {
+                            // let rets = Util.JsonFormat(ret);
+                            if (ret.Status == 0) {
+                                self.loginTip = ret.Message;
+                            } else if (ret.Status == 1) {
+                                console.log(ret)
+                                Storage.setItems({
+                                    'user_token': ret.obj.Token,
+                                    'user_id': ret.obj.UserId
+                                })
+                                // Util.pops({
+                                //     "webBack": function(){
+                                //         self.$router.go(-1)
+                                //     },
+                                //     "phoneBack": function(){}
+                                // })
+                                // Util.jump({
+                                //     "phoneJump": function(){
+                                //         var bundleUrl = self.bundleUrl;
+                                //         weex.requireModule('navigator').push({
+                                //             url: Util.urlPort().urlAddPort + 'dist/' + "index.js",
+                                //             animated: "true"
+                                //         }, event => {})
+                                //     },
+                                //     "webJump": function(){
+                                        self.$router.push({name: "main"})
+                                    // }
+                                // })
+                            }
                         }
-                    }
-                })
-            }
-        }
+                    })
+                }
+        },
+		link(urls){
+            var self = this;
+			// Util.jump({
+   //              "phoneJump": function(){
+   //                  var bundleUrl = self.bundleUrl;
+   //                  weex.requireModule('navigator').push({
+   //                      url: Util.urlPort().urlAddPort + 'dist/' + urls.phone,
+   //                      animated: "true"
+   //                  }, event => {})
+   //              },
+   //              "webJump": function(){
+                    self.$router.push({name: urls})
+            //     }
+            // })
+		}
     },
     created() {
         var fontModule = weex.requireModule("dom");
         fontModule.addRule('fontFace', {
             'fontFamily': "iconfont",
-            'src': "url('//at.alicdn.com/t/font_948634_pdqe49i9gsj.ttf')"
-        });
+            'src': "url('" + api.iconUrl + "')"
+        })
     }
 };
 </script>

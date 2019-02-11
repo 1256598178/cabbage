@@ -1,33 +1,98 @@
 /*global Vue*/
 import Router from 'vue-router'
-import home from '../src/components/home/home.vue'
-import classes from '../src/components/class/class.vue'
-import shop from '../src/components/shop/shop.vue'
-import goods from '../src/components/goods/goods.vue'
-import my from '../src/components/my/my.vue'
+import HelloWorld from '@/components/login/HelloWorld'
+import login from '@/components/login/login'
+import register from '@/components/login/register'
+import FindPassword from '@/components/login/FindPassword'
+import seafood from '@/components/main/seafood/seafood'
+import goodIn from '@/components/main/GoodsInfo/Goods'
+import goodInfo from '@/components/main/GoodsInfo/GoodsInfo'
+import main from '@/components/main/main'
+import home from '@/components/main/home/home'
+import classes from '@/components/main/class/class'
+import shop from '@/components/main/shop/shop'
+import setlemet from '@/components/main/shop/setlemet'
+import goods from '@/components/main/goods/goods' 
+import my from '@/components/main/my/my'
+
+
+
+import checkstand from '@/components/main/checkstand/checkstand'
+
 
 Vue.use(Router)
 module.exports = new Router({
   linkActiveClass: 'active',
   routes: [
-    {
+      {
         path: '/',
-        redirect: '/home'
+        name: 'HelloWorld',
+        component: HelloWorld,
+        redirect: '/HelloWorld'
       },{
-        path: '/home',
-        component: home
+        path: '/HelloWorld',
+        name: 'HelloWorld',
+        component: HelloWorld
       },{
-        path: '/classes',
-        component: classes
+        path: '/login',
+        name: 'login',
+        component: login
       },{
-        path: '/shop',
-        component: shop
+        path: '/register',
+        name: 'register',
+        component: register
       },{
-        path: '/goods',
-        component: goods
+        path: '/FindPassword',
+        name: 'FindPassword',
+        component: FindPassword
       },{
-        path: '/my',
-        component: my
+        path: '/seafood',
+        name: 'seafood',
+        component: seafood
+      },{
+        path: '/goodIn',
+        name: 'goodIn',
+        component: goodIn
+      },{
+        path: '/goodInfo',
+        name: 'goodInfo',
+        component: goodInfo
+      },{
+        path: '/main',
+        name: 'main',
+        component: main,
+        redirect:'/main/home',
+        children: [
+          {
+            path: 'home',
+            name: 'home',
+            component: home
+          },{
+            path: 'classes',
+            name: 'classes',
+            component: classes
+          },{
+            path: 'shop',
+            name: 'shop',
+            component: shop
+          },{
+            path: 'goods',
+            name: 'goods',
+            component: goods
+          },{
+            path: 'my',
+            name: 'my',
+            component: my
+          }
+        ]
+      },{
+        path: 'setlemet',
+        name: 'setlemet',
+        component: setlemet,
+      },{
+        path: 'checkstand',
+        name: 'checkstand',
+        component: checkstand,
       }
   ]
 });
