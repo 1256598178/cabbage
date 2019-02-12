@@ -15944,18 +15944,21 @@ module.exports = {
   "goods-share": {
     "flexDirection": "row"
   },
-  "share-img": {
+  "share-box": {
+    "flexDirection": "row",
+    "justifyContent": "center",
+    "alignItems": "center",
     "width": "34",
     "height": "34",
-    "lineHeight": "34",
     "borderWidth": "1",
     "borderStyle": "solid",
     "borderColor": "#999999",
     "borderRadius": "17",
-    "fontSize": "30",
-    "color": "#999999",
-    "marginRight": "5",
-    "textAlign": "center"
+    "marginRight": "5"
+  },
+  "share-img": {
+    "width": "17",
+    "height": "16"
   },
   "share-text": {
     "fontSize": "22",
@@ -15995,12 +15998,12 @@ module.exports = {
   },
   "payment-l": {
     "width": "180",
-    "flexDirection": "row"
+    "flexDirection": "row",
+    "alignItems": "center"
   },
   "payment-icon": {
-    "fontSize": "30",
-    "lineHeight": "40",
-    "color": "#999999",
+    "width": "24",
+    "height": "26",
     "marginRight": "10"
   },
   "payment-title": {
@@ -16035,10 +16038,8 @@ module.exports = {
     "marginRight": "20"
   },
   "shop-car-icon": {
-    "fontSize": "32",
-    "lineHeight": "60",
-    "textAlign": "center",
-    "color": "#ffffff"
+    "width": "60",
+    "height": "60"
   },
   "shop-car-num": {
     "minWidth": "10",
@@ -16058,6 +16059,9 @@ module.exports = {
     "left": "45"
   },
   "collection": {
+    "flexDirection": "row",
+    "alignItems": "center",
+    "justifyContent": "center",
     "width": "60",
     "height": "60",
     "borderRadius": "30",
@@ -16065,10 +16069,8 @@ module.exports = {
     "marginRight": "60"
   },
   "collection-icon": {
-    "fontSize": "32",
-    "lineHeight": "60",
-    "textAlign": "center",
-    "color": "#ffffff"
+    "width": "33",
+    "height": "31"
   },
   "add-box": {
     "flex": 1
@@ -16125,6 +16127,8 @@ var _vue2 = _interopRequireDefault(_vue);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+//
+//
 //
 //
 //
@@ -17750,9 +17754,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: ["bottom-box"]
   }, [_c('div', {
     staticClass: ["shop-car"]
-  }, [_c('text', {
-    staticClass: ["shop-car-icon", "iconFont"]
-  }, [_vm._v("")]), (_vm.NumType) ? _c('text', {
+  }, [_c('image', {
+    staticClass: ["shop-car-icon"],
+    attrs: {
+      "src": "http://47.92.164.211:8011/PublicImage/shop-car.png"
+    }
+  }), (_vm.NumType) ? _c('text', {
     staticClass: ["shop-car-num"]
   }, [_vm._v(_vm._s(_vm.CarNum))]) : _vm._e()]), _vm._m(4), _c('div', {
     staticClass: ["add-box"]
@@ -17767,17 +17774,25 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: ["goods-share"]
-  }, [_c('text', {
-    staticClass: ["share-img", "iconFont"]
-  }, [_vm._v("")]), _c('text', {
+  }, [_c('div', {
+    staticClass: ["share-box"]
+  }, [_c('image', {
+    staticClass: ["share-img"],
+    attrs: {
+      "src": "http://47.92.164.211:8011/PublicImage/share@17x16.png"
+    }
+  })]), _c('text', {
     staticClass: ["share-text"]
   }, [_vm._v("分享")])])
 },function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: ["payment-l"]
-  }, [_c('text', {
-    staticClass: ["payment-icon", "iconFont"]
-  }, [_vm._v("")]), _c('text', {
+  }, [_c('image', {
+    staticClass: ["payment-icon"],
+    attrs: {
+      "src": "http://47.92.164.211:8011/PublicImage/payment1@24x26.png"
+    }
+  }), _c('text', {
     staticClass: ["payment-title"]
   }, [_vm._v("结算方式")])])
 },function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -17785,9 +17800,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: ["payment-method", "border-t"]
   }, [_c('div', {
     staticClass: ["payment-l"]
-  }, [_c('text', {
-    staticClass: ["payment-icon", "iconFont"]
-  }, [_vm._v("")]), _c('text', {
+  }, [_c('image', {
+    staticClass: ["payment-icon"],
+    attrs: {
+      "src": "http://47.92.164.211:8011/PublicImage/payment2@24x26.png"
+    }
+  }), _c('text', {
     staticClass: ["payment-title"]
   }, [_vm._v("每份数量")])]), _c('text', {
     staticClass: ["payment-content"]
@@ -17795,17 +17813,23 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
 },function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: ["payment-l"]
-  }, [_c('text', {
-    staticClass: ["payment-icon", "iconFont"]
-  }, [_vm._v("")]), _c('text', {
+  }, [_c('image', {
+    staticClass: ["payment-icon"],
+    attrs: {
+      "src": "http://47.92.164.211:8011/PublicImage/payment3@24x26.png"
+    }
+  }), _c('text', {
     staticClass: ["payment-title"]
   }, [_vm._v("商品详情")])])
 },function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: ["collection"]
-  }, [_c('text', {
-    staticClass: ["collection-icon", "iconFont"]
-  }, [_vm._v("")])])
+  }, [_c('image', {
+    staticClass: ["collection-icon"],
+    attrs: {
+      "src": "http://47.92.164.211:8011/PublicImage/collection@33x31.png"
+    }
+  })])
 }]}
 module.exports.render._withStripped = true
 
@@ -19303,7 +19327,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 exports.default = {
   data: function data() {
     return {
-      logo: "http://47.92.164.211:8011/PublicImage/logo.png", //logo图
+      logo: "http://47.92.164.211:8011/PublicImage/logo_title.png", //logo图
       address: "http://47.92.164.211:8011/PublicImage/address.png", // 定位图标
       arrow: "http://47.92.164.211:8011/PublicImage/arrow.png",
       magnifier: "http://47.92.164.211:8011/PublicImage/search.png", // 放大镜图标
@@ -19759,6 +19783,9 @@ module.exports = {
     "marginRight": "20"
   },
   "slideShow": {
+    "flexDirection": "row",
+    "justifyContent": "center",
+    "alignItems": "center",
     "width": "80",
     "height": "88",
     "position": "absolute",
@@ -19766,10 +19793,8 @@ module.exports = {
     "right": 0
   },
   "slideShow-icon": {
-    "fontSize": "50",
-    "color": "#999999",
-    "lineHeight": "88",
-    "textAlign": "center"
+    "width": "14",
+    "height": "9"
   },
   "cover": {
     "width": "600",
@@ -20927,13 +20952,16 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }, [_vm._v(_vm._s(nums.CategoryName))])])
   })), _c('div', {
     staticClass: ["slideShow"]
-  }, [_c('text', {
+  }, [_c('image', {
     ref: "slideBtn",
-    staticClass: ["iconFont", "slideShow-icon"],
+    staticClass: ["slideShow-icon"],
+    attrs: {
+      "src": "http://47.92.164.211:8011/PublicImage/moreImage@14x9.png"
+    },
     on: {
       "click": _vm.openCover
     }
-  }, [_vm._v("")])])]), _c('div', {
+  })])]), _c('div', {
     staticClass: ["product-box"]
   }, [_c('scroller', {
     staticClass: ["product-list"]
@@ -21090,6 +21118,8 @@ module.exports = {
     "paddingTop": "21"
   },
   "iconfont-address": {
+    "width": "25",
+    "height": "35",
     "marginRight": "15",
     "fontSize": "36",
     "color": "#ffffff"
@@ -21193,6 +21223,10 @@ module.exports = {
     "fontSize": "35",
     "color": "#73cc46"
   },
+  "shop-list-money-img": {
+    "width": "34",
+    "height": "34"
+  },
   "good-bottom-wrapper": {
     "position": "fixed",
     "display": "flex",
@@ -21221,9 +21255,9 @@ module.exports = {
     "backgroundColor": "#ffffff"
   },
   "member-image": {
-    "marginRight": "10",
-    "fontSize": "27",
-    "color": "#ffffff"
+    "width": "26",
+    "height": "24",
+    "marginRight": "10"
   },
   "member-text": {
     "fontSize": "18",
@@ -22858,33 +22892,42 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       staticClass: ["shop-list-all-money"]
     }, [_vm._v("￥" + _vm._s(foods.Price))])]), _c('div', {
       staticClass: ["shop-list-money-right"]
-    }, [_c('text', {
-      staticClass: ["iconFont", "shop-list-money-reduce"],
+    }, [_c('image', {
+      staticClass: ["shop-list-money-reduce", "shop-list-money-img"],
+      attrs: {
+        "src": "http://47.92.164.211:8011/PublicImage/res@34x34.png"
+      },
       on: {
         "click": function($event) {
           _vm.reduceMoney(foods.CartNum, index)
         }
       }
-    }, [_vm._v("")]), _c('text', {
+    }), _c('text', {
       staticClass: ["shop-list-money-number"],
       attrs: {
         "type": "text"
       }
-    }, [_vm._v(_vm._s(foods.CartNum))]), _c('text', {
-      staticClass: ["iconFont", "shop-list-money-add"],
+    }, [_vm._v(_vm._s(foods.CartNum))]), _c('image', {
+      staticClass: ["shop-list-money-add", "shop-list-money-img"],
+      attrs: {
+        "src": "http://47.92.164.211:8011/PublicImage/add@34x34.png"
+      },
       on: {
         "click": function($event) {
           _vm.addMoney(foods.CartNum, index)
         }
       }
-    }, [_vm._v("")])])])])], 1)]) : _vm._e()
+    })])])])], 1)]) : _vm._e()
   })), _c('div', {
     staticClass: ["good-bottom-wrapper"]
   }, [_c('div', {
     staticClass: ["good-bottom-member-wrapper"]
-  }, [_c('text', {
-    staticClass: ["iconFont", "member-image"]
-  }, [_vm._v("")]), _c('text', {
+  }, [_c('image', {
+    staticClass: ["member-image"],
+    attrs: {
+      "src": "http://47.92.164.211:8011/PublicImage/menber@26x24.png"
+    }
+  }), _c('text', {
     staticClass: ["member-text"]
   }, [_vm._v("升级会员，本单可为您节省")]), _c('text', {
     staticClass: ["member-text-num"]
@@ -22927,9 +22970,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: ["shop-address-wrapper"]
-  }, [_c('text', {
-    staticClass: ["iconFont", "iconfont-address"]
-  }, [_vm._v("")]), _c('text', {
+  }, [_c('image', {
+    staticClass: ["iconfont-address"],
+    attrs: {
+      "src": "http://47.92.164.211:8011/PublicImage/address.png"
+    }
+  }), _c('text', {
     staticClass: ["shop-address-text"]
   }, [_vm._v("绿白菜滨湖春融苑店")])])
 }]}
@@ -23975,16 +24021,15 @@ module.exports = {
     "height": "54",
     "flexDirection": "row",
     "justifyContent": "center",
+    "alignItems": "center",
     "borderRadius": "54",
     "borderWidth": "4",
     "borderColor": "#73cc00",
     "borderStyle": "solid"
   },
   "share-btn": {
-    "fontSize": "42",
-    "lineHeight": "50",
-    "color": "#73cc00",
-    "textAlign": "center"
+    "width": "34",
+    "height": "32"
   },
   "text-box01": {
     "flexDirection": "row",
@@ -24382,7 +24427,6 @@ exports.default = {
 //
 //
 //
-//
 
 /***/ }),
 /* 118 */
@@ -24463,9 +24507,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
 },function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: ["share"]
-  }, [_c('text', {
-    staticClass: ["share-btn", "iconFont"]
-  }, [_vm._v("")])])
+  }, [_c('image', {
+    staticClass: ["share-btn"],
+    attrs: {
+      "src": "http://47.92.164.211:8011/PublicImage/share@34x32.png"
+    }
+  })])
 },function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: ["cabbage-img-box"]
@@ -24584,9 +24631,8 @@ module.exports = {
     "lineHeight": "45"
   },
   "my-header-info": {
-    "fontSize": "42.5",
-    "lineHeight": "44",
-    "color": "#ffffff"
+    "width": "42",
+    "height": "34"
   },
   "info-number": {
     "position": "absolute",
@@ -24666,9 +24712,8 @@ module.exports = {
     "color": "#ffffff"
   },
   "my-info-sign-iconfont": {
-    "fontSize": "20",
-    "lineHeight": "22",
-    "color": "#ffffff",
+    "width": "20",
+    "height": "20",
     "marginRight": "10"
   },
   "my-info-colum-wrapper": {
@@ -24732,10 +24777,9 @@ module.exports = {
     "alignItems": "center"
   },
   "member-iconfont": {
-    "marginRight": "15",
-    "fontSize": "35",
-    "lineHeight": "37",
-    "color": "#fdc90b"
+    "width": "35",
+    "height": "29",
+    "marginRight": "15"
   },
   "my-member-area-title-left-text": {
     "fontSize": "24",
@@ -24875,7 +24919,7 @@ module.exports = {
     "flexDirection": "column",
     "justifyContent": "center",
     "alignItems": "center",
-    "width": "223.3333",
+    "width": "223",
     "marginBottom": "20"
   },
   "my-tool-body-list-image": {
@@ -25177,7 +25221,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }, [_c('image', {
       staticClass: ["my-order-body-list-image"],
       attrs: {
-        "src": "http://47.92.164.211:8011/PublicImage/order_04.png"
+        "src": "http://47.92.164.211:8011/PublicImage/order_01.png"
       }
     }), _c('text', {
       staticClass: ["info-number", "my-order-body-list-number"]
@@ -25208,9 +25252,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: ["my-header-info-wrapper"]
-  }, [_c('text', {
-    staticClass: ["iconFont", "my-header-info"]
-  }, [_vm._v("")]), _c('text', {
+  }, [_c('image', {
+    staticClass: ["my-header-info"],
+    attrs: {
+      "src": "http://47.92.164.211:8011/PublicImage/info@42x34.png"
+    }
+  }), _c('text', {
     staticClass: ["info-number"]
   }, [_vm._v("2")])])
 },function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -25225,9 +25272,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
 },function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: ["my-info-sign-box"]
-  }, [_c('text', {
-    staticClass: ["iconFont", "my-info-sign-iconfont"]
-  }, [_vm._v("")]), _c('text', {
+  }, [_c('image', {
+    staticClass: ["my-info-sign-iconfont"],
+    attrs: {
+      "src": "http://47.92.164.211:8011/PublicImage/sign@20x20.png"
+    }
+  }), _c('text', {
     staticClass: ["my-info-sign-text"]
   }, [_vm._v("签到")])])
 },function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -25243,9 +25293,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: ["my-member-area-title"]
   }, [_c('div', {
     staticClass: ["my-member-area-title-left"]
-  }, [_c('text', {
-    staticClass: ["iconFont", "member-iconfont"]
-  }, [_vm._v("")]), _c('text', {
+  }, [_c('image', {
+    staticClass: ["member-iconfont"],
+    attrs: {
+      "src": "http://47.92.164.211:8011/PublicImage/crown@35x39.png"
+    }
+  }), _c('text', {
     staticClass: ["my-member-area-title-left-text"]
   }, [_vm._v("会员权益")])]), _c('div', {
     staticClass: ["my-member-area-title-right"]

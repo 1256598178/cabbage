@@ -9,7 +9,7 @@
 				<!-- <v-header :titleName="titleName" :deleted="true" :USERIDs="USERID" :TOKENs="TOKEN" :shopCarArrs="shopCarArr" v-on:fetch="deletAll($event)"></v-header> -->
 				<!-- 待开发 -->
 				<div class="shop-address-wrapper">
-					<text class="iconFont iconfont-address">&#xe7e0;</text>
+					<image class="iconfont-address" src="http://47.92.164.211:8011/PublicImage/address.png"></image>
 					<text class="shop-address-text">绿白菜滨湖春融苑店</text>
 				</div>
 			<!-- </div> -->
@@ -30,9 +30,9 @@
 							    <text class="shop-list-all-money">￥{{foods.Price}}</text>
 							</div>
 							<div class="shop-list-money-right">
-								<text class="iconFont shop-list-money-reduce" @click="reduceMoney(foods.CartNum,index)">&#xe600;</text>
+								<image class="shop-list-money-reduce shop-list-money-img" src="http://47.92.164.211:8011/PublicImage/res@34x34.png" @click="reduceMoney(foods.CartNum,index)"></image>
 								<text type="text" class="shop-list-money-number">{{foods.CartNum}}</text>
-								<text class="iconFont shop-list-money-add" @click="addMoney(foods.CartNum,index)">&#xe601;</text>
+								<image class="shop-list-money-add shop-list-money-img" src="http://47.92.164.211:8011/PublicImage/add@34x34.png" @click="addMoney(foods.CartNum,index)"></image>
 							</div>
 						</div>
 					</div>
@@ -41,7 +41,7 @@
 		</list>
 		<div class="good-bottom-wrapper">
 			<div class="good-bottom-member-wrapper">
-				<text class="iconFont member-image">&#xe641;</text>
+				<image class="member-image" src="http://47.92.164.211:8011/PublicImage/menber@26x24.png"></image>
 				<text class="member-text">升级会员，本单可为您节省</text><text class="member-text-num">{{discount}}</text><text class="member-text">元!</text>
 			</div>
 			<div class="good-bottom-list-wrapper">
@@ -390,6 +390,8 @@ export default {
 	padding-top: 21px;
 }
 .iconfont-address{
+	width: 25px;
+	height: 35px;
 	margin-right: 15px;
 	font-size: 36px;
 	color: #fff;
@@ -485,6 +487,10 @@ export default {
 .shop-list-money-reduce,.shop-list-money-add{
 	font-size: 35px;
 }
+.shop-list-money-img{
+	width: 34px;
+	height: 34px;
+}
 .shop-list-money-add{
 	color: rgb(115,204,70);
 }
@@ -509,9 +515,9 @@ export default {
 	background-color: #ade564;
 }
 .member-image{
+	width: 26px;
+	height: 24px;
 	margin-right: 10px;
-	font-size: 27px;
-	color: #fff;
 }
 .member-text,.member-text-num{
 	font-size: 18px;

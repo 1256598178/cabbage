@@ -18,7 +18,7 @@ import Util from '../../../common/utils/utils.js'
 export default {
   data() {
   	return {
-  		logo: "http://47.92.164.211:8011/PublicImage/logo.png", //logo图
+  		logo: "http://47.92.164.211:8011/PublicImage/logo_title.png", //logo图
   		address: "http://47.92.164.211:8011/PublicImage/address.png", // 定位图标
   		arrow: "http://47.92.164.211:8011/PublicImage/arrow.png",
   		magnifier: "http://47.92.164.211:8011/PublicImage/search.png",  // 放大镜图标

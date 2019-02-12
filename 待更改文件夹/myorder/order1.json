@@ -1,0 +1,13 @@
+{
+	"orderList":[
+		{
+			"pWay":"门店自提",
+			"orderType":"待付款",
+			"orderStatus":"1",
+			"orderNum":"566456496546465465",
+			"orderProduct":["../src/components/class/product-img01.png","../src/components/class/product-img02.png"],
+			"num":"2",
+			"money":"6.98"
+		}
+	]
+}

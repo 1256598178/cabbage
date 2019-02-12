@@ -21,7 +21,7 @@
                         </div>
                     </scroller>
                     <div class="slideShow">
-                        <text class="iconFont slideShow-icon" @click="openCover" ref="slideBtn">&#xe731;</text>
+                        <image class="slideShow-icon" @click="openCover" ref="slideBtn" src="http://47.92.164.211:8011/PublicImage/moreImage@14x9.png"></image>
                     </div>
                 </div>
                 <div class="product-box">
@@ -450,6 +450,9 @@ export default {
 }
 
 .slideShow {
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
     width: 80px;
     height: 88px;
     position: absolute;
@@ -458,10 +461,8 @@ export default {
 }
 
 .slideShow-icon {
-    font-size: 50px;
-    color: #999;
-    line-height: 88px;
-    text-align: center;
+    width: 14px;
+    height: 9px;
 }
 
 .cover {

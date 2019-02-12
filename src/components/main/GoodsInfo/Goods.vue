@@ -20,7 +20,9 @@
 				<div class="goods-price-box">
 					<text class="goods-price">¥{{SalesPrice}}元/份</text>
 					<div class="goods-share">
-						<text class="share-img iconFont">&#xe713;</text>
+						<div class="share-box">
+							<image class="share-img" src="http://47.92.164.211:8011/PublicImage/share@17x16.png"></image>
+						</div>
 						<text class="share-text">分享</text>
 					</div>
 				</div>
@@ -32,14 +34,14 @@
 				<div class="payment-box">
 					<div class="payment-method">
 						<div class="payment-l">
-							<text class="payment-icon iconFont">&#xe66e;</text>
+							<image class="payment-icon" src="http://47.92.164.211:8011/PublicImage/payment1@24x26.png"></image>
 							<text class="payment-title">结算方式</text>
 						</div>
 						<text class="payment-content">折合{{SalesPrice}}元/份</text>
 					</div>
 					<div class="payment-method border-t">
 						<div class="payment-l">
-							<text class="payment-icon iconFont">&#xe631;</text>
+							<image class="payment-icon" src="http://47.92.164.211:8011/PublicImage/payment2@24x26.png"></image>
 							<text class="payment-title">每份数量</text>
 						</div>
 						<text class="payment-content">份</text>
@@ -49,7 +51,7 @@
 				<div class="goods-info">
 					<div class="payment-method">
 						<div class="payment-l">
-							<text class="payment-icon iconFont">&#xe604;</text>
+							<image class="payment-icon" src="http://47.92.164.211:8011/PublicImage/payment3@24x26.png"></image>
 							<text class="payment-title">商品详情</text>
 						</div>
 						<text class="payment-content">{{Introduce}}</text>
@@ -59,11 +61,11 @@
 		</list>
 		<div class="bottom-box">
 			<div class="shop-car">
-				<text class="shop-car-icon iconFont">&#xe668;</text>
+				<image class="shop-car-icon" src="http://47.92.164.211:8011/PublicImage/shop-car.png"></image>
 				<text class="shop-car-num" v-if="NumType">{{CarNum}}</text>
 			</div>
 			<div class="collection">
-				<text class="collection-icon iconFont">&#xe626;</text>
+				<image class="collection-icon" src="http://47.92.164.211:8011/PublicImage/collection@33x31.png"></image>
 			</div>
 			<div class="add-box">
 				<text class="add-btn" @click="addShopCar()">加入购物车</text>
@@ -392,19 +394,21 @@
 		width: auto;
 		flex-direction: row;
 	}
-
-	.share-img {
+	.share-box{
+		flex-direction: row;
+		justify-content: center;
+		align-items: center;
 		width: 34px;
 		height: 34px;
-		line-height: 34px;
 		border-width: 1px;
 		border-style: solid;
 		border-color: #999;
 		border-radius: 17px;
-		font-size: 30px;
-		color: #999;
 		margin-right: 5px;
-		text-align: center;
+	}
+	.share-img {
+		width: 17px;
+		height: 16px;
 	}
 
 	.share-text {
@@ -446,12 +450,12 @@
 	.payment-l {
 		width: 180px;
 		flex-direction: row;
+		align-items: center;
 	}
 
 	.payment-icon {
-		font-size: 30px;
-		line-height: 40px;
-		color: #999;
+		width: 24px;
+		height: 26px;
 		margin-right: 10px;
 	}
 
@@ -491,10 +495,8 @@
 	}
 
 	.shop-car-icon {
-		font-size: 32px;
-		line-height: 60px;
-		text-align: center;
-		color: #fff;
+		width: 60px;
+   		height: 60px;
 	}
 
 	.shop-car-num {
@@ -513,6 +515,9 @@
 	}
 
 	.collection {
+		flex-direction: row;
+		align-items: center;
+		justify-content: center;
 		width: 60px;
 		height: 60px;
 		border-radius: 30px;
@@ -521,10 +526,8 @@
 	}
 
 	.collection-icon {
-		font-size: 32px;
-		line-height: 60px;
-		text-align: center;
-		color: #fff;
+		width: 33px;
+		height: 31px;
 	}
 
 	.add-box {

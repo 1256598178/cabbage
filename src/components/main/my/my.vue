@@ -3,7 +3,7 @@
 		<header class="my-header-title-wrapper">
 			<text class="my-header-title">{{titleName}}</text>
 			<div class="my-header-info-wrapper">
-				<text class="iconFont my-header-info">&#xe606;</text>
+				<image class="my-header-info" src="http://47.92.164.211:8011/PublicImage/info@42x34.png"></image>
 				<text class="info-number">2</text>
 			</div>
 		</header>
@@ -19,7 +19,7 @@
 							<div class="my-info-sign-wrapper" v-if="loginBool">
 								<text class="my-info-sign-time">68分59秒</text>
 								<div class="my-info-sign-box">
-									<text class="iconFont my-info-sign-iconfont">&#xe642;</text>
+									<image class="my-info-sign-iconfont" src="http://47.92.164.211:8011/PublicImage/sign@20x20.png"></image>
 									<text class="my-info-sign-text">签到</text>
 								</div>
 							</div>
@@ -42,7 +42,7 @@
 				<div class="my-member-area">
 					<div class="my-member-area-title">
 						<div class="my-member-area-title-left">
-							<text class="iconFont member-iconfont">&#xe636;</text>
+							<image class="member-iconfont" src="http://47.92.164.211:8011/PublicImage/crown@35x39.png"></image>
 							<text class="my-member-area-title-left-text">会员权益</text>
 						</div>
 						<div class="my-member-area-title-right">
@@ -68,7 +68,7 @@
 					</div>
 					<div class="my-order-body">
 						<div class="my-order-body-list" v-for="item in 5">
-							<image class="my-order-body-list-image" src="http://47.92.164.211:8011/PublicImage/order_04.png"></image>
+							<image class="my-order-body-list-image" src="http://47.92.164.211:8011/PublicImage/order_01.png"></image>
 							<text class="info-number my-order-body-list-number">2</text>
 							<text class="my-order-body-list-image-text">待付款</text>
 						</div>
@@ -250,9 +250,8 @@ export default {
 	line-height: 45px;
 }
 .my-header-info{
-	font-size: 42.5px;
-	line-height: 44px;
-	color: #fff;
+	width: 42px;
+	height: 34px;
 }
 .info-number{
 	position: absolute;
@@ -332,9 +331,8 @@ export default {
 	color: #fff;
 }
 .my-info-sign-iconfont{
-	font-size: 20px;
-	line-height: 22px;
-	color: #fff;
+	width: 20px;
+	height: 20px;
 	margin-right: 10px;
 }
 .my-info-colum-wrapper{
@@ -395,10 +393,9 @@ export default {
 	align-items: center;
 }
 .member-iconfont{
+	width: 35px;
+	height: 29px;
 	margin-right: 15px;
-	font-size: 35px;
-	line-height: 37px;
-	color: #fdc90b;
 }
 .my-member-area-title-left-text{
 	font-size: 24px;
@@ -534,7 +531,7 @@ export default {
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	width: 223.3333px;
+	width: 223px;
 	margin-bottom: 20px;
 }
 .my-tool-body-list-image{

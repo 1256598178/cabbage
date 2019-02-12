@@ -31,7 +31,7 @@
 							</div>
 						</div>
 						<div class="share">
-							<text class="share-btn iconFont">&#xe713;</text>
+							<image class="share-btn" src="http://47.92.164.211:8011/PublicImage/share@34x32.png"></image>
 						</div>
 					</div>
 				</div>
@@ -164,16 +164,15 @@
 		height: 54px;
 		flex-direction: row;
 		justify-content: center;
+		align-items: center;
 		border-radius: 54px;
 		border-width: 4px;
 		border-color: #73cc00;
 		border-style: solid;
 	}
 	.share-btn{
-		font-size: 42px;
-		line-height: 50px;
-		color: #73cc00;
-		text-align: center;
+		width: 34px;
+		height: 32px;
 	}
 	.text-box01{
 		flex-direction: row;
