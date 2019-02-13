@@ -10213,9 +10213,9 @@ module.exports = new _vueRouter2.default({
   linkActiveClass: 'active',
   routes: [{
     path: '/',
-    name: 'HelloWorld',
-    component: _HelloWorld2.default,
-    redirect: '/HelloWorld'
+    name: 'main',
+    component: _main2.default,
+    redirect: '/main'
   }, {
     path: '/HelloWorld',
     name: 'HelloWorld',
@@ -13117,18 +13117,14 @@ module.exports = {
     "borderBottomStyle": "solid"
   },
   "username-img": {
-    "width": "54",
-    "fontSize": "34",
-    "lineHeight": "70",
-    "color": "#999999",
-    "textAlign": "left"
+    "width": "42",
+    "height": "44",
+    "marginRight": "30"
   },
   "password-img": {
-    "width": "54",
-    "fontSize": "32",
-    "lineHeight": "70",
-    "color": "#999999",
-    "textAlign": "left"
+    "width": "40",
+    "height": "44",
+    "marginRight": "32"
   },
   "pBtn": {
     "width": "34",
@@ -13320,18 +13316,7 @@ exports.default = {
     },
     methods: {
         minibarLeftButtonClick: function minibarLeftButtonClick() {
-            var self = this;
-            // Util.pops({
-            //     "webBack": function(){
-            self.$router.go(-1);
-            //     },
-            //     "phoneBack": function(){
-            //         weex.requireModule('navigator').pop({
-            //             animated: "true"
-            //         }, event => {
-            //         })
-            //     }
-            // })
+            this.$router.go(-1);
         },
         typeSelect: function typeSelect() {
             if (this.pBtn) {
@@ -13771,9 +13756,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: ["login-box"]
   }, [_c('div', {
     staticClass: ["username"]
-  }, [_c('text', {
-    staticClass: ["username-img", "iconFont"]
-  }, [_vm._v("")]), _c('input', {
+  }, [_c('image', {
+    staticClass: ["username-img"],
+    attrs: {
+      "src": "http://47.92.164.211:8011/PublicImage/phone@22x34.png"
+    }
+  }), _c('input', {
     ref: "username",
     staticClass: ["input"],
     attrs: {
@@ -13786,9 +13774,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   })]), _c('div', {
     staticClass: ["username"]
-  }, [_c('text', {
-    staticClass: ["password-img", "iconFont"]
-  }, [_vm._v("")]), _c('input', {
+  }, [_c('image', {
+    staticClass: ["password-img"],
+    attrs: {
+      "src": "http://47.92.164.211:8011/PublicImage/password@24x32.png"
+    }
+  }), _c('input', {
     ref: "passwords",
     staticClass: ["input"],
     attrs: {
@@ -13955,18 +13946,14 @@ module.exports = {
     "borderBottomStyle": "solid"
   },
   "username-img": {
-    "width": "54",
-    "fontSize": "34",
-    "lineHeight": "70",
-    "color": "#999999",
-    "textAlign": "left"
+    "width": "42",
+    "height": "44",
+    "marginRight": "30"
   },
   "password-img": {
-    "width": "54",
-    "fontSize": "32",
-    "lineHeight": "70",
-    "color": "#999999",
-    "textAlign": "left"
+    "width": "40",
+    "height": "44",
+    "marginRight": "32"
   },
   "pBtn": {
     "width": "34",
@@ -14377,9 +14364,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: ["login-box"]
   }, [_c('div', {
     staticClass: ["username"]
-  }, [_c('text', {
-    staticClass: ["username-img", "iconFont"]
-  }, [_vm._v("")]), _c('input', {
+  }, [_c('image', {
+    staticClass: ["username-img"],
+    attrs: {
+      "src": "http://47.92.164.211:8011/PublicImage/phone@22x34.png"
+    }
+  }), _c('input', {
     ref: "username",
     staticClass: ["input"],
     attrs: {
@@ -14400,9 +14390,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_vm._v(_vm._s(_vm.objSetInval.phoneCode))])]), _c('div', {
     staticClass: ["username"]
-  }, [_c('text', {
-    staticClass: ["username-img", "iconFont"]
-  }, [_vm._v("")]), _c('input', {
+  }, [_c('image', {
+    staticClass: ["password-img"],
+    attrs: {
+      "src": "http://47.92.164.211:8011/PublicImage/code@20x38.png"
+    }
+  }), _c('input', {
     ref: "username",
     staticClass: ["input"],
     attrs: {
@@ -14416,9 +14409,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   })]), _c('div', {
     staticClass: ["username"]
-  }, [_c('text', {
-    staticClass: ["password-img", "iconFont"]
-  }, [_vm._v("")]), _c('input', {
+  }, [_c('image', {
+    staticClass: ["password-img"],
+    attrs: {
+      "src": "http://47.92.164.211:8011/PublicImage/password@24x32.png"
+    }
+  }), _c('input', {
     ref: "passwords",
     staticClass: ["input"],
     attrs: {
@@ -14438,9 +14434,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   })]), _c('div', {
     staticClass: ["username"]
-  }, [_c('text', {
-    staticClass: ["username-img", "iconFont"]
-  }, [_vm._v("")]), _c('input', {
+  }, [_c('image', {
+    staticClass: ["password-img"],
+    attrs: {
+      "src": "http://47.92.164.211:8011/PublicImage/share@20x38.png"
+    }
+  }), _c('input', {
     ref: "username",
     staticClass: ["input"],
     attrs: {
@@ -14576,18 +14575,14 @@ module.exports = {
     "borderBottomStyle": "solid"
   },
   "username-img": {
-    "width": "54",
-    "fontSize": "34",
-    "lineHeight": "70",
-    "color": "#999999",
-    "textAlign": "left"
+    "width": "42",
+    "height": "44",
+    "marginRight": "30"
   },
   "password-img": {
-    "width": "54",
-    "fontSize": "32",
-    "lineHeight": "70",
-    "color": "#999999",
-    "textAlign": "left"
+    "width": "40",
+    "height": "44",
+    "marginRight": "32"
   },
   "pBtn": {
     "width": "34",
@@ -14972,9 +14967,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: ["login-box"]
   }, [_c('div', {
     staticClass: ["username"]
-  }, [_c('text', {
-    staticClass: ["username-img", "iconFont"]
-  }, [_vm._v("")]), _c('input', {
+  }, [_c('image', {
+    staticClass: ["username-img"],
+    attrs: {
+      "src": "http://47.92.164.211:8011/PublicImage/phone@22x34.png"
+    }
+  }), _c('input', {
     ref: "username",
     staticClass: ["input"],
     attrs: {
@@ -14995,9 +14993,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_vm._v(_vm._s(_vm.objSetInval.phoneCode))])]), _c('div', {
     staticClass: ["username"]
-  }, [_c('text', {
-    staticClass: ["username-img", "iconFont"]
-  }, [_vm._v("")]), _c('input', {
+  }, [_c('image', {
+    staticClass: ["password-img"],
+    attrs: {
+      "src": "http://47.92.164.211:8011/PublicImage/password@24x32.png"
+    }
+  }), _c('input', {
     ref: "username",
     staticClass: ["input"],
     attrs: {
@@ -15011,9 +15012,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   })]), _c('div', {
     staticClass: ["username"]
-  }, [_c('text', {
-    staticClass: ["password-img", "iconFont"]
-  }, [_vm._v("")]), _c('input', {
+  }, [_c('image', {
+    staticClass: ["password-img"],
+    attrs: {
+      "src": "http://47.92.164.211:8011/PublicImage/password@24x32.png"
+    }
+  }), _c('input', {
     ref: "passwords",
     staticClass: ["input"],
     attrs: {
@@ -16253,18 +16257,7 @@ exports.default = {
 			var self = this;
 		},
 		minibarLeftButtonClick: function minibarLeftButtonClick() {
-			var self = this;
-			// Util.pops({
-			//     "webBack": function(){
-			self.$router.go(-1);
-			//     },
-			//     "phoneBack": function(){
-			//         weex.requireModule('navigator').pop({
-			//             animated: "true"
-			//         }, event => {
-			//         })
-			//     }
-			// })
+			this.$router.go(-1);
 		},
 		link: function link(urls) {
 			var self = this;

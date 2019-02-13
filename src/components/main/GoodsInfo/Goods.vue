@@ -133,18 +133,7 @@
 				const self = this
 			},
 			minibarLeftButtonClick() {
-				var self = this
-	            // Util.pops({
-	            //     "webBack": function(){
-	                    self.$router.go(-1)
-	            //     },
-	            //     "phoneBack": function(){
-	            //         weex.requireModule('navigator').pop({
-	            //             animated: "true"
-	            //         }, event => {
-	            //         })
-	            //     }
-	            // })
+				this.$router.go(-1)
 			},
 			link(urls){
 				var self = this;

@@ -13,21 +13,21 @@
 		</div>
 		<div class="login-box">
 			<div class="username">
-				<text class="username-img iconFont">&#xe64f;</text>
+				<image class="username-img" src="http://47.92.164.211:8011/PublicImage/phone@22x34.png"></image>
 				<input ref="username" @input="input1" type="text" placeholder="请输入您的手机号码" value="" class="input" />
 				<text class="code-btn" :class="[logoTel == true ? 'code-btn-logo' : '',objSetInval.boolSetInval == true ? 'code-btn-active' : '']" @click="codeBtn()">{{objSetInval.phoneCode}}</text>
 			</div>
 			<div class="username">
-				<text class="username-img iconFont">&#xe647;</text>
+				<image class="password-img" src="http://47.92.164.211:8011/PublicImage/code@20x38.png"></image>
 				<input ref="username" @input="input3" type="text" maxlength ="4" placeholder="请输入验证码" value="" class="input" />
 			</div>
 			<div class="username">
-				<text class="password-img iconFont">&#xe614;</text>
+				<image class="password-img" src="http://47.92.164.211:8011/PublicImage/password@24x32.png"></image>
 				<input ref="passwords" @input="input2" :type="pBtn === true ? 'password' : 'text'" placeholder="请输入您的密码" class="input" />
 				<image class="pBtn" @click="typeSelect" :src="pBtn === true ? 'http://47.92.164.211:8011/PublicImage/biyan-icon.png' : 'http://47.92.164.211:8011/PublicImage/zhenyan-icon.png'"></image>
 			</div>
 			<div class="username">
-				<text class="username-img iconFont">&#xe667;</text>
+				<image class="password-img" src="http://47.92.164.211:8011/PublicImage/share@20x38.png"></image>
 				<input ref="username" @input="input4" type="text" placeholder="请输入邀请码（选填）" value="" class="input" />
 			</div>
 			<div class="login-tip-box">
@@ -294,20 +294,19 @@
 		border-bottom-color: #dcdcdc;
 		border-bottom-style: solid;
 	}
-	.username-img{
-		width: 54px;
-		font-size: 34px;
-		line-height: 70px;
-		color: #999;
-		text-align: left;
+	.username-img {
+	    width: 42px;
+	    height: 44px;
+	    margin-right: 30px;
 	}
-	.password-img{
-		width: 54px;
-		font-size: 32px;
-		line-height: 70px;
-		color: #999;
-		text-align: left;
+
+	.password-img {
+	    width: 40px;
+	    height: 44px;
+	    margin-right: 32px;
 	}
+
+
 	.pBtn{
 		width: 34px;
 		height: 22px;

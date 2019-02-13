@@ -26,9 +26,9 @@ module.exports = new Router({
   routes: [
       {
         path: '/',
-        name: 'HelloWorld',
-        component: HelloWorld,
-        redirect: '/HelloWorld'
+        name: 'main',
+        component: main,
+        redirect: '/main'
       },{
         path: '/HelloWorld',
         name: 'HelloWorld',
