@@ -5,34 +5,32 @@
 			<!--状态栏-->
 			<text class="statusbar"></text>
 			<!--标题栏-->
-			<wxc-minibar title="收银台" background-color="#73cc00" text-color="#FFFFFF" left-button='http://47.92.164.211:8011/PublicImage/backImage.png' right-text="" @wxcMinibarLeftButtonClicked="minibarLeftButtonClick">
-				<text class="title" slot="middle">收银台</text>
-			</wxc-minibar>
+			<v-header :titleName="titleName" :backPage="true"></v-header>
 			<text class="border-cell"></text>
 		</div>
 		<scroller class="scroller">
 			<div class="bind-floor">
 				<text class="fl">应付金额</text>
-				<text class="fm red">￥{{money}}元</text>
+				<text class="fm red">¥{{money}}元</text>
 			</div>
 			<text class="border-cells"></text>
 			<div class="bind-floor border-b">
 				<text class="fl">支付方式</text>
 			</div>
 			<div class="bind-floor border-b" @click="">
-				<text class="fl fl1 iconFont">&#xe624;</text>
+				<image class="fl fl1 i1" src="http://47.92.164.211:8011/PublicImage/tt1.png"></image>
 				<text class="fm">余额（0.00元）</text>
-				<text class="fr iconFont">&#xe7ad;</text>
+				<image class="lemet-title-address-right" src="http://47.92.164.211:8011/PublicImage/moreImage@16x25.png"></image>
 			</div>
 			<div class="bind-floor border-b" @click="">
-				<text class="fl fl2 iconFont">&#xe648;</text>
+				<image class="fl fl2 i2" src="http://47.92.164.211:8011/PublicImage/tt2.png"></image>
 				<text class="fm">支付宝</text>
-				<text class="fr iconFont">&#xe7ad;</text>
+				<image class="lemet-title-address-right" src="http://47.92.164.211:8011/PublicImage/moreImage@16x25.png"></image>
 			</div>
 			<div class="bind-floor" @click="">
-				<text class="fl fl3 iconFont">&#xe650;</text>
+				<image class="fl fl3 i3" src="http://47.92.164.211:8011/PublicImage/tt3.png"></image>
 				<text class="fm">微信支付</text>
-				<text class="fr iconFont">&#xe7ad;</text>
+				<image class="lemet-title-address-right" src="http://47.92.164.211:8011/PublicImage/moreImage@16x25.png"></image>
 			</div>
 			<!--<div class="exit-box">
 				<text class="exit-btn" @click="">确认支付</text>
@@ -57,6 +55,7 @@
 </template>
 
 <script>
+	import header from '../header/orderHeader.vue'
 	import { WxcMinibar, WxcDialog, WxcRadio } from 'weex-ui';
 	import Util from '../../../common/utils/utils.js'
 	import api from '../../../common/api/api.js'
@@ -66,9 +65,11 @@
 		components: {
 			WxcMinibar,
 			WxcDialog,
-			WxcRadio 
+			WxcRadio,
+			"v-header": header 
 		},
 		data: () => ({
+			titleName: '收银台',
 			title: '标题',
 	        content: '内容',
 	        confirmText: '确定',
@@ -82,20 +83,6 @@
 	        pBtn:0,
 		}),
 		methods: {
-			minibarLeftButtonClick() {
-				var self = this
-	            // Util.pops({
-	            //     "webBack": function(){
-	                    self.$router.go(-1)
-	            //     },
-	            //     "phoneBack": function(){
-	            //         weex.requireModule('navigator').pop({
-	            //             animated: "true"
-	            //         }, event => {
-	            //         })
-	            //     }
-	            // })
-			},
 			selects (indexs) {
 	        	this.pBtn = indexs;
 				var flag = 0
@@ -148,8 +135,17 @@
 </script>
 
 <style>
-	.iconFont{
-	    font-family: iconfont;
+	.i1{
+		width: 27px;
+		height: 29px;
+	}
+	.i2{
+		width: 28px;
+		height: 27px;
+	}
+	.i3{
+		width: 27px;
+		height: 27px;
 	}
 	.wrap{
 		position: fixed;
@@ -189,18 +185,25 @@
 	}
 	.bind-floor{
 		flex-direction: row;
+		align-items: center;
 		padding-left: 20px;
 		padding-right: 20px;
 		background-color: #fff;
 	}
 	.border-b{
+		flex-direction: row;
+		align-items: center;
 		border-bottom-width: 1px;
 		border-bottom-color: #dcdcdc;
 		border-bottom-style: solid;
 	}
+	.lemet-title-address-right{
+		width: 16px;
+		height: 25px;
+	}
 	.fl{
 		width: auto;
-		font-size: 24px;
+		font-size: 26px;
 		line-height: 70px;
 	}
 	.fl1{
@@ -217,7 +220,7 @@
 	}
 	.fm{
 		flex: 1;
-		font-size: 24px;
+		font-size: 26px;
 		line-height: 70px;
 		color: #777;
 		padding-left: 10px!important;
@@ -225,13 +228,6 @@
 	.red{
 		font-size: 34px;
 		color: #f26100;
-		text-align: right;
-	}
-	.fr{
-		width: 40px;
-		font-size: 30px;
-		line-height: 70px;
-		color: #dcdcdc;
 		text-align: right;
 	}
 	.online-cs{

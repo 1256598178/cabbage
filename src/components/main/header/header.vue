@@ -39,27 +39,26 @@ export default {
 	background-color: rgb(115,204,70);
 	display: flex;
 	flex-direction: row;
+	align-items: center;
 }
 .address-wrapper{
-	margin-top: 27.5px;
 	flex: 1;
 	flex-direction: row;
 }
 
 .address-name{
-	font-size: 26px;
+	font-size: 32px;
 	line-height: 35px;
+	font-weight: bold;
 	color: #fff;
 }
 .search-wrapper{
-	margin-top: 23.5px;
 	width: 117px;
 	flex-direction: row;
 }
 ._logo{
-	margin-top: 13.5px;
-	width: 70px;
-	height: 63px;
+	width: 56px;
+	height: 77px;
 	margin-right: 30px;
 }
 ._address{

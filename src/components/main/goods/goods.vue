@@ -12,37 +12,41 @@
 			</div>
 		</header>
 		<!-- /header -->
-		<slider class="slider" interval="3000" auto-play="false" @change="change">
-			<div class="frame" v-for="num in goodsList" ref="claim">
-				<div class="frame-box">
-					<text class="text01">{{num.orderNumber}}</text>
-					<text class="text02">{{num.phone}}</text>
-					<div class="text-box01"><text class="text06">请您前往</text><text class="text03">{{num.store}}</text><text class="text06">进行取货</text></div>
-					<div class="qr-code-box">
-						<image class="qr-code-image" :src="num.src"></image>
-					</div>
-					<text class="text07">订单编号：{{num.orderNumber}}</text>
-					<div class="claim-box">
-						<div class="claim-time">
-							<text class="text05">取货时间：</text>
-							<div class="text-box02">
-								<text class="text04">{{num.dates}}</text>
-								<text class="text04">{{num.time}}</text>
+		<list>
+			<cell>
+				<slider class="slider" interval="3000" auto-play="false" @change="change">
+					<div class="frame" v-for="num in goodsList" ref="claim">
+						<div class="frame-box">
+							<text class="text01">{{num.orderNumber}}</text>
+							<text class="text02">{{num.phone}}</text>
+							<div class="text-box01"><text class="text06">请您前往</text><text class="text03">{{num.store}}</text><text class="text06">进行取货</text></div>
+							<div class="qr-code-box">
+								<image class="qr-code-image" :src="num.src"></image>
+							</div>
+							<text class="text07">订单编号：{{num.orderNumber}}</text>
+							<div class="claim-box">
+								<div class="claim-time">
+									<text class="text05">取货时间：</text>
+									<div class="text-box02">
+										<text class="text04">{{num.dates}}</text>
+										<text class="text04">{{num.time}}</text>
+									</div>
+								</div>
+								<div class="share">
+									<image class="share-btn" src="http://47.92.164.211:8011/PublicImage/share@34x32.png"></image>
+								</div>
 							</div>
 						</div>
-						<div class="share">
-							<image class="share-btn" src="http://47.92.164.211:8011/PublicImage/share@34x32.png"></image>
+						<div class="cabbage-img-box">
+							<image class="cabbage-image" src="http://47.92.164.211:8011/PublicImage/cabbage-icon.png"></image>
 						</div>
 					</div>
+				</slider>
+				<div class="claim-index-box">
+					<text class="claim-index">{{this.cIndex}}/{{this.len}}</text>
 				</div>
-				<div class="cabbage-img-box">
-					<image class="cabbage-image" src="http://47.92.164.211:8011/PublicImage/cabbage-icon.png"></image>
-				</div>
-			</div>
-		</slider>
-		<div class="claim-index-box">
-			<text class="claim-index">{{this.cIndex}}/{{this.len}}</text>
-		</div>
+			</cell>
+		</list>
 	</div>
 </template>
 
@@ -111,27 +115,27 @@
 	}
 	
 	.slider {
-		margin-top: 60px;
+		margin-top: 20px;
 		width: 750px;
-		height: 815px;
+		height: 1100px;
 	}
 	
 	.cabbage-img-box{
-		width: 90px;
-		height: 90px;
+		width: 150px;
+		height: 150px;
 		border-radius: 90px;
 		background-color: #e0f8b1;
 		flex-direction: row;
 		justify-content: center;
+		align-items: center;
 		position: absolute;
 		top: 0;
-		left: 330px;
+		left: 300px;
 	}
 	
 	.cabbage-image{
-		width: 58px;
-		height: 77px;
-		margin-top: 10px;
+		width: 94px;
+		height: 128px;
 	}
 	
 	.frame {
@@ -143,9 +147,9 @@
 	
 	.frame-box{
 		width: 710px;
-		height: 770px;
+		height: 970px;
 		padding-top: 75px;
-		margin-top: 45px;
+		margin-top: 75px;
 		background-color: #fff;
 		border-radius: 10px;
 	}
@@ -194,37 +198,38 @@
 		justify-content: center;
 	}
 	.qr-code-image{
-		width: 300px;
-		height: 300px;
+		width: 500px;
+		height: 500px;
 	}
 	.text01{
+		margin-top: 15px;
 		font-size: 30px;
 		line-height: 36px;		
-		color: #333;
+		color: #333333;
 		text-align: center;
 	}
 	.text02{
 		width: auto;
-		font-size: 24px;
+		font-size: 28px;
 		line-height: 30px;
-		color: #777;
+		color: #777777;
 		text-align: center;
 		margin-top: 20px;
 	}
 	.text03{
-		font-size: 24px;
+		font-size: 28px;
 		line-height: 30px;
 		color: #73cc00;
 		text-align: center;
 	}
 	.text04{
-		font-size: 24px;
+		font-size: 28px;
 		line-height: 30px;
 		color: #333;
 		text-align: center;
 	}
 	.text05{
-		font-size: 24px;
+		font-size: 28px;
 		line-height: 30px;
 		color: #333;
 	}
@@ -235,15 +240,10 @@
 		color: #777;
 	}
 	.text07{
-		font-size: 24px;
+		font-size: 28px;
 		line-height: 30px;
 		color: #73cc00;
 		margin-left: 60px;
-	}
-	.claim-index-box{
-		position: fixed;
-		bottom: 150px;
-		left: 0;
 	}
 	.claim-index{
 		width: 750px;

@@ -33,12 +33,14 @@
                                 <cell class="cellps" v-for="(child,cindex) in classsubArr[index].product" @click="jump({'web':'goodIn','ProductId': child.ProductId})" :key="cindex">
                                     <image class="product-img" :src="child.ImageUrl"></image>
                                     <div class="pro-news">
-                                        <text class="product-title">{{child.ProductName}}</text>
+                                        <text class="product-title">{{child.ProductName}}啥的看法</text>
                                         <div class="product-type-box"><text :class="[child.sellOut === true ? 'product-type' : 'product-types']">已售完</text></div>
                                         <div class="pro-m">
-                                            <text class="product-price">￥{{child.SalesPrice}}元/{{child.Unit}}</text>
-                                            <text class="product-prices">￥{{child.Price}}元</text>
-                                            <image class="shop-car-icon" src="http://47.92.164.211:8011/PublicImage/shop-car-icon.png" @click="addShopCar(child.ProductId)"></image>
+                                            <div class="pro-s">
+                                                <text class="product-price">¥{{child.SalesPrice}}元/{{child.Unit}}</text>
+                                                <text class="product-prices">¥{{child.Price}}元</text>
+                                            </div>
+                                            <image class="shop-car-icon" src="http://47.92.164.211:8011/PublicImage/shop-car.png" @click="addShopCar(child.ProductId)"></image>
                                         </div>
                                     </div>
                                 </cell>
@@ -64,7 +66,7 @@
 import Util from '../../../common/utils/utils.js'
 import api from '../../../common/api/api.js'
 //1.先使用import导入你要在该组件中使用的子组件
-import sHeader from '../header/header.vue'
+import sHeader from '../header/searchHeader.vue'
 import { WxcPopup } from 'weex-ui'
 const dom = weex.requireModule('dom')
 const storage = weex.requireModule('storage')
@@ -381,7 +383,7 @@ export default {
 }
 
 .nav-list {
-    width: 150px;
+    width: 160px;
     position: fixed;
     top: 90px;
     left: 0;
@@ -403,7 +405,7 @@ export default {
 }
 
 .text {
-    font-size: 24px;
+    font-size: 30px;
     line-height: 56px;
     text-align: center;
     color: #333;
@@ -413,17 +415,17 @@ export default {
 }
 
 .text-crt {
-    font-size: 24px;
+    font-size: 30px;
     line-height: 56px;
     text-align: center;
-    color: #41B883;
+    color: #73cc46;
     border-left-width: 8px;
     border-left-style: solid;
     border-left-color: rgba(115, 204, 0, 1);
 }
 
 .right-box {
-    width: 580px;
+    width: 560px;
     position: fixed;
     top: 90px;
     bottom: 110px;
@@ -461,8 +463,8 @@ export default {
 }
 
 .slideShow-icon {
-    width: 14px;
-    height: 9px;
+    width: 28px;
+    height: 18px;
 }
 
 .cover {
@@ -482,7 +484,7 @@ export default {
 
 .cells {
     width: auto;
-    height: 40px;
+    height: 50px;
     padding-left: 20px;
     padding-right: 20px;
     border-width: 1px;
@@ -506,15 +508,15 @@ export default {
 }
 
 .texts {
-    font-size: 22px;
-    line-height: 38px;
+    font-size: 30px;
+    line-height: 50px;
     text-align: center;
 }
 
 .texts-crt {
-    font-size: 22px;
-    line-height: 38px;
-    color: #41B883;
+    font-size: 30px;
+    line-height: 50px;
+    color: #73cc46;
     text-align: center;
 }
 
@@ -539,7 +541,7 @@ export default {
     width: 560px;
     padding-top: 15px;
     padding-bottom: 15px;
-    font-size: 22px;
+    font-size: 30px;
     border-bottom-width: 1px;
     border-bottom-color: #d2d2d2;
     border-bottom-style: solid;
@@ -558,7 +560,7 @@ export default {
 .product-img {
     width: 200px;
     height: 200px;
-    margin-right: 30px;
+    margin-right: 37px;
 }
 
 .pro-news {
@@ -566,9 +568,8 @@ export default {
 }
 
 .product-title {
-    font-size: 30px;
+    font-size: 37px;
     color: #333;
-    margin-top: 20px;
     text-overflow: ellipsis;
     lines: 1;
 }
@@ -593,26 +594,29 @@ export default {
 }
 
 .pro-m {
-    height: 42px;
+    margin-top: 10px;
     flex-direction: row;
-    align-items: flex-end;
+    align-items: flex-start;
+    justify-content: flex-start;
 }
-
+.pro-s{
+    flex-direction: column;
+}
 .product-price {
-    font-size: 30px;
+    font-size: 34px;
     font-weight: bold;
-    color: #f26100;
-    margin-right: 10px;
+    color: #ff0000;
 }
 
 .product-prices {
-    font-size: 20px;
+    margin-top: 10px;
+    font-size: 28px;
     color: #777;
 }
 
 .shop-car-icon {
-    width: 42px;
-    height: 42px;
+    width: 62px;
+    height: 62px;
     position: absolute;
     bottom: 0;
     right: 0;

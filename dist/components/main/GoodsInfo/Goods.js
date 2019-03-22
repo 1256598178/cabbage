@@ -75,7 +75,7 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-var Storage = __webpack_require__(1);
+var Storage = __webpack_require__(2);
 var stream = weex.requireModule('stream');
 var navigator = weex.requireModule('navigator');
 var modal = weex.requireModule('modal');
@@ -176,25 +176,25 @@ var utils = {
     },
     analAjax: function analAjax(obj) {
         var warp = {};
-        if (WXEnvironment.platform === 'Web') {
-            warp = obj.routerName();
-        } else {
-            // var url = decodeURI(weex.config.bundleUrl); //取得整个地址栏
-            var url = this.urlPort().url;
-            console.log(url);
-            var result = url.match(new RegExp(/\?\w*\=\w*(\&\w*\=\w*)*/, "g"))[0].slice(1);
-            // console.log(result)
-            var key = result.match(new RegExp(/\w*\=/, "g"));
-            // console.log(key)
-            var value = result.match(new RegExp(/\=\w*/, "g"));
-            // console.log(value)
-            for (var indexes in value) {
-                key[indexes] = key[indexes].slice(0, key[indexes].length - 1);
-                value[indexes] = value[indexes].slice(1);
-                // console.log(value[indexes])
-                warp[key[indexes]] = value[indexes];
-            }
-        }
+        // if (WXEnvironment.platform === 'Web') {
+        warp = obj.routerName();
+        // } else {
+        //     // var url = decodeURI(weex.config.bundleUrl); //取得整个地址栏
+        //     var url = this.urlPort().url;
+        //     console.log(url)
+        //     var result = url.match(new RegExp(/\?\w*\=\w*(\&\w*\=\w*)*/, "g"))[0].slice(1);
+        //     // console.log(result)
+        //     var key = result.match(new RegExp(/\w*\=/, "g"));
+        //     // console.log(key)
+        //     var value = result.match(new RegExp(/\=\w*/, "g"));
+        //     // console.log(value)
+        //     for (var indexes in value) {
+        //         key[indexes] = key[indexes].slice(0, key[indexes].length - 1)
+        //         value[indexes] = value[indexes].slice(1)
+        //         // console.log(value[indexes])
+        //         warp[key[indexes]] = value[indexes]
+        //     }
+        // }
         console.log(warp);
         return warp;
     },
@@ -321,6 +321,44 @@ exports.default = utils;
 
 
 Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+var ajaxUrl = {
+	// POST
+	SHOPCAR_URL: "api/cart/addCart", //添加到购物车
+	LOGIN_URL: "api/account/login", // 登录
+	GETCODE_URL: "api/account/getsmscode", //获取短信验证码
+	FINDPASSWORD_URL: "api/account/findpassword", //修改密码
+	REGISTER_URL: "api/account/register", //注册
+	MODIFYSHOPNUM_URL: "api/cart/changeCart", //修改购物车
+	SUBMITORDER_URL: "api/cart/sumbitOrder", //  提交订单
+	// GET
+	HOME_URL: "api/basic/gethomepage", //获取首页
+	SEAFOOD_URL: "api/product/getprodcutlistbypage?", //根据分类获取商品列表(分页)
+	GETPRODCUTDETAIL_URL: "api/product/getprodcutdetail", //根据商品Id获取商品信息
+	CLASS_URL: "api/product/getcagegorylist", //获取分类数据
+	SELECT_URL: "api/product/getprodcutlist?categoryId=", //根据商品id获取商品
+	SHOP_URL: "api/cart/getMyCartList?userId=", //获取购物车列表
+	GETMYCARTCHOSTLIST_URL: "api/cart/getMyCartChoseList?UserId=", //获取选中的购物车列表
+	DATEURLS: "api/cart/getPickingDateTime", //取货日期
+	TIMEURLS: "api/cart/getPickingTime", //取货时间
+	GETUSERINFO_URL: "api/account/getuserinfo", //获取我的信息
+
+
+	// 字体图标
+	iconUrl: "//at.alicdn.com/t/font_948634_j56el7oqed.ttf"
+};
+
+exports.default = ajaxUrl;
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
     value: true
 });
 var Util = __webpack_require__(0);
@@ -379,40 +417,6 @@ var AIstorage = {
     }
 };
 exports.default = AIstorage;
-
-/***/ }),
-/* 2 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-	value: true
-});
-var ajaxUrl = {
-	// POST
-	SHOPCAR_URL: "api/cart/addCart", //添加到购物车
-	LOGIN_URL: "api/account/login", // 登录
-	GETCODE_URL: "api/account/getsmscode", //获取短信验证码
-	FINDPASSWORD_URL: "api/account/findpassword", //修改密码
-	REGISTER_URL: "api/account/register", //注册
-	MODIFYSHOPNUM_URL: "api/cart/changeCart", //修改购物车
-	SUBMITORDER_URL: "api/cart/sumbitOrder", //  提交订单
-	// GET
-	HOME_URL: "api/basic/gethomepage", //获取首页
-	SEAFOOD_URL: "api/product/getprodcutlistbypage?", //根据分类获取商品列表(分页)
-	GETPRODCUTDETAIL_URL: "api/product/getprodcutdetail", //根据商品Id获取商品信息
-	CLASS_URL: "api/product/getcagegorylist", //获取分类数据
-	SELECT_URL: "api/product/getprodcutlist?categoryId=", //根据商品id获取商品
-	SHOP_URL: "api/cart/getMyCartList?userId=", //获取购物车列表
-	GETMYCARTCHOSTLIST_URL: "api/cart/getMyCartChoseList?UserId=", //获取选中的购物车列表
-	DATEURLS: "api/cart/getPickingDateTime", //取货日期
-	TIMEURLS: "api/cart/getPickingTime", //取货时间
-	GETUSERINFO_URL: "api/account/getuserinfo" //获取我的信息
-};
-
-exports.default = ajaxUrl;
 
 /***/ }),
 /* 3 */
@@ -11183,18 +11187,21 @@ module.exports = {
   "goods-share": {
     "flexDirection": "row"
   },
-  "share-img": {
+  "share-box": {
+    "flexDirection": "row",
+    "justifyContent": "center",
+    "alignItems": "center",
     "width": "34",
     "height": "34",
-    "lineHeight": "34",
     "borderWidth": "1",
     "borderStyle": "solid",
     "borderColor": "#999999",
     "borderRadius": "17",
-    "fontSize": "30",
-    "color": "#999999",
-    "marginRight": "5",
-    "textAlign": "center"
+    "marginRight": "5"
+  },
+  "share-img": {
+    "width": "17",
+    "height": "16"
   },
   "share-text": {
     "fontSize": "22",
@@ -11234,12 +11241,12 @@ module.exports = {
   },
   "payment-l": {
     "width": "180",
-    "flexDirection": "row"
+    "flexDirection": "row",
+    "alignItems": "center"
   },
   "payment-icon": {
-    "fontSize": "30",
-    "lineHeight": "40",
-    "color": "#999999",
+    "width": "24",
+    "height": "26",
     "marginRight": "10"
   },
   "payment-title": {
@@ -11274,10 +11281,8 @@ module.exports = {
     "marginRight": "20"
   },
   "shop-car-icon": {
-    "fontSize": "32",
-    "lineHeight": "60",
-    "textAlign": "center",
-    "color": "#ffffff"
+    "width": "60",
+    "height": "60"
   },
   "shop-car-num": {
     "minWidth": "10",
@@ -11297,6 +11302,9 @@ module.exports = {
     "left": "45"
   },
   "collection": {
+    "flexDirection": "row",
+    "alignItems": "center",
+    "justifyContent": "center",
     "width": "60",
     "height": "60",
     "borderRadius": "30",
@@ -11304,10 +11312,8 @@ module.exports = {
     "marginRight": "60"
   },
   "collection-icon": {
-    "fontSize": "32",
-    "lineHeight": "60",
-    "textAlign": "center",
-    "color": "#ffffff"
+    "width": "33",
+    "height": "31"
   },
   "add-box": {
     "flex": 1
@@ -11350,7 +11356,7 @@ var _utils = __webpack_require__(0);
 
 var _utils2 = _interopRequireDefault(_utils);
 
-var _api = __webpack_require__(2);
+var _api = __webpack_require__(1);
 
 var _api2 = _interopRequireDefault(_api);
 
@@ -11438,6 +11444,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
+//
+//
 
 var dom = weex.requireModule('dom');
 
@@ -11451,7 +11459,9 @@ exports.default = {
 		WxcMinibar: _wxcMinibar2.default,
 		WxcTabPage: _wxcTabPage2.default,
 		WxcPanItem: _wxcPanItem2.default,
-		Config: _config2.default
+		Config: _config2.default,
+		USERID: 'user_id',
+		TOKEN: 'user_token'
 		//orderItem
 	},
 	data: function data() {
@@ -11486,39 +11496,58 @@ exports.default = {
 			var self = this;
 		},
 		minibarLeftButtonClick: function minibarLeftButtonClick() {
-			var self = this;
-			_utils2.default.pops({
-				"webBack": function webBack() {
-					self.$router.go(-1);
-				},
-				"phoneBack": function phoneBack() {
-					weex.requireModule('navigator').pop({
-						animated: "true"
-					}, function (event) {});
-				}
-			});
+			this.$router.go(-1);
 		},
 		link: function link(urls) {
 			var self = this;
 			self.abc = _utils2.default.analAjax({ 'routerName': function routerName() {
 					return self.$route.query;
 				} }).ProductId;
-			_utils2.default.jump({
-				"phoneJump": function phoneJump() {
-					var bundleUrl = self.bundleUrl;
-					weex.requireModule('navigator').push({
-						url: _utils2.default.urlPort().urlAddPort + 'dist/' + urls.phone + '?' + urls.name + '=' + urls.ProductId,
-						animated: "true"
-					}, function (event) {});
+			// Util.jump({
+			//     "phoneJump": function(){
+			//         var bundleUrl = self.bundleUrl;
+			//         weex.requireModule('navigator').push({
+			//             url: Util.urlPort().urlAddPort + 'dist/' + urls.phone + '?' + urls.name + '=' + urls.ProductId,
+			//             animated: "true"
+			//         }, event => {})
+			//     },
+			//     "webJump": function(){
+			self.$router.push({
+				name: urls.web,
+				query: {
+					"CategoryId": urls.CategoryId,
+					"ProductId": self.abc
+				}
+			});
+			//     }
+			// })
+		},
+		addShopCar: function addShopCar() {
+			var self = this;
+			_utils2.default.WeexAjax({
+				url: _api2.default.SHOPCAR_URL,
+				method: 'POST',
+				type: 'JSON',
+				token: self.TOKEN,
+				body: {
+					"UserId": self.USERID,
+					"ProductId": _utils2.default.analAjax({ "routerName": function routerName() {
+							return self.$route.query;
+						} }).ProductId,
+					"CartNum": 1
 				},
-				"webJump": function webJump() {
-					self.$router.push({
-						name: urls.web,
-						query: {
-							"CategoryId": urls.CategoryId,
-							"ProductId": self.abc
-						}
-					});
+				callback: function callback(ret) {
+					if (ret.Status == 1) {
+						modal.toast({
+							message: ret.Message,
+							duration: 1
+						});
+					} else {
+						modal.toast({
+							message: '请求错误',
+							duration: 1
+						});
+					}
 				}
 			});
 		}
@@ -11529,7 +11558,7 @@ exports.default = {
 		var fontModule = weex.requireModule("dom");
 		fontModule.addRule('fontFace', {
 			'fontFamily': "iconfont",
-			'src': "url(" + this.$store.state.iconUrl + ")"
+			'src': "url('" + _api2.default.iconUrl + "')"
 		});
 		var self = this;
 		if (self.CarNum == 0 || self.CarNum == '') {
@@ -11575,18 +11604,18 @@ exports.default = {
 						});
 					},
 					"fail": function fail() {
-						_utils2.default.jump({
-							"phoneJump": function phoneJump() {
-								var bundleUrl = this.bundleUrl;
-								weex.requireModule('navigator').push({
-									url: _utils2.default.urlPort().urlAddPort + 'dist/' + "components/login/login.js",
-									animated: "true"
-								}, function (event) {});
-							},
-							"webJump": function webJump() {
-								self.$router.push({ name: "login" });
-							}
-						});
+						// Util.jump({
+						//     "phoneJump": function(){
+						//         var bundleUrl = this.bundleUrl;
+						//         weex.requireModule('navigator').push({
+						//             url: Util.urlPort().urlAddPort + 'dist/' + "components/login/login.js",
+						//             animated: "true"
+						//         }, event => {})
+						//     },
+						//     "webJump": function(){
+						self.$router.push({ name: "login" });
+						//     }
+						// })
 					}
 				});
 			});
@@ -11626,9 +11655,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "click": function($event) {
         _vm.link({
-          'phone': 'components/main/GoodsInfo/GoodsInfo.js',
           'web': 'goodInfo',
-          'name': 'ProductId',
           'ProductId': _vm.abc
         })
       }
@@ -11688,25 +11715,45 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: ["bottom-box"]
   }, [_c('div', {
     staticClass: ["shop-car"]
-  }, [_c('text', {
-    staticClass: ["shop-car-icon", "iconFont"]
-  }, [_vm._v("")]), (_vm.NumType) ? _c('text', {
+  }, [_c('image', {
+    staticClass: ["shop-car-icon"],
+    attrs: {
+      "src": "http://47.92.164.211:8011/PublicImage/shop-car.png"
+    }
+  }), (_vm.NumType) ? _c('text', {
     staticClass: ["shop-car-num"]
-  }, [_vm._v(_vm._s(_vm.CarNum))]) : _vm._e()]), _vm._m(4), _vm._m(5)])])
+  }, [_vm._v(_vm._s(_vm.CarNum))]) : _vm._e()]), _vm._m(4), _c('div', {
+    staticClass: ["add-box"]
+  }, [_c('text', {
+    staticClass: ["add-btn"],
+    on: {
+      "click": function($event) {
+        _vm.addShopCar()
+      }
+    }
+  }, [_vm._v("加入购物车")])])])])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: ["goods-share"]
-  }, [_c('text', {
-    staticClass: ["share-img", "iconFont"]
-  }, [_vm._v("")]), _c('text', {
+  }, [_c('div', {
+    staticClass: ["share-box"]
+  }, [_c('image', {
+    staticClass: ["share-img"],
+    attrs: {
+      "src": "http://47.92.164.211:8011/PublicImage/share@17x16.png"
+    }
+  })]), _c('text', {
     staticClass: ["share-text"]
   }, [_vm._v("分享")])])
 },function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: ["payment-l"]
-  }, [_c('text', {
-    staticClass: ["payment-icon", "iconFont"]
-  }, [_vm._v("")]), _c('text', {
+  }, [_c('image', {
+    staticClass: ["payment-icon"],
+    attrs: {
+      "src": "http://47.92.164.211:8011/PublicImage/payment1@24x26.png"
+    }
+  }), _c('text', {
     staticClass: ["payment-title"]
   }, [_vm._v("结算方式")])])
 },function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -11714,9 +11761,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: ["payment-method", "border-t"]
   }, [_c('div', {
     staticClass: ["payment-l"]
-  }, [_c('text', {
-    staticClass: ["payment-icon", "iconFont"]
-  }, [_vm._v("")]), _c('text', {
+  }, [_c('image', {
+    staticClass: ["payment-icon"],
+    attrs: {
+      "src": "http://47.92.164.211:8011/PublicImage/payment2@24x26.png"
+    }
+  }), _c('text', {
     staticClass: ["payment-title"]
   }, [_vm._v("每份数量")])]), _c('text', {
     staticClass: ["payment-content"]
@@ -11724,23 +11774,23 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
 },function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: ["payment-l"]
-  }, [_c('text', {
-    staticClass: ["payment-icon", "iconFont"]
-  }, [_vm._v("")]), _c('text', {
+  }, [_c('image', {
+    staticClass: ["payment-icon"],
+    attrs: {
+      "src": "http://47.92.164.211:8011/PublicImage/payment3@24x26.png"
+    }
+  }), _c('text', {
     staticClass: ["payment-title"]
   }, [_vm._v("商品详情")])])
 },function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: ["collection"]
-  }, [_c('text', {
-    staticClass: ["collection-icon", "iconFont"]
-  }, [_vm._v("")])])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: ["add-box"]
-  }, [_c('text', {
-    staticClass: ["add-btn"]
-  }, [_vm._v("加入购物车")])])
+  }, [_c('image', {
+    staticClass: ["collection-icon"],
+    attrs: {
+      "src": "http://47.92.164.211:8011/PublicImage/collection@33x31.png"
+    }
+  })])
 }]}
 module.exports.render._withStripped = true
 

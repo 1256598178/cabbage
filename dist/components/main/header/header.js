@@ -76,7 +76,7 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-var Storage = __webpack_require__(1);
+var Storage = __webpack_require__(2);
 var stream = weex.requireModule('stream');
 var navigator = weex.requireModule('navigator');
 var modal = weex.requireModule('modal');
@@ -177,25 +177,25 @@ var utils = {
     },
     analAjax: function analAjax(obj) {
         var warp = {};
-        if (WXEnvironment.platform === 'Web') {
-            warp = obj.routerName();
-        } else {
-            // var url = decodeURI(weex.config.bundleUrl); //取得整个地址栏
-            var url = this.urlPort().url;
-            console.log(url);
-            var result = url.match(new RegExp(/\?\w*\=\w*(\&\w*\=\w*)*/, "g"))[0].slice(1);
-            // console.log(result)
-            var key = result.match(new RegExp(/\w*\=/, "g"));
-            // console.log(key)
-            var value = result.match(new RegExp(/\=\w*/, "g"));
-            // console.log(value)
-            for (var indexes in value) {
-                key[indexes] = key[indexes].slice(0, key[indexes].length - 1);
-                value[indexes] = value[indexes].slice(1);
-                // console.log(value[indexes])
-                warp[key[indexes]] = value[indexes];
-            }
-        }
+        // if (WXEnvironment.platform === 'Web') {
+        warp = obj.routerName();
+        // } else {
+        //     // var url = decodeURI(weex.config.bundleUrl); //取得整个地址栏
+        //     var url = this.urlPort().url;
+        //     console.log(url)
+        //     var result = url.match(new RegExp(/\?\w*\=\w*(\&\w*\=\w*)*/, "g"))[0].slice(1);
+        //     // console.log(result)
+        //     var key = result.match(new RegExp(/\w*\=/, "g"));
+        //     // console.log(key)
+        //     var value = result.match(new RegExp(/\=\w*/, "g"));
+        //     // console.log(value)
+        //     for (var indexes in value) {
+        //         key[indexes] = key[indexes].slice(0, key[indexes].length - 1)
+        //         value[indexes] = value[indexes].slice(1)
+        //         // console.log(value[indexes])
+        //         warp[key[indexes]] = value[indexes]
+        //     }
+        // }
         console.log(warp);
         return warp;
     },
@@ -313,74 +313,6 @@ exports.default = utils;
 // 
 // 
 //
-
-/***/ }),
-
-/***/ 1:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-var Util = __webpack_require__(0);
-var storage = weex.requireModule('storage');
-var modal = weex.requireModule('modal');
-var AIstorage = {
-    // 存入到手机储存中
-    setItems: function setItems(obj) {
-        for (var item in obj) {
-            storage.setItem(item, obj[item], function (event) {
-                console.log('set success');
-            });
-        }
-    },
-
-    // 获取
-    getItems: function getItems(obj) {
-        var arr = '';
-        storage.getItem(obj.value, function (event) {
-            arr = event.data;
-            obj.callback(arr);
-        });
-        return arr;
-    },
-
-    // getItems(obj) {
-    //     let arr = {};
-    //     for(var i = 0; i < arguments.length; i++){
-    //         arr[arguments[i]] = storage.getItem(arguments[i], event => {
-    //             arr[arguments[i]] = event.data;
-    //             console.log(arr)
-    //         })
-    //     }
-    //     return arr;
-    // },
-    // 移除
-    removeItem: function removeItem(name) {
-        var _this = this;
-
-        storage.removeItem(name, function (event) {
-            console.log('delete value:', event.data);
-            _this.state = 'deleted';
-        });
-    },
-
-    // 全部移除
-    getAll: function getAll() {
-        storage.getAllKeys(function (event) {
-            // modal.toast({ message: event.result })
-            if (event.result === 'success') {
-                modal.toast({
-                    message: 'props: ' + event.data.join(', ')
-                });
-            }
-        });
-    }
-};
-exports.default = AIstorage;
 
 /***/ }),
 
@@ -507,7 +439,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 exports.default = {
   data: function data() {
     return {
-      logo: "http://47.92.164.211:8011/PublicImage/logo.png", //logo图
+      logo: "http://47.92.164.211:8011/PublicImage/logo_title.png", //logo图
       address: "http://47.92.164.211:8011/PublicImage/address.png", // 定位图标
       arrow: "http://47.92.164.211:8011/PublicImage/arrow.png",
       magnifier: "http://47.92.164.211:8011/PublicImage/search.png", // 放大镜图标
@@ -588,6 +520,74 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   })])])])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
+
+/***/ }),
+
+/***/ 2:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+var Util = __webpack_require__(0);
+var storage = weex.requireModule('storage');
+var modal = weex.requireModule('modal');
+var AIstorage = {
+    // 存入到手机储存中
+    setItems: function setItems(obj) {
+        for (var item in obj) {
+            storage.setItem(item, obj[item], function (event) {
+                console.log('set success');
+            });
+        }
+    },
+
+    // 获取
+    getItems: function getItems(obj) {
+        var arr = '';
+        storage.getItem(obj.value, function (event) {
+            arr = event.data;
+            obj.callback(arr);
+        });
+        return arr;
+    },
+
+    // getItems(obj) {
+    //     let arr = {};
+    //     for(var i = 0; i < arguments.length; i++){
+    //         arr[arguments[i]] = storage.getItem(arguments[i], event => {
+    //             arr[arguments[i]] = event.data;
+    //             console.log(arr)
+    //         })
+    //     }
+    //     return arr;
+    // },
+    // 移除
+    removeItem: function removeItem(name) {
+        var _this = this;
+
+        storage.removeItem(name, function (event) {
+            console.log('delete value:', event.data);
+            _this.state = 'deleted';
+        });
+    },
+
+    // 全部移除
+    getAll: function getAll() {
+        storage.getAllKeys(function (event) {
+            // modal.toast({ message: event.result })
+            if (event.result === 'success') {
+                modal.toast({
+                    message: 'props: ' + event.data.join(', ')
+                });
+            }
+        });
+    }
+};
+exports.default = AIstorage;
 
 /***/ })
 

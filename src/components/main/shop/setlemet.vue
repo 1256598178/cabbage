@@ -12,7 +12,7 @@
 				<div class="lemet-body lemet-address-wrapper">
 					<div class="lemet-title-address">
 						<div class="lemet-title-address-left">
-							<text class="iconFont lemet-body-title-iconfont">&#xe7e0;</text>
+							<image class="lemet-body-title-iconfont" src="http://47.92.164.211:8011/PublicImage/addressLink.png"></image>
 					        <text class="lemet-body-title-name">绿白菜滨湖春融苑店</text>
 						</div>
 						<image class="lemet-title-address-right" src="http://47.92.164.211:8011/PublicImage/moreImage@16x25.png"></image>
@@ -79,13 +79,13 @@
 		</list>
 		<div class="good-bottom-wrapper">
 			<div class="good-bottom-member-wrapper">
-				<text class="iconFont member-image">&#xe641;</text>
+				<image class="member-image" src="http://47.92.164.211:8011/PublicImage/menber@26x24.png"></image>
 				<text class="member-text">升级会员，本单可为您节省</text><text class="member-text-num">{{(lemet.TotalPrice - (lemet.Discount * lemet.TotalPrice)).toFixed(2)}}</text><text class="member-text">元!</text>
 			</div>
 			<div class="good-bottom-list-wrapper">
 				<div class="good-bottom-select-wrapper">
 					<text class="good-bottom-total-text">预付款:</text>
-					<text class="good-bottom-total-money">￥{{lemet.TotalPrice}}元</text>
+					<text class="good-bottom-total-money">¥{{lemet.TotalPrice}}元</text>
 				</div>
 				<div class="good-bottom-total-button">
 					<text class="good-bottom-total-button-text" @click="submitBtn()">提交订单</text>
@@ -378,7 +378,10 @@ export default {
 .lemet-title-address{
 	margin-bottom: 20px;
 }
-.lemet-title-address-left,.lemet-food-time-info,.lemet-trade-title-wrapper,.pro-r{
+.lemet-title-address-left,
+.lemet-food-time-info,
+.lemet-trade-title-wrapper,
+.pro-r{
 	display: flex;
 	flex-direction: row;
 	align-items: center;
@@ -387,18 +390,18 @@ export default {
 	width: 16px;
 	height: 25px;
 }
-.lemet-body-title-iconfont,.lemet-body-title-name{
-	font-size: 30px;
+.lemet-body-title-name{
+	font-size: 32px;
 	color: #333333;
 	line-height: 34px;
 }
 .lemet-body-title-iconfont{
-	font-size: 40px;
+	width: 35px;
+	height: 35px;
 	margin-right: 10px;
-	line-height: 48px;
 }
 .lemet-address-box-text{
-	font-size: 24px;
+	font-size: 26px;
 	color: #777777;
 	line-height: 40px;	
 }
@@ -415,7 +418,7 @@ export default {
 	border-bottom-color: #f4f4f4;
 }
 .lemet-food-time-name{
-	font-size: 24px;
+	font-size: 26px;
 	color: #333333;
 	line-height: 26px;
 }
@@ -472,7 +475,7 @@ export default {
 }
 .product-title,.product-title-weight{
 	margin-right: 20px;
-	font-size: 30px;
+	font-size: 32px;
 	color: #333;
 	text-overflow: ellipsis;
 	lines:1; 
@@ -548,12 +551,12 @@ export default {
 	background-color: #ade564;
 }
 .member-image{
+	width: 39px;
+	height: 36px;
 	margin-right: 10px;
-	font-size: 27px;
-	color: #fff;
 }
 .member-text,.member-text-num{
-	font-size: 18px;
+	font-size: 22px;
 	color: #fff;
 }
 .member-text-num{
@@ -570,11 +573,11 @@ export default {
 	align-items: center;
 }
 .good-bottom-total-text{
-	font-size: 24px;
+	font-size: 26px;
 	color: #777777;
 }
 .good-bottom-total-money{
-	font-size: 24px;
+	font-size: 26px;
 	color: #f26100;
 }
 .good-bottom-total-button{

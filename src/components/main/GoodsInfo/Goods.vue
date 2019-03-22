@@ -61,7 +61,7 @@
 		</list>
 		<div class="bottom-box">
 			<div class="shop-car">
-				<image class="shop-car-icon" src="http://47.92.164.211:8011/PublicImage/shop-car.png"></image>
+				<image class="shop-car-icon" src="http://47.92.164.211:8011/PublicImage/shop-car-icon.png"></image>
 				<text class="shop-car-num" v-if="NumType">{{CarNum}}</text>
 			</div>
 			<div class="collection">
@@ -276,7 +276,7 @@
 	}
 
 	.back-btn {
-		width: 28px;
+		width: 41px;
 		height: 41px;
 	}
 
@@ -293,8 +293,8 @@
 
 	.shop-header-title {
 		width: 70px;
-		font-size: 30px;
-		line-height: 32px;
+		font-size: 34px;
+		line-height: 36px;
 		color: #333;
 		text-align: center;
 		margin-left: 10px;
@@ -382,26 +382,27 @@
 	.goods-share {
 		width: auto;
 		flex-direction: row;
+		align-items: center;
 	}
 	.share-box{
 		flex-direction: row;
 		justify-content: center;
 		align-items: center;
-		width: 34px;
-		height: 34px;
+		width: 50px;
+		height: 50px;
 		border-width: 1px;
 		border-style: solid;
 		border-color: #999;
-		border-radius: 17px;
+		border-radius: 50px;
 		margin-right: 5px;
 	}
 	.share-img {
-		width: 17px;
-		height: 16px;
+		width: 40px;
+		height: 41px;
 	}
 
 	.share-text {
-		font-size: 22px;
+		font-size: 24px;
 		line-height: 34px;
 		color: #999;
 	}
@@ -449,14 +450,14 @@
 	}
 
 	.payment-title {
-		font-size: 24px;
+		font-size: 28px;
 		line-height: 40px;
 		color: #999;
 	}
 
 	.payment-content {
 		flex: 1;
-		font-size: 24px;
+		font-size: 28px;
 		line-height: 40px;
 		color: #333;
 	}

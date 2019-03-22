@@ -76,7 +76,7 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-var Storage = __webpack_require__(1);
+var Storage = __webpack_require__(2);
 var stream = weex.requireModule('stream');
 var navigator = weex.requireModule('navigator');
 var modal = weex.requireModule('modal');
@@ -177,25 +177,25 @@ var utils = {
     },
     analAjax: function analAjax(obj) {
         var warp = {};
-        if (WXEnvironment.platform === 'Web') {
-            warp = obj.routerName();
-        } else {
-            // var url = decodeURI(weex.config.bundleUrl); //取得整个地址栏
-            var url = this.urlPort().url;
-            console.log(url);
-            var result = url.match(new RegExp(/\?\w*\=\w*(\&\w*\=\w*)*/, "g"))[0].slice(1);
-            // console.log(result)
-            var key = result.match(new RegExp(/\w*\=/, "g"));
-            // console.log(key)
-            var value = result.match(new RegExp(/\=\w*/, "g"));
-            // console.log(value)
-            for (var indexes in value) {
-                key[indexes] = key[indexes].slice(0, key[indexes].length - 1);
-                value[indexes] = value[indexes].slice(1);
-                // console.log(value[indexes])
-                warp[key[indexes]] = value[indexes];
-            }
-        }
+        // if (WXEnvironment.platform === 'Web') {
+        warp = obj.routerName();
+        // } else {
+        //     // var url = decodeURI(weex.config.bundleUrl); //取得整个地址栏
+        //     var url = this.urlPort().url;
+        //     console.log(url)
+        //     var result = url.match(new RegExp(/\?\w*\=\w*(\&\w*\=\w*)*/, "g"))[0].slice(1);
+        //     // console.log(result)
+        //     var key = result.match(new RegExp(/\w*\=/, "g"));
+        //     // console.log(key)
+        //     var value = result.match(new RegExp(/\=\w*/, "g"));
+        //     // console.log(value)
+        //     for (var indexes in value) {
+        //         key[indexes] = key[indexes].slice(0, key[indexes].length - 1)
+        //         value[indexes] = value[indexes].slice(1)
+        //         // console.log(value[indexes])
+        //         warp[key[indexes]] = value[indexes]
+        //     }
+        // }
         console.log(warp);
         return warp;
     },
@@ -323,64 +323,35 @@ exports.default = utils;
 
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+	value: true
 });
-var Util = __webpack_require__(0);
-var storage = weex.requireModule('storage');
-var modal = weex.requireModule('modal');
-var AIstorage = {
-    // 存入到手机储存中
-    setItems: function setItems(obj) {
-        for (var item in obj) {
-            storage.setItem(item, obj[item], function (event) {
-                console.log('set success');
-            });
-        }
-    },
+var ajaxUrl = {
+	// POST
+	SHOPCAR_URL: "api/cart/addCart", //添加到购物车
+	LOGIN_URL: "api/account/login", // 登录
+	GETCODE_URL: "api/account/getsmscode", //获取短信验证码
+	FINDPASSWORD_URL: "api/account/findpassword", //修改密码
+	REGISTER_URL: "api/account/register", //注册
+	MODIFYSHOPNUM_URL: "api/cart/changeCart", //修改购物车
+	SUBMITORDER_URL: "api/cart/sumbitOrder", //  提交订单
+	// GET
+	HOME_URL: "api/basic/gethomepage", //获取首页
+	SEAFOOD_URL: "api/product/getprodcutlistbypage?", //根据分类获取商品列表(分页)
+	GETPRODCUTDETAIL_URL: "api/product/getprodcutdetail", //根据商品Id获取商品信息
+	CLASS_URL: "api/product/getcagegorylist", //获取分类数据
+	SELECT_URL: "api/product/getprodcutlist?categoryId=", //根据商品id获取商品
+	SHOP_URL: "api/cart/getMyCartList?userId=", //获取购物车列表
+	GETMYCARTCHOSTLIST_URL: "api/cart/getMyCartChoseList?UserId=", //获取选中的购物车列表
+	DATEURLS: "api/cart/getPickingDateTime", //取货日期
+	TIMEURLS: "api/cart/getPickingTime", //取货时间
+	GETUSERINFO_URL: "api/account/getuserinfo", //获取我的信息
 
-    // 获取
-    getItems: function getItems(obj) {
-        var arr = '';
-        storage.getItem(obj.value, function (event) {
-            arr = event.data;
-            obj.callback(arr);
-        });
-        return arr;
-    },
 
-    // getItems(obj) {
-    //     let arr = {};
-    //     for(var i = 0; i < arguments.length; i++){
-    //         arr[arguments[i]] = storage.getItem(arguments[i], event => {
-    //             arr[arguments[i]] = event.data;
-    //             console.log(arr)
-    //         })
-    //     }
-    //     return arr;
-    // },
-    // 移除
-    removeItem: function removeItem(name) {
-        var _this = this;
-
-        storage.removeItem(name, function (event) {
-            console.log('delete value:', event.data);
-            _this.state = 'deleted';
-        });
-    },
-
-    // 全部移除
-    getAll: function getAll() {
-        storage.getAllKeys(function (event) {
-            // modal.toast({ message: event.result })
-            if (event.result === 'success') {
-                modal.toast({
-                    message: 'props: ' + event.data.join(', ')
-                });
-            }
-        });
-    }
+	// 字体图标
+	iconUrl: "//at.alicdn.com/t/font_948634_j56el7oqed.ttf"
 };
-exports.default = AIstorage;
+
+exports.default = ajaxUrl;
 
 /***/ }),
 
@@ -1033,6 +1004,8 @@ module.exports = {
     "paddingTop": "21"
   },
   "iconfont-address": {
+    "width": "25",
+    "height": "35",
     "marginRight": "15",
     "fontSize": "36",
     "color": "#ffffff"
@@ -1136,6 +1109,10 @@ module.exports = {
     "fontSize": "35",
     "color": "#73cc46"
   },
+  "shop-list-money-img": {
+    "width": "34",
+    "height": "34"
+  },
   "good-bottom-wrapper": {
     "position": "fixed",
     "display": "flex",
@@ -1164,9 +1141,9 @@ module.exports = {
     "backgroundColor": "#ffffff"
   },
   "member-image": {
-    "marginRight": "10",
-    "fontSize": "27",
-    "color": "#ffffff"
+    "width": "26",
+    "height": "24",
+    "marginRight": "10"
   },
   "member-text": {
     "fontSize": "18",
@@ -1300,7 +1277,7 @@ var _utils = __webpack_require__(0);
 
 var _utils2 = _interopRequireDefault(_utils);
 
-var _api = __webpack_require__(2);
+var _api = __webpack_require__(1);
 
 var _api2 = _interopRequireDefault(_api);
 
@@ -1555,23 +1532,23 @@ exports.default = {
 			}
 			// 替换字符串 替换掉最后一个逗号
 			CartIds = CartIds.replace(/(\,$)/g, "");
-			_utils2.default.jump({
-				"phoneJump": function phoneJump() {
-					var bundleUrl = self.bundleUrl;
-					weex.requireModule('navigator').push({
-						url: _utils2.default.urlPort().urlAddPort + 'dist/' + '?CartIds=' + CartIds,
-						animated: "true"
-					}, function (event) {});
-				},
-				"webJump": function webJump() {
-					self.$router.push({
-						name: urls.web,
-						query: {
-							"CartIds": CartIds
-						}
-					});
+			// Util.jump({
+			//     "phoneJump": function(){
+			//         var bundleUrl = self.bundleUrl;
+			//         weex.requireModule('navigator').push({
+			//             url: Util.urlPort().urlAddPort + 'dist/' + '?CartIds='+CartIds,
+			//             animated: "true"
+			//         }, event => {})
+			//     },
+			//     "webJump": function(){
+			self.$router.push({
+				name: urls.web,
+				query: {
+					"CartIds": CartIds
 				}
 			});
+			//     }
+			// })
 		}
 	},
 	created: function created() {
@@ -1581,7 +1558,7 @@ exports.default = {
 		var fontModule = weex.requireModule("dom");
 		fontModule.addRule('fontFace', {
 			'fontFamily': "iconfont",
-			'src': "url(" + this.$store.state.iconUrl + ")"
+			'src': "url('" + _api2.default.iconUrl + "')"
 		});
 		storage.getItem(this.USERID, function (event) {
 			self.USERID = event.data;
@@ -1614,18 +1591,18 @@ exports.default = {
 						});
 					},
 					"fail": function fail() {
-						_utils2.default.jump({
-							"phoneJump": function phoneJump() {
-								var bundleUrl = this.bundleUrl;
-								weex.requireModule('navigator').push({
-									url: _utils2.default.urlPort().urlAddPort + 'dist/' + "components/login/login.js",
-									animated: "true"
-								}, function (event) {});
-							},
-							"webJump": function webJump() {
-								self.$router.push({ name: "login" });
-							}
-						});
+						// Util.jump({
+						//     "phoneJump": function(){
+						//         var bundleUrl = this.bundleUrl;
+						//         weex.requireModule('navigator').push({
+						//             url: Util.urlPort().urlAddPort + 'dist/' + "components/login/login.js",
+						//             animated: "true"
+						//         }, event => {})
+						//     },
+						//     "webJump": function(){
+						self.$router.push({ name: "login" });
+						//     }
+						// })
 					}
 				});
 			});
@@ -1642,9 +1619,11 @@ exports.default = {
 			var num = 0;
 			var shopCarNum = 0;
 			// console.log(this.shopCarArr.CartList.length)
-			for (var i = 0; i < this.shopCarArr.CartList.length; i++) {
-				shopCarNum = this.shopCarArr.CartList[i].CartNum;
-				num += parseInt(shopCarNum);
+			if (this.shopCarArr.CartList) {
+				for (var i = 0; i < this.shopCarArr.CartList.length; i++) {
+					shopCarNum = this.shopCarArr.CartList[i].CartNum;
+					num += parseInt(shopCarNum);
+				}
 			}
 			return num;
 		},
@@ -1652,10 +1631,12 @@ exports.default = {
 			var money = 0;
 			var shopCarPrice = 0,
 			    shopCarNum = 0;
-			for (var i = 0; i < this.shopCarArr.CartList.length; i++) {
-				shopCarPrice = this.shopCarArr.CartList[i].SalesPrice;
-				shopCarNum = this.shopCarArr.CartList[i].CartNum;
-				money += parseFloat(shopCarPrice) * parseInt(shopCarNum);
+			if (this.shopCarArr.CartList) {
+				for (var i = 0; i < this.shopCarArr.CartList.length; i++) {
+					shopCarPrice = this.shopCarArr.CartList[i].SalesPrice;
+					shopCarNum = this.shopCarArr.CartList[i].CartNum;
+					money += parseFloat(shopCarPrice) * parseInt(shopCarNum);
+				}
 			}
 			return money.toFixed(2);
 		},
@@ -1663,10 +1644,12 @@ exports.default = {
 			var count = 0;
 			var shopCarPrice = 0,
 			    shopCarNum = 0;
-			for (var i = 0; i < this.shopCarArr.CartList.length; i++) {
-				shopCarPrice = this.shopCarArr.CartList[i].SalesPrice;
-				shopCarNum = this.shopCarArr.CartList[i].CartNum;
-				count += parseFloat(shopCarPrice).toFixed(2) * parseInt(shopCarNum) - parseFloat(shopCarPrice).toFixed(2) * parseInt(shopCarNum) * this.discounts;
+			if (this.shopCarArr.CartList) {
+				for (var i = 0; i < this.shopCarArr.CartList.length; i++) {
+					shopCarPrice = this.shopCarArr.CartList[i].SalesPrice;
+					shopCarNum = this.shopCarArr.CartList[i].CartNum;
+					count += parseFloat(shopCarPrice).toFixed(2) * parseInt(shopCarNum) - parseFloat(shopCarPrice).toFixed(2) * parseInt(shopCarNum) * this.discounts;
+				}
 			}
 			return count.toFixed(2);
 		}
@@ -2484,33 +2467,42 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       staticClass: ["shop-list-all-money"]
     }, [_vm._v("￥" + _vm._s(foods.Price))])]), _c('div', {
       staticClass: ["shop-list-money-right"]
-    }, [_c('text', {
-      staticClass: ["iconFont", "shop-list-money-reduce"],
+    }, [_c('image', {
+      staticClass: ["shop-list-money-reduce", "shop-list-money-img"],
+      attrs: {
+        "src": "http://47.92.164.211:8011/PublicImage/res@34x34.png"
+      },
       on: {
         "click": function($event) {
           _vm.reduceMoney(foods.CartNum, index)
         }
       }
-    }, [_vm._v("")]), _c('text', {
+    }), _c('text', {
       staticClass: ["shop-list-money-number"],
       attrs: {
         "type": "text"
       }
-    }, [_vm._v(_vm._s(foods.CartNum))]), _c('text', {
-      staticClass: ["iconFont", "shop-list-money-add"],
+    }, [_vm._v(_vm._s(foods.CartNum))]), _c('image', {
+      staticClass: ["shop-list-money-add", "shop-list-money-img"],
+      attrs: {
+        "src": "http://47.92.164.211:8011/PublicImage/add@34x34.png"
+      },
       on: {
         "click": function($event) {
           _vm.addMoney(foods.CartNum, index)
         }
       }
-    }, [_vm._v("")])])])])], 1)]) : _vm._e()
+    })])])])], 1)]) : _vm._e()
   })), _c('div', {
     staticClass: ["good-bottom-wrapper"]
   }, [_c('div', {
     staticClass: ["good-bottom-member-wrapper"]
-  }, [_c('text', {
-    staticClass: ["iconFont", "member-image"]
-  }, [_vm._v("")]), _c('text', {
+  }, [_c('image', {
+    staticClass: ["member-image"],
+    attrs: {
+      "src": "http://47.92.164.211:8011/PublicImage/menber@26x24.png"
+    }
+  }), _c('text', {
     staticClass: ["member-text"]
   }, [_vm._v("升级会员，本单可为您节省")]), _c('text', {
     staticClass: ["member-text-num"]
@@ -2545,7 +2537,6 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "click": function($event) {
         _vm.jump({
-          'phone': 'components/main/shop/setlemet.js',
           'web': 'setlemet'
         })
       }
@@ -2554,9 +2545,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: ["shop-address-wrapper"]
-  }, [_c('text', {
-    staticClass: ["iconFont", "iconfont-address"]
-  }, [_vm._v("")]), _c('text', {
+  }, [_c('image', {
+    staticClass: ["iconfont-address"],
+    attrs: {
+      "src": "http://47.92.164.211:8011/PublicImage/address.png"
+    }
+  }), _c('text', {
     staticClass: ["shop-address-text"]
   }, [_vm._v("绿白菜滨湖春融苑店")])])
 }]}
@@ -2571,31 +2565,64 @@ module.exports.render._withStripped = true
 
 
 Object.defineProperty(exports, "__esModule", {
-	value: true
+    value: true
 });
-var ajaxUrl = {
-	// POST
-	SHOPCAR_URL: "api/cart/addCart", //添加到购物车
-	LOGIN_URL: "api/account/login", // 登录
-	GETCODE_URL: "api/account/getsmscode", //获取短信验证码
-	FINDPASSWORD_URL: "api/account/findpassword", //修改密码
-	REGISTER_URL: "api/account/register", //注册
-	MODIFYSHOPNUM_URL: "api/cart/changeCart", //修改购物车
-	SUBMITORDER_URL: "api/cart/sumbitOrder", //  提交订单
-	// GET
-	HOME_URL: "api/basic/gethomepage", //获取首页
-	SEAFOOD_URL: "api/product/getprodcutlistbypage?", //根据分类获取商品列表(分页)
-	GETPRODCUTDETAIL_URL: "api/product/getprodcutdetail", //根据商品Id获取商品信息
-	CLASS_URL: "api/product/getcagegorylist", //获取分类数据
-	SELECT_URL: "api/product/getprodcutlist?categoryId=", //根据商品id获取商品
-	SHOP_URL: "api/cart/getMyCartList?userId=", //获取购物车列表
-	GETMYCARTCHOSTLIST_URL: "api/cart/getMyCartChoseList?UserId=", //获取选中的购物车列表
-	DATEURLS: "api/cart/getPickingDateTime", //取货日期
-	TIMEURLS: "api/cart/getPickingTime", //取货时间
-	GETUSERINFO_URL: "api/account/getuserinfo" //获取我的信息
-};
+var Util = __webpack_require__(0);
+var storage = weex.requireModule('storage');
+var modal = weex.requireModule('modal');
+var AIstorage = {
+    // 存入到手机储存中
+    setItems: function setItems(obj) {
+        for (var item in obj) {
+            storage.setItem(item, obj[item], function (event) {
+                console.log('set success');
+            });
+        }
+    },
 
-exports.default = ajaxUrl;
+    // 获取
+    getItems: function getItems(obj) {
+        var arr = '';
+        storage.getItem(obj.value, function (event) {
+            arr = event.data;
+            obj.callback(arr);
+        });
+        return arr;
+    },
+
+    // getItems(obj) {
+    //     let arr = {};
+    //     for(var i = 0; i < arguments.length; i++){
+    //         arr[arguments[i]] = storage.getItem(arguments[i], event => {
+    //             arr[arguments[i]] = event.data;
+    //             console.log(arr)
+    //         })
+    //     }
+    //     return arr;
+    // },
+    // 移除
+    removeItem: function removeItem(name) {
+        var _this = this;
+
+        storage.removeItem(name, function (event) {
+            console.log('delete value:', event.data);
+            _this.state = 'deleted';
+        });
+    },
+
+    // 全部移除
+    getAll: function getAll() {
+        storage.getAllKeys(function (event) {
+            // modal.toast({ message: event.result })
+            if (event.result === 'success') {
+                modal.toast({
+                    message: 'props: ' + event.data.join(', ')
+                });
+            }
+        });
+    }
+};
+exports.default = AIstorage;
 
 /***/ }),
 

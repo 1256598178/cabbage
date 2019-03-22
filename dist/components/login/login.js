@@ -76,7 +76,7 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-var Storage = __webpack_require__(1);
+var Storage = __webpack_require__(2);
 var stream = weex.requireModule('stream');
 var navigator = weex.requireModule('navigator');
 var modal = weex.requireModule('modal');
@@ -177,25 +177,25 @@ var utils = {
     },
     analAjax: function analAjax(obj) {
         var warp = {};
-        if (WXEnvironment.platform === 'Web') {
-            warp = obj.routerName();
-        } else {
-            // var url = decodeURI(weex.config.bundleUrl); //取得整个地址栏
-            var url = this.urlPort().url;
-            console.log(url);
-            var result = url.match(new RegExp(/\?\w*\=\w*(\&\w*\=\w*)*/, "g"))[0].slice(1);
-            // console.log(result)
-            var key = result.match(new RegExp(/\w*\=/, "g"));
-            // console.log(key)
-            var value = result.match(new RegExp(/\=\w*/, "g"));
-            // console.log(value)
-            for (var indexes in value) {
-                key[indexes] = key[indexes].slice(0, key[indexes].length - 1);
-                value[indexes] = value[indexes].slice(1);
-                // console.log(value[indexes])
-                warp[key[indexes]] = value[indexes];
-            }
-        }
+        // if (WXEnvironment.platform === 'Web') {
+        warp = obj.routerName();
+        // } else {
+        //     // var url = decodeURI(weex.config.bundleUrl); //取得整个地址栏
+        //     var url = this.urlPort().url;
+        //     console.log(url)
+        //     var result = url.match(new RegExp(/\?\w*\=\w*(\&\w*\=\w*)*/, "g"))[0].slice(1);
+        //     // console.log(result)
+        //     var key = result.match(new RegExp(/\w*\=/, "g"));
+        //     // console.log(key)
+        //     var value = result.match(new RegExp(/\=\w*/, "g"));
+        //     // console.log(value)
+        //     for (var indexes in value) {
+        //         key[indexes] = key[indexes].slice(0, key[indexes].length - 1)
+        //         value[indexes] = value[indexes].slice(1)
+        //         // console.log(value[indexes])
+        //         warp[key[indexes]] = value[indexes]
+        //     }
+        // }
         console.log(warp);
         return warp;
     },
@@ -323,6 +323,45 @@ exports.default = utils;
 
 
 Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+var ajaxUrl = {
+	// POST
+	SHOPCAR_URL: "api/cart/addCart", //添加到购物车
+	LOGIN_URL: "api/account/login", // 登录
+	GETCODE_URL: "api/account/getsmscode", //获取短信验证码
+	FINDPASSWORD_URL: "api/account/findpassword", //修改密码
+	REGISTER_URL: "api/account/register", //注册
+	MODIFYSHOPNUM_URL: "api/cart/changeCart", //修改购物车
+	SUBMITORDER_URL: "api/cart/sumbitOrder", //  提交订单
+	// GET
+	HOME_URL: "api/basic/gethomepage", //获取首页
+	SEAFOOD_URL: "api/product/getprodcutlistbypage?", //根据分类获取商品列表(分页)
+	GETPRODCUTDETAIL_URL: "api/product/getprodcutdetail", //根据商品Id获取商品信息
+	CLASS_URL: "api/product/getcagegorylist", //获取分类数据
+	SELECT_URL: "api/product/getprodcutlist?categoryId=", //根据商品id获取商品
+	SHOP_URL: "api/cart/getMyCartList?userId=", //获取购物车列表
+	GETMYCARTCHOSTLIST_URL: "api/cart/getMyCartChoseList?UserId=", //获取选中的购物车列表
+	DATEURLS: "api/cart/getPickingDateTime", //取货日期
+	TIMEURLS: "api/cart/getPickingTime", //取货时间
+	GETUSERINFO_URL: "api/account/getuserinfo", //获取我的信息
+
+
+	// 字体图标
+	iconUrl: "//at.alicdn.com/t/font_948634_j56el7oqed.ttf"
+};
+
+exports.default = ajaxUrl;
+
+/***/ }),
+
+/***/ 2:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
     value: true
 });
 var Util = __webpack_require__(0);
@@ -381,41 +420,6 @@ var AIstorage = {
     }
 };
 exports.default = AIstorage;
-
-/***/ }),
-
-/***/ 2:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-	value: true
-});
-var ajaxUrl = {
-	// POST
-	SHOPCAR_URL: "api/cart/addCart", //添加到购物车
-	LOGIN_URL: "api/account/login", // 登录
-	GETCODE_URL: "api/account/getsmscode", //获取短信验证码
-	FINDPASSWORD_URL: "api/account/findpassword", //修改密码
-	REGISTER_URL: "api/account/register", //注册
-	MODIFYSHOPNUM_URL: "api/cart/changeCart", //修改购物车
-	SUBMITORDER_URL: "api/cart/sumbitOrder", //  提交订单
-	// GET
-	HOME_URL: "api/basic/gethomepage", //获取首页
-	SEAFOOD_URL: "api/product/getprodcutlistbypage?", //根据分类获取商品列表(分页)
-	GETPRODCUTDETAIL_URL: "api/product/getprodcutdetail", //根据商品Id获取商品信息
-	CLASS_URL: "api/product/getcagegorylist", //获取分类数据
-	SELECT_URL: "api/product/getprodcutlist?categoryId=", //根据商品id获取商品
-	SHOP_URL: "api/cart/getMyCartList?userId=", //获取购物车列表
-	GETMYCARTCHOSTLIST_URL: "api/cart/getMyCartChoseList?UserId=", //获取选中的购物车列表
-	DATEURLS: "api/cart/getPickingDateTime", //取货日期
-	TIMEURLS: "api/cart/getPickingTime", //取货时间
-	GETUSERINFO_URL: "api/account/getuserinfo" //获取我的信息
-};
-
-exports.default = ajaxUrl;
 
 /***/ }),
 
@@ -622,18 +626,14 @@ module.exports = {
     "borderBottomStyle": "solid"
   },
   "username-img": {
-    "width": "54",
-    "fontSize": "34",
-    "lineHeight": "70",
-    "color": "#999999",
-    "textAlign": "left"
+    "width": "42",
+    "height": "44",
+    "marginRight": "30"
   },
   "password-img": {
-    "width": "54",
-    "fontSize": "32",
-    "lineHeight": "70",
-    "color": "#999999",
-    "textAlign": "left"
+    "width": "40",
+    "height": "44",
+    "marginRight": "32"
   },
   "pBtn": {
     "width": "34",
@@ -746,11 +746,11 @@ var _utils = __webpack_require__(0);
 
 var _utils2 = _interopRequireDefault(_utils);
 
-var _api = __webpack_require__(2);
+var _api = __webpack_require__(1);
 
 var _api2 = _interopRequireDefault(_api);
 
-var _storage = __webpack_require__(1);
+var _storage = __webpack_require__(2);
 
 var _storage2 = _interopRequireDefault(_storage);
 
@@ -826,17 +826,7 @@ exports.default = {
     },
     methods: {
         minibarLeftButtonClick: function minibarLeftButtonClick() {
-            var self = this;
-            _utils2.default.pops({
-                "webBack": function webBack() {
-                    self.$router.go(-1);
-                },
-                "phoneBack": function phoneBack() {
-                    weex.requireModule('navigator').pop({
-                        animated: "true"
-                    }, function (event) {});
-                }
-            });
+            this.$router.go(-1);
         },
         typeSelect: function typeSelect() {
             if (this.pBtn) {
@@ -908,18 +898,18 @@ exports.default = {
                             //     },
                             //     "phoneBack": function(){}
                             // })
-                            _utils2.default.jump({
-                                "phoneJump": function phoneJump() {
-                                    var bundleUrl = self.bundleUrl;
-                                    weex.requireModule('navigator').push({
-                                        url: _utils2.default.urlPort().urlAddPort + 'dist/' + "index.js",
-                                        animated: "true"
-                                    }, function (event) {});
-                                },
-                                "webJump": function webJump() {
-                                    self.$router.push({ name: "main" });
-                                }
-                            });
+                            // Util.jump({
+                            //     "phoneJump": function(){
+                            //         var bundleUrl = self.bundleUrl;
+                            //         weex.requireModule('navigator').push({
+                            //             url: Util.urlPort().urlAddPort + 'dist/' + "index.js",
+                            //             animated: "true"
+                            //         }, event => {})
+                            //     },
+                            //     "webJump": function(){
+                            self.$router.push({ name: "main" });
+                            // }
+                            // })
                         }
                     }
                 });
@@ -927,25 +917,25 @@ exports.default = {
         },
         link: function link(urls) {
             var self = this;
-            _utils2.default.jump({
-                "phoneJump": function phoneJump() {
-                    var bundleUrl = self.bundleUrl;
-                    weex.requireModule('navigator').push({
-                        url: _utils2.default.urlPort().urlAddPort + 'dist/' + urls.phone,
-                        animated: "true"
-                    }, function (event) {});
-                },
-                "webJump": function webJump() {
-                    self.$router.push({ name: urls.web });
-                }
-            });
+            // Util.jump({
+            //              "phoneJump": function(){
+            //                  var bundleUrl = self.bundleUrl;
+            //                  weex.requireModule('navigator').push({
+            //                      url: Util.urlPort().urlAddPort + 'dist/' + urls.phone,
+            //                      animated: "true"
+            //                  }, event => {})
+            //              },
+            //              "webJump": function(){
+            self.$router.push({ name: urls });
+            //     }
+            // })
         }
     },
     created: function created() {
         var fontModule = weex.requireModule("dom");
         fontModule.addRule('fontFace', {
             'fontFamily': "iconfont",
-            'src': "url(" + this.$store.state.iconUrl + ")"
+            'src': "url('" + _api2.default.iconUrl + "')"
         });
     }
 };
@@ -959,7 +949,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   return _c('div', [_c('image', {
     staticClass: ["login-bg"],
     attrs: {
-      "src": "../src/common/images/login-bg.png"
+      "src": "http://47.92.164.211:8011/PublicImage/login-bg.png"
     }
   }), _c('div', {
     staticClass: ["titleBar"]
@@ -981,9 +971,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: ["login-box"]
   }, [_c('div', {
     staticClass: ["username"]
-  }, [_c('text', {
-    staticClass: ["username-img", "iconFont"]
-  }, [_vm._v("")]), _c('input', {
+  }, [_c('image', {
+    staticClass: ["username-img"],
+    attrs: {
+      "src": "http://47.92.164.211:8011/PublicImage/phone@22x34.png"
+    }
+  }), _c('input', {
     ref: "username",
     staticClass: ["input"],
     attrs: {
@@ -996,9 +989,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   })]), _c('div', {
     staticClass: ["username"]
-  }, [_c('text', {
-    staticClass: ["password-img", "iconFont"]
-  }, [_vm._v("")]), _c('input', {
+  }, [_c('image', {
+    staticClass: ["password-img"],
+    attrs: {
+      "src": "http://47.92.164.211:8011/PublicImage/password@24x32.png"
+    }
+  }), _c('input', {
     ref: "passwords",
     staticClass: ["input"],
     attrs: {
@@ -1035,10 +1031,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: ["forgot-text"],
     on: {
       "click": function($event) {
-        _vm.link({
-          'phone': 'components/login/FindPassword.js',
-          'web': 'FindPassword'
-        })
+        _vm.link('FindPassword')
       }
     }
   }, [_vm._v("忘记密码")])]), _c('div', {
@@ -1049,10 +1042,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: ["forgot-text"],
     on: {
       "click": function($event) {
-        _vm.link({
-          'phone': 'components/login/register.js',
-          'web': 'register'
-        })
+        _vm.link('register')
       }
     }
   }, [_vm._v("免费注册")])])]), _vm._m(1)])])

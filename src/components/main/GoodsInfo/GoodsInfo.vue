@@ -16,11 +16,11 @@
 		</list>
 		<div class="bottom-box">
 			<div class="shop-car">
-				<text class="shop-car-icon iconFont">&#xe668;</text>
+				<image class="shop-car-icon" src="http://47.92.164.211:8011/PublicImage/shop-car-icon.png"></image>
 				<text class="shop-car-num" v-if="NumType">{{CarNum}}</text>
 			</div>
 			<div class="collection">
-				<text class="collection-icon iconFont">&#xe626;</text>
+				<image class="collection-icon" src="http://47.92.164.211:8011/PublicImage/collection@33x31.png"></image>
 			</div>
 			<div class="add-box">
 				<text class="add-btn" @click="addShopCar()">加入购物车</text>
@@ -242,7 +242,7 @@
 	}
 	
 	.back-btn {
-		width: 28px;
+		width: 41px;
 		height: 41px;
 	}
 	
@@ -328,10 +328,8 @@
 	}
 	
 	.shop-car-icon {
-		font-size: 32px;
-		line-height: 60px;
-		text-align: center;
-		color: #fff;
+		width: 60px;
+   		height: 60px;
 	}
 	
 	.shop-car-num {
@@ -350,6 +348,9 @@
 	}
 	
 	.collection {
+		flex-direction: row;
+		align-items: center;
+		justify-content: center;
 		width: 60px;
 		height: 60px;
 		border-radius: 30px;
@@ -358,10 +359,8 @@
 	}
 	
 	.collection-icon {
-		font-size: 32px;
-		line-height: 60px;
-		text-align: center;
-		color: #fff;
+		width: 33px;
+		height: 31px;
 	}
 	
 	.add-box {

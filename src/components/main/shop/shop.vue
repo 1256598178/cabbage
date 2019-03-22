@@ -25,9 +25,9 @@
 							<text class="shop-list-info-weight">{{foods.Weight}}g</text>
 						</div>
 						<div class="shop-list-money-wrapper">
-							<div class="shop-list-money-left">
-								<text class="shop-list-money">￥{{foods.SalesPrice}}元/{{foods.Unit}}</text>
-							    <text class="shop-list-all-money">￥{{foods.Price}}</text>
+							<div class="shop-list-money-left shop-list-money-lef">
+								<text class="shop-list-money">¥{{foods.SalesPrice}}元/{{foods.Unit}}</text>
+							    <text class="shop-list-all-money">¥{{foods.Price}}</text>
 							</div>
 							<div class="shop-list-money-right">
 								<image class="shop-list-money-reduce shop-list-money-img" src="http://47.92.164.211:8011/PublicImage/res@34x34.png" @click="reduceMoney(foods.CartNum,index)"></image>
@@ -51,7 +51,7 @@
 				</div>
 				<div class="good-bottom-total-wrapper">
 					<text class="good-bottom-total-text">合计:</text>
-					<text class="good-bottom-total-money">￥{{total}}元</text>
+					<text class="good-bottom-total-money">¥{{total}}元</text>
 					<div class="good-bottom-total-button">
 						<text class="good-bottom-total-button-text" @click="jump({'web':'setlemet'})">结算({{shopNumber}})</text>
 					</div>
@@ -456,6 +456,10 @@ export default {
 	flex-direction: row;
 	align-items: center;
 }
+.shop-list-money-lef{
+	flex-direction: column;
+	align-items: flex-start;
+}
 .shop-list-money-wrapper{
 	display: flex;
 	flex-direction: row;
@@ -473,7 +477,8 @@ export default {
 	font-weight: 600;
 }
 .shop-list-all-money{
-	margin-left: 15px;
+	margin-left: 2px;
+	margin-top: 15px;
 	font-size: 20px;
 	color: #777777;
 }
@@ -488,8 +493,8 @@ export default {
 	font-size: 35px;
 }
 .shop-list-money-img{
-	width: 34px;
-	height: 34px;
+	width: 48px;
+	height: 48px;
 }
 .shop-list-money-add{
 	color: rgb(115,204,70);
@@ -515,12 +520,12 @@ export default {
 	background-color: #ade564;
 }
 .member-image{
-	width: 26px;
-	height: 24px;
+	width: 39px;
+	height: 36px;
 	margin-right: 10px;
 }
 .member-text,.member-text-num{
-	font-size: 18px;
+	font-size: 22px;
 	color: #fff;
 }
 .member-text-num{
@@ -541,11 +546,11 @@ export default {
 	margin-right: 10px!important;
 }
 .good-bottom-total-text{
-	font-size: 24px;
+	font-size: 26px;
 	color: #777777;
 }
 .good-bottom-total-money{
-	font-size: 24px;
+	font-size: 26px;
 	color: #f26100;
 }
 .good-bottom-total-button{
@@ -627,5 +632,9 @@ export default {
 
 .shop-header-info {
     color: #fff;
+}
+
+.good-bottom-checked-all{
+	font-size: 26px;
 }
 </style>

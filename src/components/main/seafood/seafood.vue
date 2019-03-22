@@ -282,7 +282,7 @@ export default {
 }
 .seafood-bottom-name{
 	width: 310px;
-	font-size: 30px;
+	font-size: 34px;
 	color: #222222;
 	line-height: 34px;
 	font-weight: bold;
@@ -304,8 +304,8 @@ export default {
 }
 .seafood-bottom-shop-doller-wrapper{
 	display: flex;
-	flex-direction: row;
-	align-items: center;
+	flex-direction: column;
+	align-items: flex-start;
 }
 .seafood-bottom-shop-doller-box{
 	display: flex;
@@ -319,19 +319,19 @@ export default {
 	line-height: 30px;
 }
 .seafood-bottom-shop-doller{
-	font-size: 30px;
-	color: #f26100;
-	line-height: 34px;
+	font-size: 34px;
+	color: #ff0000;
+	line-height: 36px;
 	font-weight: bold;
 }
 .seafood-bottom-shop-all-doller{
-	margin-left: 10px;
-	font-size: 20px;
+	margin-top: 10px;
+	font-size: 28px;
 	color: #777777;
-	line-height: 24px;
+	line-height: 30px;
 }
 .seafood-bottom-shop-car{
-	width: 44px;
-	height: 44px;
+	width: 77px;
+	height: 77px;
 }
 </style>

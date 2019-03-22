@@ -75,7 +75,7 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-var Storage = __webpack_require__(1);
+var Storage = __webpack_require__(2);
 var stream = weex.requireModule('stream');
 var navigator = weex.requireModule('navigator');
 var modal = weex.requireModule('modal');
@@ -176,25 +176,25 @@ var utils = {
     },
     analAjax: function analAjax(obj) {
         var warp = {};
-        if (WXEnvironment.platform === 'Web') {
-            warp = obj.routerName();
-        } else {
-            // var url = decodeURI(weex.config.bundleUrl); //取得整个地址栏
-            var url = this.urlPort().url;
-            console.log(url);
-            var result = url.match(new RegExp(/\?\w*\=\w*(\&\w*\=\w*)*/, "g"))[0].slice(1);
-            // console.log(result)
-            var key = result.match(new RegExp(/\w*\=/, "g"));
-            // console.log(key)
-            var value = result.match(new RegExp(/\=\w*/, "g"));
-            // console.log(value)
-            for (var indexes in value) {
-                key[indexes] = key[indexes].slice(0, key[indexes].length - 1);
-                value[indexes] = value[indexes].slice(1);
-                // console.log(value[indexes])
-                warp[key[indexes]] = value[indexes];
-            }
-        }
+        // if (WXEnvironment.platform === 'Web') {
+        warp = obj.routerName();
+        // } else {
+        //     // var url = decodeURI(weex.config.bundleUrl); //取得整个地址栏
+        //     var url = this.urlPort().url;
+        //     console.log(url)
+        //     var result = url.match(new RegExp(/\?\w*\=\w*(\&\w*\=\w*)*/, "g"))[0].slice(1);
+        //     // console.log(result)
+        //     var key = result.match(new RegExp(/\w*\=/, "g"));
+        //     // console.log(key)
+        //     var value = result.match(new RegExp(/\=\w*/, "g"));
+        //     // console.log(value)
+        //     for (var indexes in value) {
+        //         key[indexes] = key[indexes].slice(0, key[indexes].length - 1)
+        //         value[indexes] = value[indexes].slice(1)
+        //         // console.log(value[indexes])
+        //         warp[key[indexes]] = value[indexes]
+        //     }
+        // }
         console.log(warp);
         return warp;
     },
@@ -321,6 +321,44 @@ exports.default = utils;
 
 
 Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+var ajaxUrl = {
+	// POST
+	SHOPCAR_URL: "api/cart/addCart", //添加到购物车
+	LOGIN_URL: "api/account/login", // 登录
+	GETCODE_URL: "api/account/getsmscode", //获取短信验证码
+	FINDPASSWORD_URL: "api/account/findpassword", //修改密码
+	REGISTER_URL: "api/account/register", //注册
+	MODIFYSHOPNUM_URL: "api/cart/changeCart", //修改购物车
+	SUBMITORDER_URL: "api/cart/sumbitOrder", //  提交订单
+	// GET
+	HOME_URL: "api/basic/gethomepage", //获取首页
+	SEAFOOD_URL: "api/product/getprodcutlistbypage?", //根据分类获取商品列表(分页)
+	GETPRODCUTDETAIL_URL: "api/product/getprodcutdetail", //根据商品Id获取商品信息
+	CLASS_URL: "api/product/getcagegorylist", //获取分类数据
+	SELECT_URL: "api/product/getprodcutlist?categoryId=", //根据商品id获取商品
+	SHOP_URL: "api/cart/getMyCartList?userId=", //获取购物车列表
+	GETMYCARTCHOSTLIST_URL: "api/cart/getMyCartChoseList?UserId=", //获取选中的购物车列表
+	DATEURLS: "api/cart/getPickingDateTime", //取货日期
+	TIMEURLS: "api/cart/getPickingTime", //取货时间
+	GETUSERINFO_URL: "api/account/getuserinfo", //获取我的信息
+
+
+	// 字体图标
+	iconUrl: "//at.alicdn.com/t/font_948634_j56el7oqed.ttf"
+};
+
+exports.default = ajaxUrl;
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
     value: true
 });
 var Util = __webpack_require__(0);
@@ -381,7 +419,6 @@ var AIstorage = {
 exports.default = AIstorage;
 
 /***/ }),
-/* 2 */,
 /* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2463,8 +2500,13 @@ var _utils = __webpack_require__(0);
 
 var _utils2 = _interopRequireDefault(_utils);
 
+var _api = __webpack_require__(1);
+
+var _api2 = _interopRequireDefault(_api);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+var navigator = weex.requireModule('navigator'); //
 //
 //
 //
@@ -2522,9 +2564,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
-//
-
-var navigator = weex.requireModule('navigator');
 
 exports.default = {
 	components: {
@@ -2550,16 +2589,17 @@ exports.default = {
 	methods: {
 		minibarLeftButtonClick: function minibarLeftButtonClick() {
 			var self = this;
-			_utils2.default.pops({
-				"webBack": function webBack() {
-					self.$router.go(-1);
-				},
-				"phoneBack": function phoneBack() {
-					weex.requireModule('navigator').pop({
-						animated: "true"
-					}, function (event) {});
-				}
-			});
+			// Util.pops({
+			//     "webBack": function(){
+			self.$router.go(-1);
+			//     },
+			//     "phoneBack": function(){
+			//         weex.requireModule('navigator').pop({
+			//             animated: "true"
+			//         }, event => {
+			//         })
+			//     }
+			// })
 		},
 		selects: function selects(indexs) {
 			this.pBtn = indexs;
@@ -2601,7 +2641,7 @@ exports.default = {
 		var fontModule = weex.requireModule("dom");
 		fontModule.addRule('fontFace', {
 			'fontFamily': "iconfont",
-			'src': "url(" + this.$store.state.iconUrl + ")"
+			'src': "url(" + _api2.default.iconUrl + ")"
 		});
 		// this.money = Util.analAjax().TotalPrice
 		this.money = _utils2.default.analAjax({ "routerName": function routerName() {

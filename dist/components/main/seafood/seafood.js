@@ -76,7 +76,7 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-var Storage = __webpack_require__(1);
+var Storage = __webpack_require__(2);
 var stream = weex.requireModule('stream');
 var navigator = weex.requireModule('navigator');
 var modal = weex.requireModule('modal');
@@ -177,25 +177,25 @@ var utils = {
     },
     analAjax: function analAjax(obj) {
         var warp = {};
-        if (WXEnvironment.platform === 'Web') {
-            warp = obj.routerName();
-        } else {
-            // var url = decodeURI(weex.config.bundleUrl); //取得整个地址栏
-            var url = this.urlPort().url;
-            console.log(url);
-            var result = url.match(new RegExp(/\?\w*\=\w*(\&\w*\=\w*)*/, "g"))[0].slice(1);
-            // console.log(result)
-            var key = result.match(new RegExp(/\w*\=/, "g"));
-            // console.log(key)
-            var value = result.match(new RegExp(/\=\w*/, "g"));
-            // console.log(value)
-            for (var indexes in value) {
-                key[indexes] = key[indexes].slice(0, key[indexes].length - 1);
-                value[indexes] = value[indexes].slice(1);
-                // console.log(value[indexes])
-                warp[key[indexes]] = value[indexes];
-            }
-        }
+        // if (WXEnvironment.platform === 'Web') {
+        warp = obj.routerName();
+        // } else {
+        //     // var url = decodeURI(weex.config.bundleUrl); //取得整个地址栏
+        //     var url = this.urlPort().url;
+        //     console.log(url)
+        //     var result = url.match(new RegExp(/\?\w*\=\w*(\&\w*\=\w*)*/, "g"))[0].slice(1);
+        //     // console.log(result)
+        //     var key = result.match(new RegExp(/\w*\=/, "g"));
+        //     // console.log(key)
+        //     var value = result.match(new RegExp(/\=\w*/, "g"));
+        //     // console.log(value)
+        //     for (var indexes in value) {
+        //         key[indexes] = key[indexes].slice(0, key[indexes].length - 1)
+        //         value[indexes] = value[indexes].slice(1)
+        //         // console.log(value[indexes])
+        //         warp[key[indexes]] = value[indexes]
+        //     }
+        // }
         console.log(warp);
         return warp;
     },
@@ -323,64 +323,35 @@ exports.default = utils;
 
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+	value: true
 });
-var Util = __webpack_require__(0);
-var storage = weex.requireModule('storage');
-var modal = weex.requireModule('modal');
-var AIstorage = {
-    // 存入到手机储存中
-    setItems: function setItems(obj) {
-        for (var item in obj) {
-            storage.setItem(item, obj[item], function (event) {
-                console.log('set success');
-            });
-        }
-    },
+var ajaxUrl = {
+	// POST
+	SHOPCAR_URL: "api/cart/addCart", //添加到购物车
+	LOGIN_URL: "api/account/login", // 登录
+	GETCODE_URL: "api/account/getsmscode", //获取短信验证码
+	FINDPASSWORD_URL: "api/account/findpassword", //修改密码
+	REGISTER_URL: "api/account/register", //注册
+	MODIFYSHOPNUM_URL: "api/cart/changeCart", //修改购物车
+	SUBMITORDER_URL: "api/cart/sumbitOrder", //  提交订单
+	// GET
+	HOME_URL: "api/basic/gethomepage", //获取首页
+	SEAFOOD_URL: "api/product/getprodcutlistbypage?", //根据分类获取商品列表(分页)
+	GETPRODCUTDETAIL_URL: "api/product/getprodcutdetail", //根据商品Id获取商品信息
+	CLASS_URL: "api/product/getcagegorylist", //获取分类数据
+	SELECT_URL: "api/product/getprodcutlist?categoryId=", //根据商品id获取商品
+	SHOP_URL: "api/cart/getMyCartList?userId=", //获取购物车列表
+	GETMYCARTCHOSTLIST_URL: "api/cart/getMyCartChoseList?UserId=", //获取选中的购物车列表
+	DATEURLS: "api/cart/getPickingDateTime", //取货日期
+	TIMEURLS: "api/cart/getPickingTime", //取货时间
+	GETUSERINFO_URL: "api/account/getuserinfo", //获取我的信息
 
-    // 获取
-    getItems: function getItems(obj) {
-        var arr = '';
-        storage.getItem(obj.value, function (event) {
-            arr = event.data;
-            obj.callback(arr);
-        });
-        return arr;
-    },
 
-    // getItems(obj) {
-    //     let arr = {};
-    //     for(var i = 0; i < arguments.length; i++){
-    //         arr[arguments[i]] = storage.getItem(arguments[i], event => {
-    //             arr[arguments[i]] = event.data;
-    //             console.log(arr)
-    //         })
-    //     }
-    //     return arr;
-    // },
-    // 移除
-    removeItem: function removeItem(name) {
-        var _this = this;
-
-        storage.removeItem(name, function (event) {
-            console.log('delete value:', event.data);
-            _this.state = 'deleted';
-        });
-    },
-
-    // 全部移除
-    getAll: function getAll() {
-        storage.getAllKeys(function (event) {
-            // modal.toast({ message: event.result })
-            if (event.result === 'success') {
-                modal.toast({
-                    message: 'props: ' + event.data.join(', ')
-                });
-            }
-        });
-    }
+	// 字体图标
+	iconUrl: "//at.alicdn.com/t/font_948634_j56el7oqed.ttf"
 };
-exports.default = AIstorage;
+
+exports.default = ajaxUrl;
 
 /***/ }),
 
@@ -580,7 +551,7 @@ module.exports = {
 
 
 Object.defineProperty(exports, "__esModule", {
-	value: true
+    value: true
 });
 
 var _orderHeader = __webpack_require__(44);
@@ -591,7 +562,7 @@ var _utils = __webpack_require__(0);
 
 var _utils2 = _interopRequireDefault(_utils);
 
-var _api = __webpack_require__(2);
+var _api = __webpack_require__(1);
 
 var _api2 = _interopRequireDefault(_api);
 
@@ -635,87 +606,164 @@ var modal = weex.requireModule('modal'); //
 //
 //
 
+var storage = weex.requireModule('storage');
 exports.default = {
-	data: function data() {
-		return {
-			titleName: '搜索结果',
-			pageAjax: {
-				categoryId: 12,
-				page: 1,
-				pageSize: 10
-			},
-			refreshing: false, //下拉刷新
-			loadinging: false, //上拉加载
-			layoutAct: false,
-			seafoodArr: {}
-		};
-	},
+    data: function data() {
+        return {
+            titleName: '搜索结果',
+            pageAjax: {
+                categoryId: 12,
+                page: 1,
+                pageSize: 10
+            },
+            refreshing: false, //下拉刷新
+            loadinging: false, //上拉加载
+            layoutAct: false,
+            seafoodArr: {},
+            USERID: 'user_id',
+            TOKEN: 'user_token'
+        };
+    },
 
-	methods: {
-		onloading: function onloading() {
-			var _this = this;
-			this.loadinging = true;
-			_utils2.default.WeexAjax({
-				url: _api2.default.SEAFOOD_URL + 'categoryId=' + _utils2.default.analAjax({ "routerName": function routerName() {
-						return _this.$route.query;
-					} }).CategoryId + '&page=' + (_this.pageAjax.page + 1) + '&pageSize=' + _this.pageAjax.pageSize,
-				// url: SEAFOOD_URL + 'categoryId='+ _this.pageAjax.categoryId +'&page='+ (_this.pageAjax.page+1) +'&pageSize=' + _this.pageAjax.pageSize,
-				method: 'GET',
-				type: 'JSON',
-				callback: function callback(ret) {
-					if (ret.Status == 1) {
-						var rets = ret.obj;
-						console.log(rets);
-						if (rets.CurrentPage != _this.seafoodArr.CurrentPage) {
-							_this.seafoodArr.CurrentPage = rets.CurrentPage;
-							for (var item in rets.Items) {
-								_this.seafoodArr.Items.push(rets.Items[item]);
-							}
-						} else {
-							modal.toast({
-								message: '没有更多内容了哦~',
-								duration: 1
-							});
-						}
-						_this.loadinging = false;
-					}
-					console.log(_this.seafoodArr);
-				}
-			});
-		},
-		layout: function layout(msg) {
-			this.layoutAct = msg;
-		}
-	},
-	created: function created() {
-		var _this = this;
+    methods: {
+        onloading: function onloading() {
+            var _this = this;
+            this.loadinging = true;
+            _utils2.default.WeexAjax({
+                url: _api2.default.SEAFOOD_URL + 'categoryId=' + _utils2.default.analAjax({ "routerName": function routerName() {
+                        return _this.$route.query;
+                    } }).CategoryId + '&page=' + (_this.pageAjax.page + 1) + '&pageSize=' + _this.pageAjax.pageSize,
+                // url: SEAFOOD_URL + 'categoryId='+ _this.pageAjax.categoryId +'&page='+ (_this.pageAjax.page+1) +'&pageSize=' + _this.pageAjax.pageSize,
+                method: 'GET',
+                type: 'JSON',
+                callback: function callback(ret) {
+                    if (ret.Status == 1) {
+                        var rets = ret.obj;
+                        console.log(rets);
+                        if (rets.CurrentPage != _this.seafoodArr.CurrentPage) {
+                            _this.seafoodArr.CurrentPage = rets.CurrentPage;
+                            for (var item in rets.Items) {
+                                _this.seafoodArr.Items.push(rets.Items[item]);
+                            }
+                        } else {
+                            modal.toast({
+                                message: '没有更多内容了哦~',
+                                duration: 1
+                            });
+                        }
+                        _this.loadinging = false;
+                    }
+                    console.log(_this.seafoodArr);
+                }
+            });
+        },
+        layout: function layout(msg) {
+            this.layoutAct = msg;
+        },
+        jump: function jump(urls) {
+            var self = this;
+            // Util.jump({
+            //     "phoneJump": function(){
+            //         var bundleUrl = self.bundleUrl;
+            //         weex.requireModule('navigator').push({
+            //             url: Util.urlPort().urlAddPort + 'dist/' + urls.phone + '?' + urls.name + '=' + urls.CategoryId,
+            //             animated: "true"
+            //         }, event => {})
+            //     },
+            //     "webJump": function(){
+            self.$router.push({
+                name: urls.web,
+                query: {
+                    "CategoryId": urls.CategoryId,
+                    "ProductId": urls.ProductId
+                }
+            });
+            //     }
+            // })
+        },
+        addShopCar: function addShopCar(Product_Id) {
+            var self = this;
+            _utils2.default.goLogin({
+                "USERID": self.USERID,
+                "TOKEN": self.TOKEN,
+                "success": function success() {
+                    _utils2.default.WeexAjax({
+                        url: _api2.default.SHOPCAR_URL,
+                        method: 'POST',
+                        type: 'JSON',
+                        token: self.TOKEN,
+                        body: {
+                            "UserId": self.USERID,
+                            "ProductId": Product_Id,
+                            "CartNum": 1
+                        },
+                        callback: function callback(ret) {
+                            if (ret.Status == 1) {
+                                modal.toast({
+                                    message: ret.Message,
+                                    duration: 1
+                                });
+                            } else {
+                                modal.toast({
+                                    message: '请求错误',
+                                    duration: 1
+                                });
+                            }
+                        }
+                    });
+                },
+                "fail": function fail() {
+                    // Util.jump({
+                    //     "phoneJump": function(){
+                    //         var bundleUrl = this.bundleUrl;
+                    //         weex.requireModule('navigator').push({
+                    //             url: Util.urlPort().urlAddPort + 'dist/' + "components/login/login.js",
+                    //             animated: "true"
+                    //         }, event => {})
+                    //     },
+                    //     "webJump": function(){
+                    self.$router.push({ name: "login" });
+                    //     }
+                    // })
+                }
+            });
+        }
+    },
+    created: function created() {
+        var _this = this;
 
-		_utils2.default.WeexAjax({
-			url: _api2.default.SEAFOOD_URL + 'categoryId=' + _utils2.default.analAjax({ "routerName": function routerName() {
-					return _this.$route.query;
-				} }).CategoryId + '&page=' + 1 + '&pageSize=' + 10,
-			// url: SEAFOOD_URL + 'categoryId='+ 12 +'&page='+ 1 +'&pageSize=' + 10,
-			method: 'GET',
-			type: 'JSON',
-			callback: function callback(ret) {
-				if (ret.Status == 1) {
-					var rets = ret.obj;
-					_this.seafoodArr = rets;
-					_this.titleName = rets.CategoryName;
-					console.log(_this.seafoodArr);
-				}
-			}
-		});
-	},
+        _utils2.default.WeexAjax({
+            url: _api2.default.SEAFOOD_URL + 'categoryId=' + _utils2.default.analAjax({ "routerName": function routerName() {
+                    return _this.$route.query;
+                } }).CategoryId + '&page=' + 1 + '&pageSize=' + 10,
+            // url: SEAFOOD_URL + 'categoryId='+ 12 +'&page='+ 1 +'&pageSize=' + 10,
+            method: 'GET',
+            type: 'JSON',
+            callback: function callback(ret) {
+                if (ret.Status == 1) {
+                    var rets = ret.obj;
+                    _this.seafoodArr = rets;
+                    _this.titleName = rets.CategoryName;
+                    console.log(_this.seafoodArr);
+                }
+            }
+        });
+        storage.getItem(_this.USERID, function (event) {
+            _this.USERID = event.data;
+            storage.getItem(_this.TOKEN, function (event) {
+                _this.TOKEN = event.data;
+            });
+        });
+    },
 
-	components: {
-		"v-header": _orderHeader2.default
-	},
-	filters: {
-		droller: function droller(msg) {
-			return msg.toFixed(2);
-		}
-	}
+    components: {
+        "v-header": _orderHeader2.default
+    },
+    filters: {
+        droller: function droller(msg) {
+            return msg.toFixed(2);
+        }
+    }
 };
 
 /***/ }),
@@ -751,7 +799,15 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: ["seafood-wrapper-layout"]
   }, _vm._l((_vm.seafoodArr.Items), function(items) {
     return _c('div', {
-      class: [_vm.layoutAct == false ? 'seafood-wrapper' : 'seafood-wrapper-active']
+      class: [_vm.layoutAct == false ? 'seafood-wrapper' : 'seafood-wrapper-active'],
+      on: {
+        "click": function($event) {
+          _vm.jump({
+            'web': 'goodIn',
+            'ProductId': items.ProductId
+          })
+        }
+      }
     }, [_c('image', {
       staticClass: ["seafood-image"],
       attrs: {
@@ -781,6 +837,11 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       staticClass: ["seafood-bottom-shop-car"],
       attrs: {
         "src": "http://47.92.164.211:8011/PublicImage/shop-car.png"
+      },
+      on: {
+        "click": function($event) {
+          _vm.addShopCar(items.ProductId)
+        }
       }
     })])])])
   }))]), _c('loading', {
@@ -884,9 +945,13 @@ var _utils = __webpack_require__(0);
 
 var _utils2 = _interopRequireDefault(_utils);
 
+var _api = __webpack_require__(1);
+
+var _api2 = _interopRequireDefault(_api);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var MODIFYSHOPNUM_URL = 'api/cart/changeCart'; //
+//
 //
 //
 //
@@ -898,6 +963,7 @@ var MODIFYSHOPNUM_URL = 'api/cart/changeCart'; //
 //
 //
 
+var MODIFYSHOPNUM_URL = 'api/cart/changeCart';
 var navigator = weex.requireModule('navigator');
 var modal = weex.requireModule('modal');
 exports.default = {
@@ -944,16 +1010,17 @@ exports.default = {
     methods: {
         pops: function pops() {
             var self = this;
-            _utils2.default.pops({
-                "webBack": function webBack() {
-                    self.$router.go(-1);
-                },
-                "phoneBack": function phoneBack() {
-                    weex.requireModule('navigator').pop({
-                        animated: "true"
-                    }, function (event) {});
-                }
-            });
+            // Util.pops({
+            //     "webBack": function(){
+            self.$router.go(-1);
+            //     },
+            //     "phoneBack": function(){
+            //         weex.requireModule('navigator').pop({
+            //             animated: "true"
+            //         }, event => {
+            //         })
+            //     }
+            // })
         },
         layoutClick: function layoutClick() {
             this.$emit("layoutAct", this.layoutActBool = !this.layoutActBool);
@@ -966,7 +1033,7 @@ exports.default = {
         var fontModule = weex.requireModule("dom");
         fontModule.addRule('fontFace', {
             'fontFamily': "iconfont",
-            'src': "url(" + this.$store.state.iconUrl + ")"
+            'src': "url('" + _api2.default.iconUrl + "')"
         });
     }
 };
@@ -980,31 +1047,64 @@ exports.default = {
 
 
 Object.defineProperty(exports, "__esModule", {
-	value: true
+    value: true
 });
-var ajaxUrl = {
-	// POST
-	SHOPCAR_URL: "api/cart/addCart", //添加到购物车
-	LOGIN_URL: "api/account/login", // 登录
-	GETCODE_URL: "api/account/getsmscode", //获取短信验证码
-	FINDPASSWORD_URL: "api/account/findpassword", //修改密码
-	REGISTER_URL: "api/account/register", //注册
-	MODIFYSHOPNUM_URL: "api/cart/changeCart", //修改购物车
-	SUBMITORDER_URL: "api/cart/sumbitOrder", //  提交订单
-	// GET
-	HOME_URL: "api/basic/gethomepage", //获取首页
-	SEAFOOD_URL: "api/product/getprodcutlistbypage?", //根据分类获取商品列表(分页)
-	GETPRODCUTDETAIL_URL: "api/product/getprodcutdetail", //根据商品Id获取商品信息
-	CLASS_URL: "api/product/getcagegorylist", //获取分类数据
-	SELECT_URL: "api/product/getprodcutlist?categoryId=", //根据商品id获取商品
-	SHOP_URL: "api/cart/getMyCartList?userId=", //获取购物车列表
-	GETMYCARTCHOSTLIST_URL: "api/cart/getMyCartChoseList?UserId=", //获取选中的购物车列表
-	DATEURLS: "api/cart/getPickingDateTime", //取货日期
-	TIMEURLS: "api/cart/getPickingTime", //取货时间
-	GETUSERINFO_URL: "api/account/getuserinfo" //获取我的信息
-};
+var Util = __webpack_require__(0);
+var storage = weex.requireModule('storage');
+var modal = weex.requireModule('modal');
+var AIstorage = {
+    // 存入到手机储存中
+    setItems: function setItems(obj) {
+        for (var item in obj) {
+            storage.setItem(item, obj[item], function (event) {
+                console.log('set success');
+            });
+        }
+    },
 
-exports.default = ajaxUrl;
+    // 获取
+    getItems: function getItems(obj) {
+        var arr = '';
+        storage.getItem(obj.value, function (event) {
+            arr = event.data;
+            obj.callback(arr);
+        });
+        return arr;
+    },
+
+    // getItems(obj) {
+    //     let arr = {};
+    //     for(var i = 0; i < arguments.length; i++){
+    //         arr[arguments[i]] = storage.getItem(arguments[i], event => {
+    //             arr[arguments[i]] = event.data;
+    //             console.log(arr)
+    //         })
+    //     }
+    //     return arr;
+    // },
+    // 移除
+    removeItem: function removeItem(name) {
+        var _this = this;
+
+        storage.removeItem(name, function (event) {
+            console.log('delete value:', event.data);
+            _this.state = 'deleted';
+        });
+    },
+
+    // 全部移除
+    getAll: function getAll() {
+        storage.getAllKeys(function (event) {
+            // modal.toast({ message: event.result })
+            if (event.result === 'success') {
+                modal.toast({
+                    message: 'props: ' + event.data.join(', ')
+                });
+            }
+        });
+    }
+};
+exports.default = AIstorage;
 
 /***/ }),
 

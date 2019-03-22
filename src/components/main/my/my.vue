@@ -12,9 +12,7 @@
 				<div class="my-header">
 					<div class="my-info-wrapper">
 						<div class="my-info-wrapper-left">
-							<div class="my-info-logo-wrapper">
-								<image class="my-info-logo" src="http://47.92.164.211:8011/PublicImage/logo.png"></image>
-							</div>
+							<image class="my-info-logo-wrapper" src="http://47.92.164.211:8011/PublicImage/logo.png"></image>
 							<!-- 登录过后信息 -->
 							<div class="my-info-sign-wrapper" v-if="loginBool">
 								<text class="my-info-sign-time">68分59秒</text>
@@ -26,20 +24,34 @@
 							<!-- 待登录 -->
 							<text class="mylogin" v-if="!loginBool" @click="loginBtn()">注册/登录</text>
 						</div>
-						<div class="my-info-wrapper-right">
-							<div class="my-info-colum-wrapper">
-								<div class="my-info-colum-list" v-for="(item,index) in 4" :key="index">
-									<div class="my-info-colum-list-left">
-										<text class="my-info-colum-text">余额</text>
-									    <text class="my-info-colum-num">0.00元</text>
-									</div>
-									<div class="my-info-colum-line" v-if="index != 3"></div>
-								</div>
+					</div>
+				</div><!-- /header -->
+				<div class="cell-box my-tool-wrapper my-order-w">
+					<div class="my-info-wrapper-right">
+						<div class="my-info-colum-list">
+							<div class="my-info-colum-list-left">
+								<text class="my-info-colum-text">余额</text>
+							    <text class="my-info-colum-num">0.00元</text>
+							</div>
+							<div class="my-info-colum-line"></div>
+							<div class="my-info-colum-list-left">
+								<text class="my-info-colum-text">白菜币</text>
+							    <text class="my-info-colum-num">2个</text>
+							</div>
+							<div class="my-info-colum-line"></div>
+							<div class="my-info-colum-list-left">
+								<text class="my-info-colum-text">奖励</text>
+							    <text class="my-info-colum-num">2个</text>
+							</div>
+							<div class="my-info-colum-line"></div>
+							<div class="my-info-colum-list-left">
+								<text class="my-info-colum-text">优惠券</text>
+							    <text class="my-info-colum-num">10张</text>
 							</div>
 						</div>
 					</div>
-				</div><!-- /header -->
-				<div class="my-member-area">
+				</div>
+				<div class="my-member-area cell-box">
 					<div class="my-member-area-title">
 						<div class="my-member-area-title-left">
 							<image class="member-iconfont" src="http://47.92.164.211:8011/PublicImage/crown@35x39.png"></image>
@@ -50,15 +62,35 @@
 						</div>
 					</div>
 					<div class="my-member-area-body">
-						<div class="my-member-area-body-list" v-for="item in 6">
+						<div class="my-member-area-body-list">
 							<image class="my-member-area-body-list-image" src="http://47.92.164.211:8011/PublicImage/merage_01.png"></image>
 							<text class="my-member-area-body-list-text">尊享黑卡</text>
+						</div>
+						<div class="my-member-area-body-list">
+							<image class="my-member-area-body-list-image" src="http://47.92.164.211:8011/PublicImage/merage_02.png"></image>
+							<text class="my-member-area-body-list-text">生日有礼</text>
+						</div>
+						<div class="my-member-area-body-list">
+							<image class="my-member-area-body-list-image" src="http://47.92.164.211:8011/PublicImage/merage_03.png"></image>
+							<text class="my-member-area-body-list-text">节日好礼</text>
+						</div>
+						<div class="my-member-area-body-list">
+							<image class="my-member-area-body-list-image" src="http://47.92.164.211:8011/PublicImage/merage_04.png"></image>
+							<text class="my-member-area-body-list-text">极速售后</text>
+						</div>
+						<div class="my-member-area-body-list">
+							<image class="my-member-area-body-list-image" src="http://47.92.164.211:8011/PublicImage/merage_05.png"></image>
+							<text class="my-member-area-body-list-text">专属客服</text>
+						</div>
+						<div class="my-member-area-body-list">
+							<image class="my-member-area-body-list-image" src="http://47.92.164.211:8011/PublicImage/merage_06.png"></image>
+							<text class="my-member-area-body-list-text">敬请期待</text>
 						</div>
 					</div>
 				</div>
 			</cell>
 			<cell>
-				<div class="cell-box my-order-wrapper">
+				<div class="cell-box my-tool-wrapper">
 					<div class="my-order-title">
 						<text class="my-order-title-text">我的订单</text>
 						<div class="my-all-order-title">
@@ -67,10 +99,30 @@
 						</div>
 					</div>
 					<div class="my-order-body">
-						<div class="my-order-body-list" v-for="item in 5">
+						<div class="my-order-body-list">
 							<image class="my-order-body-list-image" src="http://47.92.164.211:8011/PublicImage/order_01.png"></image>
-							<text class="info-number my-order-body-list-number">2</text>
+							
 							<text class="my-order-body-list-image-text">待付款</text>
+						</div>
+						<div class="my-order-body-list">
+							<image class="my-order-body-list-image" src="http://47.92.164.211:8011/PublicImage/order_02.png"></image>
+							
+							<text class="my-order-body-list-image-text">待取货</text>
+						</div>
+						<div class="my-order-body-list">
+							<image class="my-order-body-list-image" src="http://47.92.164.211:8011/PublicImage/order_03.png"></image>
+							
+							<text class="my-order-body-list-image-text">扫码购</text>
+						</div>
+						<div class="my-order-body-list">
+							<image class="my-order-body-list-image" src="http://47.92.164.211:8011/PublicImage/order_04.png"></image>
+							<text class="info-number my-order-body-list-number">2</text>
+							<text class="my-order-body-list-image-text">我的评价</text>
+						</div>
+						<div class="my-order-body-list">
+							<image class="my-order-body-list-image" src="http://47.92.164.211:8011/PublicImage/order_05.png"></image>
+							
+							<text class="my-order-body-list-image-text">售后服务</text>
 						</div>
 					</div>
 				</div>
@@ -256,7 +308,7 @@ export default {
 .info-number{
 	position: absolute;
 	top: 0px;
-	right: -2px;
+	right: 0px;
 	width: 22px;
 	height: 22px;
 	background-color: #fff;
@@ -275,6 +327,7 @@ export default {
 	width: 710px;
 	margin-left: 20px;
 	margin-right: 20px;
+	margin-bottom: 20px;
 }
 .my-info-wrapper-left{
 	display: flex;
@@ -284,15 +337,15 @@ export default {
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
-	align-items: flex-end;
+	align-items: center;
 	margin-right: 10px;
 	padding-bottom: 5px;
 	padding-top: 5px;
 	padding-left: 5px;
 	padding-right: 5px;
-	width: 100px;
-	height: 100px;
-	border-radius: 50%;
+	width: 130px;
+	height: 130px;
+	border-radius: 130px;
 	background-color: #d9f2aa;
 }
 .my-info-logo{
@@ -302,10 +355,11 @@ export default {
 .my-info-sign-wrapper{
 	display: flex;
 	flex-direction: column;
+	justify-content: space-between;
 }
 .my-info-sign-time{
-	font-size: 36px;
-	line-height: 40px;
+	font-size: 50px;
+	line-height: 52px;
 	color: #fff;
 }
 .my-info-sign-box{
@@ -313,15 +367,14 @@ export default {
 	flex-direction: row;
 	justify-content: center;
 	align-items: center;
-	margin-top: 15px;
-	width: 100px;
-	height: 40px;
-	border-radius: 40px;
+	width: 150px;
+	height: 50px;
+	border-radius: 50px;
 	background-color: #ffa200;
 }
 .my-info-sign-text{
-	font-size: 20px;
-	line-height: 22px;
+	font-size: 26px;
+	line-height: 28px;
 	color: #fff;
 }
 .mylogin{
@@ -331,8 +384,8 @@ export default {
 	color: #fff;
 }
 .my-info-sign-iconfont{
-	width: 20px;
-	height: 20px;
+	width: 30px;
+	height: 30px;
 	margin-right: 10px;
 }
 .my-info-colum-wrapper{
@@ -343,6 +396,7 @@ export default {
 	display: flex;
 	flex-direction: row;
 	align-items: center;
+	justify-content: space-around;
 }
 .my-info-colum-list-left{
 	display: flex;
@@ -351,24 +405,31 @@ export default {
 	align-items: center;
 }
 .my-info-colum-text,.my-info-colum-num{
-	line-height: 24px;
-	font-size: 22px;
+	line-height: 28px;
 	color: #fff;
 }
+.my-info-colum-text{
+	font-size: 30px;
+	color: #333;
+	font-weight: bold;
+}
 .my-info-colum-num{
-	margin-top: 8px;
+	color: #73cc46;
+	font-size: 30px;
+}
+.my-info-colum-num{
+	margin-top: 20px;
 }
 .my-info-colum-line{
 	margin-left: 20px;
 	margin-right: 20px;
 	width: 1px;
 	height: 30px;
-	background-color: #fff;
+	background-color: #ccc;
 }
 .my-member-area{
 	display: flex;
 	flex-direction: column;
-	top: -15px;
 	width: 710px;
 	padding-top: 20px;
 	padding-left: 20px;
@@ -398,7 +459,7 @@ export default {
 	margin-right: 15px;
 }
 .my-member-area-title-left-text{
-	font-size: 24px;
+	font-size: 26px;
 	line-height: 26px;
 	color: #333333;
 }
@@ -427,15 +488,15 @@ export default {
 	flex-direction: row;
 	align-items: center;
 	min-width: 108px;
-	margin-right: 40px;
+	margin-right: 35px;
 	margin-bottom: 20px;
 }
 .my-member-area-body-list-image{
-	width: 22px;
-	height: 22px;
+	width: 24px;
+	height: 24px;
 }
 .my-member-area-body-list-text{
-	font-size: 20px;
+	font-size: 24px;
 	color: #ff9000;
 	padding-left: 5px;
 }
@@ -443,11 +504,15 @@ export default {
 	margin-top: 0;
 	display: flex;
 	flex-direction: column;
+	margin-bottom: 20px;
 	padding-top: 20px;
 	padding-left: 20px;
 	padding-right: 20px;
 	background-color: #fff;
 	border-radius: 15px;
+}
+.my-order-w{
+	padding-bottom: 20px;
 }
 .my-order-title{
 	display: flex;
@@ -460,8 +525,9 @@ export default {
 	color: #333333;
 }
 .my-order-title-text{
-	font-size: 30px;
-	line-height: 32px;
+	font-size: 32px;
+	line-height: 34px;
+	font-weight: 600;
 }
 .my-all-order-title{
 	font-size: 20px;
@@ -493,17 +559,17 @@ export default {
 .my-order-body-list-image{
 	margin-top: 10px;
 	margin-bottom: 10px;
-	width: 42px;
-	height: 42px;
+	width: 44px;
+	height: 44px;
 }
 .my-order-body-list-number{
-	right: 0px;
+	right: 15px;
 	border-width: 1px;
 	border-style: solid;
-	border-color: #73cc00;
+	border-color: #73cc00; 
 }
 .my-order-body-list-image-text{
-	font-size: 20px;
+	font-size: 22px;
 	line-height: 22px;
 	color: #777777;
 }
@@ -518,7 +584,7 @@ export default {
 	border-radius: 10px;
 }
 .my-tool-wrapper{
-	margin-top: 10px;
+	margin-top: 20px;
 }
 .my-tool-body{
 	display: flex;
@@ -536,12 +602,12 @@ export default {
 }
 .my-tool-body-list-image{
 	margin-bottom: 15px;
-	width: 52px;
-	height: 52px;
+	width: 54px;
+	height: 54px;
 }
 .my-tool-body-list-image-text{
-	font-size: 24px;
-	line-height: 26px;
+	font-size: 26px;
+	line-height: 28px;
 	color: #777777;
 }
 </style>

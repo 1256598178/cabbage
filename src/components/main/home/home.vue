@@ -45,10 +45,10 @@
                 <div class="list-box food-box">
                     <div class="foods-wrapper">
                         <div class="foods-wrapper-list">
-                            <image class="foods-image foods-image-one" :src="homeArr.RegionCategoryList[0].RegionImageUrl"  v-if="boolArr[0]"  @click="jump({'web':'seafood','CategoryId': homeArr.RegionCategoryList[0].CategoryId})"></image>
+                            <image class="foods-image-one" :src="homeArr.RegionCategoryList[0].RegionImageUrl"  v-if="boolArr[0]"  @click="jump({'web':'seafood','CategoryId': homeArr.RegionCategoryList[0].CategoryId})"></image>
                         </div>
                         <div class="foods-wrapper-list foods-wrapper-list-two">
-                            <image class="foods-image" :src="homeArr.RegionCategoryList[1].RegionImageUrl" v-if="boolArr[1]" @click="jump({'web':'seafood','CategoryId': homeArr.RegionCategoryList[1].CategoryId})"></image>
+                            <image class="foods-image foots-image-three" :src="homeArr.RegionCategoryList[1].RegionImageUrl" v-if="boolArr[1]" @click="jump({'web':'seafood','CategoryId': homeArr.RegionCategoryList[1].CategoryId})"></image>
                             <image class="foods-image" :src="homeArr.RegionCategoryList[2].RegionImageUrl" v-if="boolArr[2]" @click="jump({'web':'seafood','CategoryId': homeArr.RegionCategoryList[2].CategoryId})"></image>
                         </div>
                     </div>
@@ -76,8 +76,10 @@
                                 <text class="foot-shop-name">{{food.ProductName}}&nbsp;&nbsp;{{food.Weight}}</text>
                             </div>
                             <div class="foot-dollar-wrapper">
-                                <text class="foot-dollar">￥{{food.SalesPrice | droller}}</text>
-                                <text class="foot-more-money">￥{{food.Price | droller}}</text>
+                                <div class="foot-wrapper">
+                                    <text class="foot-dollar">¥{{food.SalesPrice | droller}}元/斤</text>
+                                    <text class="foot-more-money">¥{{food.Price | droller}}</text>
+                                </div>
                                 <image class="foot-shop-car" src="http://47.92.164.211:8011/PublicImage/shop-car.png" @click="addShopCar(food.ProductId)"></image>
                             </div>
                         </div>
@@ -114,7 +116,7 @@ export default {
                 names: '绿白菜 • 滨湖春融苑店',
                 linkr: '扫码添加微信实惠更多>',
                 telName: '服务热线',
-                telNum: '400-1000-000'
+                telNum: '400-107-6027'
             },
         }
     },
@@ -437,21 +439,22 @@ export default {
 
 .fication-wrapper-list-child {
     width: 142px;
+    flex-direction: column;
+    align-items: center;
 }
 
 .fication-name {
     margin-top: 10px;
     margin-bottom: 20px;
-    font-size: 22px;
+    font-size: 24px;
     color: #333333;
     text-align: center;
 }
 
 ._fication {
     border-radius: 100px;
-    margin-left: 21px;
-    width: 100px;
-    height: 100px;
+    width: 80px;
+    height: 80px;
     box-shadow: 5px 2px 5px 2px #eee;
 }
 
@@ -465,7 +468,9 @@ export default {
     border-radius: 10px;
     box-shadow: 0 0 5px 2px #eee;
 }
-
+.foots-image-three{
+    margin-bottom: 10px;
+}
 ._wechatImage {
     width: 685px;
     height: 180px;
@@ -481,18 +486,18 @@ export default {
 
 .service-info {
     position: absolute;
-    top: 55px;
+    top: 45px;
     left: 210px;
 }
 
 .face-name {
-    font-size: 22px;
+    font-size: 26px;
     color: #333;
     font-weight: 700;
 }
 
 .face-linkr {
-    font-size: 14px;
+    font-size: 20px;
     color: #777;
     margin-top: 10px;
     text-decoration: underline;
@@ -506,19 +511,19 @@ export default {
 }
 
 ._tel {
-    width: 43px;
-    height: 43px;
-    margin-right: 10px;
+    width: 45px;
+    height: 45px;
+    margin-right: 5px;
 }
 
 .telName {
-    font-size: 14px;
+    font-size: 22px;
     color: #777777;
 }
 
 .telNum {
-    margin-top: 9px;
-    font-size: 20px;
+    margin-top: 5px;
+    font-size: 24px;
     color: #333;
     font-weight: 900;
 }
@@ -550,7 +555,9 @@ export default {
 }
 
 .foods-image-one {
+    width: 350px;
     height: 430px;
+    border-radius: 20px;
 }
 
 .food-bg-image {
@@ -574,7 +581,7 @@ export default {
     margin-top: 5px;
     margin-bottom: 5px;
     width: 350px;
-    height: 480px;
+    height: 550px;
     border-radius: 20px;
     box-shadow: 0 0 5px 2px #eee;
     background-color: #fff;
@@ -598,44 +605,43 @@ export default {
     padding-left: 20px;
     padding-right: 20px;
     width: 350px;
-    height: 130px;
 }
 
 .food-name-wrapper {
-    margin-bottom: 34px;
+    height: 90px;
 }
 
 .foot-shop-name {
     display: inline;
-    font-size: 30px;
+    font-size: 34px;
     font-weight: 500;
     color: #222222;
 }
 
 .foot-dollar-wrapper {
-    position: relative;
-    height: 96px;
     display: flex;
     flex-direction: row;
 }
-
-.foot-dollar {
-    font-size: 30px;
-    font-weight: 600;
-    color: #f26100;
+.foot-wrapper{
+    display: flex;
+    flex-direction: column;
 }
-
+.foot-dollar {
+    font-size: 34px;
+    font-weight: 900;
+    color: #ff0000;
+}
 .foot-more-money {
-    margin-left: 15px;
-    margin-top: 7px;
-    font-size: 20px;
+    margin-left: 2px;
+    margin-top: 15px;
+    font-size: 28px;
     color: #777777;
 }
 
 .foot-shop-car {
     position: absolute;
-    width: 44px;
-    height: 44px;
+    width: 77px;
+    height: 77px;
     top: 0;
     right: 0;
 }

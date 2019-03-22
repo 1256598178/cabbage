@@ -67,6 +67,45 @@
 /************************************************************************/
 /******/ ({
 
+/***/ 1:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+var ajaxUrl = {
+	// POST
+	SHOPCAR_URL: "api/cart/addCart", //添加到购物车
+	LOGIN_URL: "api/account/login", // 登录
+	GETCODE_URL: "api/account/getsmscode", //获取短信验证码
+	FINDPASSWORD_URL: "api/account/findpassword", //修改密码
+	REGISTER_URL: "api/account/register", //注册
+	MODIFYSHOPNUM_URL: "api/cart/changeCart", //修改购物车
+	SUBMITORDER_URL: "api/cart/sumbitOrder", //  提交订单
+	// GET
+	HOME_URL: "api/basic/gethomepage", //获取首页
+	SEAFOOD_URL: "api/product/getprodcutlistbypage?", //根据分类获取商品列表(分页)
+	GETPRODCUTDETAIL_URL: "api/product/getprodcutdetail", //根据商品Id获取商品信息
+	CLASS_URL: "api/product/getcagegorylist", //获取分类数据
+	SELECT_URL: "api/product/getprodcutlist?categoryId=", //根据商品id获取商品
+	SHOP_URL: "api/cart/getMyCartList?userId=", //获取购物车列表
+	GETMYCARTCHOSTLIST_URL: "api/cart/getMyCartChoseList?UserId=", //获取选中的购物车列表
+	DATEURLS: "api/cart/getPickingDateTime", //取货日期
+	TIMEURLS: "api/cart/getPickingTime", //取货时间
+	GETUSERINFO_URL: "api/account/getuserinfo", //获取我的信息
+
+
+	// 字体图标
+	iconUrl: "//at.alicdn.com/t/font_948634_j56el7oqed.ttf"
+};
+
+exports.default = ajaxUrl;
+
+/***/ }),
+
 /***/ 113:
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -183,17 +222,12 @@ module.exports = {
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+
+var _api = __webpack_require__(1);
+
+var _api2 = _interopRequireDefault(_api);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = {
     data: function data() {
@@ -202,32 +236,32 @@ exports.default = {
             nav: [{
                 title: '首页',
                 iconText: '\uE605', //'&#xe619;'转换成'\ue619'是为了解决在v-for循环中直接显示字符串的bug
-                srco: '../src/common/images/home.png',
-                srct: '../src/common/images/home_act.png',
+                srco: 'http://47.92.164.211:8011/PublicImage/home.png',
+                srct: 'http://47.92.164.211:8011/PublicImage/home_act.png',
                 path: 'home'
             }, {
                 title: '分类',
                 iconText: '\uE645',
-                srco: '../src/common/images/class.png',
-                srct: '../src/common/images/class_act.png',
+                srco: 'http://47.92.164.211:8011/PublicImage/class.png',
+                srct: 'http://47.92.164.211:8011/PublicImage/class_act.png',
                 path: 'classes'
             }, {
                 title: '购物车',
                 iconText: '\uE607',
-                srco: '../src/common/images/shop.png',
-                srct: '../src/common/images/shop_act.png',
+                srco: 'http://47.92.164.211:8011/PublicImage/shop.png',
+                srct: 'http://47.92.164.211:8011/PublicImage/shop_act.png',
                 path: 'shop'
             }, {
                 title: '取货',
                 iconText: '\uE69E',
-                srco: '../src/common/images/goods.png',
-                srct: '../src/common/images/goods_act.png',
+                srco: 'http://47.92.164.211:8011/PublicImage/goods.png',
+                srct: 'http://47.92.164.211:8011/PublicImage/goods_act.png',
                 path: 'goods'
             }, {
                 title: '我的',
                 iconText: '\uE612',
-                srco: '../src/common/images/my.png',
-                srct: '../src/common/images/my_act.png',
+                srco: 'http://47.92.164.211:8011/PublicImage/my.png',
+                srct: 'http://47.92.164.211:8011/PublicImage/my_act.png',
                 path: 'my'
             }]
         };
@@ -235,6 +269,7 @@ exports.default = {
 
     methods: {
         jump: function jump(msg) {
+            // this.navIndex = index;
             this.$router.push(msg);
             this.navIndex = msg;
         }
@@ -243,10 +278,21 @@ exports.default = {
         var fontModule = weex.requireModule("dom");
         fontModule.addRule('fontFace', {
             'fontFamily': "iconfont",
-            'src': "url(" + this.$store.state.iconUrl + ")"
+            'src': "url('" + _api2.default.iconUrl + "')"
         });
     }
-};
+}; //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /***/ }),
 
@@ -267,10 +313,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
           _vm.jump(item.path)
         }
       }
-    }, [_c('text', {
-      staticClass: ["iconFont"],
-      class: [_vm.navIndex == item.path ? 'nav-image-active' : 'nav-image']
-    }, [_vm._v(_vm._s(item.iconText))]), _c('text', {
+    }, [_c('image', {
+      staticClass: ["nav-img"],
+      attrs: {
+        "src": _vm.navIndex === item.path ? item.srct : item.srco
+      }
+    }), _c('text', {
       class: [_vm.navIndex == item.path ? 'nav-cn-active' : 'nav-cn']
     }, [_vm._v(_vm._s(item.title))])])
   }))], 1)
